@@ -1,0 +1,57 @@
+---
+title: ""
+website: 
+    google-analytics: ""
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **VISUAL ANALYTICS & APPLICATIONS**
+
+<font size = "6pt">with R Markdown, R Studio and Quarto</font>
+
+::: {.callout-caution collapse="true"}
+## Content Disclaimer
+
+This micro-site is for academic purposes only. Any views or opinions, or comments represented in this site is personal and belongs solely to the site owner and do not represent those people, institutions or organisations that the owner may or may not be associated professionally or within a personal capacity unless explicitly stated.
+
+All content on this site is for informational purposes only. This site's owner makes no representation of the accuracy or completeness of any display information or any link on this site. The owner will not be liable for any errors, omissions or availability of any information. The owner will not be liable for any losses, injuries, or damages from the display or use of this information.
+:::
+
+[module]{style="color:#a39f9d"} : [**ISSS608-AY2022-23Jan Visual Analytics and Applications**](https://isss608-ay2022-23jan.netlify.app/)
+
+[instructor]{style="color:#a39f9d"} : [**Dr. Kam Tin Seong**](https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong), Associate Professor of Information Systems (Practice)
+
+[institute]{style="color:#a39f9d"} : [**MITB-Analytics Track**](https://scis.smu.edu.sg/master-it-business/analytics-track/curriculum "MITB_analyticsTrack") , Singapore Management University (SMU)
+
+[timeline]{style="color:#a39f9d"} : January 14, 2023 to March 25, 2023
+
+<br>
+
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| [topic]{style="color:#a39f9d"}                                                                                        | [lesson cover]{style="color:#a39f9d"} | [**date**]{style="color:#a39f9d"} |
++=======================================================================================================================+=======================================+===================================+
+| 1.  [Introduction to Visual Analytics](https://isss608-ay2022-23jan.netlify.app/outline/Lesson01_outline.html)        | Hands-on Ex1                          | Jan 14, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 2.  [Designing Graphs to Enlighten](https://isss608-ay2022-23jan.netlify.app/outline/Lesson02_outline.html)           |                                       | Jan 21, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 3.  [Interactivity in Visual Analytics](https://isss608-ay2022-23jan.netlify.app/outline/Lesson03_outline.html)       |                                       | Jan 28, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 4.  [Fundamentals of Visual Analytics](https://isss608-ay2022-23jan.netlify.app/outline/Lesson04_outline.html)        |                                       | Feb 4, 2023                       |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 5.  [Visual Multivariate Analysis](https://isss608-ay2022-23jan.netlify.app/outline/Lesson05_outline.html)            |                                       | Feb 11, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 6.  [It's About Time](https://isss608-ay2022-23jan.netlify.app/outline/Lesson06_outline.html)                         |                                       | Feb 18, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 7.  [GeoVisual Analytics](https://isss608-ay2022-23jan.netlify.app/outline/Lesson07_outline.html)                     |                                       | Feb 25, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 8.  [Network Data Visualisation and Analysis](https://isss608-ay2022-23jan.netlify.app/outline/Lesson08_outline.html) |                                       | Mar 11, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 9.  [Information Dashboard Design](https://isss608-ay2022-23jan.netlify.app/outline/Lesson09_outline.html)            |                                       | Mar 18, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+
+| 10. [Visualising Financial Data](https://isss608-ay2022-23jan.netlify.app/outline/Lesson10_outline.html)              |                                       | Mar 25, 2023                      |
++-----------------------------------------------------------------------------------------------------------------------+---------------------------------------+-----------------------------------+

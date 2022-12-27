@@ -1,0 +1,44 @@
+project:
+  type: website
+
+website:
+  google-analytics: "G-VVFCV6MNHG"
+  title: "ISSS624"
+  navbar:
+    left: 
+      - text: References & Notes
+        menu: 
+          - text: Acronym & Terminology
+            href: personal_note/Acronym_Terminology.qmd
+            
+      - text: Hands-on Exercises
+        menu: 
+          - text: Geospatial Data Wrangling with R [1]
+            href: Hands-on_Ex1-1.qmd
+
+            
+      - text: In-class Exercises
+        menu: 
+          - text: Spatial Weights & Applications [3]
+            href: in-class_ex/in-class_ex1/In-class_Ex1.qmd
+
+            
+      - text: Projects
+        menu: 
+          - text: Class Project 1 - Spatial Weights & Applications
+            href: class_project/project_1/spatial_weights.qmd
+
+    
+    right:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+
+editor: visual
+
