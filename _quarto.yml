@@ -23,9 +23,9 @@ website:
      
       - text: References & Notes
         menu: 
-          - text: Test & Exploration 1
+          - text: Exploration 1 - Pareto Chart
             href: pnote/test1.qmd
-          - text: Test & Exploration 2
+          - text: Exploration 2 - Pyramid Chart
             href: pnote/test2.qmd
     right:
       - href: index.qmd

@@ -1,5 +1,5 @@
 ---
-title: "Test & Explore"
+title: "Exploration 1 :: Pareto Chart"
 editor: visual
 date:  28 Dec 2022
 code-copy: true
@@ -13,9 +13,29 @@ format:
     css: styles.css
 ---
 
-# 1. OVERVIEW
+# OVERVIEW
 
-\--
+In this take-home exercise, we will explore the pros and cons of creating data visualisation using **ggplot2** and Tableau. The data visualisation for this exercise focus on the Pareto chart showing the distribution of returns by a fictitious superstore.
+
+#### **CHALLENGES FACED**
+
+-   The raw data had to be extensively transformed before it could be used for visualisation. It is challenging to ensure that the fields have been adequately transformed, and frequently results in recycle work where one has to modify data wrangling after doing the visualisation and repeating again. For example, the Age Group column for the population pyramid has a character data type, which means that when plotting or generating dataframes including this column, 0_to_4 would be parsed first, followed by 10_to_14, instead of the expected 5_to_9. The order in the visualisation would be incorrect based on this order. The issue was resolved by manually changing the order using *mutate()* and then sorting via *arrange()*.
+
+-   The secondary axes in **ggplot2** is just based on a one-to-one transformation of the primary axes, hence the charts are still referenced to the primary axes. The challenge was resolved by transforming the secondary axis by a coefficient, such that the scale matches the primary axis.
+
+-   As **ggplot2** produces static charts, bringing in interactivity in the visualizations may be a challenge. This was resolved by using *plotly* package, which can be quickly transformed for the Age-Sex Population Pyramid. The pareto chart, which contained a secondary axis, required to be plotted using **plotly** tools.
+
+-   The default visualization created with **ggplot2** is not appealing and not professional looking. The default grey background was difficult to view for some charts and some of the default themes are not easy on the eyes. Hence, some charts may need to be extensively customized. For instance, the grid lines, axis labels, colour scheme of the pareto chart had to be customised.
+
+#### **COMPARING BETWEEN TABLEAU AND R**
+
+-   In R, data preparation for different charts using different data sets can be done on one platform using the same environment. Tableau, on the other hand requires separate workbook for separate data sets. . On the other hand, web scraping cannot be performed on Tableau. Both pareto chart and population pyramid can be plotted in the same environment in R, whereas requires 2 workbooks in Tableau.
+
+-   Tableau is more user friendly and fool-proof in creating visualisations. However, R has a rich repository of packages that directly creates different chart types, whereas Tableau requires some manipulation of base chart types. For example, though not carried out in this exercise, a basic pareto plot can be created by *stat_pareto()* of **ggQC**, and a basic population pyramid can be plotted using *nPyramid()* of **rCharts**.
+
+-   Visualisations in Tableau are interactive, whereas **ggplot2** in R is static. Extra effort is also required to customise the details of the visualisation in **ggplot2**. Interactivity and customisation can be included through **ggplot** and **plotly**. Once a chart is created, the same visualisation using different variables or level of details can be easily re-created using similar lines of code.
+
+As Tableau produces interactive charts and dashboards, we will use **plotly** to convert the **ggplot2** plots to produce interactive graphs for a more objective comparison.
 
 # 2. R PACKAGE REQUIRED
 
@@ -29,238 +49,299 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, readxl, knitr, plotly, sf, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork)
+pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
+
+[sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
+
+[Alternate code chunk -]{style="color:#d69c3c"}
+
+```{r}
+#| code-fold: false
+#| eval: false
+packages = c('tidyverse', 'readxl', 'knitr', 'plotly')
+for(p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
 :::
 
 # 3. DATA
 
 ## 3.1 Acquire Data Source
 
--   Tableau Dataset for Superstore
+This study will be based on Tableau's fictatious data set -
 
-    1.  Download "Superstore" [dataset](https://community.tableau.com/s/question/0D54T00000OPxEhSAL/does-any-have-the-sample-superstore-dataset-for-tableau-version-20203-when-i-downloaded-tableau-the-datasources-file-was-empty-i-tried-to-look-at-saved-data-sources-already) for **Tableau** version 2020.3.
-    2.  Rename the title to "superstore_2020.3".
+1.  Download "Superstore" [dataset](https://community.tableau.com/s/question/0D54T00000OPxEhSAL/does-any-have-the-sample-superstore-dataset-for-tableau-version-20203-when-i-downloaded-tableau-the-datasources-file-was-empty-i-tried-to-look-at-saved-data-sources-already) for **Tableau** version 2020.3.
+2.  Rename the title to "superstore_2020.3".
 
--   Singstat Dataset for Population
+## 3.2 Import Data
 
-    1.  Download "Population and Population Structure" [dataset.](https://tablebuilder.singstat.gov.sg/statistical-tables/downloadMultiple/zX5lZdqFrk-29wjZN4FFXw)
-
-## 3.2 Read RDS file
+### 3.2.1 Import Tableau Data
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-```{r}
-#| code-fold: false
-wp_ngaTrim <- read_rds("data/geodata/wp_ngaTrim.rds")
-```
+Two (2) steps : import and inspect imported data set.
+
+#### 3.2.1.1 import data
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_xls( )*** - readxl -]{style="color:#d46e15"} to read excel into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the Excel file.
 :::
 
-### 3.7.2 Visualise Distribution of Cluster Variable
-
 ```{r}
-cluster_vars <- wp_ngaTrim %>%
-  st_set_geometry(NULL) %>%
-  select("shapeName",
-         "total_wp",
-         "pct_functional", 
-         "pct_nonFunctional",
-         "pct_handPump",
-         "pct_mechPump",
-         "pct_tapStand",
-         "pct_uc300",
-         "pct_uc1000",
-         "pct_ucN1000",
-         "pct_uc250",
-         "pct_urban1",
-         "pct_urban0",
-         "pct_cs04",
-         "pct_cs10",
-         "pct_stat1",
-         "pct_stat0",
-         "pct_ps09",
-         "pct_ps19")
+orders <- read_xls("data/superstore_2020.3.xls",
+                   sheet = "Orders")
 
-row.names(cluster_vars) <- cluster_vars$shapeName
-cluster_vars <- cluster_vars %>%
-  select(-shapeName)
+problems(orders)
 ```
 
 ```{r}
-ggarrange(
-  (ggplot(data=cluster_vars, aes(x=`pct_functional`)) + 
-     geom_boxplot(color="black", fill="#19ff3fFF")), 
-  ((ggplot(data=cluster_vars, aes(x=`pct_nonFunctional`)) +
-      geom_boxplot(color="black", fill="#ff1919FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_handPump`)) +
-      geom_boxplot(color="black", fill="#FFA319FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_mechPump`)) +
-      geom_boxplot(color="black", fill="#ff8419FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_tapStand`)) +
-      geom_boxplot(color="black", fill="#ff5619FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_urban0`)) +
-      geom_boxplot(color="black", fill="#19beffFF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_uc1000`)) +
-      geom_boxplot(color="black", fill="#C16622FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_ucN1000`)) +
-      geom_boxplot(color="black", fill="#543005FF"))),
-   ncol = 2,
-  nrow = 4)
+returns <- read_xls("data/superstore_2020.3.xls",
+                   sheet = "Returns")
+
+problems(returns)
 ```
 
-```{r}
-#| code-fold: false
-hist_box_plot <- function(varname, title){ 
-  
-  func1 <- ggplot(data = cluster_vars, 
-       aes(x = varname)) + 
-  geom_histogram(bins = 30,
-                 color = "black", 
-                 fill = "steelblue") +
-  theme_classic() + 
-  xlab(title)
-  
-  func2 <- ggplot(data = cluster_vars, 
-         aes(x = varname)) + 
-    geom_boxplot(fill = "steelblue", 
-                 color = "black") + 
-    theme_classic() +
-    xlab("") +
-    theme(axis.text.y = element_blank(),
-          axis.ticks.y = element_blank())
-  
-plot_grid(func1,
-          func2,
-          align = "v",
-          ncol = 1)
-}
-```
+#### 3.2.1.2 inspect for missing value
 
 ```{r}
-hist_box_plot(cluster_vars$pct_nonFunctional, "Non-Functional Water Point")
-```
-
-```{r}
-#| code-fold: false
-hist_plot <- function(varname, title){
-  func3 <- ggplot(data = cluster_vars, 
-       aes(x = varname)) + 
-  geom_histogram(bins = 30,
-                 color = "black", 
-                 fill = "steelblue") +
-  theme_classic() + 
-  xlab(title)
-
-  func3
-}
-```
-
-```{r}
-pct_functional <- hist_plot(cluster_vars$pct_functional, "pct_functional")
-pct_nonfunctional <- hist_plot(cluster_vars$pct_nonFunctional, "pct_nonFunctional")
-pct_handpump <- hist_plot(cluster_vars$pct_handPump, "pct_handPump")
-pct_mechpump <- hist_plot(cluster_vars$pct_mechPump, "pct_mechPump")
-pct_uc1000 <- hist_plot(cluster_vars$pct_uc1000, "pct_uc1000")
-pct_ucN1000 <- hist_plot(cluster_vars$pct_ucN1000, "pct_ucN1000")
-pct_urban0 <- hist_plot(cluster_vars$pct_urban0, "pct_urban0")
-pct_stat1 <- hist_plot(cluster_vars$pct_stat1, "pct_stat1")
-pct_cs10 <-hist_plot(cluster_vars$pct_cs10, "pct_cs10")
-pct_ps19 <-hist_plot(cluster_vars$pct_ps19, "pct_ps19")
-```
-
-```{r}
-pct_functional + pct_nonfunctional +
-  pct_handpump + pct_mechpump +
-  pct_uc1000 + pct_ucN1000 +
-  pct_urban0 + pct_stat1 +
-  pct_cs10 + pct_ps19 +
-  plot_layout(ncol = 2)
-```
-
-```{r}
-#| code-fold: false
-choropleth_plot <- function(varname, style, title) {
-  tm_shape(wp_ngaTrim) +
-    tm_fill(varname, 
-          n = 5,
-          style = style) +
-    tm_borders(alpha = 0.5) +
-    tm_layout(main.title = title,
-              main.title.size = 0.8,
-              main.title.position = "center",
-              legend.height = 3, 
-              legend.width = 3,
-              legend.title.size = 0.8,
-              legend.text.size = 0.5,
-              frame = TRUE)+ 
-    tm_compass(position = c('left','bottom'))
-}
-```
-
-```{r}
-#| eval: false
-tmap_arrange(choropleth_plot("wp_functional", "quantile", 
-                "Functional Water Point"),
-             choropleth_plot("wp_nonFunctional", "quantile", 
-                "Non-functional Water Point"), 
-             choropleth_plot("pct_functional", "quantile", 
-                "Pct of functional water point"),
-             choropleth_plot("pct_nonFunctional", "quantile", 
-                "Pct of Non-functional water point"),
-             choropleth_plot("pct_handPump", "quantile", 
-                "Pct of Hand Pump Deployed"),
-             choropleth_plot("pct_mechPump", "quantile", 
-                "Pct of Mechanical Pump Deployed"),
-             choropleth_plot("pct_urban0", "quantile", 
-                "Pct of Water Point in Non-Urban Community"),
-             choropleth_plot("pct_cs10", "quantile", 
-                "Pct of Water Points with Crucialness > 0.6"),
-             choropleth_plot("pct_ps19", "quantile", 
-                "Pct of Water Points with Reaching Usage Limit"),
-             ncol = 2,
-             heights = 5,
-             nrow = 5)
-```
-
-## 5.2 Standardise Data
-
-As shown in 3.7.3.3, not all variables are not distributed normally. Hence, standardisation will be required before the clustering analysis.
-
-::: {.callout-warning appearance="simple" icon="false"}
-### 5.2.1 Standardise :: Min-Max Method
-
-```{r}
-wp_stdMM <- normalize(cluster_vars)
-describe(wp_stdMM)
-```
-
-### 5.2.2 Standardise :: Z-score Method
-
-```{r}
-wp_stdZ <- scale(cluster_vars)
-describe(wp_stdZ)
+skim(orders)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
 
-[Comparing the reports above, the Min-Max method is the only method that can standardise the value to between 0 and 1.]{style="color:#d69c3c"}
-
-### 5.2.3 Compare Distribution For Standardisation Method
-
-Visualise to determine which standardisation method provide the better output.
+[Preliminary data interpretation - between 2017 and 2020, 793 unique customers contributed to the sales volume of 5,009 orders for 1,862 products.]{style="color:#d69c3c"}
 
 ```{r}
-ggarrange(
-  (ggplot(data = cluster_vars, aes(x = `pct_stat1`)) +
-    geom_density(color = "black", fill = "#19ff3fFF") + 
-    ggtitle("Before Standardisation")),
-  (ggplot(data = (as.data.frame(wp_stdMM)), aes(x = `pct_stat1`)) +
-      geom_density(color = "black", fill = "#19ff3fFF") +
-      ggtitle("Min-Max Stdsn.")),
-  (ggplot(data = (as.data.frame(wp_stdZ)), aes(x = `pct_stat1`)) +
-     geom_density(color = "black", fill="#19ff3fFF") +
-     ggtitle("Z-score Stdsn.")),
-   ncol = 3)
+skim(returns)
 ```
+
+```{r}
+summary(unique(returns$Returned))
+summary(unique(returns$`Order ID`))
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[Preliminary data interpretation - there were 296 out of 5,009 orders returned.]{style="color:#d69c3c"}
+:::
+
+## 3.3 Data Wrangling
+
+### 3.3.1 Join Data Frames
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+Combine both data frames.
+
+#### 3.3.1.1 join *returns* to *orders*
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***left_join( )*** - dplyr -]{style="color:#d46e15"} to join the *returns* data frame to *orders* data frame by "Order ID" as the unique identifier.
+:::
+
+```{r}
+summary(ss_ordersMgmt <- left_join(orders, 
+                           returns,
+                        by = c('Order ID' = 'Order ID')
+                        ))
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[There were 12,420 items sold, as indicated by the variable lengths.]{style="color:#d69c3c"}
+
+#### 3.2.1.2 explore and inspect
+
+```{r}
+freq(ss_ordersMgmt$Returned)
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[3,226 out of ordered 12,420 items, approximately 25.97% of items returned.]{style="color:#d69c3c"}
+:::
+
+### 3.3.2 Compute Frequency Count
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+Group items first before summarising the count of "Returned".
+
+#### **3.3.2.1 compute returns by "Sub-category"**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***group_by( )*** - dplyr -]{style="color:#d46e15"} to group orders by specific param.
+
+[***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of returned orders.
+
+[***arrange( )*** - dplyr -]{style="color:#d46e15"} to sort the rows in descending order of the counted "Returned" value of each "Sub-category".
+:::
+
+```{r}
+returned_subCat <- ss_ordersMgmt %>%
+  group_by(`Sub-Category`) %>%
+  summarise(`Returned` = n()) %>%
+  arrange(desc(`Returned`)) %>%
+  ungroup()
+
+returned_subCat
+```
+:::
+
+### **3.3.3 Compute Cumulative Frequency**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***mutate( )*** - dplyr -]{style="color:#d46e15"} to compute new variables "cum_freq" and "cum".
+
+[***cumsum( )*** - base -]{style="color:#d46e15"} to compute vector consists of cumulative sums elements.
+:::
+
+```{r}
+cf_subCat <- returned_subCat %>%
+  mutate(cum_freq = cumsum(Returned)) %>%
+  mutate(cum = cumsum(Returned)/sum(Returned))
+
+cf_subCat
+```
+:::
+
+# 4 EXPLORATORY DATA ANALYSIS (EDA)
+
+## 4.1 Pareto Chart
+
+It is crucial to narrow down the 20% factor contributing to the 80% increment or drop in sales orders to avoid unnecessary waste of time and resources during preliminary decision-making for business development.
+
+Hence, the Pareto chart is used to identify the 20% crucial factors and eliminates the 80% less crucial ones.
+
+### **4.1.1 Plot Static Pareto Chart**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***geom_col( )*** - ggplot2 -]{style="color:#d46e15"} to create the bar chart and set the height of the bar to represent the actual returns counts.
+
+[***geom_line( ) & geom_point*** - ggplot2 -]{style="color:#d46e15"} to plot the line and scatter plot for the cumulative frequency of returned counts. The scatter plot helps identify each product's cumulative frequency in a static chart.
+
+[***scale_y\_continuous( )*** - ggplot2 -]{style="color:#d46e15"} to adjust the interval between the grid lines and to add a secondary y-axis to illustrate each product's cumulative percentage of returns.
+
+The secondary y-axis is based on a one-to-one transformation of the primary axis..
+
+[***theme( )*** - ggplot2 -]{style="color:#d46e15"} to improve visibility by adjusting the plot's background colour and grid lines.
+:::
+
+```{r}
+ggplot(data = cf_subCat,
+       aes(x = reorder(`Sub-Category`,
+                       -`Returned`))) +
+  geom_col(aes(y = `Returned`),
+           fill = 'salmon', 
+           width = 0.8) +
+  geom_point(aes(y = `cum_freq`), 
+             color = 'grey20', 
+             size = 0.8) +
+  geom_line(
+    aes(y = `cum_freq`, 
+        group = 1), 
+    colour = 'grey20', 
+    size = 0.4) +
+  labs(x = "Sub-Category", 
+       title = "Pareto Chart of returns by sub-category") +
+  scale_y_continuous(name = 'Returns (absolute frequency)', 
+                     breaks = seq(0, 3500, 300), 
+                     minor_breaks = seq(0, 3500, 100),
+                     sec.axis = sec_axis(~.*1/sum(cf_subCat$Returned), 
+                                         name = 'Cumulative Frequency', 
+                                         breaks = seq(0, 1, 
+                                                      by = 0.1), 
+                                         labels = scales::percent)) +
+  geom_hline(yintercept = 0.8*sum(cf_subCat$Returned), 
+             linetype = "dashed", 
+             color = "grey50") +
+  geom_text(
+    aes(17,
+        0.8*sum(Returned),
+        label = "80.0%",
+        vjust = -0.5),
+    size = 2) +
+  theme(panel.background = element_rect(
+    fill = 'white', 
+    colour = 'grey60',
+    size = 0.5,
+    linetype = 'solid'),
+    panel.grid.major = element_line(
+      size = 0.3, 
+      linetype = 'solid', 
+      colour = 'grey85'),
+    panel.grid.minor = element_line(
+      size = 0.2, 
+      linetype = 'solid', 
+      colour = 'grey90'),
+    text = element_text(
+      size = 5.5),
+    axis.ticks.x = element_blank()) 
+```
+:::
+
+### **4.1.2 Plot Interactive Pareto Chart**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***plot_ly( )*** - plotly -]{style="color:#d46e15"} to plot an interactive Pareto chart that allows to view corresponding cumulative percentage for each product when hover across the line or the bars .
+:::
+
+```{r}
+plot_ly(cf_subCat, 
+        x = ~reorder(`Sub-Category`,
+                     -`Returned`), 
+        y = ~`Returned`, 
+        type = "bar", 
+        name = "Returned") %>%
+  add_trace(x = ~reorder(`Sub-Category`,
+                         -`Returned`), 
+            y = ~`cum`*100,
+            type = "scatter", 
+            mode = "lines", 
+            yaxis = "y2", 
+            name = "Cum. %") %>%
+  layout(title = "Pareto chart of returns by sub-category",
+         xaxis = list(
+           title = "Sub-Category"),
+         yaxis = list(
+           title = "Returned (Absolute Frequency)", 
+           showgrid = F),
+         yaxis2 = list(
+           overlaying = "y", 
+           side = "right", 
+           title = "Cumulative Percentage (%)", 
+           range = list(0, 100)),
+         legend = list(orientation = "h", 
+                       yanchor = "bottom", 
+                       y = 0.9,
+                       xanchor = "top",
+                       x = 0.2)) 
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[Interactive chart makes the interpretation easier by showing the sub-categories that below 80%. -]{style="color:#d69c3c"}
+
+[Therewith, eight (8) sub-categories, namely Binders, Paper, Furnishings, Phones, Storage, Accessories, Art, Chairs, are identified to account for 80% of the returned products.]{style="color:#d69c3c"}
 :::
