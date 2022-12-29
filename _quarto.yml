@@ -6,29 +6,27 @@ website:
   title: "ISSS608"
   navbar:
     left: 
-      - text: References & Notes
-        menu: 
-          - text: Acronym & Terminology
-            href: personal_note/Acronym_Terminology.qmd
-            
       - text: Hands-on Exercises
         menu: 
-          - text: Geospatial Data Wrangling with R [1]
-            href: Hands-on_Ex1-1.qmd
-
+          - text: Take-home Exercise [1]
+            href: Hands-on_Ex1.1.qmd
             
       - text: In-class Exercises
         menu: 
-          - text: Spatial Weights & Applications [3]
+          - text: In-class Exercise [1]
             href: in-class_ex/in-class_ex1/In-class_Ex1.qmd
-
             
       - text: Projects
         menu: 
-          - text: Class Project 1 - Spatial Weights & Applications
-            href: class_project/project_1/spatial_weights.qmd
-
-    
+          - text: Class Project 1
+            href: class_project/project_1/xxx.qmd
+     
+      - text: References & Notes
+        menu: 
+          - text: Test & Exploration 1
+            href: pnote/test1.qmd
+          - text: Test & Exploration 2
+            href: pnote/test2.qmd
     right:
       - href: index.qmd
         text: Home

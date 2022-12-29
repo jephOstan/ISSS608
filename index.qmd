@@ -24,7 +24,7 @@ All content on this site is for informational purposes only. This site's owner m
 
 [module]{style="color:#a39f9d"} : [**ISSS608-AY2022-23Jan Visual Analytics and Applications**](https://isss608-ay2022-23jan.netlify.app/)
 
-[instructor]{style="color:#a39f9d"} : [**Dr. Kam Tin Seong**](https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong), Associate Professor of Information Systems (Practice)
+[instructor]{style="color:#a39f9d"} : [**Dr. Kam Tin Seong**](https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong), Associate Professor of Information Systems (Practice)
 
 [institute]{style="color:#a39f9d"} : [**MITB-Analytics Track**](https://scis.smu.edu.sg/master-it-business/analytics-track/curriculum "MITB_analyticsTrack") , Singapore Management University (SMU)
 
