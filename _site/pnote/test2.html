@@ -217,7 +217,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../about.html">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">Profile</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -234,7 +234,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">OVERVIEW</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. OVERVIEW</a></li>
   <li><a href="#r-package-required" id="toc-r-package-required" class="nav-link" data-scroll-target="#r-package-required">2. R PACKAGE REQUIRED</a>
   <ul class="collapse">
   <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">2.1 Load R Packages</a></li>
@@ -255,6 +255,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#plot-pyramid-chart" id="toc-plot-pyramid-chart" class="nav-link" data-scroll-target="#plot-pyramid-chart">4.1 Plot Pyramid Chart</a></li>
   </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">5. REFERENCES</a></li>
   </ul>
 </nav>
     </div>
@@ -285,26 +286,27 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </header>
 
 <section id="overview" class="level1">
-<h1>OVERVIEW</h1>
-<p>In this take-home exercise, we will explore the pros and cons of creating data visualisation using <strong>ggplot2</strong> and Tableau. The data visualisation for this exercise focus on the population pyramid of Singapore by age cohort and gender.</p>
-<section id="challenges-faced" class="level4">
-<h4 class="anchored" data-anchor-id="challenges-faced"><strong>CHALLENGES FACED</strong></h4>
-<ul>
-<li><p>The raw data had to be extensively transformed before it could be used for visualisation. It is challenging to ensure that the fields have been adequately transformed, and frequently results in recycle work where one has to modify data wrangling after doing the visualisation and repeating again. For example, the Age Group column for the population pyramid has a character data type, which means that when plotting or generating dataframes including this column, 0_to_4 would be parsed first, followed by 10_to_14, instead of the expected 5_to_9. The order in the visualisation would be incorrect based on this order. The issue was resolved by manually changing the order using <em>mutate()</em> and then sorting via <em>arrange()</em>.</p></li>
-<li><p>The secondary axes in <strong>ggplot2</strong> is just based on a one-to-one transformation of the primary axes, hence the charts are still referenced to the primary axes. The challenge was resolved by transforming the secondary axis by a coefficient, such that the scale matches the primary axis.</p></li>
-<li><p>As <strong>ggplot2</strong> produces static charts, bringing in interactivity in the visualizations may be a challenge. This was resolved by using <em>plotly</em> package, which can be quickly transformed for the Age-Sex Population Pyramid. The pareto chart, which contained a secondary axis, required to be plotted using <strong>plotly</strong> tools.</p></li>
-<li><p>The default visualization created with <strong>ggplot2</strong> is not appealing and not professional looking. The default grey background was difficult to view for some charts and some of the default themes are not easy on the eyes. Hence, some charts may need to be extensively customized. For instance, the grid lines, axis labels, colour scheme of the pareto chart had to be customised.</p></li>
-</ul>
-</section>
-<section id="comparing-between-tableau-and-r" class="level4">
-<h4 class="anchored" data-anchor-id="comparing-between-tableau-and-r"><strong>COMPARING BETWEEN TABLEAU AND R</strong></h4>
-<ul>
-<li><p>In R, data preparation for different charts using different data sets can be done on one platform using the same environment. Tableau, on the other hand requires separate workbook for separate data sets. . On the other hand, web scraping cannot be performed on Tableau. Both pareto chart and population pyramid can be plotted in the same environment in R, whereas requires 2 workbooks in Tableau.</p></li>
-<li><p>Tableau is more user friendly and fool-proof in creating visualisations. However, R has a rich repository of packages that directly creates different chart types, whereas Tableau requires some manipulation of base chart types. For example, though not carried out in this exercise, a basic Pareto plot can be created by <em>stat_pareto()</em> of <strong>ggQC</strong>, and a basic population pyramid can be plotted using <em>nPyramid()</em> of <strong>rCharts</strong>.</p></li>
-<li><p>Visualisations in Tableau are interactive, whereas <strong>ggplot2</strong> in R is static. Extra effort is also required to customise the details of the visualisation in <strong>ggplot2</strong>. Interactivity and customisation can be included through <strong>ggplot</strong> and <strong>plotly</strong>. Once a chart is created, the same visualisation using different variables or level of details can be easily re-created using similar lines of code.</p></li>
-</ul>
-<p>As Tableau produces interactive charts and dashboards, we will use <strong>plotly</strong> to convert the <strong>ggplot2</strong> plots to produce interactive graphs for a more objective comparison.</p>
-</section>
+<h1>1. OVERVIEW</h1>
+<p>This study explores the <strong>Pyramid chart</strong> using <strong>ggplot2</strong> and supporting R packages.</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Challenges in wrangling the raw data :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The age group variable, “AG”, is a character data type.</p>
+<p>If it is used to plot the population pyramid, “10_to_14” will be parsed first instead of “5_to_9” after “0_to_4 is parsed.</p>
+<p>Because of that, the order in the chart will be incorrect.</p>
+<p><span style="color:#d69c3c">Resolve manually with these functions - <em>mutate( )</em> and <em>arrange( )</em>.</span></p>
+</div>
+</div>
+</div>
 </section>
 <section id="r-package-required" class="level1">
 <h1>2. R PACKAGE REQUIRED</h1>
@@ -327,16 +329,6 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <p><span style="color:#d69c3c">Remarks :</span></p>
 <p><span style="color:#d69c3c">sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.</span></p>
-<p><span style="color:#d69c3c">Alternate code chunk -</span></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'tidyverse'</span>, <span class="st">'readxl'</span>, <span class="st">'knitr'</span>, <span class="st">'plotly'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> packages){</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(p, <span class="at">character.only =</span> T)){</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(p)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p, <span class="at">character.only =</span> T)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -381,7 +373,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pop_sgp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagesexfa2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop_sgp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagesexfa2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 75696 Columns: 7
@@ -395,7 +387,7 @@ dbl (2): Pop, Time
 </div>
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(pop_sgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(pop_sgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 5
@@ -409,7 +401,7 @@ dbl (2): Pop, Time
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(pop_sgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(pop_sgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -628,14 +620,14 @@ dbl (2): Pop, Time
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0_to_4"</span>, <span class="st">"5_to_9"</span>, <span class="st">"10_to_14"</span>, <span class="st">"15_to_19"</span>, <span class="st">"20_to_24"</span>, <span class="st">"25_to_29"</span>, <span class="st">"30_to_34"</span>, <span class="st">"35_to_39"</span>, <span class="st">"40_to_44"</span>, <span class="st">"45_to_49"</span>, <span class="st">"50_to_54"</span>, <span class="st">"55_to_59"</span>, <span class="st">"60_to_64"</span>, <span class="st">"65_to_69"</span>, <span class="st">"70_to_74"</span>, <span class="st">"75_to_79"</span>, <span class="st">"80_to_84"</span>, <span class="st">"85_to_89"</span>, <span class="st">"90_and_over"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pop_agSx <span class="ot">&lt;-</span> pop_sgp <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">AG</span><span class="st">`</span>,<span class="st">`</span><span class="at">Sex</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Count</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AG =</span> <span class="fu">factor</span>(AG, <span class="at">levels =</span> order)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AG) <span class="sc">%&gt;%</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0_to_4"</span>, <span class="st">"5_to_9"</span>, <span class="st">"10_to_14"</span>, <span class="st">"15_to_19"</span>, <span class="st">"20_to_24"</span>, <span class="st">"25_to_29"</span>, <span class="st">"30_to_34"</span>, <span class="st">"35_to_39"</span>, <span class="st">"40_to_44"</span>, <span class="st">"45_to_49"</span>, <span class="st">"50_to_54"</span>, <span class="st">"55_to_59"</span>, <span class="st">"60_to_64"</span>, <span class="st">"65_to_69"</span>, <span class="st">"70_to_74"</span>, <span class="st">"75_to_79"</span>, <span class="st">"80_to_84"</span>, <span class="st">"85_to_89"</span>, <span class="st">"90_and_over"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pop_agSx <span class="ot">&lt;-</span> pop_sgp <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">AG</span><span class="st">`</span>,<span class="st">`</span><span class="at">Sex</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Count</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AG =</span> <span class="fu">factor</span>(AG, <span class="at">levels =</span> order)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AG) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'AG'. You can override using the `.groups`
@@ -643,7 +635,7 @@ argument.</code></pre>
 </div>
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pop_agSx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pop_agSx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
@@ -692,34 +684,33 @@ argument.</code></pre>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pyramid_agSx <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pop_agSx, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">yes =</span> <span class="sc">-</span>Count,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">no =</span> Count),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> AG,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> Sex)) <span class="sc">+</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">150000</span>, <span class="dv">150000</span>, <span class="dv">50000</span>), </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">as.character</span>(</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">50</span>), </span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">50</span>))),</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"k"</span>)) <span class="sc">+</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Population"</span>, </span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Age"</span>, </span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">'Singapore Age-Sex Population Pyramid 2022'</span>) <span class="sc">+</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, </span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"lightpink"</span>)) </span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>pyramid_agSx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pyramid_agSx <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pop_agSx, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">yes =</span> <span class="sc">-</span>Count,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">no =</span> Count),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> AG,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> Sex)) <span class="sc">+</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">150000</span>, <span class="dv">150000</span>, <span class="dv">50000</span>), </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">as.character</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">50</span>), </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">50</span>))),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"k"</span>)) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Population"</span>, </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Age"</span>, </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">'Singapore Age-Sex Population Pyramid 2022'</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"lightpink"</span>)) </span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>pyramid_agSx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="test2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="test2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><span style="color:#d69c3c">Remark :</span></p>
 </div>
 </div>
 </div>
@@ -735,27 +726,40 @@ argument.</code></pre>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(pyramid_agSx, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">session =</span> <span class="st">"knitr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(pyramid_agSx, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">session =</span> <span class="st">"knitr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8dacdca3bede10d3263c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-8dacdca3bede10d3263c">{"x":{"data":[{"orientation":"v","width":[87370,98430,99450,101340,113630,140510,164210,153790,157520,157150,150570,150870,144920,126220,98720,57850,44020,23860,16010],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55,15.55,16.55,17.55,18.55],"x":[43685,49215,49725,50670,56815,70255,82105,76895,78760,78575,75285,75435,72460,63110,49360,28925,22010,11930,8005],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["ifelse(Sex == \"Males\", yes = -Count, no = Count):   87370<br />AG: 0_to_4<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   98430<br />AG: 5_to_9<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   99450<br />AG: 10_to_14<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  101340<br />AG: 15_to_19<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  113630<br />AG: 20_to_24<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  140510<br />AG: 25_to_29<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  164210<br />AG: 30_to_34<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  153790<br />AG: 35_to_39<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  157520<br />AG: 40_to_44<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  157150<br />AG: 45_to_49<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  150570<br />AG: 50_to_54<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  150870<br />AG: 55_to_59<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  144920<br />AG: 60_to_64<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  126220<br />AG: 65_to_69<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   98720<br />AG: 70_to_74<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   57850<br />AG: 75_to_79<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   44020<br />AG: 80_to_84<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   23860<br />AG: 85_to_89<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   16010<br />AG: 90_and_over<br />Sex: Females"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,182,193,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Females","legendgroup":"Females","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[91170,103530,103350,105580,119610,139910,153450,137670,142590,147600,143020,149390,143660,121800,90260,48360,31180,14110,6950],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55,15.55,16.55,17.55,18.55],"x":[-45585,-51765,-51675,-52790,-59805,-69955,-76725,-68835,-71295,-73800,-71510,-74695,-71830,-60900,-45130,-24180,-15590,-7055,-3475],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["ifelse(Sex == \"Males\", yes = -Count, no = Count):  -91170<br />AG: 0_to_4<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -103530<br />AG: 5_to_9<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -103350<br />AG: 10_to_14<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -105580<br />AG: 15_to_19<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -119610<br />AG: 20_to_24<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -139910<br />AG: 25_to_29<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -153450<br />AG: 30_to_34<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -137670<br />AG: 35_to_39<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -142590<br />AG: 40_to_44<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -147600<br />AG: 45_to_49<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -143020<br />AG: 50_to_54<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -149390<br />AG: 55_to_59<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -143660<br />AG: 60_to_64<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -121800<br />AG: 65_to_69<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -90260<br />AG: 70_to_74<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -48360<br />AG: 75_to_79<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -31180<br />AG: 80_to_84<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -14110<br />AG: 85_to_89<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):   -6950<br />AG: 90_and_over<br />Sex: Males"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Males","legendgroup":"Males","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":89.8630136986302},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Singapore Age-Sex Population Pyramid 2022","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-169333,180093],"tickmode":"array","ticktext":["150k","100k","50k","0k","50k","100k","150k"],"tickvals":[-150000,-100000,-50000,0,50000,100000,150000],"categoryorder":"array","categoryarray":["150k","100k","50k","0k","50k","100k","150k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Population","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,19.6],"tickmode":"array","ticktext":["0_to_4","5_to_9","10_to_14","15_to_19","20_to_24","25_to_29","30_to_34","35_to_39","40_to_44","45_to_49","50_to_54","55_to_59","60_to_64","65_to_69","70_to_74","75_to_79","80_to_84","85_to_89","90_and_over"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"categoryorder":"array","categoryarray":["0_to_4","5_to_9","10_to_14","15_to_19","20_to_24","25_to_29","30_to_34","35_to_39","40_to_44","45_to_49","50_to_54","55_to_59","60_to_64","65_to_69","70_to_74","75_to_79","80_to_84","85_to_89","90_and_over"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Age","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"Sex","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"97ac71ed5932":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"97ac71ed5932","visdat":{"97ac71ed5932":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b1bd9ce332ce99811807" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b1bd9ce332ce99811807">{"x":{"data":[{"orientation":"v","width":[87370,98430,99450,101340,113630,140510,164210,153790,157520,157150,150570,150870,144920,126220,98720,57850,44020,23860,16010],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55,15.55,16.55,17.55,18.55],"x":[43685,49215,49725,50670,56815,70255,82105,76895,78760,78575,75285,75435,72460,63110,49360,28925,22010,11930,8005],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["ifelse(Sex == \"Males\", yes = -Count, no = Count):   87370<br />AG: 0_to_4<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   98430<br />AG: 5_to_9<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   99450<br />AG: 10_to_14<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  101340<br />AG: 15_to_19<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  113630<br />AG: 20_to_24<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  140510<br />AG: 25_to_29<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  164210<br />AG: 30_to_34<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  153790<br />AG: 35_to_39<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  157520<br />AG: 40_to_44<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  157150<br />AG: 45_to_49<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  150570<br />AG: 50_to_54<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  150870<br />AG: 55_to_59<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  144920<br />AG: 60_to_64<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):  126220<br />AG: 65_to_69<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   98720<br />AG: 70_to_74<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   57850<br />AG: 75_to_79<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   44020<br />AG: 80_to_84<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   23860<br />AG: 85_to_89<br />Sex: Females","ifelse(Sex == \"Males\", yes = -Count, no = Count):   16010<br />AG: 90_and_over<br />Sex: Females"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,182,193,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Females","legendgroup":"Females","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[91170,103530,103350,105580,119610,139910,153450,137670,142590,147600,143020,149390,143660,121800,90260,48360,31180,14110,6950],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55,15.55,16.55,17.55,18.55],"x":[-45585,-51765,-51675,-52790,-59805,-69955,-76725,-68835,-71295,-73800,-71510,-74695,-71830,-60900,-45130,-24180,-15590,-7055,-3475],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["ifelse(Sex == \"Males\", yes = -Count, no = Count):  -91170<br />AG: 0_to_4<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -103530<br />AG: 5_to_9<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -103350<br />AG: 10_to_14<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -105580<br />AG: 15_to_19<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -119610<br />AG: 20_to_24<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -139910<br />AG: 25_to_29<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -153450<br />AG: 30_to_34<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -137670<br />AG: 35_to_39<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -142590<br />AG: 40_to_44<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -147600<br />AG: 45_to_49<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -143020<br />AG: 50_to_54<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -149390<br />AG: 55_to_59<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -143660<br />AG: 60_to_64<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count): -121800<br />AG: 65_to_69<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -90260<br />AG: 70_to_74<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -48360<br />AG: 75_to_79<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -31180<br />AG: 80_to_84<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):  -14110<br />AG: 85_to_89<br />Sex: Males","ifelse(Sex == \"Males\", yes = -Count, no = Count):   -6950<br />AG: 90_and_over<br />Sex: Males"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Males","legendgroup":"Males","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":89.8630136986302},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Singapore Age-Sex Population Pyramid 2022","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-169333,180093],"tickmode":"array","ticktext":["150k","100k","50k","0k","50k","100k","150k"],"tickvals":[-150000,-100000,-50000,0,50000,100000,150000],"categoryorder":"array","categoryarray":["150k","100k","50k","0k","50k","100k","150k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Population","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,19.6],"tickmode":"array","ticktext":["0_to_4","5_to_9","10_to_14","15_to_19","20_to_24","25_to_29","30_to_34","35_to_39","40_to_44","45_to_49","50_to_54","55_to_59","60_to_64","65_to_69","70_to_74","75_to_79","80_to_84","85_to_89","90_and_over"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"categoryorder":"array","categoryarray":["0_to_4","5_to_9","10_to_14","15_to_19","20_to_24","25_to_29","30_to_34","35_to_39","40_to_44","45_to_49","50_to_54","55_to_59","60_to_64","65_to_69","70_to_74","75_to_79","80_to_84","85_to_89","90_and_over"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Age","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"Sex","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"7b889aa4bde":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"7b889aa4bde","visdat":{"7b889aa4bde":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><span style="color:#d69c3c">Remark :</span></p>
-<p><span style="color:#d69c3c">The pyramid above shows that lower percentage of younger generation, which making Singapore population structure a constrictive type. That means an ageing population.</span></p>
-<p><span style="color:#d69c3c">Hence, this chart provides various stakeholders in the country to plan ahead policies and measures to manage this ageing population challenge.</span></p>
+<p><span style="color:#d69c3c">The pyramid above shows the younger generation’s lower percentage, making Singapore’s population structure a constrictive type. That means an ageing population.</span></p>
+<p><span style="color:#d69c3c">By June 2022, 4.07 million residents population with a median age of 42.1,</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span style="color:#d69c3c">which is approximately a 19% increase from the median age of 35.3 back in the year 2002</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p><span style="color:#d69c3c">Also, another observation is from 25 age onward, the female population is higher than the male population. As of 2020, Singapore’s adjusted gender pay gap (GPG) is at 6%</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p><span style="color:#d69c3c">Measures and new schemes may be required to further narrow the gender pay gap and encourage the birth rate or may have long-lasting socio-economic repercussions.</span></p>
 </div>
 </div>
 </div>
-
-
 </section>
 </section>
 </section>
+<section id="references" class="level1">
+<h1>5. REFERENCES</h1>
 
-</main> <!-- /main -->
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><span style="color:#d69c3c">Singstat. (2022). Population Dashboard. https://www.singstat.gov.sg/find-data/search-by-theme/population/population-and-population-structure/visualising-data/population-dashboard</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><span style="color:#d69c3c">Singstat. (2002). Indicators On Population. https://tablebuilder.singstat.gov.sg/table/TS/M810001</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span style="color:#d69c3c">Ministry of Manpower. (2020). Report: Singapore’s Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx</span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

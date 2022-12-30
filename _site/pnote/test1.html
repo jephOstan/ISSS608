@@ -234,10 +234,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">OVERVIEW</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. OVERVIEW</a></li>
   <li><a href="#r-package-required" id="toc-r-package-required" class="nav-link" data-scroll-target="#r-package-required">2. R PACKAGE REQUIRED</a>
   <ul class="collapse">
   <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">2.1 Load R Packages</a></li>
+  <li><a href="#summary-of-r-functions" id="toc-summary-of-r-functions" class="nav-link" data-scroll-target="#summary-of-r-functions">2.2 Summary of R Functions</a></li>
   </ul></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">3. DATA</a>
   <ul class="collapse">
@@ -291,30 +292,45 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </header>
 
 <section id="overview" class="level1">
-<h1>OVERVIEW</h1>
-<p>In this take-home exercise, we will explore the pros and cons of creating data visualisation using <strong>ggplot2</strong> and Tableau. The data visualisation for this exercise focus on the Pareto chart showing the distribution of returns by a fictitious superstore.</p>
-<section id="challenges-faced" class="level4">
-<h4 class="anchored" data-anchor-id="challenges-faced"><strong>CHALLENGES FACED</strong></h4>
-<ul>
-<li><p>The raw data had to be extensively transformed before it could be used for visualisation. It is challenging to ensure that the fields have been adequately transformed, and frequently results in recycle work where one has to modify data wrangling after doing the visualisation and repeating again. For example, the Age Group column for the population pyramid has a character data type, which means that when plotting or generating dataframes including this column, 0_to_4 would be parsed first, followed by 10_to_14, instead of the expected 5_to_9. The order in the visualisation would be incorrect based on this order. The issue was resolved by manually changing the order using <em>mutate()</em> and then sorting via <em>arrange()</em>.</p></li>
-<li><p>The secondary axes in <strong>ggplot2</strong> is just based on a one-to-one transformation of the primary axes, hence the charts are still referenced to the primary axes. The challenge was resolved by transforming the secondary axis by a coefficient, such that the scale matches the primary axis.</p></li>
-<li><p>As <strong>ggplot2</strong> produces static charts, bringing in interactivity in the visualizations may be a challenge. This was resolved by using <em>plotly</em> package, which can be quickly transformed for the Age-Sex Population Pyramid. The pareto chart, which contained a secondary axis, required to be plotted using <strong>plotly</strong> tools.</p></li>
-<li><p>The default visualization created with <strong>ggplot2</strong> is not appealing and not professional looking. The default grey background was difficult to view for some charts and some of the default themes are not easy on the eyes. Hence, some charts may need to be extensively customized. For instance, the grid lines, axis labels, colour scheme of the pareto chart had to be customised.</p></li>
-</ul>
-</section>
-<section id="comparing-between-tableau-and-r" class="level4">
-<h4 class="anchored" data-anchor-id="comparing-between-tableau-and-r"><strong>COMPARING BETWEEN TABLEAU AND R</strong></h4>
-<ul>
-<li><p>In R, data preparation for different charts using different data sets can be done on one platform using the same environment. Tableau, on the other hand requires separate workbook for separate data sets. . On the other hand, web scraping cannot be performed on Tableau. Both pareto chart and population pyramid can be plotted in the same environment in R, whereas requires 2 workbooks in Tableau.</p></li>
-<li><p>Tableau is more user friendly and fool-proof in creating visualisations. However, R has a rich repository of packages that directly creates different chart types, whereas Tableau requires some manipulation of base chart types. For example, though not carried out in this exercise, a basic pareto plot can be created by <em>stat_pareto()</em> of <strong>ggQC</strong>, and a basic population pyramid can be plotted using <em>nPyramid()</em> of <strong>rCharts</strong>.</p></li>
-<li><p>Visualisations in Tableau are interactive, whereas <strong>ggplot2</strong> in R is static. Extra effort is also required to customise the details of the visualisation in <strong>ggplot2</strong>. Interactivity and customisation can be included through <strong>ggplot</strong> and <strong>plotly</strong>. Once a chart is created, the same visualisation using different variables or level of details can be easily re-created using similar lines of code.</p></li>
-</ul>
-<p>As Tableau produces interactive charts and dashboards, we will use <strong>plotly</strong> to convert the <strong>ggplot2</strong> plots to produce interactive graphs for a more objective comparison.</p>
-</section>
+<h1>1. OVERVIEW</h1>
+<p>This study explores the <strong>Pyramid chart</strong> using <strong>ggplot2</strong> and supporting R packages.</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Challenges to plot secondary-axis :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The functions in <strong>ggplot2</strong> transform the secondary axis one-to-one based on the primary axis. Hence, the scale of the secondary axis plot will not be accurate.</p>
+<p><span style="color:#d69c3c">Resolve by transforming the secondary axis with a coefficient to match the scale with the primary axis.</span></p>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Lack of interactive function :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <strong>ggplot2</strong> can only produce static charts.</p>
+<p><span style="color:#d69c3c">Resolve by using <strong>plotly</strong> functions to allow readers to hover over the chart to reveal details for each plotted point.</span></p>
+</div>
+</div>
+</div>
 </section>
 <section id="r-package-required" class="level1">
 <h1>2. R PACKAGE REQUIRED</h1>
-<p>The following are the packages required for this exercise :</p>
 <section id="load-r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="load-r-packages">2.1 Load R Packages</h2>
 <div class="callout-warning callout callout-style-simple no-icon">
@@ -343,6 +359,29 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(p, <span class="at">character.only =</span> T)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-r-functions" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-r-functions">2.2 Summary of R Functions</h2>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>R packages and functions used in this exercise :</p>
+<section id="base" class="level2">
+<h2 class="anchored" data-anchor-id="base"><strong>base :</strong></h2>
+<ul>
+<li><span style="color:#d69c3c"><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum">cumsum( )</a> -</span></li>
+</ul>
+<p><strong>ggplot2 :</strong></p>
+<ul>
+<li><span style="color:#d69c3c"><a href="https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous">scale_continuous( )</a> -</span></li>
+</ul>
+</section>
 </div>
 </div>
 </div>
@@ -1280,8 +1319,8 @@ of ggplot2 3.3.4.
 </details>
 <div class="cell-output-display">
 
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-38da7d247eaac4b3193c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-38da7d247eaac4b3193c">{"x":{"visdat":{"41184ad77b62":["function () ","plotlyVisDat"]},"cur_data":"41184ad77b62","attrs":{"41184ad77b62":{"x":{},"y":{},"name":"Returned","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"41184ad77b62.1":{"x":{},"y":{},"name":"Cum. %","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"lines","yaxis":"y2","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Pareto chart of returns by sub-category","xaxis":{"domain":[0,1],"automargin":true,"title":"Sub-Category","type":"category","categoryorder":"array","categoryarray":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Returned (Absolute Frequency)","showgrid":false},"yaxis2":{"overlaying":"y","side":"right","title":"Cumulative Percentage (%)","range":[0,100]},"legend":{"orientation":"h","yanchor":"bottom","y":0.9,"xanchor":"top","x":0.2},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[1938,1734,1151,1121,1022,965,926,802,603,423,405,292,291,263,243,157,84],"name":"Returned","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[15.6038647342995,29.5652173913043,38.8325281803543,47.8582930756844,56.0869565217391,63.8566827697262,71.3123993558776,77.7697262479871,82.6247987117552,86.0305958132045,89.2914653784219,91.6425120772947,93.9855072463768,96.1030595813205,98.0595813204509,99.3236714975845,100],"name":"Cum. %","type":"scatter","mode":"lines","yaxis":"y2","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-58a313de30e38b39ebc4" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-58a313de30e38b39ebc4">{"x":{"visdat":{"1b2028a665e":["function () ","plotlyVisDat"]},"cur_data":"1b2028a665e","attrs":{"1b2028a665e":{"x":{},"y":{},"name":"Returned","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"1b2028a665e.1":{"x":{},"y":{},"name":"Cum. %","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"lines","yaxis":"y2","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Pareto chart of returns by sub-category","xaxis":{"domain":[0,1],"automargin":true,"title":"Sub-Category","type":"category","categoryorder":"array","categoryarray":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Returned (Absolute Frequency)","showgrid":false},"yaxis2":{"overlaying":"y","side":"right","title":"Cumulative Percentage (%)","range":[0,100]},"legend":{"orientation":"h","yanchor":"bottom","y":0.9,"xanchor":"top","x":0.2},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[1938,1734,1151,1121,1022,965,926,802,603,423,405,292,291,263,243,157,84],"name":"Returned","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[15.6038647342995,29.5652173913043,38.8325281803543,47.8582930756844,56.0869565217391,63.8566827697262,71.3123993558776,77.7697262479871,82.6247987117552,86.0305958132045,89.2914653784219,91.6425120772947,93.9855072463768,96.1030595813205,98.0595813204509,99.3236714975845,100],"name":"Cum. %","type":"scatter","mode":"lines","yaxis":"y2","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><span style="color:#d69c3c">Remark :</span></p>

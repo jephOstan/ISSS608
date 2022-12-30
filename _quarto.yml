@@ -27,6 +27,8 @@ website:
             href: pnote/test1.qmd
           - text: Exploration 2 - Pyramid Chart
             href: pnote/test2.qmd
+          - text: Exploration 3 - Interactive & Animated Pyramid Chart
+            href: pnote/test3.qmd
     right:
       - href: index.qmd
         text: Home

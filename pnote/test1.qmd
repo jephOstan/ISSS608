@@ -13,33 +13,27 @@ format:
     css: styles.css
 ---
 
-# OVERVIEW
+# 1. OVERVIEW
 
-In this take-home exercise, we will explore the pros and cons of creating data visualisation using **ggplot2** and Tableau. The data visualisation for this exercise focus on the Pareto chart showing the distribution of returns by a fictitious superstore.
+This study explores the **Pyramid chart** using **ggplot2** and supporting R packages.
 
-#### **CHALLENGES FACED**
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Challenges to plot secondary-axis :**]{style="color:#3a9c88"}
 
--   The raw data had to be extensively transformed before it could be used for visualisation. It is challenging to ensure that the fields have been adequately transformed, and frequently results in recycle work where one has to modify data wrangling after doing the visualisation and repeating again. For example, the Age Group column for the population pyramid has a character data type, which means that when plotting or generating dataframes including this column, 0_to_4 would be parsed first, followed by 10_to_14, instead of the expected 5_to_9. The order in the visualisation would be incorrect based on this order. The issue was resolved by manually changing the order using *mutate()* and then sorting via *arrange()*.
+The functions in **ggplot2** transform the secondary axis one-to-one based on the primary axis. Hence, the scale of the secondary axis plot will not be accurate.
 
--   The secondary axes in **ggplot2** is just based on a one-to-one transformation of the primary axes, hence the charts are still referenced to the primary axes. The challenge was resolved by transforming the secondary axis by a coefficient, such that the scale matches the primary axis.
+[Resolve by transforming the secondary axis with a coefficient to match the scale with the primary axis.]{style="color:#d69c3c"}
+:::
 
--   As **ggplot2** produces static charts, bringing in interactivity in the visualizations may be a challenge. This was resolved by using *plotly* package, which can be quickly transformed for the Age-Sex Population Pyramid. The pareto chart, which contained a secondary axis, required to be plotted using **plotly** tools.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Lack of interactive function :**]{style="color:#3a9c88"}
 
--   The default visualization created with **ggplot2** is not appealing and not professional looking. The default grey background was difficult to view for some charts and some of the default themes are not easy on the eyes. Hence, some charts may need to be extensively customized. For instance, the grid lines, axis labels, colour scheme of the pareto chart had to be customised.
+The **ggplot2** can only produce static charts.
 
-#### **COMPARING BETWEEN TABLEAU AND R**
-
--   In R, data preparation for different charts using different data sets can be done on one platform using the same environment. Tableau, on the other hand requires separate workbook for separate data sets. . On the other hand, web scraping cannot be performed on Tableau. Both pareto chart and population pyramid can be plotted in the same environment in R, whereas requires 2 workbooks in Tableau.
-
--   Tableau is more user friendly and fool-proof in creating visualisations. However, R has a rich repository of packages that directly creates different chart types, whereas Tableau requires some manipulation of base chart types. For example, though not carried out in this exercise, a basic pareto plot can be created by *stat_pareto()* of **ggQC**, and a basic population pyramid can be plotted using *nPyramid()* of **rCharts**.
-
--   Visualisations in Tableau are interactive, whereas **ggplot2** in R is static. Extra effort is also required to customise the details of the visualisation in **ggplot2**. Interactivity and customisation can be included through **ggplot** and **plotly**. Once a chart is created, the same visualisation using different variables or level of details can be easily re-created using similar lines of code.
-
-As Tableau produces interactive charts and dashboards, we will use **plotly** to convert the **ggplot2** plots to produce interactive graphs for a more objective comparison.
+[Resolve by using **plotly** functions to allow readers to hover over the chart to reveal details for each plotted point.]{style="color:#d69c3c"}
+:::
 
 # 2. R PACKAGE REQUIRED
-
-The following are the packages required for this exercise :
 
 ## 2.1 Load R Packages
 
@@ -69,6 +63,20 @@ for(p in packages){
   library(p, character.only = T)
 }
 ```
+:::
+
+## 2.2 Summary of R Functions
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+R packages and functions used in this exercise :
+
+## **base :**
+
+-   [[cumsum( )](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum) - ]{style="color:#d69c3c"}
+
+**ggplot2 :**
+
+-   [[scale_continuous( )](https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous) - ]{style="color:#d69c3c"}
 :::
 
 # 3. DATA

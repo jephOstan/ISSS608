@@ -1,7 +1,7 @@
 ---
-title: "Test & Explore 2"
+title: "Exploration 3 :: Interactive & Animated Pyramid Chart"
 editor: visual
-date:  28 Dec 2022
+date:  30 Dec 2022
 code-copy: true
 website: 
     google-analytics: "G-PKMQ2W4ZRC"
@@ -15,7 +15,15 @@ format:
 
 # 1. OVERVIEW
 
-\--
+This study explores the interactivity and animation methods in designing an age-gender **Pyramid chart** using **ggplot2** and supporting R packages between year 2000 and 2020 at planning area level.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
+
+The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
+
+[Transform with *filter( )* function, and add widgets via *plotly::hovermenu( )*, *plotly::updatemenus( )*, *plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+:::
 
 # 2. R PACKAGE REQUIRED
 
@@ -29,231 +37,402 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, readxl, knitr, plotly, sf, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork)
+pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling, ggiraph, gganimate, gifski)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
+
+[sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
+:::
+
+## 2.2 Summary of R Functions
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+R packages and functions used in this exercise :
+
+**readr :**
+
+-   [read_csv( ) -]{style="color:#d69c3c"}
+
+-   [[problems( )](https://www.rdocumentation.org/packages/readr/versions/1.3.1/topics/problems) -]{style="color:#d69c3c"}
+
+**base :**
+
+-   [[cumsum( )](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum) -]{style="color:#d69c3c"}
+
+**ggplot2 :**
+
+-   [[scale_continuous( )](https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous) -]{style="color:#d69c3c"}
+
+dplyr :
+
+-   [[select( )](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) -]{style="color:#d69c3c"}
+
+-   [[group_by( )](https://www.rdocumentation.org/packages/dplyr/versions/1.0.10/topics/group_by) -]{style="color:#d69c3c"}
+
+-   [summarise( ) -]{style="color:#d69c3c"}
 :::
 
 # 3. DATA
 
 ## 3.1 Acquire Data Source
 
-Dataset will be the water points from Nigeria
+-   [Singapore Demographic & Geographic Distribution](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data)
 
-## 3.2 Read RDS file
+    1.  Download "[Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2000-2010](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2000to2010.ashx)" data set in csv format from Singstat.gov.sg.
+    2.  Download "[Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2011-2020](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2011to2020.ashx)" data set in csv format from Singstat.gov.sg.
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-```{r}
-#| code-fold: false
-wp_ngaTrim <- read_rds("data/geodata/wp_ngaTrim.rds")
-```
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Variable Definition :**]{style="color:#3a9c88"}
+
+"PA" = Planning Area
+
+"SZ" = Subzone
+
+"AG" = Age Group
+
+"Sex" = Gender
+
+"TOD" = Type of Dwelling
+
+"Pop" = Resident Count
+
+"Time" = Time / Period
 :::
 
-### 3.7.2 Visualise Distribution of Cluster Variable
+## 3.2 Data Preparation
+
+### 3.2.1 Import Data Sets
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+This step involve two(2) functions, i.e. import and inspect any parsing error when importing the data.
+
+#### 3.2.1.1 import CSV file
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
 
 ```{r}
-cluster_vars <- wp_ngaTrim %>%
-  st_set_geometry(NULL) %>%
-  select("shapeName",
-         "total_wp",
-         "pct_functional", 
-         "pct_nonFunctional",
-         "pct_handPump",
-         "pct_mechPump",
-         "pct_tapStand",
-         "pct_uc300",
-         "pct_uc1000",
-         "pct_ucN1000",
-         "pct_uc250",
-         "pct_urban1",
-         "pct_urban0",
-         "pct_cs04",
-         "pct_cs10",
-         "pct_stat1",
-         "pct_stat0",
-         "pct_ps09",
-         "pct_ps19")
+pop_0010 <- read_csv("data/respopagesextod2000to2010.csv")
 
-row.names(cluster_vars) <- cluster_vars$shapeName
-cluster_vars <- cluster_vars %>%
-  select(-shapeName)
+problems(pop_0010)
 ```
 
 ```{r}
-ggarrange(
-  (ggplot(data=cluster_vars, aes(x=`pct_functional`)) + 
-     geom_boxplot(color="black", fill="#19ff3fFF")), 
-  ((ggplot(data=cluster_vars, aes(x=`pct_nonFunctional`)) +
-      geom_boxplot(color="black", fill="#ff1919FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_handPump`)) +
-      geom_boxplot(color="black", fill="#FFA319FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_mechPump`)) +
-      geom_boxplot(color="black", fill="#ff8419FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_tapStand`)) +
-      geom_boxplot(color="black", fill="#ff5619FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_urban0`)) +
-      geom_boxplot(color="black", fill="#19beffFF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_uc1000`)) +
-      geom_boxplot(color="black", fill="#C16622FF"))),
-  ((ggplot(data = cluster_vars, aes(x = `pct_ucN1000`)) +
-      geom_boxplot(color="black", fill="#543005FF"))),
-   ncol = 2,
-  nrow = 4)
+pop_1020 <- read_csv("data/respopagesextod2011to2020.csv")
+
+problems(pop_1020)
 ```
+
+[Remarks :]{style="color:#d69c3c"}
+:::
+
+## 3.3 Data Wrangling
+
+### 3.3.1 Combine Dataframes to Create Frequency Count Dataframe
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+rbind( ) data frames will create file size above 100 MB. Hence, this step is combined together with the code chunk to compute frequency count for "AG", "Sex", "Time" and "PA".
+
+#### 3.3.1.1 combine *pop_0010* & *pop_1020*
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***group_by( )*** - dplyr -]{style="color:#d46e15"} to group Singapore population by age, gender, time and planning area.
+
+[***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of residents for each group.
+
+[***as.integer( )*** - base -]{style="color:#d46e15"} to create "integer" object.
+:::
 
 ```{r}
-#| code-fold: false
-hist_box_plot <- function(varname, title){ 
-  
-  func1 <- ggplot(data = cluster_vars, 
-       aes(x = varname)) + 
-  geom_histogram(bins = 30,
-                 color = "black", 
-                 fill = "steelblue") +
-  theme_classic() + 
-  xlab(title)
-  
-  func2 <- ggplot(data = cluster_vars, 
-         aes(x = varname)) + 
-    geom_boxplot(fill = "steelblue", 
-                 color = "black") + 
-    theme_classic() +
-    xlab("") +
-    theme(axis.text.y = element_blank(),
-          axis.ticks.y = element_blank())
-  
-plot_grid(func1,
-          func2,
-          align = "v",
-          ncol = 1)
-}
+freq_pop0020 <- rbind(pop_0010, pop_1020) %>%
+  group_by(`AG`, `Sex`, `Time`, `PA`) %>%
+  summarise('Count'= sum(`Pop`)) %>%
+  ungroup()
+
+freq_pop0020$Time = as.integer(freq_pop0020$Time)
 ```
+
+#### 3.3.1.2 inspect combined dataframe
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***kable( )*** - knitr -]{style="color:#d46e15"} to create tables in Markdown.
+:::
 
 ```{r}
-hist_box_plot(cluster_vars$pct_nonFunctional, "Non-Functional Water Point")
+kable(head(freq_pop0020))
 ```
 
-```{r}
-#| code-fold: false
-hist_plot <- function(varname, title){
-  func3 <- ggplot(data = cluster_vars, 
-       aes(x = varname)) + 
-  geom_histogram(bins = 30,
-                 color = "black", 
-                 fill = "steelblue") +
-  theme_classic() + 
-  xlab(title)
-
-  func3
-}
-```
-
-```{r}
-pct_functional <- hist_plot(cluster_vars$pct_functional, "pct_functional")
-pct_nonfunctional <- hist_plot(cluster_vars$pct_nonFunctional, "pct_nonFunctional")
-pct_handpump <- hist_plot(cluster_vars$pct_handPump, "pct_handPump")
-pct_mechpump <- hist_plot(cluster_vars$pct_mechPump, "pct_mechPump")
-pct_uc1000 <- hist_plot(cluster_vars$pct_uc1000, "pct_uc1000")
-pct_ucN1000 <- hist_plot(cluster_vars$pct_ucN1000, "pct_ucN1000")
-pct_urban0 <- hist_plot(cluster_vars$pct_urban0, "pct_urban0")
-pct_stat1 <- hist_plot(cluster_vars$pct_stat1, "pct_stat1")
-pct_cs10 <-hist_plot(cluster_vars$pct_cs10, "pct_cs10")
-pct_ps19 <-hist_plot(cluster_vars$pct_ps19, "pct_ps19")
-```
-
-```{r}
-pct_functional + pct_nonfunctional +
-  pct_handpump + pct_mechpump +
-  pct_uc1000 + pct_ucN1000 +
-  pct_urban0 + pct_stat1 +
-  pct_cs10 + pct_ps19 +
-  plot_layout(ncol = 2)
-```
-
-```{r}
-#| code-fold: false
-choropleth_plot <- function(varname, style, title) {
-  tm_shape(wp_ngaTrim) +
-    tm_fill(varname, 
-          n = 5,
-          style = style) +
-    tm_borders(alpha = 0.5) +
-    tm_layout(main.title = title,
-              main.title.size = 0.8,
-              main.title.position = "center",
-              legend.height = 3, 
-              legend.width = 3,
-              legend.title.size = 0.8,
-              legend.text.size = 0.5,
-              frame = TRUE)+ 
-    tm_compass(position = c('left','bottom'))
-}
-```
+#### 3.3.1.3 check data consistency
 
 ```{r}
 #| eval: false
-tmap_arrange(choropleth_plot("wp_functional", "quantile", 
-                "Functional Water Point"),
-             choropleth_plot("wp_nonFunctional", "quantile", 
-                "Non-functional Water Point"), 
-             choropleth_plot("pct_functional", "quantile", 
-                "Pct of functional water point"),
-             choropleth_plot("pct_nonFunctional", "quantile", 
-                "Pct of Non-functional water point"),
-             choropleth_plot("pct_handPump", "quantile", 
-                "Pct of Hand Pump Deployed"),
-             choropleth_plot("pct_mechPump", "quantile", 
-                "Pct of Mechanical Pump Deployed"),
-             choropleth_plot("pct_urban0", "quantile", 
-                "Pct of Water Point in Non-Urban Community"),
-             choropleth_plot("pct_cs10", "quantile", 
-                "Pct of Water Points with Crucialness > 0.6"),
-             choropleth_plot("pct_ps19", "quantile", 
-                "Pct of Water Points with Reaching Usage Limit"),
-             ncol = 2,
-             heights = 5,
-             nrow = 5)
-```
-
-## 5.2 Standardise Data
-
-As shown in 3.7.3.3, not all variables are not distributed normally. Hence, standardisation will be required before the clustering analysis.
-
-::: {.callout-warning appearance="simple" icon="false"}
-### 5.2.1 Standardise :: Min-Max Method
-
-```{r}
-wp_stdMM <- normalize(cluster_vars)
-describe(wp_stdMM)
-```
-
-### 5.2.2 Standardise :: Z-score Method
-
-```{r}
-wp_stdZ <- scale(cluster_vars)
-describe(wp_stdZ)
+freq(freq_pop0020$Time)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
 
-[Comparing the reports above, the Min-Max method is the only method that can standardise the value to between 0 and 1.]{style="color:#d69c3c"}
+[As shown in the plot above, the data volume is not the same. There are four (4) different sets of data volume.]{style="color:#d69c3c"}
+:::
 
-### 5.2.3 Compare Distribution For Standardisation Method
+### 3.3.2 Remove Planning Areas without Residents
 
-Visualise to determine which standardisation method provide the better output.
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***select( )*** - dplyr -]{style="color:#d46e15"} to select variables by "PA" and "Count".
+
+[***group_by( )*** - dplyr -]{style="color:#d46e15"} to group "PA" variable.
+
+[***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the total number of residents from 2000 to 2020.
+
+[***filter( )*** - dplyr -]{style="color:#d46e15"} to identify the planning areas with no residents..
+:::
+
+The column of planning areas with no residents was then converted to a list using *as.vector()*, and these planning areas were subsequently removed from the data set.
 
 ```{r}
-ggarrange(
-  (ggplot(data = cluster_vars, aes(x = `pct_stat1`)) +
-    geom_density(color = "black", fill = "#19ff3fFF") + 
-    ggtitle("Before Standardisation")),
-  (ggplot(data = (as.data.frame(wp_stdMM)), aes(x = `pct_stat1`)) +
-      geom_density(color = "black", fill = "#19ff3fFF") +
-      ggtitle("Min-Max Stdsn.")),
-  (ggplot(data = (as.data.frame(wp_stdZ)), aes(x = `pct_stat1`)) +
-     geom_density(color = "black", fill="#19ff3fFF") +
-     ggtitle("Z-score Stdsn.")),
-   ncol = 3)
+no_pop <- freq_pop0020 %>%
+  select(`PA`, `Count`) %>%
+  group_by(PA) %>%
+  summarise(Total = sum(Count)) %>%
+  filter(Total == 0) %>%
+  select(PA) %>%
+  ungroup
+
+no_pop_list <- as.vector(no_pop$PA)
+
+new_pop0020 <- freq_pop0020 %>%
+  filter(!PA %in% no_pop_list)
+
+kable(head(new_pop0020))
 ```
+
+#### 
 :::
+
+## **3.3.4 Sort Data**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***arrange( )*** - dpackage -]{style="color:#d46e15"} to select variables by "PA" and "Count".
+
+[***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative value. This will allow the Male data to be plotted on the left side of the pyramid.
+:::
+
+By default, the values of the data frame is sorted according to the values of the first column. In this case, the values are sorted alphanumerically by the age group.
+
+Hence, we will sort the data based on the categorical age-group assigned in the original dataset. This task is first performed by changing the order using *mutate()* and then sorting via *arrange()* of dpackage.
+
+```{r}
+order <- c("0_to_4", "5_to_9", "10_to_14", "15_to_19", "20_to_24", "25_to_29", "30_to_34", "35_to_39", "40_to_44", "45_to_49", "50_to_54", "55_to_59", "60_to_64", "65_to_69", "70_to_74", "75_to_79", "80_to_84", "85_to_89", "90_and_over")
+
+sorted_pop0020 <- new_pop0020 %>%
+  mutate(AG =  factor(AG, 
+                      levels = order)) %>%
+  arrange(AG)
+
+sorted_pop0020$nCount = ifelse(sorted_pop0020$Sex == "Males", 
+                                 yes = -sorted_pop0020$Count, 
+                                 no = sorted_pop0020$Count)
+
+kable(head(sorted_pop0020))
+```
+
+Remarks :
+
+```{r}
+kable(tail(sorted_pop0020))
+```
+
+Remarks :
+:::
+
+# 4 EXPLORATORY DATA ANALYSIS (EDA)
+
+## 4.1 Plot Animated Pyramid Chart
+
+### **4.1.1 Plot By Year**
+
+The first visualisation plotted is an animation of Singapore's Total Population from 2000 to 2020.
+
+For this exercise, the static ggplot figure that was completed in Take-Home Exercise 1 was used. Using **gganimate** library, the static plot was converted into an animated pyramid via *transition_time()* and *ease_aes()* function. A moving subtitle was also included to relay the correct year information to the viewer.
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***geom_col( )*** - ggplot2 -]{style="color:#d46e15"} to create the bar chart with the bar length represent the actual population stats.
+
+[***scale_x\_continuous( )*** - ggplot2 -]{style="color:#d46e15"} to modify the labels on the x-axis to provide better readability.
+
+[***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative, so that their data will be plotted on the left side of the pyramid.
+:::
+
+```{r}
+anime_pyramid <- ggplot(sorted_pop0020,
+                        aes(x = nCount,
+                            y = AG, 
+                            fill = Sex)) +
+  geom_col() +
+  scale_x_continuous(breaks = seq(-150000, 
+                                  150000, 
+                                  50000), 
+                     labels = paste0(
+                       as.character(c(seq(150, 0, -50),
+                                      seq(50, 150, 50))),
+                       "k")) +
+  labs (x = "Population", 
+        y = "Age Group", 
+        title ='Singapore Age-Sex Population Pyramid') +
+  theme_bw() +
+  theme(axis.ticks.y = element_blank()) +
+  scale_fill_manual(values = c("Males" = "lightblue", 
+                               "Females" = "lightpink"))
+
+anime_pyramid + 
+  transition_time(Time) +
+  ease_aes('linear') +
+  labs (subtitle = 'Year: {frame_time}')
+```
+
+[Remark :]{style="color:#d69c3c"}
+:::
+
+### **4.1.2 Plot by Year and Planning Location**
+
+Next, an interactive visualisation with a slider bar, dropdown menu and tooltip was created. This will enable the user to view the population pyramids for selected planning area across the years. As population numbers may differ drastically for different planning areas, hovering on the plot generates a tooltip which conveniently informs the user what is the age group, gender and population of each bar.
+
+#### **4.1.2.1 define time and planning area**
+
+The time and planning area for each unique instance were defined using a for loop. The annotation variables for the drop down menu was also defined.
+
+```{r}
+year_list <- list()
+for (i in 1:length(
+  unique(
+    sorted_pop0020$Time))) 
+  {year_list[[i]] <- list(method = "restyle",
+                          args = list("transforms[0].value",
+                                      unique(sorted_pop0020$Time)[i]),
+                          label = unique(sorted_pop0020$Time)[i])
+  }
+
+PA_list <- list()
+for (j in 1:length(unique(sorted_pop0020$PA))) { 
+  PA_list[[j]] <- list(method = "restyle",
+                        args = list("transforms[1].value", 
+                                    unique(sorted_pop0020$PA)[j]),
+                        label = unique(sorted_pop0020$PA)[j])
+  }
+
+annot <- list(
+  list(
+    text = "Select Planning Area:",
+                   x = 1.61,
+                   y = 0.78,
+                   xref = 'paper',
+                   yref = 'paper',
+                   showarrow = FALSE))
+```
+
+#### **4.1.2.2 Interactive Pyramid Chart**
+
+#### \*\* INTERACTIVE GRAPH WITH SLIDER AND DROPDOWN MENU\*\*
+
+An interactive graph was then generated using *plotly()*. A tooltip was added using the *hovertemplate* function to include age group, gender and population count.
+
+The *transforms - filter* function was used to filter the data for each plot by 2 variables - Year and Planning Area. Next, *layout - Updatemenus* and *layout - Sliders* was used to include the interactive widgets for the plot - a drop down menu for the planning areas and a slider bar for the years respectively.
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+```{r}
+plot_ly(sorted_pop0020, 
+        x = ~nCount, 
+        y = ~AG,
+        type = 'bar', 
+        orientation = 'h',
+        hovertemplate = ~paste("<br>Age Group:", AG,
+                               "<br>Gender:", Sex,
+                               "<br>Population:", Count),
+        color = ~Sex,
+        colors = c("lightpink", "lightblue"),
+        transforms = list(
+          list(type = 'filter',
+               target = ~Time,
+               operation = '=',
+               value = unique(sorted_pop0020$Time)[1]),
+          list(type = 'filter',
+               target = ~PA,
+               operation = '=',
+               value = unique(sorted_pop0020$PA)[1]))) %>%
+  layout(autosize = F, 
+         bargap = 0.1, 
+         barmode = 'overlay',
+         xaxis = list(
+           title = "Population",
+           tickmode = 'array', 
+           tickvals = c(-10000, -8000, -6000, -4000, -2000, 
+                        0, 2000, 4000, 6000, 8000, 10000),
+           ticktext = c('10k', '8k', '6k', '4k', '2k', '0',
+                        '2k', '4k', '6k', '8k', '10k')),
+         yaxis = list(
+           title = "Age Group"),
+         title = 'Singapore Age-Sex Population Pyramid',
+         updatemenus = list(
+           list(type = 'dropdown',
+                x = 1.6, 
+                y = 0.7,
+                buttons = PA_list)),
+         sliders = list(
+           list(
+             active = 1,
+             currentvalue = list(prefix = "Year: "),
+             pad = list(t = 60),
+             steps = year_list)),
+         annotations = annot)
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[The pyramid above shows that lower percentage of younger generation, which making Singapore population structure a constrictive type. That means an ageing population.]{style="color:#d69c3c"}
+
+[Hence, this chart provides various stakeholders in the country to plan ahead policies and measures to manage this ageing population challenge.]{style="color:#d69c3c"}
+:::
+
+# 5. CONCLUSION
+
+The insights from the visualisations are somewhat similar to that of Take-Home Exercise. Singapore and its planning areas tend to has a constrictive population because there is a lower percentage of younger people, indicates declining birth rates in Singapore, since each succeeding age group is getting smaller and smaller.
+
+An interesting insight from interactive pyramid would be the difference between Mature and Non-mature estates. As with mature estates like Toa Payoh, within younger people, the younger the age group, the smaller the population. However, in non-mature estates like Punggol, within younger people, the younger the age group, the bigger the population. This may be an indication young adults setting up their families in non-mature estates, where most BTOs are built, hence bringing about more babies and children to the estate.
+
+## **5.1 Tableau vs. R**
+
+-   Animations and interactivity in Tableau can easily be generated by a few clicks, whereas it requires more code and hence more tedious in R. However, this also means that visualisation in R is reproducible and repeatable as the steps can be traced back.
+
+-   R allows for more customisation of the visualisations as compared to Tableau. For example, the names widgets can be easily modified to detailed levels, whereas Tableau only takes in the data from the Table.
+
+-   The animation in R may require more customisation to achieve less jerky animation as compared to Tableau.
+
+# 6. REFERENCES
+
+-   [Functions](https://r4ds.had.co.nz/functions.html)
+
+-   [Custom Buttons](https://plotly.com/r/custom-buttons/)
+
+-   [Sliders](https://plotly.com/r/sliders/)
+
+-   [Layout - Updatemenus](https://plotly.com/r/reference/#layout-updatemenus)
+
+-   [Change Plot Size in Rmarkdown](https://stackoverflow.com/questions/52649044/change-output-width-of-plotly-chart-size-in-r-markdown-pdf-output)
