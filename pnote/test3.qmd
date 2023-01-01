@@ -1,5 +1,5 @@
 ---
-title: "Exploration 3 :: Interactive & Animated Pyramid Chart"
+title: "Exploration 3 - Interactive & Animated Pyramid Chart"
 editor: visual
 date:  30 Dec 2022
 code-copy: true
@@ -15,14 +15,20 @@ format:
 
 # 1. OVERVIEW
 
-This study explores the interactivity and animation methods in designing an age-gender **Pyramid chart** using **ggplot2** and supporting R packages between year 2000 and 2020 at planning area level.
+This study explores the interactivity and animation methods in designing an age-gender **Pyramid chart** using **ggplot2** and supporting R packages between 2000 and 2020 at the planning area level.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
 
 The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
 
-[Transform with *filter( )* function, and add widgets via *plotly::hovermenu( )*, *plotly::updatemenus( )*, *plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
+
+-   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
 :::
 
 # 2. R PACKAGE REQUIRED
@@ -34,13 +40,15 @@ The following are the packages required for this exercise :
 ::: {.callout-warning appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
-[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
+[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.
 
 ```{r}
 pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling, ggiraph, gganimate, gifski)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
+
+[Packages to consider -]{style="color:#d69c3c"}
 
 [sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
 :::
@@ -71,6 +79,8 @@ dplyr :
 -   [[group_by( )](https://www.rdocumentation.org/packages/dplyr/versions/1.0.10/topics/group_by) -]{style="color:#d69c3c"}
 
 -   [summarise( ) -]{style="color:#d69c3c"}
+
+-   [[glimpse( )](https://www.rdocumentation.org/packages/dplyr/versions/0.3/topics/glimpse) -]{style="color:#d69c3c"}
 :::
 
 # 3. DATA
@@ -80,6 +90,7 @@ dplyr :
 -   [Singapore Demographic & Geographic Distribution](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data)
 
     1.  Download "[Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2000-2010](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2000to2010.ashx)" data set in csv format from Singstat.gov.sg.
+
     2.  Download "[Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2011-2020](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2011to2020.ashx)" data set in csv format from Singstat.gov.sg.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
@@ -104,10 +115,18 @@ dplyr :
 
 ### 3.2.1 Import Data Sets
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-This step involve two(2) functions, i.e. import and inspect any parsing error when importing the data.
+::: {.callout-warning appearance="simple" icon="false"}
+This section involves two(2) functions, i.e.
 
-#### 3.2.1.1 import CSV file
+1.  import CSV file as a table data frame that retains spec attribute.
+
+2.  inspect parsing error, if any, when importing the data.
+
+::: callout-note
+## import these two(2) data sets separately to identify potential parsing errors.
+:::
+
+#### 3.2.1.1 import CSV file :: demography between 2000 and 2010
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -123,23 +142,96 @@ pop_0010 <- read_csv("data/respopagesextod2000to2010.csv")
 problems(pop_0010)
 ```
 
+#### 3.2.1.2 import CSV file :: demography between 2010 and 2020
+
 ```{r}
 pop_1020 <- read_csv("data/respopagesextod2011to2020.csv")
 
 problems(pop_1020)
 ```
 
+#### 3.2.1.3 inspect imported data
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***glimpse( )*** - dplyr -]{style="color:#d46e15"} to get a glimpse of the imported data.
+:::
+
+#### \-- pop_0010
+
+```{r}
+glimpse(pop_0010, 0)
+
+```
+
+#### \-- pop_1020
+
+```{r}
+glimpse(pop_1020, 0)
+```
+
 [Remarks :]{style="color:#d69c3c"}
+
+-   [Both data sets do not have the same number of rows, i.e. pop_0010(1,040,592 rows) and pop_1020 (984,656 rows).]{style="color:#d69c3c"}
+
+-   [Data types for "Pop" and "Time" are in <dbl> format.]{style="color:#d69c3c"}
 :::
 
 ## 3.3 Data Wrangling
 
-### 3.3.1 Combine Dataframes to Create Frequency Count Dataframe
+### 3.3.1 Combine Data Frames
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-rbind( ) data frames will create file size above 100 MB. Hence, this step is combined together with the code chunk to compute frequency count for "AG", "Sex", "Time" and "PA".
+::: {.callout-warning appearance="simple" icon="false"}
+Rows bind function will be used instead of the columns bind function as the imported data frames have an unequal number of rows.
 
-#### 3.3.1.1 combine *pop_0010* & *pop_1020*
+However, using rows bind function will create a data frame with file size above 100 MB which exceed the limit.
+
+Hence, change both "Time" and "Pop" from dbl type to int type first.
+
+#### 3.3.1.1 convert data type
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***as.integer( )*** - base -]{style="color:#d46e15"} to convert both Time and Pop from double object to integer object.
+
+[***mutate( )*** - dplyr -]{style="color:#d46e15"} to add the converted variables into the data frame.
+:::
+
+```{r}
+pop_0010 <- pop_0010 %>% 
+  mutate(Time = as.integer(pop_0010$Time)) %>%
+  mutate(Pop = as.integer(pop_0010$Pop))
+
+pop_1020 <- pop_1020 %>% 
+  mutate(Time = as.integer(pop_1020$Time)) %>%
+  mutate(Pop = as.integer(pop_1020$Pop))
+```
+
+#### 3.3.1.2 combine both data frames
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***rbind( )*** - dplyr -]{style="color:#d46e15"} to union two or more data frames by row.
+:::
+
+```{r}
+pop_0020 <- rbind(pop_0010, pop_1020)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[The combined data frame file size is 92.7 MB.]{style="color:#d69c3c"}
+:::
+
+### 3.3.2 Compute Frequency Count
+
+::: {.callout-warning appearance="simple" icon="false"}
+To compute frequency count, first group the variables.
+
+#### 3.3.2.1 group variables
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -147,20 +239,16 @@ rbind( ) data frames will create file size above 100 MB. Hence, this step is com
 [***group_by( )*** - dplyr -]{style="color:#d46e15"} to group Singapore population by age, gender, time and planning area.
 
 [***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of residents for each group.
-
-[***as.integer( )*** - base -]{style="color:#d46e15"} to create "integer" object.
 :::
 
 ```{r}
-freq_pop0020 <- rbind(pop_0010, pop_1020) %>%
+freq_pop0020 <- pop_0020 %>%
   group_by(`AG`, `Sex`, `Time`, `PA`) %>%
-  summarise('Count'= sum(`Pop`)) %>%
+  summarise(Count = sum(`Pop`)) %>%
   ungroup()
-
-freq_pop0020$Time = as.integer(freq_pop0020$Time)
 ```
 
-#### 3.3.1.2 inspect combined dataframe
+#### 3.3.2.2 inspect combined data frame
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -169,14 +257,14 @@ freq_pop0020$Time = as.integer(freq_pop0020$Time)
 :::
 
 ```{r}
-kable(head(freq_pop0020))
+kable(head(freq_pop0020,2))
 ```
 
-#### 3.3.1.3 check data consistency
+#### 3.3.2.3 check data consistency
 
 ```{r}
 #| eval: false
-freq(freq_pop0020$Time)
+funModeling::freq(freq_pop0020$Time)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
@@ -186,7 +274,11 @@ freq(freq_pop0020$Time)
 
 ### 3.3.2 Remove Planning Areas without Residents
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-warning appearance="simple" icon="false"}
+First identify the planning areas with 0 resident count.
+
+#### 3.3.2.1 list "PA" without resident
+
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
@@ -196,85 +288,121 @@ freq(freq_pop0020$Time)
 
 [***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the total number of residents from 2000 to 2020.
 
-[***filter( )*** - dplyr -]{style="color:#d46e15"} to identify the planning areas with no residents..
+[***filter( )*** - dplyr -]{style="color:#d46e15"} to identify the planning areas with no residents.
 :::
-
-The column of planning areas with no residents was then converted to a list using *as.vector()*, and these planning areas were subsequently removed from the data set.
 
 ```{r}
 no_pop <- freq_pop0020 %>%
   select(`PA`, `Count`) %>%
-  group_by(PA) %>%
-  summarise(Total = sum(Count)) %>%
-  filter(Total == 0) %>%
-  select(PA) %>%
+  group_by(`PA`) %>%
+  summarise(`Total` = sum(`Count`)) %>%
+  filter(`Total` == 0) %>%
+  select(`PA`) %>%
   ungroup
-
-no_pop_list <- as.vector(no_pop$PA)
-
-new_pop0020 <- freq_pop0020 %>%
-  filter(!PA %in% no_pop_list)
-
-kable(head(new_pop0020))
 ```
 
-#### 
-:::
+```{r}
+questionr::freq(no_pop)
+```
 
-## **3.3.4 Sort Data**
+[Remarks :]{style="color:#d69c3c"}
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+[!!!!! why Paya Lebar dont have residents?]{style="color:#d69c3c"}
+
+#### 3.3.2.2 convert variable to non-distributed vector
+
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
-[***arrange( )*** - dpackage -]{style="color:#d46e15"} to select variables by "PA" and "Count".
-
-[***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative value. This will allow the Male data to be plotted on the left side of the pyramid.
+[***as.vector( )*** - pbdDMAT -]{style="color:#d46e15"} to converts a distributed matrix into a non-distributed vector.
 :::
 
-By default, the values of the data frame is sorted according to the values of the first column. In this case, the values are sorted alphanumerically by the age group.
+```{r}
+no_pop_list <- as.vector(no_pop$PA)
 
-Hence, we will sort the data based on the categorical age-group assigned in the original dataset. This task is first performed by changing the order using *mutate()* and then sorting via *arrange()* of dpackage.
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[!!!!! what is distributed and non-distributed data? !!!!! why need to convert?]{style="color:#d69c3c"}
+
+#### 3.3.2.3 remove "PA" without resident
+
+```{r}
+pop_0020_trim <- freq_pop0020 %>%
+  filter(!PA %in% no_pop_list)
+```
+
+#### 3.3.2.4 inspect output
+
+```{r}
+unique(pop_0020_trim$PA[pop_0020_trim$Count == 0])
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[!!!!!"PA" without residents are removed????]{style="color:#d69c3c"}
+:::
+
+### **3.3.3 Set Display Order & Layout**
+
+::: {.callout-warning appearance="simple" icon="false"}
+This section involves 2 parts, i.e. set the orders and the display layout.
+
+#### 3.3.3.1 set the display order
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***factor( )*** - base -]{style="color:#d46e15"} to encode a vector a a factor.
+
+[***arrange( )*** - dplyr -]{style="color:#d46e15"} to sort variable by descending order.
+:::
 
 ```{r}
 order <- c("0_to_4", "5_to_9", "10_to_14", "15_to_19", "20_to_24", "25_to_29", "30_to_34", "35_to_39", "40_to_44", "45_to_49", "50_to_54", "55_to_59", "60_to_64", "65_to_69", "70_to_74", "75_to_79", "80_to_84", "85_to_89", "90_and_over")
 
-sorted_pop0020 <- new_pop0020 %>%
-  mutate(AG =  factor(AG, 
-                      levels = order)) %>%
+pop_0020_sort <- pop_0020_trim %>%
+  mutate(AG = factor(AG,
+                     levels = order)) %>%
   arrange(AG)
-
-sorted_pop0020$nCount = ifelse(sorted_pop0020$Sex == "Males", 
-                                 yes = -sorted_pop0020$Count, 
-                                 no = sorted_pop0020$Count)
-
-kable(head(sorted_pop0020))
 ```
 
-Remarks :
+#### 3.3.3.2 set the display layout
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative value. This will allow the Male data to be plotted on the left side of the pyramid.
+:::
 
 ```{r}
-kable(tail(sorted_pop0020))
+pop_0020_sort$nCount = ifelse(pop_0020_sort$Sex == "Males",
+                               yes = -pop_0020_sort$Count,
+                               no = pop_0020_sort$Count)
 ```
 
-Remarks :
+#### \-- inspect output
+
+```{r}
+kable(head(pop_0020_sort,2))
+kable(tail(pop_0020_sort,2))
+```
 :::
 
 # 4 EXPLORATORY DATA ANALYSIS (EDA)
 
 ## 4.1 Plot Animated Pyramid Chart
 
-### **4.1.1 Plot By Year**
-
-The first visualisation plotted is an animation of Singapore's Total Population from 2000 to 2020.
-
-For this exercise, the static ggplot figure that was completed in Take-Home Exercise 1 was used. Using **gganimate** library, the static plot was converted into an animated pyramid via *transition_time()* and *ease_aes()* function. A moving subtitle was also included to relay the correct year information to the viewer.
+### 4.1.1 Plot Population from 2000 to 2020
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+For this exercise, the static ggplot figure that was completed in Take-Home Exercise 1 was used. Using **gganimate** library, the static plot was converted into an animated pyramid via *transition_time()* and *ease_aes()* function. A moving subtitle was also included to relay the correct year information to the viewer.
+
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
-[***geom_col( )*** - ggplot2 -]{style="color:#d46e15"} to create the bar chart with the bar length represent the actual population stats.
+[***transition_time( )*** - gganimate -]{style="color:#d46e15"} to display the data that represented specific point in time.
 
 [***scale_x\_continuous( )*** - ggplot2 -]{style="color:#d46e15"} to modify the labels on the x-axis to provide better readability.
 
@@ -282,7 +410,7 @@ For this exercise, the static ggplot figure that was completed in Take-Home Exer
 :::
 
 ```{r}
-anime_pyramid <- ggplot(sorted_pop0020,
+anime_pyramid <- ggplot(pop_0020_sort,
                         aes(x = nCount,
                             y = AG, 
                             fill = Sex)) +
@@ -296,69 +424,76 @@ anime_pyramid <- ggplot(sorted_pop0020,
                        "k")) +
   labs (x = "Population", 
         y = "Age Group", 
-        title ='Singapore Age-Sex Population Pyramid') +
+        title = 'Singapore Age-Gender Population Pyramid') +
   theme_bw() +
   theme(axis.ticks.y = element_blank()) +
   scale_fill_manual(values = c("Males" = "lightblue", 
                                "Females" = "lightpink"))
+```
 
+```{r}
 anime_pyramid + 
   transition_time(Time) +
   ease_aes('linear') +
   labs (subtitle = 'Year: {frame_time}')
 ```
-
-[Remark :]{style="color:#d69c3c"}
 :::
 
 ### **4.1.2 Plot by Year and Planning Location**
 
+::: {.callout-warning appearance="simple" icon="false"}
 Next, an interactive visualisation with a slider bar, dropdown menu and tooltip was created. This will enable the user to view the population pyramids for selected planning area across the years. As population numbers may differ drastically for different planning areas, hovering on the plot generates a tooltip which conveniently informs the user what is the age group, gender and population of each bar.
 
-#### **4.1.2.1 define time and planning area**
+#### **4.1.2.1 define time & planning area**
 
-The time and planning area for each unique instance were defined using a for loop. The annotation variables for the drop down menu was also defined.
+Define the time and planning area for each unique instance using a for loop.
 
 ```{r}
 year_list <- list()
 for (i in 1:length(
   unique(
-    sorted_pop0020$Time))) 
+    pop_0020_sort$Time))) 
   {year_list[[i]] <- list(method = "restyle",
                           args = list("transforms[0].value",
-                                      unique(sorted_pop0020$Time)[i]),
-                          label = unique(sorted_pop0020$Time)[i])
+                                      unique(pop_0020_sort$Time)[i]),
+                          label = unique(pop_0020_sort$Time)[i])
   }
 
 PA_list <- list()
-for (j in 1:length(unique(sorted_pop0020$PA))) { 
+for (j in 1:length(unique(pop_0020_sort$PA))) { 
   PA_list[[j]] <- list(method = "restyle",
                         args = list("transforms[1].value", 
-                                    unique(sorted_pop0020$PA)[j]),
-                        label = unique(sorted_pop0020$PA)[j])
+                                    unique(pop_0020_sort$PA)[j]),
+                        label = unique(pop_0020_sort$PA)[j])
   }
-
-annot <- list(
-  list(
-    text = "Select Planning Area:",
-                   x = 1.61,
-                   y = 0.78,
-                   xref = 'paper',
-                   yref = 'paper',
-                   showarrow = FALSE))
 ```
 
-#### **4.1.2.2 Interactive Pyramid Chart**
+#### 4.1.2.2 define drop down menu
 
-#### \*\* INTERACTIVE GRAPH WITH SLIDER AND DROPDOWN MENU\*\*
+```{r}
+annot <- list(
+  list(text = "Select Planning Area:",
+       x = 1.61,
+       y = 0.78,
+       xref = 'paper',
+       yref = 'paper',
+       showarrow = FALSE))
+```
+
+#### **4.1.2.3 plot with widget**
 
 An interactive graph was then generated using *plotly()*. A tooltip was added using the *hovertemplate* function to include age group, gender and population count.
 
 The *transforms - filter* function was used to filter the data for each plot by 2 variables - Year and Planning Area. Next, *layout - Updatemenus* and *layout - Sliders* was used to include the interactive widgets for the plot - a drop down menu for the planning areas and a slider bar for the years respectively.
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***plot_ly( )*** - plotly -]{style="color:#d46e15"} to initiate a plotly visualisation.
+:::
+
 ```{r}
-plot_ly(sorted_pop0020, 
+plot_ly(pop_0020_sort, 
         x = ~nCount, 
         y = ~AG,
         type = 'bar', 
@@ -372,11 +507,11 @@ plot_ly(sorted_pop0020,
           list(type = 'filter',
                target = ~Time,
                operation = '=',
-               value = unique(sorted_pop0020$Time)[1]),
+               value = unique(pop_0020_sort$Time)[1]),
           list(type = 'filter',
                target = ~PA,
                operation = '=',
-               value = unique(sorted_pop0020$PA)[1]))) %>%
+               value = unique(pop_0020_sort$PA)[1]))) %>%
   layout(autosize = F, 
          bargap = 0.1, 
          barmode = 'overlay',

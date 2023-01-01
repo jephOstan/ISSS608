@@ -1,5 +1,5 @@
 ---
-title: "Exploration 1 :: Pareto Chart"
+title: "Exploration 1 - Pareto Chart"
 editor: visual
 date:  28 Dec 2022
 code-copy: true
@@ -72,11 +72,11 @@ R packages and functions used in this exercise :
 
 ## **base :**
 
--   [[cumsum( )](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum) - ]{style="color:#d69c3c"}
+-   [[cumsum( )](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum) -]{style="color:#d69c3c"}
 
 **ggplot2 :**
 
--   [[scale_continuous( )](https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous) - ]{style="color:#d69c3c"}
+-   [[scale_continuous( )](https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous) -]{style="color:#d69c3c"}
 :::
 
 # 3. DATA
