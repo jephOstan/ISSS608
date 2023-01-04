@@ -1,0 +1,101 @@
+---
+title: "Note1"
+editor: visual
+date:  2 Jan 2022
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+    tbl-cap-location: bottom
+---
+
+cv = continuous variables
+
++-------------+-------------------------------+-----------------+--------------------+
+| chart       | usage                         | measure / param | remark / attention |
++=============+===============================+=================+====================+
+|             |                               |                 |                    |
++-------------+-------------------------------+-----------------+--------------------+
+| Histogram   | frequency of bins of value    | -   mean        |                    |
+|             |                               |                 |                    |
+|             | cv = probability distribution | -   median      |                    |
+|             |                               |                 |                    |
+|             |                               | -   mode        |                    |
++-------------+-------------------------------+-----------------+--------------------+
+| Box plot    |                               |                 |                    |
++-------------+-------------------------------+-----------------+--------------------+
+| Correlogram | reveal multicollinearity.     |                 |                    |
++-------------+-------------------------------+-----------------+--------------------+
+|             |                               |                 |                    |
++-------------+-------------------------------+-----------------+--------------------+
+
++-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| understand distribution | measure                                                                                                                                                       | remark / note                                                                          |
++=========================+===============================================================================================================================================================+========================================================================================+
+| Central Tendency        | -   mean                                                                                                                                                      | Mean affected the most by outliers.                                                    |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   median                                                                                                                                                    |                                                                                        |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   mode                                                                                                                                                      |                                                                                        |
++-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Dispersion              | -   range                                                                                                                                                     | inter-quartile range = differences between Q1 and Q3 == 50% of population lies within. |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   quartiles                                                                                                                                                 | variance = average of the squared differences from the Mean.                           |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   inter-quartile range                                                                                                                                      | standard deviation = is square root of variance.                                       |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   variance                                                                                                                                                  |                                                                                        |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   standard deviation                                                                                                                                        |                                                                                        |
++-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Shape of Distribution   | -   skewness                                                                                                                                                  | negative skewed curve = long left tail.                                                |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | -   kurtosis                                                                                                                                                  | **mesokurtic** = medium kurtosis (medium tails)                                        |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         | [![](images/image-1844618062.png)](https://www.scribbr.com/statistics/kurtosis/#:~:text=Kurtosis%20is%20a%20measure%20of,(thin%20tails)%20are%20platykurtic.) | **platykurtic** = low kurtosis (thin). E.g. age of students from a school.             |
+|                         |                                                                                                                                                               |                                                                                        |
+|                         |                                                                                                                                                               | **leptokurtic** = high kurtosis (fat)                                                  |
++-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
+
+Definition :
+
+**Kurtosis** = measures the heaviness of a distribution's tails relative to a normal distribution. Tails represent the probability or frequency of values that are extreme high or low from the mean. Tailedness is how often outliers occur.
+
+|                      | Mesokurtic    | Platykurtic | Leptokurtic |
+|----------------------|---------------|-------------|-------------|
+| Tailedness           | Medium-tailed | Thin-tailed | Fat-tailed  |
+| Outlier frequency    | Medium        | Low         | High        |
+| Kurtosis             | Moderate (3)  | Low (\<3)   | High (\>3)  |
+| Excess kurtosis      | 0             | Negative    | Positive    |
+| Example distribution | Normal        | Uniform     | Laplace     |
+
+: **3 Types of Kurtosis**[^1]
+
+[^1]: Shaun T. (2022). What Is Kurtosis? \| Definition, Examples & Formula. Scribbr. https://www.scribbr.com/statistics/kurtosis/#:\~:text=Kurtosis%20is%20a%20measure%20of,(thin%20tails)%20are%20platykurtic.
+
++-------------------------+------------------------------+----------------------+------+------+
+| topic                   | measure / parameter / aspect | Col3                 | Col4 | Col5 |
++=========================+==============================+======================+======+======+
+| population distribution | total population             | absolute, percentage |      |      |
+|                         |                              |                      |      |      |
+|                         | young population             |                      |      |      |
+|                         |                              |                      |      |      |
+|                         | elderly population           |                      |      |      |
+|                         |                              |                      |      |      |
+|                         | working age population       |                      |      |      |
++-------------------------+------------------------------+----------------------+------+------+
+|                         |                              |                      |      |      |
++-------------------------+------------------------------+----------------------+------+------+
+|                         |                              |                      |      |      |
++-------------------------+------------------------------+----------------------+------+------+
+|                         |                              |                      |      |      |
++-------------------------+------------------------------+----------------------+------+------+
+|                         |                              |                      |      |      |
++-------------------------+------------------------------+----------------------+------+------+
+|                         |                              |                      |      |      |
++-------------------------+------------------------------+----------------------+------+------+

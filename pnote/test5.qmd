@@ -1,0 +1,384 @@
+---
+title: "Exploration 5 - Create Time-Series Visualisation"
+editor: visual
+date:  2 Jan 2022
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# 1. OVERVIEW
+
+In this take-home exercise, we will explore the impact of COVID-19 on the stock prices of top 40 companies in Singapore by market capitalisation.
+
+-   
+
+    -   The data extraction and cleaning required some effort as the company names had to be referenced from another table, and extracted using the *tidyquant* package. Some experimentation also had to be done to optimise the frequency of the data to be extracted, as daily data may lower the clarity due to minute fluctuations as compared to weekly data.
+
+    -   The horiplot required extensive customisation to make it aesthetically pleasing, such as the sizing of the text fonts, adjusting the scale of the colour and the origin of the graph. Furthermore, as a time series scale was used for the x-axis, the date labels required special customisation using the *scale_x\_date* function.
+
+    -   Coming from a non-financial background, the task took abit of research to figure out financial terms and technical standards for stock market price monitoring
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
+
+The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
+
+[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
+
+-   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+:::
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
+
+The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
+
+[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
+
+-   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+:::
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
+
+The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
+
+[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
+
+-   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
+
+-   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+:::
+
+# 2. R PACKAGE REQUIRED
+
+The following are the packages required for this exercise :
+
+## 2.1 Load R Packages
+
+::: {.callout-warning appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.
+
+```{r}
+pacman::p_load(tidyverse, knitr, rmarkdown, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[Packages to consider -]{style="color:#d69c3c"}
+
+[sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
+:::
+
+## 2.2 Summary of R Functions
+
+-   **tidyverse** : A collection of core packages designed for data science, used extensively for data preparation and wrangling.
+
+-   **knitr**: Package used for dynamic report generation
+
+-   **rmarkdown**: Used to convert R Markdown documents into a variety of formats.
+
+-   **corrplot**: Used for plotting a correlation matrix, test for correlation, and other visualization methods about association and correlation.
+
+-   **ggstatsplot**: Used for creating graphics with details from statistical tests included
+
+-   **heatmaply**: Used to plot 'heatmap', a popular graphical method for visualizing high-dimensional data
+
+-   **parallelPlot**: Used to create a parallel coordinates plot
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+!!!!! need to update!
+
+R packages and functions used in this exercise :
+
+**readr :**
+
+-   [read_csv( ) -]{style="color:#d69c3c"}
+
+-   [[problems( )](https://www.rdocumentation.org/packages/readr/versions/1.3.1/topics/problems) -]{style="color:#d69c3c"}
+
+**base :**
+
+-   [[cumsum( )](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum) -]{style="color:#d69c3c"}
+
+**ggplot2 :**
+
+-   [[scale_continuous( )](https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous) -]{style="color:#d69c3c"}
+
+dplyr :
+
+-   [[select( )](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) -]{style="color:#d69c3c"}
+
+-   [[group_by( )](https://www.rdocumentation.org/packages/dplyr/versions/1.0.10/topics/group_by) -]{style="color:#d69c3c"}
+
+-   [summarise( ) -]{style="color:#d69c3c"}
+
+-   [[glimpse( )](https://www.rdocumentation.org/packages/dplyr/versions/0.3/topics/glimpse) -]{style="color:#d69c3c"}
+:::
+
+# 3. DATA
+
+## 3.1 Acquire Data Source
+
+The dataset used for this practice is the stock prices of [top 40 companies in Singapore by market capitalisation](https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/) between 1st January 2020 - 31st December 2021.
+
+-   [Kaggle Starbucks nutrition data set](https://www.kaggle.com/datasets/swoolfeek/starbucks-nutrition-with-sugar-and-etc?resource=download&select=starbucks_drink.csv)
+
+    -   Download "[starbucks_drink](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2000to2010.ashx).csv" data set.
+
+## 3.2 Import Data
+
+### 3.2.1 Import Data Set
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+sgp_marketCap <- read_csv("data/sgp_marketcap.csv")
+
+problems(sgp_marketCap)
+```
+:::
+
+### 3.2.2 Inspect Imported Data Set
+
+::: {.callout-warning appearance="simple" icon="false"}
+```{r}
+glimpse(sgp_marketCap,0)
+```
+
+```{r}
+kable(head(sgp_marketCap))
+```
+
+Since the dataset is already ranked by market capitalisation, we can extract the Top 40 by using *head()*.
+
+```{r}
+top40 <- head(sgp_marketCap, 40)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[The "Caffein(mg)" variable consist of mixed values including absolute and values in range.]{style="color:#d69c3c"}
+:::
+
+## 3.3 Data Wrangling
+
+### 3.3.1 Edit "Caffeine(mg)" Variable
+
+::: {.callout-warning appearance="simple" icon="false"}
+First remove special character, then replace the range values with the maximum value.
+
+#### 3.3.1.1 remove special character
+
+Remove special character from '40+'.
+
+Only the columns containing the symbol and name of the company were extracted, and the columns were renamed in preparation for joining of tables later on.
+
+```{r}
+top40 <- top40[-c(1, 4:6)]
+top40 <- rename(top40, symbol = Symbol)
+top40 <- rename(top40, name = Name)
+
+kable(head(top40))
+```
+
+#### 3.3.1.2 update with for-loop function
+
+The company symbols and names were listed using *as.vector()* function according to the rank.
+
+```{r}
+top40_sym <- as.vector(top40$symbol)
+top40_name <- as.vector(top40$name)
+```
+
+#### 3.3.1.3 convert variable type
+
+Using the list of Top 40 symbols, the stock prices of the companies from 2020 to 2021 were extracted using the **tidyquant** package. Weekly period was used as it provides a longer term comparison compared to daily period, which may be too fluctuative to point out major trends.
+
+```{r}
+stock_data_weekly = tq_get(top40_sym,
+                          get = "stock.prices",
+                          from = "2020-01-01",
+                          to = "2021-12-31")%>%
+  group_by(symbol) %>%
+  tq_transmute(select     = NULL, 
+               mutate_fun = to.period, 
+               period  = "weeks")
+
+kable(head(stock_data_weekly))
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[The]{style="color:#d69c3c"}
+:::
+
+## 3.4
+
+# 3.2 Data Wrangling
+
+The weekly rate of change of stock price was calculated using the adjusted price.
+
+::: {.callout-warning appearance="simple" icon="false"}
+To identify the largest drink names, the *group_by()* function was used to group the orders by name and *summarise()* was used to count (i.e. n()) the total number of drinks for each name. Then, *arrange(desc)* was used to sort the data and *top_n()* was used to select and identify the top 3 largest names. *filter()* was used to display rows of drinks that are in the top 3 largest names. They are iced coffee, hot chocolate and pumpkin spice crème.
+
+```{r}
+stock_data_weekly$change <- ((stock_data_weekly$adjusted/shift(stock_data_weekly$adjusted)) - 1 )*100
+```
+
+Next, the names of the companies were added to the stock price dataset using *merge()*, because it is easier to identify name than symbols in the visualisation.
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***as.integer( )*** - base -]{style="color:#d46e15"} to convert both Time and Pop from double object to integer object.
+
+[***mutate( )*** - dplyr -]{style="color:#d46e15"} to add the converted variables into the data frame.
+:::
+:::
+
+```{r}
+stock_data_weekly <- merge(stock_data_weekly, top40, by = 'symbol')
+
+kable(head(stock_data_weekly))
+```
+
+Lastly, the rows were ordered by the name of the stock in descending order of the market capitalisation value.
+
+```{r}
+stock_data_weekly <- stock_data_weekly %>%
+  mutate(name =  factor(name, levels = top40_name)) %>%
+  arrange(name)
+
+kable(head(stock_data_weekly))
+```
+
+# 4 Visualisation
+
+[Horizon plots](https://en.wikipedia.org/wiki/Infographic) are a type or plots frequently used in time-series data to represent a moving value.
+
+The figure below shows a horizon plot using the **ggHoriplot** package. The palette 'RdBu' was used to provide the contrast between negative (red) and positive (blue) rate of change. Vertical x-intercept dashed-lines were added to represent key milestones in Singapore's covid-19 journey, which will be explained later on.
+
+```{r}
+ggplot() +
+  geom_horizon(aes(date, change),
+               data = stock_data_weekly,
+               origin = 0,
+               horizonscale = c(-15, -5, -1,  0,  1, 3, 5)) +
+  scale_fill_hcl(palette = 'RdBu') +
+  facet_grid(name~.)+
+   theme_few() +
+  theme(
+    panel.spacing.y=unit(0, "lines"),
+    plot.title = element_text(size=12),
+    plot.subtitle = element_text(size=9),
+    strip.text.y = element_text(size = 5, angle = 0, hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x = element_text(size = 7, angle = 90, hjust = 0, vjust = 0.5),
+    axis.title.x = element_blank(),
+    panel.border = element_blank(),
+    legend.position="none"
+    ) +
+  scale_x_date(expand=c(0,0), 
+               date_breaks = "1 month", 
+               date_labels = "%b '%y",
+               limit=c(as.Date("2020-01-01"),as.Date("2021-12-31"))) +
+  xlab('Date') +
+  ggtitle('Stock Prices of Top 40 Companies in Singapore, 2020 to 2021', 
+          'Ranked by Market Capitalisation, Weekly Data') +
+  geom_vline(xintercept = as.Date("2020-02-07"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2020-04-07"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2020-06-02"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2020-11-09"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2021-05-08"), color = "limegreen", size = 1) + 
+  geom_vline(xintercept = as.Date("2021-10-09"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2021-11-26"), color = "limegreen", size = 1) 
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[The]{style="color:#d69c3c"}
+:::
+
+## 
+
+# 5 Conclusion
+
+#### **INITIAL WAVE OF COVID-19**
+
+On Feb 7 2020, COVID-19 Disease Outbreak Response System Condition (DORSCON) to orange, signalling that the disease is severe and there is widespread transmission from unknown sources. This is highest level ever reached since the SARS outbreak in 2003. The severity of the pandemic caused panic and uncertainty amongst business and citizens. More countries were also entering a lockdown state to contain the spread, disrupting global trade flows which exacerbated the market. Hence, spurring on the COVID-19 financial crash in March 2020, which not only impacted Singapore but all major stock markets as well. The March 2020 COVID-19 crash was a short-lived bear market, and in April 2020 stock markets re-entered a bull market.
+
+#### **CIRCUIT BREAKER**
+
+On Apr 7 2020, the Singapore government took a drastic step and introduced the circuit breaker period, where citizens practised enhanced social distancing and isolation. Workplaces and schools closed and most shops shuttered. Businesses were badly impacted by the drop in footfall and consumption. However, the stock market seem to be recovering from the crash in March. One reason could be the implementation of the Budgets the Government has dedicated to support Singaporeans and businesses in the battle against COVID-19, which amounted close to \$100 billion. Secondly, businesses were also adapting to the change in consumer patterns through contactless digital systems, which were well-received.
+
+On Jun 2 2020, the circuit breaker is eased and Singapore enters its first phase of reopening, where businesses and activities are progressively allowed to resume, giving rise to some semblance of normalcy. Hence, causing the stock price in the market to rise.
+
+#### **NATIONAL VACCINATION CAMPAIGN**
+
+In Nov 2020, Pfizer and BioNTech SE announced a vaccine candidate that has demonstrated evidence of efficacy against COVID-19. As the news brought about positivity of a potential return of normal activity, many shares of companies soared. Since Dec 2020, the National Vaccination Campaign commenced and in late 2021, Singapore became the world's most-vaccinated country, with more than 85% of its total population fully-vaccinated.
+
+#### **DELTA WAVE OF COVID-19**
+
+By May 2021, the Delta variant of COVID-19 had widely spread, causing several clusters across the nation. The re-opening efforts put forth by the Government were heldback, Singapore reverted back to Phase 2 from 8 May, which was subsequently tightened to Phase 2 Heightened Alert from 16 May. This tightening of measures caused the stock market prices to dip.
+
+#### **CAUTIOUS RE-OPENING WITH ENDEMIC COVID-19**
+
+Since then, the nation has acknowledged that the Zero-Covid strategy is no longer feasible due to highly infectious variants formed. It has engaged a cautions re-opening strategy to enable Singaporeans to resume their lives, participate in social activities, open the borders and revive the economy. One such example would be the Vaccinated Travel Lane (VTL) which allowed fully-vaccinated Singaporean citizens and permanent residents to return to Singapore without quarantine. On 9 Oct 2021, it was announced that Singapore would open up more VTLs with other countries, including South Korea and the United States. This saw some rise in the stock market prices, especially companies who stand to gain most such as Singapore Airlines and SATS.
+
+#### **OMICRON VARIANT OF COVID-19**
+
+On 26 Nov 2021, the World Health Organisation (WHO) announced the Omicron variant discovery of COVID-19. While there was some dip to the stock market prices, due to lack of information on the virus, the impact seems to be lower than the Delta and Alpha variant of the virus for most companies.
+
+# 6 References
+
+-   [tidyquant](https://giniceseah.netlify.app/posts/2021-06-18-scraping-of-financial-dataset/#tidyquant-package)
+
+-   [ggHoriplot](https://rivasiker.github.io/ggHoriPlot/index.html)
+
+-   [Price Rate of Change Indicator](https://www.investopedia.com/terms/p/pricerateofchange.asp)
+
+-   [COVID-19 pandemic in Singapore](https://en.wikipedia.org/wiki/COVID-19_pandemic_in_Singapore)
+
+-   [COVID-19 Singapore timeline milestones](https://www.asiaone.com/singapore/1-year-covid-19-singapore-timeline-milestones)
+
+-   [Pfizer and BioNTech Announce Vaccine Candidate Against COVID-19](https://www.pfizer.com/news/press-release/press-release-detail/pfizer-and-biontech-announce-vaccine-candidate-against)
+
+-   [Omicron WHO Update](https://www.who.int/news/item/28-11-2021-update-on-omicron)

@@ -29,6 +29,11 @@ website:
             href: pnote/test2.qmd
           - text: Exploration 3 - Interactive & Animated Pyramid Chart
             href: pnote/test3.qmd
+          - text: Exploration 4 - Interactive Heatmap Chart
+            href: pnote/test4.qmd
+          - text: Exploration 5 - Time-Series Visualisation
+            href: pnote/test5.qmd           
+            
     right:
       - href: index.qmd
         text: Home
@@ -39,6 +44,7 @@ format:
     theme: flatly
     css: styles.css
     toc: true
+    
 
 editor: visual
 

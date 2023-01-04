@@ -1,0 +1,924 @@
+---
+title: "Exploration 4 - Interactive Heatmap & Parallele Coord."
+editor: visual
+date:  2 Jan 2022
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# 1. OVERVIEW
+
+This study explores the visualisation of multidimensional data from Starbucks drinks.
+
+!!!!! Questions
+
+-   for data visualisation, display unit next to variable a distraction? ok to remove so that the display not clutter?
+
+-   how missing data affect the plots?
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Data Wrangling Challenges :**]{style="color:#3a9c88"}
+
+1.  Some values have a special character, "+", while others are presented as range values.
+2.  Only specific drinks are duplicated.
+
+[manually remove the special character and use loop with *ifelse( )* function to replace the range value with the max of range value.]{style="color:#d69c3c"}
+:::
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Normalise Character Type Variable :**]{style="color:#3a9c88"}
+
+Since the nutritional value is different according to the sizes and volumes. Hence, the milk type and whipped cream must be normalised by volume before plotting the heatmap.
+:::
+
+# 2. R PACKAGE REQUIRED
+
+The following are the packages required for this exercise :
+
+## 2.1 Load R Packages
+
+::: {.callout-warning appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.
+
+```{r}
+pacman::p_load(tidyverse, knitr, ggplot2, ggcorrplot, corrplot, ggstatsplot, heatmaply, dendextend, parallelPlot, factoextra)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[Packages to consider -]{style="color:#d69c3c"}
+
+[sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
+:::
+
+## 2.2 Summary of R Functions
+
+-   **tidyverse** : A collection of core packages designed for data science, used extensively for data preparation and wrangling.
+
+-   **knitr**: Package used for dynamic report generation
+
+-   **rmarkdown**: Used to convert R Markdown documents into a variety of formats.
+
+-   **corrplot**: Used for plotting a correlation matrix, test for correlation, and other visualization methods about association and correlation.
+
+-   **ggstatsplot**: Used for creating graphics with details from statistical tests included
+
+-   **heatmaply**: Used to plot 'heatmap', a popular graphical method for visualizing high-dimensional data
+
+-   **parallelPlot**: Used to create a parallel coordinates plot
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+!!!!! need to update!
+
+R packages and functions used in this exercise :
+
+**readr :**
+
+-   [read_csv( ) -]{style="color:#d69c3c"}
+
+-   [[problems( )](https://www.rdocumentation.org/packages/readr/versions/1.3.1/topics/problems) -]{style="color:#d69c3c"}
+
+**base :**
+
+-   [[cumsum( )](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cumsum) -]{style="color:#d69c3c"}
+
+**ggplot2 :**
+
+-   [[scale_continuous( )](https://www.rdocumentation.org/packages/ggplot2/versions/3.4.0/topics/scale_continuous) -]{style="color:#d69c3c"}
+
+dplyr :
+
+-   [[select( )](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select) -]{style="color:#d69c3c"}
+
+-   [[group_by( )](https://www.rdocumentation.org/packages/dplyr/versions/1.0.10/topics/group_by) -]{style="color:#d69c3c"}
+
+-   [summarise( ) -]{style="color:#d69c3c"}
+
+-   [[glimpse( )](https://www.rdocumentation.org/packages/dplyr/versions/0.3/topics/glimpse) -]{style="color:#d69c3c"}
+:::
+
+# 3. DATA
+
+## 3.1 Acquire Data Source
+
+-   [Kaggle Starbucks nutrition data set](https://www.kaggle.com/datasets/swoolfeek/starbucks-nutrition-with-sugar-and-etc?resource=download&select=starbucks_drink.csv)
+
+    -   Download "[starbucks_drink](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2000to2010.ashx).csv" data set.
+
+## 3.2 Import Data
+
+### 3.2.1 Import Data Set
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+drink <- read_csv("data/starbucks_drink.csv")
+
+problems(drink)
+```
+:::
+
+### 3.2.2 Inspect Imported Data Set
+
+::: {.callout-warning appearance="simple" icon="false"}
+```{r}
+glimpse(drink,0)
+```
+
+```{r}
+skimr::skim(drink)
+```
+
+```{r}
+kable(tail(drink[,c(1:5, 15:18)]))
+```
+
+```{r}
+questionr::freq(unique(drink$`Caffeine(mg)`))
+questionr::freq(unique(drink$`Trans fat(g)`))
+questionr::freq(unique(drink$Size))
+questionr::freq(unique(drink$Milk))
+questionr::freq(unique(drink$`Whipped Cream`))
+```
+
+```{r}
+length(drink$Name)
+questionr::freq(drink$`Whipped Cream`)
+questionr::freq(drink$Milk)
+questionr::freq(drink$Size)
+```
+
+```{r}
+drink %>% 
+  janitor::get_dupes()
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+1.  ["Caffein(mg)" variable consist of mixed values including absolute and values in range.]{style="color:#d69c3c"}
+2.  [There are 121 rows of duplicated data.]{style="color:#d69c3c"}
+3.  [Out of 2,068 drinks, more than 10% of "Whipped Cream" and "Milk" are missing.]{style="color:#d69c3c"}
+:::
+
+## 3.3 Data Wrangling
+
+### 3.3.1 Edit "Caffeine(mg)" Variable
+
+::: {.callout-warning appearance="simple" icon="false"}
+First remove special character, then replace the range values with the maximum value.
+
+#### 3.3.1.1 remove special character
+
+Remove special character from '40+'.
+
+```{r}
+drink["Caffeine(mg)"][drink["Caffeine(mg)"] == '40+'] <- '40'
+```
+
+#### 3.3.1.2 update with for-loop function
+
+```{r}
+for (i in 1:nrow(drink)) {
+  drink[i, "Caffeine(mg)"] <- ifelse(
+    grepl("–", 
+          drink[i,
+                "Caffeine(mg)"]),
+    substr(drink[i, 
+                 "Caffeine(mg)"],
+           nchar(
+             drink[i, 
+                   "Caffeine(mg)"])-1,
+           nchar(
+             drink[i,
+                   "Caffeine(mg)"])),
+    drink[i, 
+          "Caffeine(mg)"])
+  }
+```
+
+#### 3.3.1.3 convert variable type
+
+Change the variable to numeric data type.
+
+```{r}
+drink["Caffeine(mg)"] <- as.numeric(unlist(drink["Caffeine(mg)"]))
+```
+
+```{r}
+kable(tail(drink[,c(1:2, 15)],3))
+```
+
+[Remarks :]{style="color:#d69c3c"}
+:::
+
+### 3.3.2 Remove Duplication
+
+::: {.callout-warning appearance="simple" icon="false"}
+#### 3.3.2.1 filter duplicated data
+
+```{r}
+duplication <- drink %>% 
+  janitor::get_dupes()
+
+duplication <- duplication %>%
+  filter(duplicated(duplication) == TRUE)
+```
+
+#### 3.3.2.2 remove duplicated data
+
+```{r}
+drink_clean <- drink[!duplicated(drink),]
+```
+:::
+
+## 3.4 Create New Dataframe
+
+### 3.4.1 Create Dataframe by "Category" :: *category_top4*
+
+::: {.callout-warning appearance="simple" icon="false"}
+This data frame will be used to compare differences in variables by "Category" via multiple correlogram under section xxx.
+
+```{r}
+test <- drink %>%
+  group_by(`Category`) %>%
+  summarise(Total = n()) %>%
+  arrange(desc(Total))
+```
+
+#### 3.4.1.1 filter top 4 "Category"
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***group_by( )*** - base -]{style="color:#d46e15"} to group the orders by name.
+
+[***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of drinks for each "Category" and assign under "Total".
+
+[***arrange(desc( )*** - base -]{style="color:#d46e15"} to sort data in descending order.
+
+[***top_n( )*** - base -]{style="color:#d46e15"} to retain only the four (4) "Category" with the highest "Total".
+:::
+
+```{r}
+category_top4 <- drink %>%
+  group_by(`Category`) %>%
+  summarise(Total = n()) %>%
+  arrange(desc(Total)) %>%
+  top_n(4) %>%
+  ungroup
+```
+
+```{r}
+kable(category_top4)
+```
+
+#### 3.4.1.2 create vector list
+
+```{r}
+category_top4.list <- as.vector(category_top4$Category)
+```
+
+#### 3.4.1.3 filter attribute data with vector list
+
+```{r}
+category_filtered <- drink %>%
+  filter(Category %in% category_top4.list)
+```
+
+#### 3.4.1.4 inspect filtered output
+
+```{r}
+unique(category_filtered$Category)
+```
+:::
+
+### 3.4.2 Create Dataframe by "Name" :: *name_top3*
+
+::: {.callout-warning appearance="simple" icon="false"}
+This dataframe will be used to ??
+
+#### 3.4.2.1 filter top 3 "Names"
+
+```{r}
+name_top3 <- drink %>%
+  group_by(`Name`) %>%
+  summarise(Total = n()) %>%
+  arrange(desc(Total)) %>%
+  top_n(3) %>%
+  ungroup
+```
+
+```{r}
+kable(name_top3)
+```
+
+#### 3.4.2.2 create vector list
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***as.vector( )*** - base -]{style="color:#d46e15"} to ???.
+:::
+
+```{r}
+name_top3.list <- as.vector(name_top3$Name)
+```
+
+#### 3.4.2.3 filter attribute data with vector list
+
+```{r}
+name_filtered <- drink %>%
+  filter(Name %in% name_top3.list)
+```
+
+#### 3.4.2.4 inspect filtered output
+
+```{r}
+unique(name_filtered$Name)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+:::
+
+## **3.5 Data Normalisation**
+
+### **3.5.1 Normalise *category_filtered***
+
+::: {.callout-warning appearance="simple" icon="false"}
+To compare the category holistically, need to first group "Category", "Name", "Milk" and "Whipped Cream". Then, normalise the drinks' attributes by the volume, i.e. "Portion( fl oz)".
+
+#### 3.5.1.1 normalise nutritional-related variables
+
+```{r}
+category_norm <- category_filtered %>%
+  group_by(`Category`,
+           `Name`, 
+           `Milk`, 
+           `Whipped Cream`) %>%
+  summarise('Calories per oz)' = mean(`Calories`/`Portion(fl oz)`),
+            'Calories from fat per oz' = mean(`Calories from fat`/`Portion(fl oz)`),
+            'Total Fat(g/oz)' = mean(`Total Fat(g)`/`Portion(fl oz)`),
+            'Saturated fat(g/oz)' = mean(`Saturated fat(g)`/`Portion(fl oz)`),
+            'Trans fat(g/oz)' = mean(`Trans fat(g)`/`Portion(fl oz)`),
+            'Cholesterol(mg/oz)' = mean(`Cholesterol(mg)`/`Portion(fl oz)`),
+            'Sodium(mg/oz)' = mean(`Sodium(mg)`/`Portion(fl oz)`),
+            'Total Carbohydrate(g/oz)' = mean(`Total Carbohydrate(g)`/`Portion(fl oz)`),
+            'Dietary Fiber(g/oz)' = mean(`Dietary Fiber(g)`/`Portion(fl oz)`),
+            'Sugars(g/oz)' = mean(`Sugars(g)`/`Portion(fl oz)`),
+            'Protein(g/oz)' = mean(`Protein(g)`/`Portion(fl oz)`),
+            'Caffeine(mg/oz)' = mean(`Caffeine(mg)`/`Portion(fl oz)`)) %>%
+  ungroup()
+```
+
+#### **3.5.1.2 combine "Name" with "Milk" and "Whipped Cream"**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***paste( )*** - base -]{style="color:#d46e15"} to update the drinks' name.
+:::
+
+```{r}
+category_norm$Name_mw <- paste(
+  category_norm$Name, 
+  category_norm$Milk, 
+  category_norm$`Whipped Cream`)
+```
+
+```{r}
+kable(head(category_norm[,c(1:3, 17)],3))
+```
+
+#### **3.5.1.3 filter variables for correlation matrix**
+
+```{r}
+corr_var_category <- category_norm %>%
+  select(c(1,5:16))
+```
+
+#### **3.5.1.4 replace row references with "Name_mw"**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***row.names( )*** - dplyr -]{style="color:#d46e15"} to replace the row reference with the updated name.
+:::
+
+```{r}
+row.names(corr_var_category) <- category_norm$Name_mw
+```
+
+#### **3.5.1.5 inspect output**
+
+```{r}
+glimpse(corr_var_category, 70)
+```
+:::
+
+### **3.5.2 Normalise *name_filtered***
+
+::: {.callout-warning appearance="simple" icon="false"}
+In order to study the nutritional value holistically, the toppings, i.e. milk and whipped cream will need to be normalised by the volume of drink.
+
+#### **3.5.2.1 normalise nutritional-related variables**
+
+```{r}
+name_norm <- name_filtered %>%
+  group_by(`Name`, 
+           `Milk`, 
+           `Whipped Cream`) %>%
+  summarise('Calories per oz)' = mean(`Calories`/`Portion(fl oz)`),
+            'Calories from fat per oz' = mean(`Calories from fat`/`Portion(fl oz)`),
+            'Total Fat(g/oz)' = mean(`Total Fat(g)`/`Portion(fl oz)`),
+            'Saturated fat(g/oz)' = mean(`Saturated fat(g)`/`Portion(fl oz)`),
+            'Trans fat(g/oz)' = mean(`Trans fat(g)`/`Portion(fl oz)`),
+            'Cholesterol(mg/oz)' = mean(`Cholesterol(mg)`/`Portion(fl oz)`),
+            'Sodium(mg/oz)' = mean(`Sodium(mg)`/`Portion(fl oz)`),
+            'Total Carbohydrate(g/oz)' = mean(`Total Carbohydrate(g)`/`Portion(fl oz)`),
+            'Dietary Fiber(g/oz)' = mean(`Dietary Fiber(g)`/`Portion(fl oz)`),
+            'Sugars(g/oz)' = mean(`Sugars(g)`/`Portion(fl oz)`),
+            'Protein(g/oz)' = mean(`Protein(g)`/`Portion(fl oz)`),
+            'Caffeine(mg/oz)' = mean(`Caffeine(mg)`/`Portion(fl oz)`)) %>%
+  ungroup()
+```
+
+#### **3.5.2.2 combine "Name" with "Milk" and "Whipped Cream"**
+
+```{r}
+name_norm$Name_mw <- paste(
+  name_norm$Name, 
+  name_norm$Milk, 
+  name_norm$`Whipped Cream`)
+```
+
+```{r}
+kable(head(name_norm[,c(1:3, 16)],3))
+```
+
+Remarks :
+
+!!!!! Should we introduce new variable "Name_mw" or stick to "Name" when the new value is combined between 3 vars' value?
+
+#### **3.5.2.3 filter variables for correlation matrix**
+
+```{r}
+corr_var_name <- name_norm %>%
+  select(c(4:15))
+```
+
+#### **3.5.2.4 replace row references with "Name_mw"**
+
+```{r}
+row.names(corr_var_name) <- name_norm$Name_mw
+```
+
+#### **3.5.2.5 inspect output**
+
+```{r}
+glimpse(corr_var_name, 70)
+```
+:::
+
+# **4 EXPLORATORY DATA ANALYSIS (EDA)**
+
+Explore data visualisation for multidimensional data using:
+
+-   Correlogram (also known as Auto Correlation Function (ACF) plot)
+
+-   Heatmap
+
+-   Parallel Coordinate Plot
+
+## **4.1 Plot Correlogram**
+
+### **4.1.1 Plot with R Base**
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***panel.cor( )*** - xcms -]{style="color:#d46e15"} to create correlation coefficient panel for pairs function.
+
+-   [***par( )*** - graphics -]{style="color:#d46e15"} to set or query graphical parameters.
+
+    -   [***usr***]{style="color:#d46e15"} = a vector of the form c(x1, x2, y1, y2) giving the extremes of the user coordinates of the plotting region.
+
+        -   par("usr") = useful command for custom plot with fixed features[^1]. It allows objects to be placed within the plot window.
+
+-   [***on.exit( )*** - base -]{style="font-size: 11pt; color: rgb(212, 110, 21);"} to set execution when the function exits naturally or due to error[^2]. Use together with *usr*.
+
+-   [***cor( )*** - stats -]{style="font-size: 11pt; color: rgb(212, 110, 21);"} to returns a correlation data frame rather a matrix.
+
+    -   [***complete.obs***]{style="font-size: 11pt; color: rgb(212, 110, 21);"}= correlations will be computed from complete observations, with an error being raised if there are no complete cases.[^3]
+
+-   [***strwidth( )*** - graphics -]{style="font-size: 11pt; color: rgb(212, 110, 21);"} to compute the width and height of the given strings *txt*.[^4]
+:::
+
+```{r}
+panel.cor <- function(x, y, 
+                      digits = 3, 
+                      prefix = "",
+                      cex.cor)
+  {
+  usr <- par("usr" = c(0, 1, 0, 1))
+  on.exit(par(usr))
+  
+  r <- abs(
+    cor(x, y, use = "complete.obs"))
+  
+  txt <- format(
+    c(r, 0.123456789),
+    digits = digits)[1]
+  
+  txt <- paste(prefix, 
+               txt, 
+               sep = "")
+  
+  if(missing(cex.cor))
+    cex.cor <- 0.8/strwidth(txt)
+  
+  text(0.5, 0.5, 
+       txt, 
+       cex = cex.cor*(1+r)/2)
+  }
+```
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***pairs( )*** - graphics -]{style="color:#d46e15"} to produce matrix of scatterplots.
+:::
+
+```{r}
+pairs(corr_var_name,
+      upper.panel = panel.cor,
+      label.pos = 0.5, 
+      line.main = 2,
+      cex.labels = 0.5, 
+      font.labels = 0.5,
+      gap = 0.2)
+```
+:::
+
+[^1]: http://rfunction.com/archives/131#:\~:text=The%20par(%E2%80%9Cusr%E2%80%9D),the%20middle%20of%20the%20plot).
+
+[^2]: https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/on.exit
+
+[^3]: https://corrr.tidymodels.org/reference/correlate.html
+
+[^4]: https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/strwidth
+
+### **4.1.2 Plot with ggstatsplot package**
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***ggcorrmat( )*** - ggstatsplot -]{style="color:#d46e15"} to visualise a correlation matrix.[^5]
+:::
+
+```{r}
+ggcorrmat(data = corr_var_name,
+  ggcorrplot.args = list(outline.color = "white", 
+                         hc.order = TRUE,
+                         lab_col = "black",
+                         lab_size = 3,
+                         pch.col = "red",
+                         pch.cex = 6),
+  title = "Nutrition Value for Top 3 Starbucks Drinks",
+  ggplot.component = list(
+    theme_void(
+      base_size = 10),
+    theme(
+      plot.title = element_text(size = 12),
+      legend.text = element_text(size = 8),
+      axis.text.x = element_text(size = 8, 
+                                 angle = 75, 
+                                 hjust = 0.6),
+      axis.text.y = element_text(size = 8, 
+                                 hjust = 1)
+      ))
+  )
+```
+
+Remarks :
+
+Above correlation plot is hc.ordered meaning using hierarchical function.
+
+"Trans fat(g/oz)" and "Dietary Fiber(g/oz)" has no significant at p \< 0.05.
+:::
+
+[^5]: https://www.rdocumentation.org/packages/ggstatsplot/versions/0.2.0/topics/ggcorrmat
+
+### **4.1.3 Plot Multiple Correlogram with ggstatsplot package**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***grouped_ggcorrmat( )*** - ggstatsplot -]{style="color:#d46e15"} a helper function to apply the function to visualise multiple correlation matrix.
+:::
+
+```{r}
+grouped_ggcorrmat(
+    data = corr_var_category,
+    grouping.var = Category,
+    type = "p",
+    p.adjust.method = "holm",
+    plotgrid.args = list(ncol = 2),
+    ggcorrplot.args = list(outline.color = "black",
+                           lab_col = "black",
+                           lab_size = 1.5,
+                           pch.col = "red",
+                           pch.cex = 3),
+    annotation.args = list(
+      tag_levels = "a",
+      title = "Correlation of Attributes for Starbucks Top 4 Drink Categories",
+      subtitle = "Top 4 categories : Espresso, Frapuccino blended beverages, Kids Drinks & Tea"),
+    ggplot.component = list(
+      theme_void(base_size = 8),
+      theme(
+        plot.title = element_text(size = 8),
+        plot.subtitle = element_text(size = 6),
+        legend.text = element_text(size = 5),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 75, 
+                                   hjust = 0.6),
+        axis.text.y = element_text(size = 7, 
+                                   hjust = 1),
+        strip.text.x = element_text(size = 7),
+        legend.key.size = unit(3, 'mm')
+        ))
+    )
+```
+:::
+
+### **4.1.4 Plot with corrplot package**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+The figure below shows a corrgram using the **corrplot** combined with the significant test of 0.1. The corrgram reveals that not all correlation pairs are statistically significant. For example the correlation between total carbohydrate and sugar is statistically significant at significant level of 0.1 but not the pair between total caffeine and trans fat.
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***cor.mtest( )*** - corrplot -]{style="color:#d46e15"} to generate p-values for "p" variable, and confidence intervals for each pair of input variables.
+
+[***corrplot.mixed( )*** - corrplot -]{style="color:#d46e15"} to use mixed methods to visualise a correlation matrix.
+:::
+:::
+
+```{r}
+name.sig = cor.mtest(corr_var_name, 
+                     conf.level = .9)
+```
+
+```{r}
+corrplot.mixed((cor(corr_var_name)),
+               lower = "number",
+               upper = "square",
+               order = "AOE",
+               diag = "l",
+               tl.pos = "lt",
+               tl.col = "black",
+               tl.cex = .6,
+               tl.srt = 45,
+               pch.col = "grey70",
+               pch.cex = 1.5,
+               number.cex = .6,
+               cl.cex = .6,
+               lower.col = "black",
+               p.mat = name.sig$p, 
+               sig.level = 0.1,
+               title = "Attributes Pairs Correlation with significant level of 0.1",
+               mar = c(0,0,1,0)
+               )
+```
+
+Remarks :
+:::
+
+### 4.1.5 Plot with Hierarchical Clustering
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+The *dend_expend()* and *find_k()* functions of dendextend package was used to determine the best clustering method and number of cluster.
+
+```{r}
+cv_name.matrix <- data.matrix(corr_var_name)
+```
+
+```{r}
+name_d <- dist(normalize(cv_name.matrix, method = "euclidean"))
+```
+
+```{r}
+name_hclust <- hclust(name_d, method = "average")
+```
+
+```{r}
+name_num_k <- find_k(name_hclust)
+
+plot(name_num_k)
+```
+
+s
+
+```{r}
+set.seed(12345)
+
+factoextra::fviz_nbclust(cv_name.matrix,
+                         FUNcluster = hcut,
+                         nstart = 25,  
+                         method = "gap_stat", 
+                         nboot = 50,
+                         linecolor = "white") +
+  theme_dark() +
+  labs(subtitle = "Gap statistic method")
+```
+
+w
+
+```{r}
+fviz_nbclust(cv_name.matrix, 
+             kmeans, 
+             method = "wss",
+             linecolor = "white")+
+  theme_dark() +
+  labs(subtitle = "Elbow method")
+```
+
+a
+
+```{r}
+fviz_nbclust(cv_name.matrix, 
+             kmeans, 
+             method = "silhouette",
+             linecolor = "white") +
+  theme_dark() +
+  labs(subtitle = "Silhouette method")
+```
+:::
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+Next, the corrgram was plotted using *corrplot()* and *hclust* based on the results of hierarchical clustering.
+
+```{r}
+corrplot((cor(corr_var_name)),
+         method = "ellipse",
+         order = "hclust",
+         hclust.method = "ward.D",
+         addrect = 3,
+         tl.pos = "lt",
+         tl.col = "black",
+         tl.cex = .6,
+         tl.srt = 45,
+         number.cex = .6,
+         cl.cex = .6,
+         title = "Correlation with K-2 Hierarchical Clustering",
+         mar = c(0,0,1,0))
+```
+:::
+
+### **4.1.6 Conclusion**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+In general, the corrgram for all starbucks drinks show that caffeine is mostly negatively correlated with the other nutritional factors except protein, whereas the rest are positively correlated. The diagram also shows that following pairs of nutritional factors of starbucks drinks are highly correlated (r \> 0.90):
+
+-   Total Fat(g) -- Calories from Fat (r = 1)
+
+-   Total Fat(g) -- Saturated Fat(g) (r = 0.94)
+
+-   Calories from fat -- Saturated Fat (g) (r = 0.94)
+
+-   Sugars (g) -- Total Carbohydrate (g) (r = 0.99)
+
+-   Sugars (g) -- Calories (r = 0.92)
+
+-   Total Carbohydrate (g) -- Calories (r = 0.94)
+
+The trans fat(g) and caffeine (mg) pair is not significant at p \<0.05 and has a correlation parameter of only 0.01.
+
+From the multiple corrgram, an interesting finding is that the caffeine for kids drinks and tea is positively correlated to the other factors.
+
+The starbucks drinks nutrition factors can be separated into 3 clusters:
+
+-   Caffeine (mg)
+
+-   Trans fat(g), Cholesterol(mg), Saturated fat(g), Calories from fat, Total Fat(g)
+
+-   Sodium (mg), Calories, Total Carbohydrate(g), Sugars(g), Dietary Fiber(g), Protein(g)
+
+The nutrition factors in each cluster are correlated with one another. Caffeine is standalone as it is not highly correlated with the others and generally has a negative correlation with the rest.
+:::
+
+## **4.2 Heatmap**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+A [heatmap](https://en.wikipedia.org/wiki/Heat_map) is a data visualization technique that shows magnitude of a phenomenon as color in two dimensions. The variation in color may be by hue or intensity, giving obvious visual cues to the reader about how the phenomenon is clustered or varies over space.
+
+The top drinks dataset where nutritional values have been normalised against the unit volume will be used for plotting the heat map.
+
+First, the *dend_expend()* and *find_k()* functions of dendextend package was used to determine the best clustering method and number of cluster.
+
+```{r}
+name_matrix <- data.matrix(name_norm)
+```
+
+```{r}
+name_matrix_d <- dist(normalize(name_matrix), method = "euclidean")
+```
+
+```{r}
+name_clustHM <- hclust(name_matrix_d, method = "average")
+```
+
+```{r}
+heatmap_k <- find_k(name_clustHM)
+plot(heatmap_k)
+```
+:::
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+Next, **heatmaply** package was used to plot the heatmap for Ice Coffee, Hot Chocolate and Pumpkin Spice Crème for different combinations of milk and whipped cream.
+
+```{r}
+heatmaply(percentize(name_matrix),
+          colors = Blues,
+          k_row = 6,
+          margins = c(0, 100, 30, 50), #btm, left, top, right
+          fontsize_row = 6,
+          fontsize_col = 6,
+          title= list(
+            text = "Playing with Fonts",
+            font = t1),
+          xlab = "Nutrition",
+          ylab = "Drinks",
+          main = "Heatmap of Top 3 popular Starbucks Drinks")
+```
+:::
+
+### **4.2.1 Conclusion**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+The heatmap compares the nutritional value of hot chocolate, pumpkin spice crème and iced coffee, which are popular drinks in Starbucks. It shows that hot chocolate and pump spice crème are generally unhealthier, containing higher sodium, sugars, carbohydrates, and cholesterol levels than iced coffee. On the other hand, iced coffee contains higher caffeine levels than the hot chocolate and pump spice crème. The impact of milk, whipped cream, sweetener choices on the nutritional value of drinks were further analysed using hierarchical clustering. The drinks were separated into 4 clusters:
+
+-   Hot Chocolate and Pumpkin Spice Crème with whipped cream or Pumpkin Spiced Crème with Whole/2% milk
+
+-   Pumpkin Spice Crème without whipped cream with soy or nonfat milk
+
+-   Hot Chocolate and Pumpkin Spice Crème without whipped cream
+
+-   Iced Coffee with all milk and sweetener combinations
+
+For Hot Chocolate and Pumpkin Spice Crème, the nutritional value was determined by whipped cream then milk type. In general, no whipped cream and plant-based milk milk choices are considered healthier with lower sodium, sugars, carbohydrates, and cholesterol levels. For Iced coffee, the nutritional value was determined by sweetener then milk type. Unsweetened iced coffee with plant-based milk is considered healthier with lower sodium, sugars, carbohydrates, and cholesterol levels.
+:::
+
+## **4.3 Parallel Coordinate Plot**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+[Parallel coordinates](https://en.wikipedia.org/wiki/Parallel_coordinates) are a common way of visualizing and analyzing high-dimensional datasets. To show a set of points in an n-dimensional space, a backdrop is drawn consisting of n parallel lines, typically vertical and equally spaced. A point in n-dimensional space is represented as a polyline with vertices on the parallel axes; the position of the vertex on the i-th axis corresponds to the i-th coordinate of the point.
+
+The parallel coordinate was plotted using the **parallelPlot** package.
+
+```{r}
+drink.pc <- corr_var_name
+
+histoVisibility <- rep(TRUE, 
+                       ncol(drink.pc))
+
+parallelPlot(drink.pc,
+             rotateTitle = TRUE,
+             continuousCS = 'YlGnBu',
+             histoVisibility = histoVisibility)
+```
+:::
+
+### **4.3.1 Conclusion**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+The findings from the parallel coordinate plot are generally in line with the corrgram above. Drinks with high calories typically have high total carbohydrate, sugars, sodium and lower caffeine, vice versa. Some factors like trans fat, dietary fibre and cholesterol are generally not-well distributed with most drinks having a low nutritional value for those factors. They may not be a good indicator of the calorific content of the drinks.
+:::
+
+# 5 References
+
+-   [ggcorrplot](https://cran.r-project.org/web/packages/ggcorrplot/ggcorrplot.pdf)
+
+-   [corrplot](https://www.rdocumentation.org/packages/corrplot/versions/0.2-0/topics/corrplot)
+
+-   [heatmaply](https://cran.r-project.org/web/packages/heatmaply/vignettes/heatmaply.html)
