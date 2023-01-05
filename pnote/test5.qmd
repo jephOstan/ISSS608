@@ -15,56 +15,22 @@ format:
 
 # 1. OVERVIEW
 
-In this take-home exercise, we will explore the impact of COVID-19 on the stock prices of top 40 companies in Singapore by market capitalisation.
-
--   
-
-    -   The data extraction and cleaning required some effort as the company names had to be referenced from another table, and extracted using the *tidyquant* package. Some experimentation also had to be done to optimise the frequency of the data to be extracted, as daily data may lower the clarity due to minute fluctuations as compared to weekly data.
-
-    -   The horiplot required extensive customisation to make it aesthetically pleasing, such as the sizing of the text fonts, adjusting the scale of the colour and the origin of the graph. Furthermore, as a time series scale was used for the x-axis, the date labels required special customisation using the *scale_x\_date* function.
-
-    -   Coming from a non-financial background, the task took abit of research to figure out financial terms and technical standards for stock market price monitoring
+This study explores the creation of a time-series visualisation with a subject matter focus on the COVID-19 impact on the stock prices of the top 40 companies in Singapore.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
+## [**Visualisation at daily or weekly data :**]{style="color:#3a9c88"}
 
-The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
+Daily or weekly depends on the end users to this analysis output. For users whose cash flow unable to move fast enough would prefer weekly data, otherwise daily data.
 
-[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
+Weekly data helps to focus on the predominant longer-term trend, without being distracted by the "noise" and daily fluctuations.
 
--   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
-
--   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
-
--   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+The greatest challenge is to plot a comprehensible daily chart.
 :::
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
+## [**Lack of domain knowledge :**]{style="color:#3a9c88"}
 
-The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
-
-[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
-
--   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
-
--   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
-
--   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
-:::
-
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Challenges of interactive visualisation :**]{style="color:#3a9c88"}
-
-The study requires a certain level of data transformation and several widgets to create an interactive visualisation.
-
-[Transform with *filter( )* function, and add widgets via :]{style="color:#d69c3c"}
-
--   [*plotly::hovermenu( )*,]{style="color:#d69c3c"}
-
--   [*plotly::updatemenus( )*,]{style="color:#d69c3c"}
-
--   [*plotly::layout-sliders( )*.]{style="color:#d69c3c"}
+Extra readings required to understand the financial terms and technical standards for stock market price monitoring.
 :::
 
 # 2. R PACKAGE REQUIRED
@@ -79,7 +45,7 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, knitr, rmarkdown, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)
+pacman::p_load(tidyverse, knitr, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
@@ -139,11 +105,9 @@ dplyr :
 
 ## 3.1 Acquire Data Source
 
-The dataset used for this practice is the stock prices of [top 40 companies in Singapore by market capitalisation](https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/) between 1st January 2020 - 31st December 2021.
+-   [companiesmarketcap.com market-capitalisation](https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/)
 
--   [Kaggle Starbucks nutrition data set](https://www.kaggle.com/datasets/swoolfeek/starbucks-nutrition-with-sugar-and-etc?resource=download&select=starbucks_drink.csv)
-
-    -   Download "[starbucks_drink](https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2000to2010.ashx).csv" data set.
+    -   Download "[total market cap](https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/?download=csv)" data set.
 
 ## 3.2 Import Data
 
@@ -173,91 +137,93 @@ glimpse(sgp_marketCap,0)
 ```
 
 ```{r}
-kable(head(sgp_marketCap))
+kable(head(sgp_marketCap,5))
 ```
+:::
 
-Since the dataset is already ranked by market capitalisation, we can extract the Top 40 by using *head()*.
+### 3.2.3 Filter Top40 Companies
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***head( )*** - utils -]{style="color:#d46e15"} to return the top 40 companies.
+:::
 
 ```{r}
-top40 <- head(sgp_marketCap, 40)
+top40 <- head(sgp_marketCap, 40) %>%
+  select(-c(1, 4:6)) %>%
+  rename(symbol = Symbol) %>%
+  rename(name = Name)
 ```
-
-[Remarks :]{style="color:#d69c3c"}
-
-[The "Caffein(mg)" variable consist of mixed values including absolute and values in range.]{style="color:#d69c3c"}
 :::
 
 ## 3.3 Data Wrangling
 
-### 3.3.1 Edit "Caffeine(mg)" Variable
+### 3.3.1 Create Non-Distributed Vector List
 
 ::: {.callout-warning appearance="simple" icon="false"}
-First remove special character, then replace the range values with the maximum value.
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
 
-#### 3.3.1.1 remove special character
-
-Remove special character from '40+'.
-
-Only the columns containing the symbol and name of the company were extracted, and the columns were renamed in preparation for joining of tables later on.
+[***as.vector( )*** - pbdDMAT -]{style="color:#d46e15"} to convert "name" and "symbol" into a non-distributed vectors.
+:::
 
 ```{r}
-top40 <- top40[-c(1, 4:6)]
-top40 <- rename(top40, symbol = Symbol)
-top40 <- rename(top40, name = Name)
-
-kable(head(top40))
+vector_name.list <- as.vector(top40$name)
+vector_symbol.list <- as.vector(top40$symbol)
 ```
+:::
 
-#### 3.3.1.2 update with for-loop function
+### 3.3.2 Extract Stock Information
 
-The company symbols and names were listed using *as.vector()* function according to the rank.
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***tq_get( )*** - tidyquant -]{style="color:#d46e15"} to get the quantitative stock data in `tibble` format.
+
+[***tq_transmute( )*** - tidyquant -]{style="color:#d46e15"} to get weekly data.
+:::
 
 ```{r}
-top40_sym <- as.vector(top40$symbol)
-top40_name <- as.vector(top40$name)
-```
-
-#### 3.3.1.3 convert variable type
-
-Using the list of Top 40 symbols, the stock prices of the companies from 2020 to 2021 were extracted using the **tidyquant** package. Weekly period was used as it provides a longer term comparison compared to daily period, which may be too fluctuative to point out major trends.
-
-```{r}
-stock_data_weekly = tq_get(top40_sym,
-                          get = "stock.prices",
-                          from = "2020-01-01",
-                          to = "2021-12-31")%>%
+stock_week = tq_get(vector_symbol.list,
+                      get = "stock.prices",
+                      from = "2020-01-01",
+                      to = "2021-12-31") %>%
   group_by(symbol) %>%
-  tq_transmute(select     = NULL, 
+  tq_transmute(select = NULL, 
                mutate_fun = to.period, 
                period  = "weeks")
 
-kable(head(stock_data_weekly))
-```
-
-```{r}
-
-```
-
-```{r}
-
+kable(head(stock_week))
 ```
 
 [Remarks :]{style="color:#d69c3c"}
 
-[The]{style="color:#d69c3c"}
+The data is based on every week Sunday. However, the trading hours for Singapore Exchange (SGX) is between Monday to Friday.
+
+"open" = the opening value of a day.
+
+"close" = the closing value of a day.
+
+"adjusted" = adjusted closing price refers to the price of the stock after paying off the dividends. Often used to examine historical returns or analyse past performance.
+
+"open" and "close" are far apart it shows strong momentum, otherwise may suggest indecision or weak momentum.[^1]
+
+"high" and "low" are useful to assess volatility of a stock price.
 :::
 
-## 3.4
+[^1]: https://www.investopedia.com/terms/o/ohlcchart.asp
 
-# 3.2 Data Wrangling
-
-The weekly rate of change of stock price was calculated using the adjusted price.
+### 3.3.3 ???
 
 ::: {.callout-warning appearance="simple" icon="false"}
-To identify the largest drink names, the *group_by()* function was used to group the orders by name and *summarise()* was used to count (i.e. n()) the total number of drinks for each name. Then, *arrange(desc)* was used to sort the data and *top_n()* was used to select and identify the top 3 largest names. *filter()* was used to display rows of drinks that are in the top 3 largest names. They are iced coffee, hot chocolate and pumpkin spice crème.
+??? The weekly rate of change of stock price was calculated using the adjusted price.
 
 ```{r}
-stock_data_weekly$change <- ((stock_data_weekly$adjusted/shift(stock_data_weekly$adjusted)) - 1 )*100
+stock_week$change <- ((stock_week$adjusted/shift(
+  stock_week$adjusted)) - 1 )*100
 ```
 
 Next, the names of the companies were added to the stock price dataset using *merge()*, because it is easier to identify name than symbols in the visualisation.
@@ -273,19 +239,22 @@ Next, the names of the companies were added to the stock price dataset using *me
 :::
 
 ```{r}
-stock_data_weekly <- merge(stock_data_weekly, top40, by = 'symbol')
+stock_week <- merge(stock_week, 
+                      top40, 
+                      by = 'symbol')
 
-kable(head(stock_data_weekly))
+kable(head(stock_week))
 ```
 
 Lastly, the rows were ordered by the name of the stock in descending order of the market capitalisation value.
 
 ```{r}
-stock_data_weekly <- stock_data_weekly %>%
-  mutate(name =  factor(name, levels = top40_name)) %>%
+stock_week <- stock_week %>%
+  mutate(name =  factor(name, 
+                        levels = vector_name.list)) %>%
   arrange(name)
 
-kable(head(stock_data_weekly))
+kable(head(stock_week))
 ```
 
 # 4 Visualisation
@@ -297,16 +266,16 @@ The figure below shows a horizon plot using the **ggHoriplot** package. The pale
 ```{r}
 ggplot() +
   geom_horizon(aes(date, change),
-               data = stock_data_weekly,
+               data = stock_week,
                origin = 0,
                horizonscale = c(-15, -5, -1,  0,  1, 3, 5)) +
   scale_fill_hcl(palette = 'RdBu') +
-  facet_grid(name~.)+
-   theme_few() +
+  facet_grid(name~.) +
+  theme_few() +
   theme(
-    panel.spacing.y=unit(0, "lines"),
-    plot.title = element_text(size=12),
-    plot.subtitle = element_text(size=9),
+    panel.spacing.y = unit(0, "lines"),
+    plot.title = element_text(size = 12),
+    plot.subtitle = element_text(size = 9),
     strip.text.y = element_text(size = 5, angle = 0, hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
@@ -314,12 +283,13 @@ ggplot() +
     axis.text.x = element_text(size = 7, angle = 90, hjust = 0, vjust = 0.5),
     axis.title.x = element_blank(),
     panel.border = element_blank(),
-    legend.position="none"
+    legend.position = "none"
     ) +
-  scale_x_date(expand=c(0,0), 
+  scale_x_date(expand = c(0,0), 
                date_breaks = "1 month", 
                date_labels = "%b '%y",
-               limit=c(as.Date("2020-01-01"),as.Date("2021-12-31"))) +
+               limit = c(as.Date("2020-01-01"),
+                         as.Date("2021-12-31"))) +
   xlab('Date') +
   ggtitle('Stock Prices of Top 40 Companies in Singapore, 2020 to 2021', 
           'Ranked by Market Capitalisation, Weekly Data') +

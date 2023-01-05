@@ -251,15 +251,14 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#import-data-set" id="toc-import-data-set" class="nav-link" data-scroll-target="#import-data-set">3.2.1 Import Data Set</a></li>
   <li><a href="#inspect-imported-data-set" id="toc-inspect-imported-data-set" class="nav-link" data-scroll-target="#inspect-imported-data-set">3.2.2 Inspect Imported Data Set</a></li>
+  <li><a href="#filter-top40-companies" id="toc-filter-top40-companies" class="nav-link" data-scroll-target="#filter-top40-companies">3.2.3 Filter Top40 Companies</a></li>
   </ul></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">3.3 Data Wrangling</a>
   <ul class="collapse">
-  <li><a href="#edit-caffeinemg-variable" id="toc-edit-caffeinemg-variable" class="nav-link" data-scroll-target="#edit-caffeinemg-variable">3.3.1 Edit “Caffeine(mg)” Variable</a></li>
+  <li><a href="#create-non-distributed-vector-list" id="toc-create-non-distributed-vector-list" class="nav-link" data-scroll-target="#create-non-distributed-vector-list">3.3.1 Create Non-Distributed Vector List</a></li>
+  <li><a href="#extract-stock-information" id="toc-extract-stock-information" class="nav-link" data-scroll-target="#extract-stock-information">3.3.2 Extract Stock Information</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">3.3.3 ???</a></li>
   </ul></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">3.4</a></li>
-  </ul></li>
-  <li><a href="#data-wrangling-1" id="toc-data-wrangling-1" class="nav-link" data-scroll-target="#data-wrangling-1">3.2 Data Wrangling</a>
-  <ul class="collapse">
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">5 Conclusion</a></li>
@@ -295,33 +294,22 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 <section id="overview" class="level1">
 <h1>1. OVERVIEW</h1>
-<p>In this take-home exercise, we will explore the impact of COVID-19 on the stock prices of top 40 companies in Singapore by market capitalisation.</p>
-<ul>
-<li><ul>
-<li><p>The data extraction and cleaning required some effort as the company names had to be referenced from another table, and extracted using the <em>tidyquant</em> package. Some experimentation also had to be done to optimise the frequency of the data to be extracted, as daily data may lower the clarity due to minute fluctuations as compared to weekly data.</p></li>
-<li><p>The horiplot required extensive customisation to make it aesthetically pleasing, such as the sizing of the text fonts, adjusting the scale of the colour and the origin of the graph. Furthermore, as a time series scale was used for the x-axis, the date labels required special customisation using the <em>scale_x_date</em> function.</p></li>
-<li><p>Coming from a non-financial background, the task took abit of research to figure out financial terms and technical standards for stock market price monitoring</p></li>
-</ul></li>
-</ul>
+<p>This study explores the creation of a time-series visualisation with a subject matter focus on the COVID-19 impact on the stock prices of the top 40 companies in Singapore.</p>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Challenges of interactive visualisation :</strong></span>
+<span style="color:#3a9c88"><strong>Visualisation at daily or weekly data :</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The study requires a certain level of data transformation and several widgets to create an interactive visualisation.</p>
-<p><span style="color:#d69c3c">Transform with <em>filter( )</em> function, and add widgets via :</span></p>
-<ul>
-<li><p><span style="color:#d69c3c"><em>plotly::hovermenu( )</em>,</span></p></li>
-<li><p><span style="color:#d69c3c"><em>plotly::updatemenus( )</em>,</span></p></li>
-<li><p><span style="color:#d69c3c"><em>plotly::layout-sliders( )</em>.</span></p></li>
-</ul>
+<p>Daily or weekly depends on the end users to this analysis output. For users whose cash flow unable to move fast enough would prefer weekly data, otherwise daily data.</p>
+<p>Weekly data helps to focus on the predominant longer-term trend, without being distracted by the “noise” and daily fluctuations.</p>
+<p>The greatest challenge is to plot a comprehensible daily chart.</p>
 </div>
 </div>
 </div>
@@ -331,41 +319,13 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Challenges of interactive visualisation :</strong></span>
+<span style="color:#3a9c88"><strong>Lack of domain knowledge :</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The study requires a certain level of data transformation and several widgets to create an interactive visualisation.</p>
-<p><span style="color:#d69c3c">Transform with <em>filter( )</em> function, and add widgets via :</span></p>
-<ul>
-<li><p><span style="color:#d69c3c"><em>plotly::hovermenu( )</em>,</span></p></li>
-<li><p><span style="color:#d69c3c"><em>plotly::updatemenus( )</em>,</span></p></li>
-<li><p><span style="color:#d69c3c"><em>plotly::layout-sliders( )</em>.</span></p></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Challenges of interactive visualisation :</strong></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The study requires a certain level of data transformation and several widgets to create an interactive visualisation.</p>
-<p><span style="color:#d69c3c">Transform with <em>filter( )</em> function, and add widgets via :</span></p>
-<ul>
-<li><p><span style="color:#d69c3c"><em>plotly::hovermenu( )</em>,</span></p></li>
-<li><p><span style="color:#d69c3c"><em>plotly::updatemenus( )</em>,</span></p></li>
-<li><p><span style="color:#d69c3c"><em>plotly::layout-sliders( )</em>.</span></p></li>
-</ul>
+<p>Extra readings required to understand the financial terms and technical standards for stock market price monitoring.</p>
 </div>
 </div>
 </div>
@@ -386,7 +346,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, knitr, rmarkdown, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, knitr, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><span style="color:#d69c3c">Remarks :</span></p>
@@ -444,11 +404,10 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <h1>3. DATA</h1>
 <section id="acquire-data-source" class="level2">
 <h2 class="anchored" data-anchor-id="acquire-data-source">3.1 Acquire Data Source</h2>
-<p>The dataset used for this practice is the stock prices of <a href="https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/">top 40 companies in Singapore by market capitalisation</a> between 1st January 2020 - 31st December 2021.</p>
 <ul>
-<li><p><a href="https://www.kaggle.com/datasets/swoolfeek/starbucks-nutrition-with-sugar-and-etc?resource=download&amp;select=starbucks_drink.csv">Kaggle Starbucks nutrition data set</a></p>
+<li><p><a href="https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/">companiesmarketcap.com market-capitalisation</a></p>
 <ul>
-<li>Download “<a href="https://www.singstat.gov.sg/-/media/files/find_data/population/statistical_tables/respopagesextod2000to2010.ashx">starbucks_drink</a>.csv” data set.</li>
+<li>Download “<a href="https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/?download=csv">total market cap</a>” data set.</li>
 </ul></li>
 </ul>
 </section>
@@ -530,18 +489,10 @@ $ country       &lt;chr&gt; …</code></pre>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgp_marketCap))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgp_marketCap,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 31%">
-<col style="width: 10%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 14%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Rank</th>
@@ -557,63 +508,78 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">DBS Group</td>
 <td style="text-align: left;">D05.SI</td>
-<td style="text-align: right;">65157130700</td>
-<td style="text-align: right;">25.32</td>
+<td style="text-align: right;">66770694229</td>
+<td style="text-align: right;">25.94</td>
 <td style="text-align: left;">Singapore</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">OCBC Bank</td>
 <td style="text-align: left;">O39.SI</td>
-<td style="text-align: right;">40864457238</td>
-<td style="text-align: right;">9.09</td>
+<td style="text-align: right;">41736766443</td>
+<td style="text-align: right;">9.28</td>
 <td style="text-align: left;">Singapore</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">UOB</td>
 <td style="text-align: left;">U11.SI</td>
-<td style="text-align: right;">38371794525</td>
-<td style="text-align: right;">22.91</td>
+<td style="text-align: right;">38709263592</td>
+<td style="text-align: right;">23.12</td>
 <td style="text-align: left;">Singapore</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td style="text-align: left;">Singtel</td>
-<td style="text-align: left;">Z74.SI</td>
-<td style="text-align: right;">31683620839</td>
-<td style="text-align: right;">1.92</td>
+<td style="text-align: left;">Sea (Garena)</td>
+<td style="text-align: left;">SE</td>
+<td style="text-align: right;">31271952384</td>
+<td style="text-align: right;">55.67</td>
 <td style="text-align: left;">Singapore</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
-<td style="text-align: left;">Sea (Garena)</td>
-<td style="text-align: left;">SE</td>
-<td style="text-align: right;">29227227136</td>
-<td style="text-align: right;">52.03</td>
-<td style="text-align: left;">Singapore</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">Wilmar International</td>
-<td style="text-align: left;">F34.SI</td>
-<td style="text-align: right;">19429093823</td>
-<td style="text-align: right;">3.11</td>
+<td style="text-align: left;">Singtel</td>
+<td style="text-align: left;">Z74.SI</td>
+<td style="text-align: right;">31067209219</td>
+<td style="text-align: right;">1.88</td>
 <td style="text-align: left;">Singapore</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Since the dataset is already ranked by market capitalisation, we can extract the Top 40 by using <em>head()</em>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="filter-top40-companies" class="level3">
+<h3 class="anchored" data-anchor-id="filter-top40-companies">3.2.3 Filter Top40 Companies</h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>head( )</em></strong> - utils -</span> to return the top 40 companies.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>top40 <span class="ot">&lt;-</span> <span class="fu">head</span>(sgp_marketCap, <span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>top40 <span class="ot">&lt;-</span> <span class="fu">head</span>(sgp_marketCap, <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">symbol =</span> Symbol) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">name =</span> Name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><span style="color:#d69c3c">Remarks :</span></p>
-<p><span style="color:#d69c3c">The “Caffein(mg)” variable consist of mixed values including absolute and values in range.</span></p>
 </div>
 </div>
 </div>
@@ -621,93 +587,69 @@ $ country       &lt;chr&gt; …</code></pre>
 </section>
 <section id="data-wrangling" class="level2">
 <h2 class="anchored" data-anchor-id="data-wrangling">3.3 Data Wrangling</h2>
-<section id="edit-caffeinemg-variable" class="level3">
-<h3 class="anchored" data-anchor-id="edit-caffeinemg-variable">3.3.1 Edit “Caffeine(mg)” Variable</h3>
+<section id="create-non-distributed-vector-list" class="level3">
+<h3 class="anchored" data-anchor-id="create-non-distributed-vector-list">3.3.1 Create Non-Distributed Vector List</h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>First remove special character, then replace the range values with the maximum value.</p>
-<section id="remove-special-character" class="level4">
-<h4 class="anchored" data-anchor-id="remove-special-character">3.3.1.1 remove special character</h4>
-<p>Remove special character from ‘40+’.</p>
-<p>Only the columns containing the symbol and name of the company were extracted, and the columns were renamed in preparation for joining of tables later on.</p>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>as.vector( )</em></strong> - pbdDMAT -</span> to convert “name” and “symbol” into a non-distributed vectors.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>top40 <span class="ot">&lt;-</span> top40[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)]</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>top40 <span class="ot">&lt;-</span> <span class="fu">rename</span>(top40, <span class="at">symbol =</span> Symbol)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>top40 <span class="ot">&lt;-</span> <span class="fu">rename</span>(top40, <span class="at">name =</span> Name)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(top40))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>vector_name.list <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(top40<span class="sc">$</span>name)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>vector_symbol.list <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(top40<span class="sc">$</span>symbol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;">name</th>
-<th style="text-align: left;">symbol</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">DBS Group</td>
-<td style="text-align: left;">D05.SI</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">OCBC Bank</td>
-<td style="text-align: left;">O39.SI</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">UOB</td>
-<td style="text-align: left;">U11.SI</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Singtel</td>
-<td style="text-align: left;">Z74.SI</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Sea (Garena)</td>
-<td style="text-align: left;">SE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Wilmar International</td>
-<td style="text-align: left;">F34.SI</td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section id="update-with-for-loop-function" class="level4">
-<h4 class="anchored" data-anchor-id="update-with-for-loop-function">3.3.1.2 update with for-loop function</h4>
-<p>The company symbols and names were listed using <em>as.vector()</em> function according to the rank.</p>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>top40_sym <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(top40<span class="sc">$</span>symbol)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>top40_name <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(top40<span class="sc">$</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<section id="extract-stock-information" class="level3">
+<h3 class="anchored" data-anchor-id="extract-stock-information">3.3.2 Extract Stock Information</h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-</section>
-<section id="convert-variable-type" class="level4">
-<h4 class="anchored" data-anchor-id="convert-variable-type">3.3.1.3 convert variable type</h4>
-<p>Using the list of Top 40 symbols, the stock prices of the companies from 2020 to 2021 were extracted using the <strong>tidyquant</strong> package. Weekly period was used as it provides a longer term comparison compared to daily period, which may be too fluctuative to point out major trends.</p>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>tq_get( )</em></strong> - tidyquant -</span> to get the quantitative stock data in <code>tibble</code> format.</p>
+<p><span style="color:#d46e15"><strong><em>tq_transmute( )</em></strong> - tidyquant -</span> to get weekly data.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>stock_data_weekly <span class="ot">=</span> <span class="fu">tq_get</span>(top40_sym,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">get =</span> <span class="st">"stock.prices"</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">from =</span> <span class="st">"2020-01-01"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">to =</span> <span class="st">"2021-12-31"</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select     =</span> <span class="cn">NULL</span>, </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">mutate_fun =</span> to.period, </span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">period  =</span> <span class="st">"weeks"</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_data_weekly))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">=</span> <span class="fu">tq_get</span>(vector_symbol.list,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">get =</span> <span class="st">"stock.prices"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">from =</span> <span class="st">"2020-01-01"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">to =</span> <span class="st">"2021-12-31"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select =</span> <span class="cn">NULL</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">mutate_fun =</span> to.period, </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">period  =</span> <span class="st">"weeks"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -788,38 +730,31 @@ $ country       &lt;chr&gt; …</code></pre>
 </table>
 </div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 <p><span style="color:#d69c3c">Remarks :</span></p>
-<p><span style="color:#d69c3c">The</span></p>
-</section>
+<p>The data is based on every week Sunday. However, the trading hours for Singapore Exchange (SGX) is between Monday to Friday.</p>
+<p>“open” = the opening value of a day.</p>
+<p>“close” = the closing value of a day.</p>
+<p>“adjusted” = adjusted closing price refers to the price of the stock after paying off the dividends. Often used to examine historical returns or analyse past performance.</p>
+<p>“open” and “close” are far apart it shows strong momentum, otherwise may suggest indecision or weak momentum.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>“high” and “low” are useful to assess volatility of a stock price.</p>
 </div>
 </div>
 </div>
 </section>
-</section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">3.4</h2>
-</section>
-</section>
-<section id="data-wrangling-1" class="level1">
-<h1>3.2 Data Wrangling</h1>
-<p>The weekly rate of change of stock price was calculated using the adjusted price.</p>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section">3.3.3 ???</h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>To identify the largest drink names, the <em>group_by()</em> function was used to group the orders by name and <em>summarise()</em> was used to count (i.e.&nbsp;n()) the total number of drinks for each name. Then, <em>arrange(desc)</em> was used to sort the data and <em>top_n()</em> was used to select and identify the top 3 largest names. <em>filter()</em> was used to display rows of drinks that are in the top 3 largest names. They are iced coffee, hot chocolate and pumpkin spice crème.</p>
+<p>??? The weekly rate of change of stock price was calculated using the adjusted price.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stock_data_weekly<span class="sc">$</span>change <span class="ot">&lt;-</span> ((stock_data_weekly<span class="sc">$</span>adjusted<span class="sc">/</span><span class="fu">shift</span>(stock_data_weekly<span class="sc">$</span>adjusted)) <span class="sc">-</span> <span class="dv">1</span> )<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>stock_week<span class="sc">$</span>change <span class="ot">&lt;-</span> ((stock_week<span class="sc">$</span>adjusted<span class="sc">/</span><span class="fu">shift</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  stock_week<span class="sc">$</span>adjusted)) <span class="sc">-</span> <span class="dv">1</span> )<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Next, the names of the companies were added to the stock price dataset using <em>merge()</em>, because it is easier to identify name than symbols in the visualisation.</p>
@@ -847,22 +782,24 @@ $ country       &lt;chr&gt; …</code></pre>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stock_data_weekly <span class="ot">&lt;-</span> <span class="fu">merge</span>(stock_data_weekly, top40, <span class="at">by =</span> <span class="st">'symbol'</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_data_weekly))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">&lt;-</span> <span class="fu">merge</span>(stock_week, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                      top40, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">by =</span> <span class="st">'symbol'</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <colgroup>
 <col style="width: 9%">
 <col style="width: 12%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
 <col style="width: 9%">
 <col style="width: 10%">
-<col style="width: 15%">
+<col style="width: 14%">
 <col style="width: 15%">
 </colgroup>
 <thead>
@@ -889,7 +826,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">78.20</td>
 <td style="text-align: right;">517909</td>
 <td style="text-align: right;">69.56585</td>
-<td style="text-align: right;">3578.0880309</td>
+<td style="text-align: right;">255.2765702</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="even">
@@ -912,8 +849,8 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">74.25</td>
 <td style="text-align: right;">74.70</td>
 <td style="text-align: right;">482330</td>
-<td style="text-align: right;">66.45229</td>
-<td style="text-align: right;">0.4707463</td>
+<td style="text-align: right;">66.45228</td>
+<td style="text-align: right;">0.4707342</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="even">
@@ -925,7 +862,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">72.55</td>
 <td style="text-align: right;">311990</td>
 <td style="text-align: right;">64.53968</td>
-<td style="text-align: right;">-2.8781643</td>
+<td style="text-align: right;">-2.8781526</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="odd">
@@ -937,7 +874,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">71.80</td>
 <td style="text-align: right;">692375</td>
 <td style="text-align: right;">63.87249</td>
-<td style="text-align: right;">-1.0337671</td>
+<td style="text-align: right;">-1.0337733</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="even">
@@ -948,8 +885,8 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">74.55</td>
 <td style="text-align: right;">75.05</td>
 <td style="text-align: right;">395475</td>
-<td style="text-align: right;">66.76365</td>
-<td style="text-align: right;">4.5264542</td>
+<td style="text-align: right;">66.76366</td>
+<td style="text-align: right;">4.5264733</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 </tbody>
@@ -960,11 +897,12 @@ $ country       &lt;chr&gt; …</code></pre>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stock_data_weekly <span class="ot">&lt;-</span> stock_data_weekly <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span>  <span class="fu">factor</span>(name, <span class="at">levels =</span> top40_name)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(name)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_data_weekly))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">&lt;-</span> stock_week <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span>  <span class="fu">factor</span>(name, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> vector_name.list)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(name)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -1028,7 +966,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">26.35</td>
 <td style="text-align: right;">2347500</td>
 <td style="text-align: right;">22.83107</td>
-<td style="text-align: right;">1.3461809</td>
+<td style="text-align: right;">1.3461540</td>
 <td style="text-align: left;">DBS Group</td>
 </tr>
 <tr class="even">
@@ -1040,7 +978,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">26.20</td>
 <td style="text-align: right;">1474500</td>
 <td style="text-align: right;">22.70110</td>
-<td style="text-align: right;">-0.5692637</td>
+<td style="text-align: right;">-0.5692550</td>
 <td style="text-align: left;">DBS Group</td>
 </tr>
 <tr class="odd">
@@ -1064,7 +1002,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">25.31</td>
 <td style="text-align: right;">5097800</td>
 <td style="text-align: right;">21.92996</td>
-<td style="text-align: right;">-0.2365077</td>
+<td style="text-align: right;">-0.2364986</td>
 <td style="text-align: left;">DBS Group</td>
 </tr>
 </tbody>
@@ -1078,41 +1016,42 @@ $ country       &lt;chr&gt; …</code></pre>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(date, change),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> stock_data_weekly,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="dv">0</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">horizonscale =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">15</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">0</span>,  <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">'RdBu'</span>) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(name<span class="sc">~</span>.)<span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_few</span>() <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y=</span><span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">9</span>),</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 month"</span>, </span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b '%y"</span>,</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">limit=</span><span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),<span class="fu">as.Date</span>(<span class="st">"2021-12-31"</span>))) <span class="sc">+</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">'Date'</span>) <span class="sc">+</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">'Stock Prices of Top 40 Companies in Singapore, 2020 to 2021'</span>, </span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Ranked by Market Capitalisation, Weekly Data'</span>) <span class="sc">+</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-02-07"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-04-07"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-06-02"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-11-09"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-08"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-10-09"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-11-26"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(date, change),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> stock_week,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="dv">0</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">horizonscale =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">15</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">0</span>,  <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">'RdBu'</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(name<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_few</span>() <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 month"</span>, </span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b '%y"</span>,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">limit =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">as.Date</span>(<span class="st">"2021-12-31"</span>))) <span class="sc">+</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">'Date'</span>) <span class="sc">+</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">'Stock Prices of Top 40 Companies in Singapore, 2020 to 2021'</span>, </span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Ranked by Market Capitalisation, Weekly Data'</span>) <span class="sc">+</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-02-07"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-04-07"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-06-02"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-11-09"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-08"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-10-09"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-11-26"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -1123,7 +1062,7 @@ $ country       &lt;chr&gt; …</code></pre>
 ℹ Please use `linewidth` in the `default_aes` field and elsewhere instead.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="test5_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="test5_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><span style="color:#d69c3c">Remarks :</span></p>
@@ -1132,6 +1071,8 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 </div>
+</section>
+</section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1"></h2>
 </section>
@@ -1179,7 +1120,13 @@ $ country       &lt;chr&gt; …</code></pre>
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>https://www.investopedia.com/terms/o/ohlcchart.asp<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
