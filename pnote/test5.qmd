@@ -178,12 +178,43 @@ vector_symbol.list <- as.vector(top40$symbol)
 ### 3.3.2 Extract Stock Information
 
 ::: {.callout-warning appearance="simple" icon="false"}
+The prices that retrieved with tq_get() is different from the prices displayed on the website. But there is no metadata to verify this differences. Hence, identify this matter first prior to analyse the data.
+
+#### 3.3.2.1 clarify price difference
+
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
 [***tq_get( )*** - tidyquant -]{style="color:#d46e15"} to get the quantitative stock data in `tibble` format.
 
 [***tq_transmute( )*** - tidyquant -]{style="color:#d46e15"} to get weekly data.
+:::
+
+```{r}
+test0 = tq_get(vector_symbol.list,
+                      get = "stock.prices",
+                      from = "2022-12-01",
+                      to = "2023-01-06") %>%
+  group_by(symbol) %>%
+  tq_transmute(select = NULL, 
+               mutate_fun = to.period, 
+               period  = "weeks")
+
+kable(head(test0))
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+The price for DBS Group, dated January 5, 2023, indicated on the [companiesmarketcap.com](https://companiesmarketcap.com/singapore/largest-companies-in-singapore-by-market-cap/){style="font-size: 11pt;"} website, was USD\$25.94. But this value is unable to match any retrieved prices, as shown above.
+
+Based on the exchange rate between 1SGD and UGD dated January 5, 2023, 0930 UTC, which is 1730 pm Singapore time (the SGX trading hours ceased by then, so the closing price should not be far off from the currency exchanged), it was \$[0.746082](https://www.xe.com/currencyconverter/convert/?Amount=1&From=SGD&To=USD).
+
+Hence, dividing USD\$25.94 by \$0.746082 will get SGD\$34.77, which is close to the adjusted closing price, i.e. \$34.78, as shown above, which can be verified with [Yahoo](https://sg.finance.yahoo.com/quote/D05.SI/history/?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAABuT94JS8Kpk_bY1ONaNuELT80CDjVx6nQmuPZz0JBJQpwmNgIp_9d2feVacbRnevZHzXGJz-IYVvOwja9rV9XGpht-KT8o916kJKei5jWCYNYGoOnLb_yksyjvrY-GfwKLjKwba334xi-oIcgcqmotFhmIAs5s8vlhosPa_GXxM){style="font-size: 11pt;"} data to ensure there is no parsing error.
+
+#### 3.3.2.2 extract stock data
+
+::: {.callout-warning appearance="simple" icon="false"}
+The "from" date will need to be set before December 27, 2019, if January 3, 2020, data is crucial for analysis. Else, the value of the first row will have "NA" when computing the change rate.
 :::
 
 ```{r}
@@ -212,60 +243,86 @@ The data is based on every week Sunday. However, the trading hours for Singapore
 "open" and "close" are far apart it shows strong momentum, otherwise may suggest indecision or weak momentum.[^1]
 
 "high" and "low" are useful to assess volatility of a stock price.
+
+#### 3.3.2.3 save RDS file
+
+```{r}
+write_rds(stock_week, "data/stock_week.rds")
+```
+
+#### 3.3.2.4 read RDS file
+
+```{r}
+stock_week <- read_rds("data/stock_week.rds")
+```
 :::
 
 [^1]: https://www.investopedia.com/terms/o/ohlcchart.asp
 
-### 3.3.3 ???
+### 3.3.3 Compute Rate of Change
 
 ::: {.callout-warning appearance="simple" icon="false"}
-??? The weekly rate of change of stock price was calculated using the adjusted price.
+The [Rate of Change (ROC)](https://www.investopedia.com/terms/r/rateofchange.asp) represents the momentum of a variable over a defined period. A positive ROC typically means the stock outperforms the market within the past 2 weeks.
+
+"roc" will be derived by dividing the current "adjusted" price by the previous "adjusted price". Next, deduct 1 before multiplying the final value by 100.
 
 ```{r}
-stock_week$change <- ((stock_week$adjusted/shift(
-  stock_week$adjusted)) - 1 )*100
+stock_week$roc <- ((stock_week$adjusted/shift(stock_week$adjusted))-1)*100
+```
+:::
+
+### 3.3.4 Merge Data Frames
+
+::: {.callout-warning appearance="simple" icon="false"}
+Users unfamiliar with the Singapore stock market may not be able to identify companies easily based on "symbol" value. Hence, to display the "name" on the y-axis, the "name" from *top40* will need to be merged with *stock_week*.
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***merge( )*** - base -]{style="color:#d46e15"} to merge *stock_week* data frame and *top40* data frame by "symbol" variable.
+:::
+
+```{r}
+stock_week <- merge(stock_week,
+                    top40,
+                    by = 'symbol')
+
+kable(head(stock_week))
 ```
 
-Next, the names of the companies were added to the stock price dataset using *merge()*, because it is easier to identify name than symbols in the visualisation.
+#### 3.3.4.1 encode vector to factor
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***factor( )*** - base -]{style="color:#d46e15"} to encode a vector as a factor.
+:::
+
+```{r}
+stock_week <- stock_week %>%
+  mutate(name = factor(name,
+                       levels = vector_name.list))
+```
+:::
+
+# 4. VISUALISATION
+
+## 4.1 Plot Horizontal Chart
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
-[***as.integer( )*** - base -]{style="color:#d46e15"} to convert both Time and Pop from double object to integer object.
+[***factor( )*** - ggHoriplot -]{style="color:#d46e15"} to encode a vector as a factor.
 
-[***mutate( )*** - dplyr -]{style="color:#d46e15"} to add the converted variables into the data frame.
+[***scale_fill_hcl( )*** - ggHoriplot -]{style="color:#d46e15"} to set value for "palette" with 'RdBu'. Need colour contrast between negative (red) and positive (blue) to illustrate the "roc".
+
+[***geom_vline( )*** - ggHoriplot -]{style="color:#d46e15"} to draw a vertical dashed line intercepting the x-axis.
 :::
-:::
-
-```{r}
-stock_week <- merge(stock_week, 
-                      top40, 
-                      by = 'symbol')
-
-kable(head(stock_week))
-```
-
-Lastly, the rows were ordered by the name of the stock in descending order of the market capitalisation value.
-
-```{r}
-stock_week <- stock_week %>%
-  mutate(name =  factor(name, 
-                        levels = vector_name.list)) %>%
-  arrange(name)
-
-kable(head(stock_week))
-```
-
-# 4 Visualisation
-
-[Horizon plots](https://en.wikipedia.org/wiki/Infographic) are a type or plots frequently used in time-series data to represent a moving value.
-
-The figure below shows a horizon plot using the **ggHoriplot** package. The palette 'RdBu' was used to provide the contrast between negative (red) and positive (blue) rate of change. Vertical x-intercept dashed-lines were added to represent key milestones in Singapore's covid-19 journey, which will be explained later on.
 
 ```{r}
 ggplot() +
-  geom_horizon(aes(date, change),
+  geom_horizon(aes(date, roc),
                data = stock_week,
                origin = 0,
                horizonscale = c(-15, -5, -1,  0,  1, 3, 5)) +
@@ -304,40 +361,90 @@ ggplot() +
 
 [Remarks :]{style="color:#d69c3c"}
 
-[The]{style="color:#d69c3c"}
+**2020-02-07** **: initial wave of Covid-19**
+
+Disease Outbreak Response System Condition (DORSCON) to orange, signalling that the disease is severe and there is widespread transmission from unknown sources.
+
+-   This is highest level ever reached since the SARS outbreak in 2003.
+
+-   The severity of the pandemic caused panic and uncertainty amongst business and citizens.
+
+-   More countries were also entering a lockdown state to contain the spread, disrupting global trade flows which exacerbated the market.
+
+-   Hence, spurring on the COVID-19 financial crash in March 2020, which not only impacted Singapore but all major stock markets as well.
+
+-   The March 2020 COVID-19 crash was a short-lived bear market, and in April 2020 stock markets re-entered a bull market.
+
+<br>
+
+**2020-04-07 : circuit breaker**
+
+Introduced the Circuit Breaker period, where citizens practised enhanced social distancing and isolation.
+
+-   Workplaces and schools closed and most shops shuttered.
+
+-   Businesses were badly impacted by the drop in footfall and consumption.
+
+-   However, the stock market seem to be recovering from the crash in March.
+
+-   One reason could be the implementation of the Budgets the Government has dedicated to support Singaporeans and businesses in the battle against COVID-19, which amounted close to \$100 billion.
+
+-   Secondly, businesses were also adapting to the change in consumer patterns through contactless digital systems, which were well-received.
+
+<br>
+
+**2020-06-02**
+
+Eased of circuit breaker. Enters its first phase of reopening, where businesses and activities are progressively allowed to resume, giving rise to some semblance of normalcy.
+
+-   Hence, causing the stock price in the market to rise.
+
+<br>
+
+**2020-11-09 : National Vaccination Campaign**
+
+Pfizer and BioNTech SE announced a vaccine candidate that has demonstrated evidence of efficacy against COVID-19.
+
+-   As the news brought about positivity of a potential return of normal activity, many shares of companies soared.
+
+-   Since Dec 2020, the National Vaccination Campaign commenced and in late 2021, Singapore became the world's most-vaccinated country, with more than 85% of its total population fully-vaccinated.
+
+<br>
+
+**2021-05-08 : DELTA WAVE OF COVID-19**
+
+By May 2021, the Delta variant of COVID-19 had widely spread, causing several clusters across the nation.
+
+-   The re-opening efforts put forth by the Government were heldback, Singapore reverted back to Phase 2 from 8 May, which was subsequently tightened to Phase 2 Heightened Alert from 16 May.
+
+-   This tightening of measures caused the stock market prices to dip.
+
+<br>
+
+**2021-10-09 : CAUTIOUS RE-OPENING WITH ENDEMIC COVID-19**
+
+Since then, the nation has acknowledged that the Zero-Covid strategy is no longer feasible due to highly infectious variants formed.
+
+-   It has engaged a cautions re-opening strategy to enable Singaporeans to resume their lives, participate in social activities, open the borders and revive the economy.
+
+-   One such example would be the Vaccinated Travel Lane (VTL) which allowed fully-vaccinated Singaporean citizens and permanent residents to return to Singapore without quarantine.
+
+-   On 9 Oct 2021, it was announced that Singapore would open up more VTLs with other countries, including South Korea and the United States.
+
+-   This saw some rise in the stock market prices, especially companies who stand to gain most such as Singapore Airlines and SATS.
+
+<br>
+
+**2021-11-26 : OMICRON VARIANT OF COVID-19**
+
+On 26 Nov 2021, the World Health Organisation (WHO) announced the Omicron variant discovery of COVID-19.
+
+-   While there was some dip to the stock market prices, due to lack of information on the virus, the impact seems to be lower than the Delta and Alpha variant of the virus for most companies.
 :::
 
-## 
+# 5. CONCLUSION
 
-# 5 Conclusion
-
-#### **INITIAL WAVE OF COVID-19**
-
-On Feb 7 2020, COVID-19 Disease Outbreak Response System Condition (DORSCON) to orange, signalling that the disease is severe and there is widespread transmission from unknown sources. This is highest level ever reached since the SARS outbreak in 2003. The severity of the pandemic caused panic and uncertainty amongst business and citizens. More countries were also entering a lockdown state to contain the spread, disrupting global trade flows which exacerbated the market. Hence, spurring on the COVID-19 financial crash in March 2020, which not only impacted Singapore but all major stock markets as well. The March 2020 COVID-19 crash was a short-lived bear market, and in April 2020 stock markets re-entered a bull market.
-
-#### **CIRCUIT BREAKER**
-
-On Apr 7 2020, the Singapore government took a drastic step and introduced the circuit breaker period, where citizens practised enhanced social distancing and isolation. Workplaces and schools closed and most shops shuttered. Businesses were badly impacted by the drop in footfall and consumption. However, the stock market seem to be recovering from the crash in March. One reason could be the implementation of the Budgets the Government has dedicated to support Singaporeans and businesses in the battle against COVID-19, which amounted close to \$100 billion. Secondly, businesses were also adapting to the change in consumer patterns through contactless digital systems, which were well-received.
-
-On Jun 2 2020, the circuit breaker is eased and Singapore enters its first phase of reopening, where businesses and activities are progressively allowed to resume, giving rise to some semblance of normalcy. Hence, causing the stock price in the market to rise.
-
-#### **NATIONAL VACCINATION CAMPAIGN**
-
-In Nov 2020, Pfizer and BioNTech SE announced a vaccine candidate that has demonstrated evidence of efficacy against COVID-19. As the news brought about positivity of a potential return of normal activity, many shares of companies soared. Since Dec 2020, the National Vaccination Campaign commenced and in late 2021, Singapore became the world's most-vaccinated country, with more than 85% of its total population fully-vaccinated.
-
-#### **DELTA WAVE OF COVID-19**
-
-By May 2021, the Delta variant of COVID-19 had widely spread, causing several clusters across the nation. The re-opening efforts put forth by the Government were heldback, Singapore reverted back to Phase 2 from 8 May, which was subsequently tightened to Phase 2 Heightened Alert from 16 May. This tightening of measures caused the stock market prices to dip.
-
-#### **CAUTIOUS RE-OPENING WITH ENDEMIC COVID-19**
-
-Since then, the nation has acknowledged that the Zero-Covid strategy is no longer feasible due to highly infectious variants formed. It has engaged a cautions re-opening strategy to enable Singaporeans to resume their lives, participate in social activities, open the borders and revive the economy. One such example would be the Vaccinated Travel Lane (VTL) which allowed fully-vaccinated Singaporean citizens and permanent residents to return to Singapore without quarantine. On 9 Oct 2021, it was announced that Singapore would open up more VTLs with other countries, including South Korea and the United States. This saw some rise in the stock market prices, especially companies who stand to gain most such as Singapore Airlines and SATS.
-
-#### **OMICRON VARIANT OF COVID-19**
-
-On 26 Nov 2021, the World Health Organisation (WHO) announced the Omicron variant discovery of COVID-19. While there was some dip to the stock market prices, due to lack of information on the virus, the impact seems to be lower than the Delta and Alpha variant of the virus for most companies.
-
-# 6 References
+# 6. REFERENCES
 
 -   [tidyquant](https://giniceseah.netlify.app/posts/2021-06-18-scraping-of-financial-dataset/#tidyquant-package)
 
