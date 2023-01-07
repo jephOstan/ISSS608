@@ -21,8 +21,14 @@ website:
           - text: Class Project 1
             href: class_project/project_1/xxx.qmd
      
-      - text: References & Notes
-        menu: 
+      - text: Workshop & Notes
+        menu:
+          - text: Personal Note
+            href: pnote/note1.qmd 
+          - text: Shiny Workshop - Prof's Prototype
+            href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
+          - text: Shiny Workshop - Student Exam
+            href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
           - text: Exploration 1 - Pareto Chart
             href: pnote/test1.qmd
           - text: Exploration 2 - Pyramid Chart

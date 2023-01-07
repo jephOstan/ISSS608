@@ -1,0 +1,24 @@
+---
+title: "Encountered Shiny Errors"
+editor: visual
+date:  7 Jan 2022
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+Error Message :
+
+    Error in func(fname, ...) : app.R did not return a shiny.appobj object.
+
+Cause : Curly bracket is missing.
+
+Example : server \<- function(input, output)
+
+Solution : server \<- function(input, output) {}

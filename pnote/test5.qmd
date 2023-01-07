@@ -444,6 +444,11 @@ On 26 Nov 2021, the World Health Organisation (WHO) announced the Omicron varian
 
 # 5. CONCLUSION
 
+When have extra time, read up -
+
+1.  The Benefits of Weekly Charts - https://marketsmith.investors.com/stock-charts/weekly-stock-charts/
+2.  Understanding an OHLC Chart and How to Interpret It - https://www.investopedia.com/terms/o/ohlcchart.asp
+
 # 6. REFERENCES
 
 -   [tidyquant](https://giniceseah.netlify.app/posts/2021-06-18-scraping-of-financial-dataset/#tidyquant-package)

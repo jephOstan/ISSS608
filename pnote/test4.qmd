@@ -19,8 +19,6 @@ This study explores the visualisation of multidimensional data from Starbucks dr
 
 !!!!! Questions
 
--   for data visualisation, display unit next to variable a distraction? ok to remove so that the display not clutter?
-
 -   how missing data affect the plots?
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
@@ -713,6 +711,62 @@ corrplot.mixed((cor(corr_var_name)),
 
 Remarks :
 :::
+
+```{r}
+panel.smooth <- function (x, y, 
+                          col = c("#00AFBB", "#E7B800", "#FC4E07"), 
+                          bg = NA,
+                          pch = 12,
+                          cex = 0.8, 
+                          col.smooth = "red", 
+                          span = 2/3, 
+                          iter = 3,
+                          panel = panel.smooth){
+  points(x, y, 
+          pch = pch, 
+          col = col, 
+          bg = bg, 
+          cex = cex)
+  }
+```
+
+Remarks :
+
+Code chunk above with references to 2 sites :
+
+1.  [Scatter Plot Matrices - R Base Graphs](http://www.sthda.com/english/wiki/scatter-plot-matrices-r-base-graphs)
+2.  [Stack Overflow - How to modify this Correlation Matrix plot?](https://stackoverflow.com/questions/15271103/how-to-modify-this-correlation-matrix-plot)
+
+```{r}
+panel.hist <- function(x){
+  usr <- par("usr")
+  
+  on.exit(par(usr))
+
+  par(usr = c(usr[1:2], 0, 1.5) )
+  
+  h <- hist(x, plot = FALSE)
+  
+  breaks <- h$breaks
+  
+  nB <- length(breaks)
+  
+  y <- h$counts; 
+  y <- y/max(y)
+  
+  rect(breaks[-nB], 0, 
+       breaks[-1], y, 
+       col = "cyan")
+}
+```
+
+```{r}
+pairs(corr_var_name,
+      lower.panel = panel.smooth, 
+      upper.panel = panel.cor,
+      diag.panel = panel.hist,
+      gap = 0.5, row1attop = TRUE)
+```
 
 ### 4.1.5 Plot with Hierarchical Clustering
 

@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-01-02">
+<meta name="dcterms.date" content="2022-01-07">
 
-<title>ISSS608 - Personal Note</title>
+<title>ISSS608 - Shiny Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,16 +129,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop--notes">    
         <li>
-    <a class="dropdown-item" href="../pnote/note1.html">
- <span class="dropdown-text">Personal Note</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://tskam.shinyapps.io/prototype-ShinyIDEA/">
- <span class="dropdown-text">Shiny Workshop - Prof’s Prototype</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="https://tskam.shinyapps.io/prototype-ShinyIDEA/">
- <span class="dropdown-text">Shiny Workshop - Student Exam</span></a>
+    <a class="dropdown-item" href="../workshop/app0.R">
+ <span class="dropdown-text">Shiny Workshop</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../pnote/test1.html">
@@ -190,7 +182,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Personal Note</h1>
+<h1 class="title">Shiny Workshop</h1>
 </div>
 
 
@@ -201,7 +193,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 2, 2022</p>
+      <p class="date">January 7, 2022</p>
     </div>
   </div>
   
@@ -211,235 +203,10 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 </header>
 
-<p>cv = continuous variables</p>
-<table class="table">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 52%">
-<col style="width: 13%">
-<col style="width: 15%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>chart</th>
-<th>usage</th>
-<th>measure / param</th>
-<th>remark / attention</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Histogram</td>
-<td><p>frequency of bins of value</p>
-<p>cv = probability distribution</p></td>
-<td><ul>
-<li><p>mean</p></li>
-<li><p>median</p></li>
-<li><p>mode</p></li>
-</ul></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Box plot</td>
-<td>http://www.sthda.com/english/wiki/box-plots-r-base-graphs</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Scatter Plot Matrices</td>
-<td>http://www.sthda.com/english/wiki/scatter-plot-matrices-r-base-graphs</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Correlogram</td>
-<td>reveal multicollinearity.</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Horizon chart</td>
-<td>Spot general trends and identify extreme values.</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table class="table">
-<thead>
-<tr class="header">
-<th>understand distribution</th>
-<th>measure</th>
-<th>remark / note</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Central Tendency</td>
-<td><ul>
-<li><p>mean</p></li>
-<li><p>median</p></li>
-<li><p>mode</p></li>
-</ul></td>
-<td>Mean affected the most by outliers.</td>
-</tr>
-<tr class="even">
-<td>Dispersion</td>
-<td><ul>
-<li><p>range</p></li>
-<li><p>quartiles</p></li>
-<li><p>inter-quartile range</p></li>
-<li><p>variance</p></li>
-<li><p>standard deviation</p></li>
-</ul></td>
-<td><p>inter-quartile range = differences between Q1 and Q3 == 50% of population lies within.</p>
-<p>variance = average of the squared differences from the Mean.</p>
-<p>standard deviation = is square root of variance.</p></td>
-</tr>
-<tr class="odd">
-<td>Shape of Distribution</td>
-<td><ul>
-<li><p>skewness</p></li>
-<li><p>kurtosis</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://www.scribbr.com/statistics/kurtosis/#:~:text=Kurtosis%20is%20a%20measure%20of,(thin%20tails)%20are%20platykurtic."><img src="images/image-1844618062.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div></td>
-<td><p>negative skewed curve = long left tail.</p>
-<p><strong>mesokurtic</strong> = medium kurtosis (medium tails)</p>
-<p><strong>platykurtic</strong> = low kurtosis (thin). E.g. age of students from a school.</p>
-<p><strong>leptokurtic</strong> = high kurtosis (fat)</p></td>
-</tr>
-</tbody>
-</table>
-<p>Definition :</p>
-<p><strong>Kurtosis</strong> = measures the heaviness of a distribution’s tails relative to a normal distribution. Tails represent the probability or frequency of values that are extreme high or low from the mean. Tailedness is how often outliers occur.</p>
-<table class="table">
-<caption><strong>3 Types of Kurtosis</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></caption>
-<thead>
-<tr class="header">
-<th></th>
-<th>Mesokurtic</th>
-<th>Platykurtic</th>
-<th>Leptokurtic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Tailedness</td>
-<td>Medium-tailed</td>
-<td>Thin-tailed</td>
-<td>Fat-tailed</td>
-</tr>
-<tr class="even">
-<td>Outlier frequency</td>
-<td>Medium</td>
-<td>Low</td>
-<td>High</td>
-</tr>
-<tr class="odd">
-<td>Kurtosis</td>
-<td>Moderate (3)</td>
-<td>Low (&lt;3)</td>
-<td>High (&gt;3)</td>
-</tr>
-<tr class="even">
-<td>Excess kurtosis</td>
-<td>0</td>
-<td>Negative</td>
-<td>Positive</td>
-</tr>
-<tr class="odd">
-<td>Example distribution</td>
-<td>Normal</td>
-<td>Uniform</td>
-<td>Laplace</td>
-</tr>
-</tbody>
-</table>
-<table class="table">
-<colgroup>
-<col style="width: 23%">
-<col style="width: 28%">
-<col style="width: 21%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>topic</th>
-<th>measure / parameter / aspect</th>
-<th>Col3</th>
-<th>Col4</th>
-<th>Col5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>population distribution</td>
-<td><p>total population</p>
-<p>young population</p>
-<p>elderly population</p>
-<p>working age population</p></td>
-<td>absolute, percentage</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
 
 
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Shaun T. (2022). What Is Kurtosis? | Definition, Examples &amp; Formula. Scribbr. https://www.scribbr.com/statistics/kurtosis/#:~:text=Kurtosis%20is%20a%20measure%20of,(thin%20tails)%20are%20platykurtic.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
