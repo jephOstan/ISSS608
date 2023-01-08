@@ -64,7 +64,31 @@ wp_ngaTrim <- read_rds("data/geodata/wp_ngaTrim.rds")
 ```
 :::
 
-### 3.3 Create Data Frame for Clustering Analysis
+## 3.3 Create Data Samples
+
+### 3.3.1 Random 20 Rows with All Variables
+
+```{r}
+set.seed(12345)
+test <- sample(wp_ngaTrim, 20)
+
+test
+```
+
+### 3.3.2 Random 20 Samples with Row Id Returned
+
+```{r}
+set.seed(12345)
+test2 <- sample(1:nrow(wp_ngaTrim), 20)
+
+test2
+```
+
+```{r}
+wp_ngaTrim[test2,]
+```
+
+## 3.4 Create Data Frame for Clustering Analysis
 
 ```{r}
 #| code-fold: false
@@ -185,6 +209,11 @@ boxplot(pressure_score ~ water_tech_clean*usage_capacity,
 
 ### 4.2.4 add number of observations in each group
 
+::: {.callout-warning appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***boxplot2( )*** - gplots -]{style="color:#d46e15"} to produce a boxplot annotated with the number of observations.
+
 ```{r}
 #| code-fold: false
 boxplot2(pressure_score ~ usage_capacity, 
@@ -194,6 +223,7 @@ boxplot2(pressure_score ~ usage_capacity,
         border = c("#999999", "#E69F00", "#56B4E9")
         )
 ```
+:::
 
 ## 4.3 Plot Mixed Chart with Functions
 
