@@ -48,7 +48,7 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, knitr, ggplot2, ggcorrplot, corrplot, ggstatsplot, heatmaply, dendextend, parallelPlot, factoextra)
+pacman::p_load(tidyverse, knitr, ggplot2, ggcorrplot, corrplot, ggstatsplot, heatmaply, dendextend, parallelPlot, factoextra, psych)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
@@ -252,13 +252,6 @@ drink_clean <- drink[!duplicated(drink),]
 ::: {.callout-warning appearance="simple" icon="false"}
 This data frame will be used to compare differences in variables by "Category" via multiple correlogram under section xxx.
 
-```{r}
-test <- drink %>%
-  group_by(`Category`) %>%
-  summarise(Total = n()) %>%
-  arrange(desc(Total))
-```
-
 #### 3.4.1.1 filter top 4 "Category"
 
 ::: {.callout-alert appearance="simple" icon="false"}
@@ -278,8 +271,7 @@ category_top4 <- drink %>%
   group_by(`Category`) %>%
   summarise(Total = n()) %>%
   arrange(desc(Total)) %>%
-  top_n(4) %>%
-  ungroup
+  top_n(4)
 ```
 
 ```{r}
@@ -650,17 +642,17 @@ grouped_ggcorrmat(
       title = "Correlation of Attributes for Starbucks Top 4 Drink Categories",
       subtitle = "Top 4 categories : Espresso, Frapuccino blended beverages, Kids Drinks & Tea"),
     ggplot.component = list(
-      theme_void(base_size = 8),
+      theme_void(base_size = 6),
       theme(
-        plot.title = element_text(size = 8),
-        plot.subtitle = element_text(size = 6),
-        legend.text = element_text(size = 5),
-        axis.text.x = element_text(size = 7, 
+        plot.title = element_text(size = 6),
+        plot.subtitle = element_text(size = 3),
+        legend.text = element_text(size = 3),
+        axis.text.x = element_text(size = 3, 
                                    angle = 75, 
                                    hjust = 0.6),
-        axis.text.y = element_text(size = 7, 
+        axis.text.y = element_text(size = 3, 
                                    hjust = 1),
-        strip.text.x = element_text(size = 7),
+        strip.text.x = element_text(size = 3),
         legend.key.size = unit(3, 'mm')
         ))
     )
@@ -711,6 +703,8 @@ corrplot.mixed((cor(corr_var_name)),
 
 Remarks :
 :::
+
+### **4.1.5 Plot with Histogram on Diagonal Panel**
 
 ```{r}
 panel.smooth <- function (x, y, 
@@ -765,10 +759,43 @@ pairs(corr_var_name,
       lower.panel = panel.smooth, 
       upper.panel = panel.cor,
       diag.panel = panel.hist,
-      gap = 0.5, row1attop = TRUE)
+      gap = 0.2, 
+      row1attop = TRUE)
 ```
 
-### 4.1.5 Plot with Hierarchical Clustering
+### **4.1.6 Plot with psych package**
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***pairs.panels( )*** - psych -]{style="color:#d46e15"} to include histograms and correlations into the Scatter Plot of Matrices (SPLOM)[^6].
+
+-   [method]{style="color:#d46e15"} parameters for the correlation ("pearson", "spearman", "kendall"
+
+-   [density]{style="color:#d46e15"} TRUE shows histograms and density plots.
+
+-   [ellipses]{style="color:#d46e15"} TRUE draws correlation ellipses.
+
+-   [hist.col]{style="color:#d46e15"} colour for histogram.
+
+note : the alpha level for the confidence regions is 0.05.
+:::
+
+```{r}
+pairs.panels(corr_var_name,
+             method = "pearson",
+             hist.col = "#00AFBB",
+             density = TRUE,
+             ellipses = TRUE,
+             digits = 3,
+             gap = 0.2)
+```
+:::
+
+[^6]: RDocumentation. pairs.panels: SPLOM, histograms and correlations for a data matrix. https://www.rdocumentation.org/packages/psych/versions/2.2.9/topics/pairs.panels
+
+### **4.1.7 Plot with Hierarchical Clustering**
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 The *dend_expend()* and *find_k()* functions of dendextend package was used to determine the best clustering method and number of cluster.
@@ -817,8 +844,6 @@ fviz_nbclust(cv_name.matrix,
   labs(subtitle = "Elbow method")
 ```
 
-a
-
 ```{r}
 fviz_nbclust(cv_name.matrix, 
              kmeans, 
@@ -837,7 +862,7 @@ corrplot((cor(corr_var_name)),
          method = "ellipse",
          order = "hclust",
          hclust.method = "ward.D",
-         addrect = 3,
+         addrect = 2,
          tl.pos = "lt",
          tl.col = "black",
          tl.cex = .6,
@@ -849,7 +874,7 @@ corrplot((cor(corr_var_name)),
 ```
 :::
 
-### **4.1.6 Conclusion**
+### **4.1.8 Conclude SPLOM Methods and Findings**
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 In general, the corrgram for all starbucks drinks show that caffeine is mostly negatively correlated with the other nutritional factors except protein, whereas the rest are positively correlated. The diagram also shows that following pairs of nutritional factors of starbucks drinks are highly correlated (r \> 0.90):

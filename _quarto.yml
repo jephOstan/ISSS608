@@ -27,8 +27,8 @@ website:
             href: pnote/note1.qmd 
           - text: Shiny Workshop - Prof's Prototype
             href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
-          - text: Shiny Workshop - Student Exam
-            href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
+          - text: Exploration 0 - Explore with Geospatial Data
+            href: pnote/test0.qmd          
           - text: Exploration 1 - Pareto Chart
             href: pnote/test1.qmd
           - text: Exploration 2 - Pyramid Chart

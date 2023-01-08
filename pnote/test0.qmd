@@ -1,5 +1,5 @@
 ---
-title: "Test & Explore 2"
+title: "Explore with Geospatial Data"
 editor: visual
 date:  28 Dec 2022
 code-copy: true
@@ -15,7 +15,7 @@ format:
 
 # 1. OVERVIEW
 
-\--
+Exploring R functions for visual analytics, and their applications.
 
 # 2. R PACKAGE REQUIRED
 
@@ -29,34 +29,52 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, readxl, knitr, plotly, sf, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork)
+pacman::p_load(tidyverse, readxl, knitr, plotly, sf, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork, gplots)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
+
+[Packages to consider -]{style="color:#d69c3c"}
+
+[sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
 :::
 
 # 3. DATA
 
 ## 3.1 Acquire Data Source
 
-Dataset will be the water points from Nigeria
+Nigeria water points dataset. Its a wrangled data from [Geospatial Analytics](https://geospatial-analysis-jeph0stan.netlify.app/) module .
 
 ## 3.2 Read RDS file
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 ```{r}
 #| code-fold: false
+wp_joined.sf <- read_rds("data/geodata/wp_joined.sf.rds")
+```
+
+```{r}
+#| code-fold: false
+wpt_functional.sf <- read_rds("data/geodata/wpt_functional.sf.rds")
+```
+
+```{r}
+#| code-fold: false
 wp_ngaTrim <- read_rds("data/geodata/wp_ngaTrim.rds")
 ```
 :::
 
-### 3.7.2 Visualise Distribution of Cluster Variable
+### 3.3 Create Data Frame for Clustering Analysis
 
 ```{r}
+#| code-fold: false
 cluster_vars <- wp_ngaTrim %>%
   st_set_geometry(NULL) %>%
   select("shapeName",
          "total_wp",
+         "wp_functional",
+         "wp_nonFunctional",
+         "wp_unknown",
          "pct_functional", 
          "pct_nonFunctional",
          "pct_handPump",
@@ -80,7 +98,12 @@ cluster_vars <- cluster_vars %>%
   select(-shapeName)
 ```
 
+# 4. VISUALISATION
+
+## 4.1 Plot Multiple Boxplots
+
 ```{r}
+#| code-fold: false
 ggarrange(
   (ggplot(data=cluster_vars, aes(x=`pct_functional`)) + 
      geom_boxplot(color="black", fill="#19ff3fFF")), 
@@ -101,6 +124,80 @@ ggarrange(
    ncol = 2,
   nrow = 4)
 ```
+
+## 4.2 Plot Basic Boxplot
+
+### 4.2.1 with & without frame
+
+```{r}
+#| code-fold: false
+boxplot(cluster_vars$wp_functional,
+        cluster_vars$wp_nonFunctional,
+        frame = FALSE)
+
+boxplot(cluster_vars$wp_functional,
+        cluster_vars$wp_nonFunctional)
+```
+
+### 4.2.2 change colour, name & direction
+
+```{r}
+#| code-fold: false
+boxplot(pressure_score ~ usage_capacity, 
+        data = wpt_functional.sf, 
+        frame = FALSE, 
+        border = "steelblue",
+        names = c("uc50", "uc250", "uc300", "uc1000")
+        )
+
+boxplot(pressure_score ~ usage_capacity, 
+        data = wpt_functional.sf, 
+        frame = FALSE, 
+        col = "steelblue",
+        names = c("uc50", "uc250", "uc300", "uc1000")
+        )
+
+boxplot(pressure_score ~ usage_capacity, 
+        data = wpt_functional.sf, 
+        frame = FALSE, 
+        border = c("#999999", "#E69F00", "#56B4E9"),
+        names = c("uc50", "uc250", "uc300", "uc1000")
+        )
+
+boxplot(pressure_score ~ usage_capacity, 
+        data = wpt_functional.sf, 
+        frame = FALSE, 
+        border = "steelblue",
+        horizontal = TRUE
+        )
+
+```
+
+### 4.2.3 plot with 2 characters + 1 continuous variable
+
+```{r}
+boxplot(pressure_score ~ water_tech_clean*usage_capacity, 
+        data = wpt_functional.sf, 
+        frame = FALSE, 
+        border = c("#E69F00", "#56B4E9")
+        )
+```
+
+### 4.2.4 add number of observations in each group
+
+```{r}
+#| code-fold: false
+boxplot2(pressure_score ~ usage_capacity, 
+        data = wpt_functional.sf, 
+        frame = FALSE,
+        shrink = 0.7,
+        border = c("#999999", "#E69F00", "#56B4E9")
+        )
+```
+
+## 4.3 Plot Mixed Chart with Functions
+
+### 4.3.1 Set Function
 
 ```{r}
 #| code-fold: false
@@ -130,9 +227,13 @@ plot_grid(func1,
 }
 ```
 
+### 4.3.2 Plot Histogram & Box Plot
+
 ```{r}
 hist_box_plot(cluster_vars$pct_nonFunctional, "Non-Functional Water Point")
 ```
+
+### 4.3.3 Set Function for Multiple Histograms
 
 ```{r}
 #| code-fold: false
@@ -148,6 +249,8 @@ hist_plot <- function(varname, title){
   func3
 }
 ```
+
+### 4.3.4 Plot Multiple Histograms
 
 ```{r}
 pct_functional <- hist_plot(cluster_vars$pct_functional, "pct_functional")
@@ -171,6 +274,8 @@ pct_functional + pct_nonfunctional +
   plot_layout(ncol = 2)
 ```
 
+### 4.3.5 Set Function for Multiple Maps
+
 ```{r}
 #| code-fold: false
 choropleth_plot <- function(varname, style, title) {
@@ -190,6 +295,8 @@ choropleth_plot <- function(varname, style, title) {
     tm_compass(position = c('left','bottom'))
 }
 ```
+
+### 4.3.6 Plot Multiple Maps
 
 ```{r}
 #| eval: false
@@ -216,19 +323,21 @@ tmap_arrange(choropleth_plot("wp_functional", "quantile",
              nrow = 5)
 ```
 
-## 5.2 Standardise Data
+## 4.4 Compare Plots of Before and After Data Standardisation
+
+### 4.4.1 Standardise Data
 
 As shown in 3.7.3.3, not all variables are not distributed normally. Hence, standardisation will be required before the clustering analysis.
 
 ::: {.callout-warning appearance="simple" icon="false"}
-### 5.2.1 Standardise :: Min-Max Method
+### 4.4.1.1 Standardise :: Min-Max Method
 
 ```{r}
 wp_stdMM <- normalize(cluster_vars)
 describe(wp_stdMM)
 ```
 
-### 5.2.2 Standardise :: Z-score Method
+### 4.4.1.2 Standardise :: Z-score Method
 
 ```{r}
 wp_stdZ <- scale(cluster_vars)
@@ -238,9 +347,11 @@ describe(wp_stdZ)
 [Remarks :]{style="color:#d69c3c"}
 
 [Comparing the reports above, the Min-Max method is the only method that can standardise the value to between 0 and 1.]{style="color:#d69c3c"}
+:::
 
-### 5.2.3 Compare Distribution For Standardisation Method
+### 4.4.2 Compare Distribution For Standardisation Method
 
+::: {.callout-warning appearance="simple" icon="false"}
 Visualise to determine which standardisation method provide the better output.
 
 ```{r}
