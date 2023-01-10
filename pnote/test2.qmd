@@ -46,6 +46,8 @@ pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling)
 
 [Remarks :]{style="color:#d69c3c"}
 
+[Packages to consider -]{style="color:#d69c3c"}
+
 [sf, tidyverse, questionr, janitor, psych, ggplot2, gcookbook, tmap, ggpubr, egg, corrplot, gtsummary, regclass, caret, heatmaply, ggdendro, cluster, factoextra, spdep, ClustGeo, GGally, skimr, stringr, funModeling, knitr, caTools, viridis, rgeoda, cowplot, patchwork.]{style="color:#d69c3c"}
 :::
 
@@ -124,6 +126,101 @@ head(pop_agSx)
 ```
 :::
 
+### 
+3.3.2 Create Smaller Data Frame
+
+#### 3.3.2.1 filter rows with head( ) function
+
+```{r}
+test0 <- head(pop_sgp, 5000) %>%
+  select(-c("SZ", "FA", "Time"))
+```
+
+#### 3.3.2.2 specify rows
+
+```{r}
+test0_1 <- pop_sgp[c(1:5000),] %>%
+  select(-c(2,5,7))
+```
+
+#### 3.3.2.3 verify outputs
+
+```{r}
+questionr::freq(test0 == test0_1)
+```
+
+### 3.3.3 Group Variables
+
+#### 3.3.3.1 count population for Planning Area
+
+```{r}
+test1 <- test0 %>%
+  group_by(`PA`) %>%
+  summarise(`Count` = sum(`Pop`)) %>%
+  ungroup()
+
+head(test1)
+```
+
+#### 3.3.3.2 count population by Planning Area & Gender
+
+```{r}
+test1_1 <- test0 %>%
+  group_by(`PA`,`Sex`) %>%
+  summarise(`Count` = sum(`Pop`)) %>%
+  ungroup()
+
+head(test1_1)
+```
+
+#### \-- create new columns manually
+
+```{r}
+test1_1$male <- test1_1$Sex == "Males"
+test1_1$female <- test1_1$Sex == "Females"
+
+head(test1_1)
+```
+
+#### \-- create new columns with pivot_wider ( ) function
+
+```{r}
+test1_2 <- test1_1 %>%
+  pivot_wider(id_cols = PA,
+              names_from = Sex,
+              values_from = Count)
+
+head(test1_2)
+```
+
+### 3.3.4 Convert Row Names for Tibbles
+
+The row.names( ) function is deprecated for Tibbles.
+
+Hence, convert tbl_df to data.frame first with as.data.frame( ) function. Then, replace the row names with .rowNamesDF( ) function.
+
+#### 3.3.4.1 convert to data.frame
+
+as.data.frame - base
+
+```{r}
+test1_2.df <- as.data.frame(test1_2)
+```
+
+#### 3.3.4.2 replace row names
+
+.rowNamesDF - base
+
+```{r}
+.rowNamesDF(test1_2.df, make.names = FALSE) <- test1_2$PA
+```
+
+#### \-- remove "PA"
+
+```{r}
+test1_2df <- test1_2.df[-(1)]
+```
+
 # 4 EXPLORATORY DATA ANALYSIS (EDA)
 
 ## 4.1 Plot Pyramid Chart
@@ -191,5 +288,65 @@ ggplotly(pyramid_agSx,
 [^2]: [Singstat. (2002). Indicators On Population. https://tablebuilder.singstat.gov.sg/table/TS/M810001]{style="color:#d69c3c"}
 
 [^3]: [Ministry of Manpower. (2020). Report: Singapore's Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx]{style="color:#d69c3c"}
+
+## 4.2 Plot Bar Chart
+
+```{r}
+test1_2.mat <- as.matrix.data.frame(test1_2df)
+```
+
+### 4.2.1 Explore Bar Plot with graphics Package
+
+```{r}
+barplot(test1_2.mat, 
+        horiz = TRUE, 
+        names.arg = c("females", "males"))
+```
+
+```{r}
+barplot(test1_2.mat, col = "white", border = "steelblue")
+
+barplot(test1_2.mat, col = "white",
+        border = c("#999999", "#E69F00", "#56B4E9"))
+
+barplot(test1_2.mat, col = "steelblue")
+
+barplot(test1_2.mat, col = c("#999999", "#E69F00", "#56B4E9"))
+```
+
+```{r}
+barplot(test1_2.mat,
+        col = "steelblue",
+        main = "Population Gender",
+        xlab = "Gender",
+        ylab = "Count"
+        )
+```
+
+### 4.2.2 Stacked Bar Plots
+
+```{r}
+barplot(test1_2.mat,
+        main = "Population Count",
+        font.main = 4,
+        col = c("lightblue", "mistyrose", "lightcyan", 
+                 "lavender", "cornsilk"),
+        legend = rownames(test1_2.mat))
+```
+
+### 4.2.3 Grouped Bar Plots
+
+beside = FALSE, stacked bar (output same as above); TRUE , juxtaposed bars.
+
+```{r}
+barplot(test1_2.mat, 
+        col = c("lightcyan",
+                           "lavender",
+                           "cornsilk"),
+        legend = rownames(test1_2.mat),
+        args.legend = list(x = "topright"), 
+        ylim = c(0,150000), 
+        beside = TRUE)
+```
 
 # 5. REFERENCES
