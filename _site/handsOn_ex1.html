@@ -268,11 +268,13 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#create-base-for-a-ggplot-object" id="toc-create-base-for-a-ggplot-object" class="nav-link" data-scroll-target="#create-base-for-a-ggplot-object"><strong>4.2.1 Create Base for a ggplot Object</strong></a></li>
   <li><a href="#add-geometric-objects" id="toc-add-geometric-objects" class="nav-link" data-scroll-target="#add-geometric-objects"><strong>4.2.2 Add Geometric Objects</strong></a></li>
-  <li><a href="#coordinates" id="toc-coordinates" class="nav-link" data-scroll-target="#coordinates">Coordinates</a></li>
-  <li><a href="#working-with-coordinate" id="toc-working-with-coordinate" class="nav-link" data-scroll-target="#working-with-coordinate">Working with Coordinate</a></li>
-  <li><a href="#working-with-coordinate-1" id="toc-working-with-coordinate-1" class="nav-link" data-scroll-target="#working-with-coordinate-1">Working with Coordinate</a></li>
+  <li><a href="#add-statistical-functions" id="toc-add-statistical-functions" class="nav-link" data-scroll-target="#add-statistical-functions"><strong>4.2.3 Add Statistical Functions</strong></a></li>
+  <li><a href="#add-best-fit-curve-on-scatterplot" id="toc-add-best-fit-curve-on-scatterplot" class="nav-link" data-scroll-target="#add-best-fit-curve-on-scatterplot"><strong>4.2.4 Add Best Fit Curve on Scatterplot</strong></a></li>
+  <li><a href="#plot-trellis-plot" id="toc-plot-trellis-plot" class="nav-link" data-scroll-target="#plot-trellis-plot"><strong>4.2.5 Plot Trellis Plot</strong></a></li>
+  <li><a href="#coordinates" id="toc-coordinates" class="nav-link" data-scroll-target="#coordinates">4.3 Coordinates</a></li>
+  <li><a href="#working-with-coordinate" id="toc-working-with-coordinate" class="nav-link" data-scroll-target="#working-with-coordinate">4.3.1. Working with Coordinate</a></li>
   </ul></li>
-  <li><a href="#essential-grammatical-elements-in-ggplot2" id="toc-essential-grammatical-elements-in-ggplot2" class="nav-link" data-scroll-target="#essential-grammatical-elements-in-ggplot2">Essential Grammatical Elements in ggplot2</a>
+  <li><a href="#essential-grammatical-elements-in-ggplot2" id="toc-essential-grammatical-elements-in-ggplot2" class="nav-link" data-scroll-target="#essential-grammatical-elements-in-ggplot2">5. Essential Grammatical Elements in ggplot2</a>
   <ul class="collapse">
   <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes">Themes</a></li>
   </ul></li>
@@ -1026,56 +1028,75 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="mix-plot" class="level4">
 <h4 class="anchored" data-anchor-id="mix-plot"><strong>4.2.2.6 mix plot</strong></h4>
-<p>geom objects can be combined The code chunk below plots the data points on the boxplots by using both geom_boxplot() and geom_point().</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span>              <span class="co">#&lt;&lt;      </span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position=</span><span class="st">"jitter"</span>, <span class="co">#&lt;&lt;</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.5</span>)        <span class="co">#&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> GENDER)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="st">"jitter"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Geometric Objects: geom_violin geom_violin is designed for creating violin plot. Violin plots are a way of comparing multiple data distributions. With ordinary density curves, it is difficult to compare more than just a few distributions because the lines visually interfere with each other. With a violin plot, it’s easier to compare several distributions since they’re placed side by side.</p>
-<p>The code below plot the distribution of Maths score by gender in violin plot.</p>
+</section>
+<section id="plot-violin-chart" class="level4">
+<h4 class="anchored" data-anchor-id="plot-violin-chart"><strong>4.2.2.7 plot violin chart</strong></h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>geom_violin( )</em></strong> - ggplot2 -</span> to plot violins that allow to compare multiple data distributions.</p>
+<ul>
+<li><p>With ordinary density curves, it is difficult to compare more than just a few distributions because the lines visually interfere with each other.</p></li>
+<li><p>With a violin plot, it’s easier to compare several distributions since they’re placed side by side.</p></li>
+</ul>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> GENDER)) <span class="sc">+</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Geometric Objects: geom_violin() and geom_boxplot() The code chunk below combined a violin plot and a boxplot to show the distribution of Maths scores by gender.]</p>
+</section>
+<section id="combine-violin-chart-with-box-plot" class="level4">
+<h4 class="anchored" data-anchor-id="combine-violin-chart-with-box-plot"><strong>-</strong>- combine violin chart with box plot</h4>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill=</span><span class="st">"light blue"</span>) <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)           </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> GENDER)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"light blue"</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)           </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Geometric Objects: geom_point() geom_point() is especially useful for creating scatterplot. The code chunk below plots a scatterplot showing the Maths and English grades of pupils by using geom_point().</p>
+</section>
+<section id="plot-point-scatterplot-chart" class="level4">
+<h4 class="anchored" data-anchor-id="plot-point-scatterplot-chart"><strong>4.2.2.8 plot point / scatterplot chart</strong></h4>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>ENGLISH)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> ENGLISH)) <span class="sc">+</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -1086,20 +1107,44 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
-<p>Statistics, stat The Statistics functions statistically transform data, usually as some form of summary. For example: frequency of values of a variable (bar graph) a mean a confidence limit There are two ways to use these functions: add a stat_() function and override the default geom, or add a geom_() function and override the default stat.</p>
-<p>Working with stat The boxplots on the right are incomplete because the positions of the means were not shown.</p>
-<p>Next two slides will show you how to add the mean values on the boxplots.</p>
-<p>Working with stat - the stat_summary() method The code chunk below adds mean values by using stat_summary() function and overriding the default geom.</p>
+</section>
+<section id="add-statistical-functions" class="level3">
+<h3 class="anchored" data-anchor-id="add-statistical-functions"><strong>4.2.3 Add Statistical Functions</strong></h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>There are two ways to use these functions :</p>
+<ol type="1">
+<li>add a stat_() function and override the default geom</li>
+<li>add a geom_() function and override the default stat.</li>
+</ol>
+<section id="add-mean-values-on-the-boxplot" class="level4">
+<h4 class="anchored" data-anchor-id="add-mean-values-on-the-boxplot"><strong>4.2.3.1 add mean values on the boxplot</strong></h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>stat_summary( )</em></strong> - ? -</span> to override the default geom.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,       </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun.y=</span><span class="st">"mean"</span>,         </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span><span class="st">"red"</span>,        </span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span><span class="dv">4</span>)               </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> GENDER)) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,       </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun.y =</span> <span class="st">"mean"</span>,         </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"red"</span>,        </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
@@ -1109,16 +1154,27 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>stat( )</em></strong> - ? -</span> to override the default stat.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x =</span> GENDER)) <span class="sc">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat=</span><span class="st">"summary"</span>,        </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fun.y=</span><span class="st">"mean"</span>,           </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span><span class="st">"red"</span>,          </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">4</span>)          </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>,        </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fun.y =</span> <span class="st">"mean"</span>,           </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"red"</span>,          </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">4</span>)          </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in geom_point(stat = "summary", fun.y = "mean", colour = "red", :
@@ -1131,17 +1187,38 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>How to add a best fit curve on a scatterplot? The scatterplot on the right shows the relationship of Maths and English grades of pupils.</p>
-<p>The interpretability of this graph can be improved by adding a best fit curve.</p>
-<p>How to add a best fit curve on a scatterplot? In the code chunk below, geom_smooth() is used to plot a best fit curve on the scatterplot.</p>
-<p>The default method used is loess.]</p>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="add-best-fit-curve-on-scatterplot" class="level3">
+<h3 class="anchored" data-anchor-id="add-best-fit-curve-on-scatterplot"><strong>4.2.4 Add Best Fit Curve on Scatterplot</strong></h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>geom_smooth( )</em></strong> - ggplot2 -</span> to make it easier to interpret the scatterplot by adding fit curve.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, <span class="at">y=</span>ENGLISH)) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">size=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS, </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> ENGLISH)) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -1154,16 +1231,17 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>How to add a best fit curve on a scatterplot? The default smoothing method can be overridden as shown below.</p>
+<section id="override-default-smoothing-method" class="level4">
+<h4 class="anchored" data-anchor-id="override-default-smoothing-method"><strong>-- override default smoothing method</strong></h4>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y=</span>ENGLISH)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> ENGLISH)) <span class="sc">+</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -1172,46 +1250,82 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-trellis-plot" class="level3">
+<h3 class="anchored" data-anchor-id="plot-trellis-plot"><strong>4.2.5 Plot Trellis Plot</strong></h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>Facets Facetting generates small multiples (sometimes also called trellis plot), each displaying a different subset of the data.</p>
 <p>Facets are an alternative to aesthetics for displaying additional discrete variables.</p>
-<p>ggplot2 supports two types of factes, namely: facet_grid() and facet_wrap.</p>
-<p>facet_wrap() facet_wrap wraps a 1d sequence of panels into 2d.</p>
+<p>ggplot2 supports two (2) types of factes : facet_wrap( ) facet_grid( )</p>
+<section id="plot-with-face_wrap-function" class="level4">
+<h4 class="anchored" data-anchor-id="plot-with-face_wrap-function"><strong>4.2.5.1 plot with face_wrap( ) function</strong></h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>facet_wrap( )</em></strong> - ggplot2 -</span> to wraps a 1d sequence of panels into 2d.</p>
 <p>This is generally a better use of screen space than facet_grid because most displays are roughly rectangular.</p>
-<p>Working with facet_wrap() The code chunk below plots a trellis plot using facet-wrap().</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS)) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS)) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> CLASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>facet_grid() function facet_grid() forms a matrix of panels defined by row and column facetting variables.</p>
+</section>
+<section id="plot-with-face_grid-function" class="level4">
+<h4 class="anchored" data-anchor-id="plot-with-face_grid-function">4.2.5.2 plot with face_grid( ) function</h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>facet_wrap( )</em></strong> - ggplot2 -</span> to forms a matrix of panels defined by row and column faceting variables.</p>
 <p>It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.</p>
-<p>Working with facet_grid() The code chunk below plots a trellis plot using facet_grid().</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS)) <span class="sc">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> CLASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Plot a trellis boxplot looks similar to the figure below.</p>
-<p><img src="images/image-339727884.png" class="img-fluid"></p>
-<p><img src="images/image-811211769.png" class="img-fluid"></p>
-<p><img src="images/image-468521342.png" class="img-fluid"></p>
+</section>
+</div>
+</div>
+</div>
 </section>
 <section id="coordinates" class="level3">
-<h3 class="anchored" data-anchor-id="coordinates">Coordinates</h3>
+<h3 class="anchored" data-anchor-id="coordinates">4.3 Coordinates</h3>
 <ul>
 <li><p>The <em>Coordinates</em> functions map the position of objects onto the plane of the plot.</p></li>
 <li><p>There are a number of different possible coordinate systems to use, they are:</p>
@@ -1224,7 +1338,7 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 </ul>
 </section>
 <section id="working-with-coordinate" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-coordinate">Working with Coordinate</h3>
+<h3 class="anchored" data-anchor-id="working-with-coordinate">4.3.1. Working with Coordinate</h3>
 <p>By the default, the bar chart of ggplot2 is in vertical form.</p>
 <p>The code chunk below flips the horizontal bar chart into vertical bar chart by using <code>coord_flip()</code>.</p>
 <div class="cell">
@@ -1239,9 +1353,6 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="working-with-coordinate-1" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-coordinate-1">Working with Coordinate</h3>
 <section id="how-to-change-to-the-y--and-x-axis-range" class="level4">
 <h4 class="anchored" data-anchor-id="how-to-change-to-the-y--and-x-axis-range">How to change to the y- and x-axis range?</h4>
 <p>The scatterplot on the right is slightly misleading because the y-aixs and x-axis range are not equal.</p>
@@ -1268,7 +1379,7 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 </section>
 </section>
 <section id="essential-grammatical-elements-in-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="essential-grammatical-elements-in-ggplot2">Essential Grammatical Elements in ggplot2</h2>
+<h2 class="anchored" data-anchor-id="essential-grammatical-elements-in-ggplot2">5. Essential Grammatical Elements in ggplot2</h2>
 <section id="themes" class="level3">
 <h3 class="anchored" data-anchor-id="themes">Themes</h3>
 <ul>
@@ -1406,6 +1517,11 @@ The makeover design</strong></p>
 <p>Create a makeover looks similar to the figure on the right.</p>
 <p>A within group scatterplot with reference lines.</p>
 <p><img src="https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/Hands-on_Ex01-ggplot2_files/figure-revealjs/unnamed-chunk-79-1.png" class="img-fluid"></p>
+<p>Homework</p>
+<p>Plot a trellis boxplot looks similar to the figure below.</p>
+<p><img src="images/image-339727884.png" class="img-fluid"></p>
+<p><img src="images/image-811211769.png" class="img-fluid"></p>
+<p><img src="images/image-468521342.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="reference" class="level2">

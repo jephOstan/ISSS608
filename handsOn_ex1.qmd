@@ -323,143 +323,172 @@ ggplot(data = exam_data,
 
 #### **4.2.2.6 mix plot**
 
-geom objects can be combined The code chunk below plots the data points on the boxplots by using both geom_boxplot() and geom_point().
-
 ```{r}
-ggplot(data=exam_data, 
+ggplot(data = exam_data, 
        aes(y = MATHS, 
-           x= GENDER)) +
-  geom_boxplot() +              #<<      
-  geom_point(position="jitter", #<<
-             size = 0.5)        #<<
+           x = GENDER)) +
+  geom_boxplot() +
+  geom_point(position = "jitter",
+             size = 0.5)
 ```
 
-Geometric Objects: geom_violin geom_violin is designed for creating violin plot. Violin plots are a way of comparing multiple data distributions. With ordinary density curves, it is difficult to compare more than just a few distributions because the lines visually interfere with each other. With a violin plot, it's easier to compare several distributions since they're placed side by side.
+#### **4.2.2.7 plot violin chart**
 
-The code below plot the distribution of Maths score by gender in violin plot.
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***geom_violin( )*** - ggplot2 -]{style="color:#d46e15"} to plot violins that allow to compare multiple data distributions.
+
+-   With ordinary density curves, it is difficult to compare more than just a few distributions because the lines visually interfere with each other.
+
+-   With a violin plot, it's easier to compare several distributions since they're placed side by side.
+:::
 
 ```{r}
-ggplot(data=exam_data, 
+ggplot(data = exam_data, 
        aes(y = MATHS, 
-           x= GENDER)) +
+           x = GENDER)) +
   geom_violin()
 ```
 
-Geometric Objects: geom_violin() and geom_boxplot() The code chunk below combined a violin plot and a boxplot to show the distribution of Maths scores by gender.\]
+#### **-**- combine violin chart with box plot
 
 ```{r}
-ggplot(data=exam_data, 
+ggplot(data = exam_data, 
        aes(y = MATHS, 
-           x= GENDER)) +
-  geom_violin(fill="light blue") +
-  geom_boxplot(alpha=0.5)           
+           x = GENDER)) +
+  geom_violin(fill = "light blue") +
+  geom_boxplot(alpha = 0.5)           
 ```
 
-Geometric Objects: geom_point() geom_point() is especially useful for creating scatterplot. The code chunk below plots a scatterplot showing the Maths and English grades of pupils by using geom_point().
+#### **4.2.2.8 plot point / scatterplot chart**
 
 ```{r}
-ggplot(data=exam_data, 
-       aes(x= MATHS, 
-           y=ENGLISH)) +
+ggplot(data = exam_data, 
+       aes(x = MATHS, 
+           y = ENGLISH)) +
   geom_point()            
 ```
 :::
 
-Statistics, stat The Statistics functions statistically transform data, usually as some form of summary. For example: frequency of values of a variable (bar graph) a mean a confidence limit There are two ways to use these functions: add a stat\_() function and override the default geom, or add a geom\_() function and override the default stat.
+### **4.2.3 Add Statistical Functions**
 
-Working with stat The boxplots on the right are incomplete because the positions of the means were not shown.
+::: {.callout-warning appearance="simple" icon="false"}
+There are two ways to use these functions :
 
-Next two slides will show you how to add the mean values on the boxplots.
+1.  add a stat\_() function and override the default geom
+2.  add a geom\_() function and override the default stat.
 
-Working with stat - the stat_summary() method The code chunk below adds mean values by using stat_summary() function and overriding the default geom.
+#### **4.2.3.1 add mean values on the boxplot**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***stat_summary( )*** - ? -]{style="color:#d46e15"} to override the default geom.
+:::
 
 ```{r}
-ggplot(data=exam_data, 
-       aes(y = MATHS, x= GENDER)) +
+ggplot(data = exam_data, 
+       aes(y = MATHS, 
+           x = GENDER)) +
   geom_boxplot() +
   stat_summary(geom = "point",       
-               fun.y="mean",         
-               colour ="red",        
-               size=4)               
+               fun.y = "mean",         
+               colour = "red",        
+               size = 4)  
 ```
 
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***stat( )*** - ? -]{style="color:#d46e15"} to override the default stat.
+:::
+
 ```{r}
-ggplot(data=exam_data, 
-       aes(y = MATHS, x= GENDER)) +
+ggplot(data = exam_data, 
+       aes(y = MATHS, x = GENDER)) +
   geom_boxplot() +
-  geom_point(stat="summary",        
-             fun.y="mean",           
-             colour ="red",          
-             size=4)          
+  geom_point(stat = "summary",        
+             fun.y = "mean",           
+             colour = "red",          
+             size = 4)          
 ```
+:::
 
-How to add a best fit curve on a scatterplot? The scatterplot on the right shows the relationship of Maths and English grades of pupils.
+### **4.2.4 Add Best Fit Curve on Scatterplot**
 
-The interpretability of this graph can be improved by adding a best fit curve.
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
 
-How to add a best fit curve on a scatterplot? In the code chunk below, geom_smooth() is used to plot a best fit curve on the scatterplot.
-
-The default method used is loess.\]
+[***geom_smooth( )*** - ggplot2 -]{style="color:#d46e15"} to make it easier to interpret the scatterplot by adding fit curve.
+:::
 
 ```{r}
-ggplot(data=exam_data, 
-       aes(x= MATHS, y=ENGLISH)) +
+ggplot(data = exam_data, 
+       aes(x = MATHS, 
+           y = ENGLISH)) +
   geom_point() +
-  geom_smooth(size=0.5)
+  geom_smooth(size = 0.5)
 ```
 
-How to add a best fit curve on a scatterplot? The default smoothing method can be overridden as shown below.
+#### **\-- override default smoothing method**
 
 ```{r}
-ggplot(data=exam_data, 
-       aes(x= MATHS, 
-           y=ENGLISH)) +
+ggplot(data = exam_data, 
+       aes(x = MATHS, 
+           y = ENGLISH)) +
   geom_point() +
-  geom_smooth(method=lm, 
-              size=0.5)
+  geom_smooth(method = lm, 
+              size = 0.5)
 ```
+:::
 
+### **4.2.5 Plot Trellis Plot**
+
+::: {.callout-warning appearance="simple" icon="false"}
 Facets Facetting generates small multiples (sometimes also called trellis plot), each displaying a different subset of the data.
 
 Facets are an alternative to aesthetics for displaying additional discrete variables.
 
-ggplot2 supports two types of factes, namely: facet_grid() and facet_wrap.
+ggplot2 supports two (2) types of factes : facet_wrap( ) facet_grid( )
 
-facet_wrap() facet_wrap wraps a 1d sequence of panels into 2d.
+#### **4.2.5.1 plot with face_wrap( ) function**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***facet_wrap( )*** - ggplot2 -]{style="color:#d46e15"} to wraps a 1d sequence of panels into 2d.
 
 This is generally a better use of screen space than facet_grid because most displays are roughly rectangular.
-
-Working with facet_wrap() The code chunk below plots a trellis plot using facet-wrap().
+:::
 
 ```{r}
-ggplot(data=exam_data, 
-       aes(x= MATHS)) +
-  geom_histogram(bins=20) +
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20) +
     facet_wrap(~ CLASS)
 ```
 
-facet_grid() function facet_grid() forms a matrix of panels defined by row and column facetting variables.
+#### 4.2.5.2 plot with face_grid( ) function
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***facet_wrap( )*** - ggplot2 -]{style="color:#d46e15"} to forms a matrix of panels defined by row and column faceting variables.
 
 It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.
-
-Working with facet_grid() The code chunk below plots a trellis plot using facet_grid().
+:::
 
 ```{r}
-ggplot(data=exam_data, 
-       aes(x= MATHS)) +
-  geom_histogram(bins=20) +
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20) +
     facet_grid(~ CLASS)
 ```
+:::
 
-Plot a trellis boxplot looks similar to the figure below.
-
-![](images/image-339727884.png)
-
-![](images/image-811211769.png)
-
-![](images/image-468521342.png)
-
-### Coordinates
+### 4.3 Coordinates
 
 -   The *Coordinates* functions map the position of objects onto the plane of the plot.
 
@@ -473,7 +502,7 @@ Plot a trellis boxplot looks similar to the figure below.
 
     -   [`coord_quickmap()`](https://ggplot2.tidyverse.org/reference/coord_map.html): a coordinate system that approximates a good aspect ratio for maps.
 
-### Working with Coordinate
+### 4.3.1. Working with Coordinate
 
 By the default, the bar chart of ggplot2 is in vertical form.
 
@@ -485,8 +514,6 @@ ggplot(data=exam_data,
   geom_bar() +
   coord_flip()
 ```
-
-### Working with Coordinate
 
 #### How to change to the y- and x-axis range?
 
@@ -504,7 +531,7 @@ ggplot(data=exam_data,
                   ylim=c(0,100))
 ```
 
-## Essential Grammatical Elements in ggplot2
+## 5. Essential Grammatical Elements in ggplot2
 
 ### Themes
 
@@ -640,6 +667,16 @@ Create a makeover looks similar to the figure on the right.
 A within group scatterplot with reference lines.
 
 ![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/Hands-on_Ex01-ggplot2_files/figure-revealjs/unnamed-chunk-79-1.png)
+
+Homework
+
+Plot a trellis boxplot looks similar to the figure below.
+
+![](images/image-339727884.png)
+
+![](images/image-811211769.png)
+
+![](images/image-468521342.png)
 
 ## Reference
 
