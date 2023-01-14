@@ -138,6 +138,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 <body class="nav-fixed">
 
+
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
@@ -159,7 +160,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercises">    
         <li>
     <a class="dropdown-item" href="./handsOn_ex1.html">
- <span class="dropdown-text">Hands-on Exercise [1]</span></a>
+ <span class="dropdown-text">Hands-on Ex[1] Explore with ggplot2 Package</span></a>
   </li>  
     </ul>
   </li>
@@ -169,8 +170,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercises">    
         <li>
-    <a class="dropdown-item" href="./in-class_ex/in-class_ex1/In-class_Ex1.qmd">
- <span class="dropdown-text">In-class Exercise [1]</span></a>
+    <a class="dropdown-item" href="https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&amp;:origin=viz_share_link">
+ <span class="dropdown-text">In-class Ex[1] S &amp; P Summary with Tableau</span></a>
   </li>  
     </ul>
   </li>
@@ -273,28 +274,23 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <li><a href="#plot-trellis-plot" id="toc-plot-trellis-plot" class="nav-link" data-scroll-target="#plot-trellis-plot"><strong>4.2.5 Plot Trellis Plot</strong></a></li>
   <li><a href="#coordinates" id="toc-coordinates" class="nav-link" data-scroll-target="#coordinates">4.3 Coordinates</a></li>
   <li><a href="#working-with-coordinate" id="toc-working-with-coordinate" class="nav-link" data-scroll-target="#working-with-coordinate">4.3.1. Working with Coordinate</a></li>
+  <li><a href="#change-range-for-y--and-x-axis" id="toc-change-range-for-y--and-x-axis" class="nav-link" data-scroll-target="#change-range-for-y--and-x-axis">4.3.2 Change range for y- and x-axis</a></li>
   </ul></li>
-  <li><a href="#essential-grammatical-elements-in-ggplot2" id="toc-essential-grammatical-elements-in-ggplot2" class="nav-link" data-scroll-target="#essential-grammatical-elements-in-ggplot2">5. Essential Grammatical Elements in ggplot2</a>
+  <li><a href="#non-data-control-element" id="toc-non-data-control-element" class="nav-link" data-scroll-target="#non-data-control-element">5. NON-DATA CONTROL ELEMENT</a></li>
+  <li><a href="#set-theme" id="toc-set-theme" class="nav-link" data-scroll-target="#set-theme"><strong>5.1 Set Theme</strong></a></li>
+  <li><a href="#design-data-driven-visualisation-for-analysis" id="toc-design-data-driven-visualisation-for-analysis" class="nav-link" data-scroll-target="#design-data-driven-visualisation-for-analysis">6. DESIGN DATA-DRIVEN VISUALISATION FOR ANALYSIS</a></li>
+  <li><a href="#frequent-analysis" id="toc-frequent-analysis" class="nav-link" data-scroll-target="#frequent-analysis">6.1 Frequent Analysis</a>
   <ul class="collapse">
-  <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes">Themes</a></li>
-  </ul></li>
-  <li><a href="#essential-grammatical-elements-in-ggplot2-1" id="toc-essential-grammatical-elements-in-ggplot2-1" class="nav-link" data-scroll-target="#essential-grammatical-elements-in-ggplot2-1">Essential Grammatical Elements in ggplot2</a>
-  <ul class="collapse">
-  <li><a href="#working-with-theme" id="toc-working-with-theme" class="nav-link" data-scroll-target="#working-with-theme">Working with theme</a></li>
-  <li><a href="#working-with-theme-1" id="toc-working-with-theme-1" class="nav-link" data-scroll-target="#working-with-theme-1">Working with theme</a></li>
-  <li><a href="#working-with-theme-2" id="toc-working-with-theme-2" class="nav-link" data-scroll-target="#working-with-theme-2">Working with theme</a></li>
+  <li><a href="#original-bar-chart" id="toc-original-bar-chart" class="nav-link" data-scroll-target="#original-bar-chart">6.1.1 Original Bar Chart</a></li>
+  <li><a href="#enhance-bar-chart" id="toc-enhance-bar-chart" class="nav-link" data-scroll-target="#enhance-bar-chart">6.1.2 Enhance Bar Chart</a></li>
   </ul></li>
   <li><a href="#designing-data-drive-graphics-for-analysis-i" id="toc-designing-data-drive-graphics-for-analysis-i" class="nav-link" data-scroll-target="#designing-data-drive-graphics-for-analysis-i">Designing Data-drive Graphics for Analysis I</a>
-  <ul class="collapse">
-  <li><a href="#the-original-design" id="toc-the-original-design" class="nav-link" data-scroll-target="#the-original-design">The original design</a></li>
-  </ul></li>
-  <li><a href="#designing-data-drive-graphics-for-analysis-i-1" id="toc-designing-data-drive-graphics-for-analysis-i-1" class="nav-link" data-scroll-target="#designing-data-drive-graphics-for-analysis-i-1">Designing Data-drive Graphics for Analysis I</a>
   <ul class="collapse">
   <li><a href="#the-makeover-design" id="toc-the-makeover-design" class="nav-link" data-scroll-target="#the-makeover-design">The makeover design</a></li>
   </ul></li>
   <li><a href="#designing-data-drive-graphics-for-analysis-ii" id="toc-designing-data-drive-graphics-for-analysis-ii" class="nav-link" data-scroll-target="#designing-data-drive-graphics-for-analysis-ii">Designing Data-drive Graphics for Analysis II</a>
   <ul class="collapse">
-  <li><a href="#the-original-design-1" id="toc-the-original-design-1" class="nav-link" data-scroll-target="#the-original-design-1">The original design</a></li>
+  <li><a href="#the-original-design" id="toc-the-original-design" class="nav-link" data-scroll-target="#the-original-design">The original design</a></li>
   </ul></li>
   <li><a href="#designing-data-drive-graphics-for-analysis-ii-1" id="toc-designing-data-drive-graphics-for-analysis-ii-1" class="nav-link" data-scroll-target="#designing-data-drive-graphics-for-analysis-ii-1">Designing Data-drive Graphics for Analysis II</a></li>
   <li><a href="#designing-data-drive-graphics-for-analysis-iv" id="toc-designing-data-drive-graphics-for-analysis-iv" class="nav-link" data-scroll-target="#designing-data-drive-graphics-for-analysis-iv">Designing Data-drive Graphics for Analysis IV</a>
@@ -1339,13 +1335,19 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 </section>
 <section id="working-with-coordinate" class="level3">
 <h3 class="anchored" data-anchor-id="working-with-coordinate">4.3.1. Working with Coordinate</h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>By the default, the bar chart of ggplot2 is in vertical form.</p>
 <p>The code chunk below flips the horizontal bar chart into vertical bar chart by using <code>coord_flip()</code>.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>RACE)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> RACE)) <span class="sc">+</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1353,20 +1355,30 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="how-to-change-to-the-y--and-x-axis-range" class="level4">
-<h4 class="anchored" data-anchor-id="how-to-change-to-the-y--and-x-axis-range">How to change to the y- and x-axis range?</h4>
+</div>
+</div>
+</div>
+</section>
+<section id="change-range-for-y--and-x-axis" class="level3">
+<h3 class="anchored" data-anchor-id="change-range-for-y--and-x-axis">4.3.2 Change range for y- and x-axis</h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>The scatterplot on the right is slightly misleading because the y-aixs and x-axis range are not equal.</p>
 <p>The code chunk below fixed both the y-axis and x-axis range from 0-100.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, <span class="at">y=</span>ENGLISH)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS, <span class="at">y =</span> ENGLISH)) <span class="sc">+</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span>  </span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span>  </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -1375,42 +1387,54 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</div>
+</div>
+</div>
 </section>
 </section>
-</section>
-<section id="essential-grammatical-elements-in-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="essential-grammatical-elements-in-ggplot2">5. Essential Grammatical Elements in ggplot2</h2>
-<section id="themes" class="level3">
-<h3 class="anchored" data-anchor-id="themes">Themes</h3>
-<ul>
-<li><p>Themes control elements of the graph not related to the data. For example:</p>
+<section id="non-data-control-element" class="level2">
+<h2 class="anchored" data-anchor-id="non-data-control-element">5. NON-DATA CONTROL ELEMENT</h2>
 <ul>
 <li><p>background colour</p></li>
 <li><p>size of fonts</p></li>
-<li><p>gridlines</p></li>
+<li><p>grid lines</p></li>
 <li><p>colour of labels</p></li>
-</ul></li>
-<li><p>Built-in themes include:</p>
+<li><p>Built-in themes include :</p>
 <ul>
 <li><p><code>theme_gray()</code> (default)</p></li>
 <li><p><code>theme_bw()</code></p></li>
 <li><p><code>theme_classic()</code></p></li>
 </ul></li>
-<li><p>A list of theme can be found at this <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">link</a>.</p></li>
-<li><p>Each theme element can be conceived of as either a line (e.g.&nbsp;x-axis), a rectangle (e.g.&nbsp;graph background), or text (e.g.&nbsp;axis title).</p></li>
+<li><p><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">Other themes</a></p></li>
 </ul>
 </section>
-</section>
-<section id="essential-grammatical-elements-in-ggplot2-1" class="level2">
-<h2 class="anchored" data-anchor-id="essential-grammatical-elements-in-ggplot2-1">Essential Grammatical Elements in ggplot2</h2>
-<section id="working-with-theme" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-theme">Working with theme</h3>
-<p>The code chunk below plot a horizontal bar chart using <code>theme_gray()</code>.</p>
+<section id="set-theme" class="level2">
+<h2 class="anchored" data-anchor-id="set-theme"><strong>5.1 Set Theme</strong></h2>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>facet_wrap( )</em></strong> - ggplot2 -</span> to forms a matrix of panels defined by row and column faceting variables.</p>
+<p>It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.</p>
+</div>
+</div>
+</div>
+<section id="plot-horizontal-bar-chart-with-theme_gray" class="level3">
+<h3 class="anchored" data-anchor-id="plot-horizontal-bar-chart-with-theme_gray"><strong>5.1.1 Plot Horizontal Bar Chart with <code>theme_gray( )</code></strong></h3>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>RACE)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> RACE)) <span class="sc">+</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_gray</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1420,14 +1444,13 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 </div>
 </div>
 </section>
-<section id="working-with-theme-1" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-theme-1">Working with theme</h3>
-<p>A horizontal bar chart plotted using <code>theme_classic()</code>.</p>
+<section id="plot-horizontal-bar-chart-with-theme_classic" class="level3">
+<h3 class="anchored" data-anchor-id="plot-horizontal-bar-chart-with-theme_classic">5.1.2 Plot Horizontal Bar Chart with <code>theme_classic( )</code></h3>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>RACE)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> RACE)) <span class="sc">+</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1436,12 +1459,14 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 <p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>A horizontal bar chart plotted using <code>theme_minimal()</code>.</p>
+</section>
+<section id="plot-horizontal-bar-chart-with-theme_minimal" class="level3">
+<h3 class="anchored" data-anchor-id="plot-horizontal-bar-chart-with-theme_minimal"><strong>5.1.3 Plot Horizontal Bar Chart with <code>theme_minimal( )</code></strong></h3>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>RACE)) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> RACE)) <span class="sc">+</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1451,30 +1476,54 @@ Ignoring unknown parameters: `fun.y`</code></pre>
 </div>
 </div>
 </section>
-<section id="working-with-theme-2" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-theme-2">Working with theme</h3>
-<p>Plot a horizontal bar chart looks similar to the figure below.</p>
-<ul>
-<li>Changing the colors of plot panel background of <code>theme_minimal()</code> to light blue and the color of grid lines to white.</li>
-</ul>
-<p><img src="images/image-78293342.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
 </section>
+<section id="design-data-driven-visualisation-for-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="design-data-driven-visualisation-for-analysis">6. DESIGN DATA-DRIVEN VISUALISATION FOR ANALYSIS</h2>
 </section>
-<section id="designing-data-drive-graphics-for-analysis-i" class="level2">
-<h2 class="anchored" data-anchor-id="designing-data-drive-graphics-for-analysis-i">Designing Data-drive Graphics for Analysis I</h2>
-<section id="the-original-design" class="level3">
-<h3 class="anchored" data-anchor-id="the-original-design">The original design</h3>
-<p>A simple vertical bar chart for frequency analysis. Critics:</p>
+<section id="frequent-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="frequent-analysis">6.1 Frequent Analysis</h2>
+<section id="original-bar-chart" class="level3">
+<h3 class="anchored" data-anchor-id="original-bar-chart">6.1.1 Original Bar Chart</h3>
+<p>A simple vertical bar chart for frequency analysis.</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> RACE)) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Critics:</p>
 <ul>
 <li><p>y-aixs label is not clear (i.e.&nbsp;count)</p></li>
 <li><p>To support effective comparison, the bars should be sorted by their resepctive frequencies.</p></li>
 <li><p>For static graph, frequency values should be added to provide addition information.</p></li>
 </ul>
-<p><img src="images/image-1757264623.png" class="img-fluid"></p>
+</section>
+<section id="enhance-bar-chart" class="level3">
+<h3 class="anchored" data-anchor-id="enhance-bar-chart">6.1.2 Enhance Bar Chart</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data, </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> RACE)) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="handsOn_ex1_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><img src="images/image-1254806109.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="designing-data-drive-graphics-for-analysis-i-1" class="level2">
-<h2 class="anchored" data-anchor-id="designing-data-drive-graphics-for-analysis-i-1">Designing Data-drive Graphics for Analysis I</h2>
+<section id="designing-data-drive-graphics-for-analysis-i" class="level2">
+<h2 class="anchored" data-anchor-id="designing-data-drive-graphics-for-analysis-i">Designing Data-drive Graphics for Analysis I</h2>
 <p><strong><br>
 The makeover design</strong></p>
 <p>With reference to the critics on the earlier slide, create a makeover looks similar to the figure on the right.</p>
@@ -1486,8 +1535,8 @@ The makeover design</strong></p>
 </section>
 <section id="designing-data-drive-graphics-for-analysis-ii" class="level2">
 <h2 class="anchored" data-anchor-id="designing-data-drive-graphics-for-analysis-ii">Designing Data-drive Graphics for Analysis II</h2>
-<section id="the-original-design-1" class="level3">
-<h3 class="anchored" data-anchor-id="the-original-design-1">The original design</h3>
+<section id="the-original-design" class="level3">
+<h3 class="anchored" data-anchor-id="the-original-design">The original design</h3>
 <p><img src="images/image-698286474.png" class="img-fluid"></p>
 <p><br>
 </p>
@@ -1500,7 +1549,7 @@ The makeover design</strong></p>
 <li><p>Change fill color and line color</p></li>
 <li><p><img src="images/image-92343967.png" class="img-fluid"></p>
 <h2 id="designing-data-drive-graphics-for-analysis-iii" class="anchored">Designing Data-drive Graphics for Analysis III</h2>
-<h3 id="the-original-design-2" class="anchored">The original design</h3>
+<h3 id="the-original-design-1" class="anchored">The original design</h3>
 <p><img src="images/image-347055578.png" class="img-fluid"></p>
 <p>The histograms on the left are elegantly designed but not informative. This is because they only reveal the distribution of English scores by gender but without context such as all pupils.</p>
 <p>Create a makeover looks similar to the figure below. The background histograms show the distribution of English scores for all pupils.</p>
@@ -1522,6 +1571,11 @@ The makeover design</strong></p>
 <p><img src="images/image-339727884.png" class="img-fluid"></p>
 <p><img src="images/image-811211769.png" class="img-fluid"></p>
 <p><img src="images/image-468521342.png" class="img-fluid"></p>
+<p>Plot a horizontal bar chart looks similar to the figure below.</p>
+<ul>
+<li>Changing the colors of plot panel background of <code>theme_minimal()</code> to light blue and the color of grid lines to white.</li>
+</ul>
+<p><img src="images/image-78293342.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="reference" class="level2">
