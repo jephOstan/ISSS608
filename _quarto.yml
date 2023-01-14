@@ -8,7 +8,7 @@ website:
     left: 
       - text: Hands-on Exercises
         menu: 
-          - text: Hands-on Ex[1] Explore with ggplot2 Package
+          - text: Hands-on Ex[1] DataVis with ggplot2
             href: handsOn_ex1.qmd
             
       - text: In-class Exercises
@@ -31,7 +31,7 @@ website:
             href: pnote/test0.qmd          
           - text: Exploration 1 - Pareto Chart
             href: pnote/test1.qmd
-          - text: Exploration 2 - Pyramid Chart
+          - text: Exploration 2 - Pyramid & Other Charts
             href: pnote/test2.qmd
           - text: Exploration 3 - Interactive & Animated Pyramid Chart
             href: pnote/test3.qmd
