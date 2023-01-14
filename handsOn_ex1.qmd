@@ -34,9 +34,9 @@ pacman::p_load(tidyverse)
 ```
 :::
 
-# 3. DATA PREPARATION
+# **3. DATA PREPARATION**
 
-## 3.1 Acquire Data Source
+## **3.1 Acquire Data Source**
 
 This study will be based on fictitious data set provided with this lesson.
 
@@ -51,9 +51,9 @@ This study will be based on fictitious data set provided with this lesson.
 -   The continuous attributes are: MATHS, ENGLISH and SCIENCE.
 :::
 
-## 3.2 Import Data
+## **3.2 Import Data**
 
-### 3.2.1 Import Data
+### **3.2.1 Import Data**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 Involved two (2) steps : import and inspect imported data set.
@@ -74,7 +74,7 @@ problems(exam_data)
 ```
 :::
 
-### 3.2.2 Inspect Missing Value
+### **3.2.2 Inspect Missing Value**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
@@ -86,9 +86,9 @@ skimr::skim(exam_data)
 [No missing data.]{style="color:#d69c3c"}
 :::
 
-## 4. DATA VISUALISATION
+## **4. DATA VISUALISATION**
 
-## 4.1 Compare Charts between R Graphics and ggplot2
+## **4.1 Compare Charts between R Graphics and ggplot2**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 Compare histogram by R Graphics and ggplot2 -
@@ -132,21 +132,21 @@ ggplot(data = exam_data,
 [ggplot2 allows to customise axis labels, title, grid lines.]{style="color:#d69c3c"}
 :::
 
-## 4.2 Explore Functions in ggplot2
+## **4.2 Explore Functions in ggplot2**
 
-### 4.2.1 Create Base for a ggplot Object
+### **4.2.1 Create Base for a ggplot Object**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 text
 
-#### \-- initialise a ggplot Object
+#### **\-- initialise a ggplot Object**
 
 ```{r}
 #| code-fold: false
 ggplot(data = exam_data)
 ```
 
-#### \-- introduce aesthetic mappings
+#### **\-- introduce aesthetic mappings**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -161,12 +161,12 @@ ggplot(data = exam_data,
 ```
 :::
 
-### 4.2.2 Add Geometric Objects
+### **4.2.2 Add Geometric Objects**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 text
 
-#### 4.2.2.1 plot bar chart
+#### **4.2.2.1 plot bar chart**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -185,7 +185,7 @@ ggplot(data = exam_data,
   geom_bar()
 ```
 
-#### 4.2.2.2 plot dot chart
+#### **4.2.2.2 plot dot chart**
 
 The width of a dot corresponds to the bin width (or maximum width, depending on the binning algorithm).
 
@@ -221,7 +221,7 @@ ggplot(data = exam_data,
                      breaks = NULL)  
 ```
 
-#### 4.2.2.3 plot histogram
+#### **4.2.2.3 plot histogram**
 
 Note that the default bin is 30.
 
@@ -231,7 +231,7 @@ ggplot(data = exam_data,
   geom_histogram()       
 ```
 
-#### \-- modify colour and bin
+#### **\-- modify colour and bin**
 
 ```{r}
 ggplot(data = exam_data, 
@@ -241,7 +241,7 @@ ggplot(data = exam_data,
                  fill = "light blue")  
 ```
 
-#### \-- add subgroup to each bar
+#### **\-- add subgroup to each bar**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -257,7 +257,7 @@ ggplot(data = exam_data,
                  color = "grey30")
 ```
 
-#### 4.2.2.4 plot density chart
+#### **4.2.2.4 plot density chart**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -273,7 +273,7 @@ ggplot(data = exam_data,
   geom_density()           
 ```
 
-#### \-- plot two (2) kernel density lines with colour arguments under aes( )
+#### **\-- plot two (2) kernel density lines with colour arguments under aes( )**
 
 ```{r}
 ggplot(data = exam_data, 
@@ -282,7 +282,7 @@ ggplot(data = exam_data,
   geom_density()
 ```
 
-#### \-- plot two (2) kernel density with fill arguments under aes( )
+#### **\-- plot two (2) kernel density with fill arguments under aes( )**
 
 ```{r}
 ggplot(data = exam_data, 
@@ -291,7 +291,7 @@ ggplot(data = exam_data,
   geom_density()
 ```
 
-#### 4.2.2.5 plot box plot
+#### **4.2.2.5 plot box plot**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -306,6 +306,8 @@ ggplot(data = exam_data,
   geom_boxplot()            
 ```
 
+#### **\-- add notches to box plot**
+
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
@@ -318,6 +320,8 @@ ggplot(data = exam_data,
            x = GENDER)) +
   geom_boxplot(notch = TRUE)
 ```
+
+#### **4.2.2.6 mix plot**
 
 geom objects can be combined The code chunk below plots the data points on the boxplots by using both geom_boxplot() and geom_point().
 
