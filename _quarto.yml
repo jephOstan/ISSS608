@@ -8,8 +8,8 @@ website:
     left: 
       - text: Hands-on Exercises
         menu: 
-          - text: Take-home Exercise [1]
-            href: Hands-on_Ex1.1.qmd
+          - text: Hands-on Exercise [1]
+            href: handsOn_ex1.qmd
             
       - text: In-class Exercises
         menu: 

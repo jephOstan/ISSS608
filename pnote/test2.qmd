@@ -41,7 +41,7 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling)
+pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
@@ -127,7 +127,8 @@ head(pop_agSx)
 :::
 
 ### 
-3.3.2 Create Smaller Data Frame
+
+### 3.3.2 Create Smaller Data Frame
 
 #### 3.3.2.1 filter rows with head( ) function
 
@@ -292,15 +293,39 @@ ggplotly(pyramid_agSx,
 ## 4.2 Plot Bar Chart
 
 ```{r}
+test1_1.mat <- as.matrix.data.frame(test1_1)
 test1_2.mat <- as.matrix.data.frame(test1_2df)
 ```
 
-### 4.2.1 Explore Bar Plot with graphics Package
+### 4.2.1 Explore Bar Plot
+
+### 4.2.1.1 graphics package
 
 ```{r}
-barplot(test1_2.mat, 
+barplot(test1_2.mat,
         horiz = TRUE, 
         names.arg = c("females", "males"))
+```
+
+#### 4.2.1.2 ggplot2 package
+
+```{r}
+test1_1.df <- data.frame(test1_1)
+```
+
+```{r}
+ggplot(data = test1_1.df, 
+              aes(x = PA, 
+                  y = Count)) +
+  geom_bar(stat = "identity")
+
+
+ggplot(data = test1_1.df, 
+              aes(x = PA, 
+                  y = Count)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+
 ```
 
 ```{r}
@@ -347,6 +372,136 @@ barplot(test1_2.mat,
         args.legend = list(x = "topright"), 
         ylim = c(0,150000), 
         beside = TRUE)
+```
+
+## 4.3 Plot Line Chart
+
+```{r}
+# Create some variables
+x <- 1:10
+y1 <- x*x
+y2  <- 2*y1
+```
+
+### 4.3.1 Plot Basic Line
+
+```{r}
+# Create a basic stair steps plot 
+plot(x, y1, type = "S")
+# Show both points and line
+plot(x, y1, type = "b", pch = 19, 
+     col = "red", xlab = "x", ylab = "y")
+```
+
+### 4.3.2 Plot Multiple Lines
+
+```{r}
+# Create a first line
+plot(x, y1, type = "b", frame = FALSE, pch = 19, 
+     col = "red", xlab = "x", ylab = "y")
+# Add a second line
+lines(x, y2, pch = 18, col = "blue", type = "b", lty = 2)
+# Add a legend to the plot
+legend("topleft", legend=c("Line 1", "Line 2"),
+       col=c("red", "blue"), lty = 1:2, cex=0.8)
+```
+
+## 4.4 Plot Pie Chart
+
+```{r}
+#pie(x, labels = names(x), radius = 0.8)
+df <- data.frame(
+  group = c("Male", "Female", "Child"),
+  value = c(25, 25, 50)
+  )
+df
+```
+
+### 4.4.1 Plot Basic Pie Chart
+
+```{r}
+pie(df$value, labels = df$group, radius = 1)
+```
+
+#### 4.4.1.1 change colour
+
+```{r}
+pie(df$value, labels = df$group, radius = 1,
+    col = c("#999999", "#E69F00", "#56B4E9"))
+```
+
+### 4.4.2 Plot 3D Pie Chart
+
+plotix::pie3D( )
+
+```{r}
+# 3D pie chart
+library("plotrix")
+pie3D(df$value, labels = df$group, radius = 1.5, 
+      col = c("#999999", "#E69F00", "#56B4E9"))
+```
+
+4.4.3 Explode 3D Pie Chart
+
+```{r}
+# Explode the pie chart
+pie3D(df$value, labels = df$group, radius = 1.5,
+      col = c("#999999", "#E69F00", "#56B4E9"),
+      explode = 0.1)
+```
+
+## 4.5 Plot Dot Chart
+
+### 4.5.1 Plot 1 Numeric Vector
+
+```{r}
+mtcars <- mtcars[order(mtcars$mpg), ]
+
+dotchart(x, labels = NULL, groups = NULL, 
+         gcolor = par("fg"), color = par("fg"))
+```
+
+```{r}
+dotchart(mtcars$mpg, labels = row.names(mtcars),
+         cex = 0.6, xlab = "mpg")
+```
+
+#### 4.5.1.1 separate vector by colour
+
+```{r}
+# Plot and color by groups cyl
+grps <- as.factor(mtcars$cyl)
+my_cols <- c("#999999", "#E69F00", "#56B4E9")
+dotchart(mtcars$mpg, labels = row.names(mtcars),
+         groups = grps, gcolor = my_cols,
+         color = my_cols[grps],
+         cex = 0.6,  pch = 19, xlab = "mpg")
+```
+
+### 4.5.2 Plot Matrix
+
+```{r}
+dotchart(VADeaths, cex = 0.6,
+         main = "Death Rates in Virginia - 1940")
+```
+
+## 4.6 Plot Group Means
+
+```{r}
+head(ToothGrowth)
+```
+
+```{r}
+library(gplots)
+# Plot the mean of teeth length by dose groups
+plotmeans(len ~ dose, data = ToothGrowth, frame = FALSE)
+```
+
+```{r}
+# Add mean labels (mean.labels = TRUE)
+# Remove line connection (connect = FALSE)
+plotmeans(len ~ dose, data = ToothGrowth, frame = FALSE,
+          mean.labels = TRUE, connect = FALSE)
 ```
 
 # 5. REFERENCES

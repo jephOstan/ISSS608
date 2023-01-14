@@ -16,6 +16,18 @@ format:
 
 plot title - subject + details
 
+Example of title :
+
+**Figure 1-1(b) Summarised Data**
+
+Example of axis-label
+
+| chart     | label                                | remarks                                      |
+|-----------|--------------------------------------|----------------------------------------------|
+| pie chart | "Percent Enrollment by Major (2010)" | \- param + subject + variable + time context |
+|           |                                      |                                              |
+|           |                                      |                                              |
+
 cv = continuous variables
 
 +-----------------------+-------------------------------------------------------------------------------+-----------------+-----------------------------------------------+

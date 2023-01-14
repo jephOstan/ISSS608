@@ -131,7 +131,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </script>
-<script src="../site_libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <script src="../site_libs/plotly-binding-4.10.1/plotly.js"></script>
 <script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
 <script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
@@ -167,8 +167,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercises">    
         <li>
-    <a class="dropdown-item" href="../Hands-on_Ex1.1.qmd">
- <span class="dropdown-text">Take-home Exercise [1]</span></a>
+    <a class="dropdown-item" href="../handsOn_ex1.html">
+ <span class="dropdown-text">Hands-on Exercise [1]</span></a>
   </li>  
     </ul>
   </li>
@@ -195,10 +195,22 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references--notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">References &amp; Notes</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop--notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop &amp; Notes</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-references--notes">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop--notes">    
+        <li>
+    <a class="dropdown-item" href="../pnote/note1.html">
+ <span class="dropdown-text">Personal Note</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://tskam.shinyapps.io/prototype-ShinyIDEA/">
+ <span class="dropdown-text">Shiny Workshop - Prof’s Prototype</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test0.html">
+ <span class="dropdown-text">Exploration 0 - Explore with Geospatial Data</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="../pnote/test1.html">
  <span class="dropdown-text">Exploration 1 - Pareto Chart</span></a>
@@ -210,6 +222,14 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../pnote/test3.html">
  <span class="dropdown-text">Exploration 3 - Interactive &amp; Animated Pyramid Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test4.html">
+ <span class="dropdown-text">Exploration 4 - Interactive Heatmap Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test5.html">
+ <span class="dropdown-text">Exploration 5 - Time-Series Visualisation</span></a>
   </li>  
     </ul>
   </li>
@@ -1323,8 +1343,8 @@ of ggplot2 3.3.4.
 </details>
 <div class="cell-output-display">
 
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5eec422c3a9506f82022" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-5eec422c3a9506f82022">{"x":{"visdat":{"9b246fb53185":["function () ","plotlyVisDat"]},"cur_data":"9b246fb53185","attrs":{"9b246fb53185":{"x":{},"y":{},"name":"Returned","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"9b246fb53185.1":{"x":{},"y":{},"name":"Cum. %","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"lines","yaxis":"y2","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Pareto chart of returns by sub-category","xaxis":{"domain":[0,1],"automargin":true,"title":"Sub-Category","type":"category","categoryorder":"array","categoryarray":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Returned (Absolute Frequency)","showgrid":false},"yaxis2":{"overlaying":"y","side":"right","title":"Cumulative Percentage (%)","range":[0,100]},"legend":{"orientation":"h","yanchor":"bottom","y":0.9,"xanchor":"top","x":0.2},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[1938,1734,1151,1121,1022,965,926,802,603,423,405,292,291,263,243,157,84],"name":"Returned","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[15.6038647342995,29.5652173913043,38.8325281803543,47.8582930756844,56.0869565217391,63.8566827697262,71.3123993558776,77.7697262479871,82.6247987117552,86.0305958132045,89.2914653784219,91.6425120772947,93.9855072463768,96.1030595813205,98.0595813204509,99.3236714975845,100],"name":"Cum. %","type":"scatter","mode":"lines","yaxis":"y2","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c0b881ec8562deddaa48" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c0b881ec8562deddaa48">{"x":{"visdat":{"258866eb6730":["function () ","plotlyVisDat"]},"cur_data":"258866eb6730","attrs":{"258866eb6730":{"x":{},"y":{},"name":"Returned","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"258866eb6730.1":{"x":{},"y":{},"name":"Cum. %","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"lines","yaxis":"y2","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Pareto chart of returns by sub-category","xaxis":{"domain":[0,1],"automargin":true,"title":"Sub-Category","type":"category","categoryorder":"array","categoryarray":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Returned (Absolute Frequency)","showgrid":false},"yaxis2":{"overlaying":"y","side":"right","title":"Cumulative Percentage (%)","range":[0,100]},"legend":{"orientation":"h","yanchor":"bottom","y":0.9,"xanchor":"top","x":0.2},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[1938,1734,1151,1121,1022,965,926,802,603,423,405,292,291,263,243,157,84],"name":"Returned","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Binders","Paper","Furnishings","Phones","Storage","Accessories","Art","Chairs","Appliances","Labels","Tables","Fasteners","Envelopes","Bookcases","Supplies","Machines","Copiers"],"y":[15.6038647342995,29.5652173913043,38.8325281803543,47.8582930756844,56.0869565217391,63.8566827697262,71.3123993558776,77.7697262479871,82.6247987117552,86.0305958132045,89.2914653784219,91.6425120772947,93.9855072463768,96.1030595813205,98.0595813204509,99.3236714975845,100],"name":"Cum. %","type":"scatter","mode":"lines","yaxis":"y2","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><span style="color:#d69c3c">Remark :</span></p>
