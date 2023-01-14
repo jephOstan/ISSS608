@@ -541,91 +541,91 @@
   {
     "objectID": "handsOn_ex1.html",
     "href": "handsOn_ex1.html",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "",
     "text": "This study explores data visualisation using Tidyverse package."
   },
   {
     "objectID": "handsOn_ex1.html#load-r-packages",
     "href": "handsOn_ex1.html#load-r-packages",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "2.1 Load R Packages",
     "text": "2.1 Load R Packages\n\n\n\n\n\n\n\n\n\n\n\n\nUsage of the code chunk below :\np_load( ) - pacman - to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.\n\n\n\n\npacman::p_load(tidyverse)"
   },
   {
     "objectID": "handsOn_ex1.html#acquire-data-source",
     "href": "handsOn_ex1.html#acquire-data-source",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "3.1 Acquire Data Source",
     "text": "3.1 Acquire Data Source\nThis study will be based on fictitious data set provided with this lesson.\n\n\n\n\n\n\nHighlights of the data set\n\n\n\n\n\n\nYear end examination grades of a cohort of primary 3 students from a local school.\nThere are a total of seven attributes. Four of them are categorical data type and the other three are in continuous data type.\n\n\nThe categorical attributes are: ID, CLASS, GENDER and RACE.\nThe continuous attributes are: MATHS, ENGLISH and SCIENCE."
   },
   {
     "objectID": "handsOn_ex1.html#import-data",
     "href": "handsOn_ex1.html#import-data",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "3.2 Import Data",
     "text": "3.2 Import Data\n\n3.2.1 Import Data\n\n\n\n\n\n\nInvolved two (2) steps : import and inspect imported data set.\n\n\n\n\n\n\nUsage of the code chunk below :\nread_csv( ) - readr - to read CSV file into a tibble.\nproblems( ) - readr - to reveal any parsing errors when importing the CSV file.\n\n\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nproblems(exam_data)\n\n# A tibble: 0 × 5\n# … with 5 variables: row <int>, col <int>, expected <chr>, actual <chr>,\n#   file <chr>\n\n\n\n\n\n\n\n3.2.2 Inspect Missing Value\n\n\n\n\n\n\n\n\nShow the code\nskimr::skim(exam_data)\n\n\n\nData summary\n\n\nName\nexam_data\n\n\nNumber of rows\n322\n\n\nNumber of columns\n7\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n4\n\n\nnumeric\n3\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nID\n0\n1\n10\n10\n0\n322\n0\n\n\nCLASS\n0\n1\n2\n2\n0\n9\n0\n\n\nGENDER\n0\n1\n4\n6\n0\n2\n0\n\n\nRACE\n0\n1\n5\n7\n0\n4\n0\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nENGLISH\n0\n1\n67.18\n14.69\n21\n59.00\n70\n78.00\n96\n▁▂▅▇▃\n\n\nMATHS\n0\n1\n69.33\n19.98\n9\n58.00\n74\n85.00\n99\n▁▂▃▇▇\n\n\nSCIENCE\n0\n1\n61.16\n18.18\n15\n49.25\n65\n74.75\n96\n▂▃▆▇▃\n\n\n\n\n\nRemarks :\nNo missing data."
   },
   {
     "objectID": "handsOn_ex1.html#data-visualisation",
     "href": "handsOn_ex1.html#data-visualisation",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "4. DATA VISUALISATION",
     "text": "4. DATA VISUALISATION"
   },
   {
     "objectID": "handsOn_ex1.html#essential-grammatical-elements-in-ggplot2",
     "href": "handsOn_ex1.html#essential-grammatical-elements-in-ggplot2",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Essential Grammatical Elements in ggplot2",
     "text": "Essential Grammatical Elements in ggplot2\n\nThemes\n\nThemes control elements of the graph not related to the data. For example:\n\nbackground colour\nsize of fonts\ngridlines\ncolour of labels\n\nBuilt-in themes include:\n\ntheme_gray() (default)\ntheme_bw()\ntheme_classic()\n\nA list of theme can be found at this link.\nEach theme element can be conceived of as either a line (e.g. x-axis), a rectangle (e.g. graph background), or text (e.g. axis title)."
   },
   {
     "objectID": "handsOn_ex1.html#essential-grammatical-elements-in-ggplot2-1",
     "href": "handsOn_ex1.html#essential-grammatical-elements-in-ggplot2-1",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Essential Grammatical Elements in ggplot2",
     "text": "Essential Grammatical Elements in ggplot2\n\nWorking with theme\nThe code chunk below plot a horizontal bar chart using theme_gray().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_gray()\n\n\n\n\n\n\n\nWorking with theme\nA horizontal bar chart plotted using theme_classic().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_classic()\n\n\n\n\n\nA horizontal bar chart plotted using theme_minimal().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal()\n\n\n\n\n\n\n\nWorking with theme\nPlot a horizontal bar chart looks similar to the figure below.\n\nChanging the colors of plot panel background of theme_minimal() to light blue and the color of grid lines to white."
   },
   {
     "objectID": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-i",
     "href": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-i",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Designing Data-drive Graphics for Analysis I",
     "text": "Designing Data-drive Graphics for Analysis I\n\nThe original design\nA simple vertical bar chart for frequency analysis. Critics:\n\ny-aixs label is not clear (i.e. count)\nTo support effective comparison, the bars should be sorted by their resepctive frequencies.\nFor static graph, frequency values should be added to provide addition information."
   },
   {
     "objectID": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-i-1",
     "href": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-i-1",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Designing Data-drive Graphics for Analysis I",
     "text": "Designing Data-drive Graphics for Analysis I\n\nThe makeover design\nWith reference to the critics on the earlier slide, create a makeover looks similar to the figure on the right.\n\nThe makeover design\nThis code chunk uses fct_infreq() of forcats package.\nCredit: I learned this trick from Getting things into the right order of Prof. Claus O. Wilke, the author of Fundamentals of Data Visualization"
   },
   {
     "objectID": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-ii",
     "href": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-ii",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Designing Data-drive Graphics for Analysis II",
     "text": "Designing Data-drive Graphics for Analysis II\n\nThe original design"
   },
   {
     "objectID": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-ii-1",
     "href": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-ii-1",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Designing Data-drive Graphics for Analysis II",
     "text": "Designing Data-drive Graphics for Analysis II\n\nAdding mean and median lines on the histogram plot.\nChange fill color and line color\n\nDesigning Data-drive Graphics for Analysis III\nThe original design\n\nThe histograms on the left are elegantly designed but not informative. This is because they only reveal the distribution of English scores by gender but without context such as all pupils.\nCreate a makeover looks similar to the figure below. The background histograms show the distribution of English scores for all pupils."
   },
   {
     "objectID": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-iv",
     "href": "handsOn_ex1.html#designing-data-drive-graphics-for-analysis-iv",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Designing Data-drive Graphics for Analysis IV",
     "text": "Designing Data-drive Graphics for Analysis IV\n\nThe original design.\n\n\n\nCreate a makeover looks similar to the figure on the right.\nA within group scatterplot with reference lines."
   },
   {
     "objectID": "handsOn_ex1.html#reference",
     "href": "handsOn_ex1.html#reference",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "Reference",
     "text": "Reference\n\nHadley Wickham (2023) ggplot2: Elegant Graphics for Data Analysis. Online 3rd edition.\nWinston Chang (2013) R Graphics Cookbook 2nd edition. Online version.\nHealy, Kieran (2019) Data Visualization: A practical introduction. Online version\nLearning ggplot2 on Paper – Components\nLearning ggplot2 on Paper – Layer\nLearning ggplot2 on Paper – Scale"
   },
@@ -639,14 +639,14 @@
   {
     "objectID": "handsOn_ex1.html#compare-charts-between-r-graphics-and-ggplot2",
     "href": "handsOn_ex1.html#compare-charts-between-r-graphics-and-ggplot2",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "4.1 Compare Charts between R Graphics and ggplot2",
     "text": "4.1 Compare Charts between R Graphics and ggplot2\n\n\n\n\n\n\nCompare histogram by R Graphics and ggplot2 -\n\n4.1.1 Plot with R Graphics\n\n\n\n\n\n\nUsage of the code chunk below :\nhist( ) - graphics - to compute a histogram.\n\n\n\n\n\nShow the code\nhist(exam_data$MATHS)\n\n\n\n\n\n\n\n4.1.2 Plot with ggplot2\n\n\n\n\n\n\nUsage of the code chunk below :\nggplot( ) - ggplot2 - to initialise a ggplot object.\n\ngeom_histogram( )\nggtitle( )\n\n\n\n\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS)) +\n  geom_histogram(bins = 10, \n                 boundary = 100,\n                 color = \"black\", \n                 fill = \"grey\") +\n  ggtitle(\"Distribution of Maths scores\")\n\n\n\n\n\nRemarks :\nggplot2 allows to customise axis labels, title, grid lines."
   },
   {
     "objectID": "handsOn_ex1.html#explore-functions-in-ggplot2",
     "href": "handsOn_ex1.html#explore-functions-in-ggplot2",
-    "title": "Hands-on 1 - Programming Elegant DataVis with ggplot2",
+    "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "4.2 Explore Functions in ggplot2",
     "text": "4.2 Explore Functions in ggplot2\n\n4.2.1 Create Base for a ggplot Object\n\n\n\n\n\n\ntext\n\n-- initialise a ggplot Object\n\nggplot(data = exam_data)\n\n\n\n\n\n\n-- introduce aesthetic mappings\n\n\n\n\n\n\nUsage of the code chunk below :\naes( ) - ggplot2 - to visualise the attributes of the data.\n\n\n\n\nggplot(data = exam_data,\n       aes(x = MATHS))\n\n\n\n\n\n\n\n\n\n\n4.2.2 Add Geometric Objects\n\n\n\n\n\n\ntext\n\n4.2.2.1 plot bar chart\n\n\n\n\n\n\nUsage of the code chunk below :\ngeom_bar( ) - ggplot2 - to makes the height of the bar proportional to the number of “MaTHS”.\n\n\n\n\n\n\nuse geom_col( ) if the bars need to represent values in the data.\n\n\n\n\n\n\n\n\n\n\nggplot(data = exam_data, \n       aes(x = RACE)) +\n  geom_bar()\n\n\n\n\n\n\n4.2.2.2 plot dot chart\nThe width of a dot corresponds to the bin width (or maximum width, depending on the binning algorithm).\n\ndots are stacked.\neach dot representing one observation.\n\n\nggplot(data = exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(dotsize = 0.5)\n\nBin width defaults to 1/30 of the range of the data. Pick better value with\n`binwidth`.\n\n\n\n\n\nRemarks :\nThe y-scale can be misleading. Hence, below dot chart, the y-axis will be turned off with scale-y-continuous( ) function.\n\n\n\n\n\n\nUsage of the code chunk below :\nbindwidth( ) - ggplot2 - to change the bin width to 2.5.\nscale_y_continuous( ) - ggplot2 - to turn off the y-axis.\n\n\n\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(binwidth = 2.5,         \n               dotsize = 0.5) +      \n  scale_y_continuous(NULL,           \n                     breaks = NULL)  \n\n\n\n\n\n\n\n4.2.2.3 plot histogram\nNote that the default bin is 30.\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\n-- modify colour and bin\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,            \n                 color = \"black\",      \n                 fill = \"light blue\")  \n\n\n\n\n\n\n\n-- add subgroup to each bar\n\n\n\n\n\n\nUsage of the code chunk below :\nfill( ) - ggplot2 - to change colour to reflect the sub-group.\n\n\n\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins = 20, \n                 color = \"grey30\")\n\n\n\n\n\n\n\n4.2.2.4 plot density chart\n\n\n\n\n\n\nUsage of the code chunk below :\ngeom_density( ) - ggplot2 - to computes and plots kernel density estimate, which is a smoothed version of the histogram.\n\nIt is useful for continuous data that comes from an underlying smooth distribution.\n\n\n\n\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS)) +\n  geom_density()           \n\n\n\n\n\n\n\n-- plot two (2) kernel density lines with colour arguments under aes( )\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS, \n           colour = GENDER)) +\n  geom_density()\n\n\n\n\n\n\n\n-- plot two (2) kernel density with fill arguments under aes( )\n\n\nShow the code\nggplot(data = exam_data, \n       aes(x = MATHS, \n           fill = GENDER)) +\n  geom_density()\n\n\n\n\n\n\n\n4.2.2.5 plot box plot\n\n\n\n\n\n\nUsage of the code chunk below :\ngeom_boxplot( ) - ggplot2 - to display summary statistics (median, two hinges and two whiskers) and outliers.\n\n\n\n\n\nShow the code\nggplot(data = exam_data, \n       aes(y = MATHS,       \n           x = GENDER)) +    \n  geom_boxplot()            \n\n\n\n\n\n\n\n\n\n\n\nUsage of the code chunk below :\nnotch( ) - ggplot2 - to make it easier to visually notice the distribution of median.\n\n\n\n\n\nShow the code\nggplot(data = exam_data, \n       aes(y = MATHS, \n           x = GENDER)) +\n  geom_boxplot(notch = TRUE)\n\n\n\n\n\ngeom objects can be combined The code chunk below plots the data points on the boxplots by using both geom_boxplot() and geom_point().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot() +              #<<      \n  geom_point(position=\"jitter\", #<<\n             size = 0.5)        #<<\n\n\n\n\n\nGeometric Objects: geom_violin geom_violin is designed for creating violin plot. Violin plots are a way of comparing multiple data distributions. With ordinary density curves, it is difficult to compare more than just a few distributions because the lines visually interfere with each other. With a violin plot, it’s easier to compare several distributions since they’re placed side by side.\nThe code below plot the distribution of Maths score by gender in violin plot.\n\n\nShow the code\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_violin()\n\n\n\n\n\nGeometric Objects: geom_violin() and geom_boxplot() The code chunk below combined a violin plot and a boxplot to show the distribution of Maths scores by gender.]\n\n\nShow the code\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_violin(fill=\"light blue\") +\n  geom_boxplot(alpha=0.5)           \n\n\n\n\n\nGeometric Objects: geom_point() geom_point() is especially useful for creating scatterplot. The code chunk below plots a scatterplot showing the Maths and English grades of pupils by using geom_point().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point()            \n\n\n\n\n\n\n\n\n\nStatistics, stat The Statistics functions statistically transform data, usually as some form of summary. For example: frequency of values of a variable (bar graph) a mean a confidence limit There are two ways to use these functions: add a stat_() function and override the default geom, or add a geom_() function and override the default stat.\nWorking with stat The boxplots on the right are incomplete because the positions of the means were not shown.\nNext two slides will show you how to add the mean values on the boxplots.\nWorking with stat - the stat_summary() method The code chunk below adds mean values by using stat_summary() function and overriding the default geom.\n\n\nShow the code\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  stat_summary(geom = \"point\",       \n               fun.y=\"mean\",         \n               colour =\"red\",        \n               size=4)               \n\n\nWarning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.\nℹ Please use the `fun` argument instead.\n\n\n\n\n\n\n\nShow the code\nggplot(data=exam_data, \n       aes(y = MATHS, x= GENDER)) +\n  geom_boxplot() +\n  geom_point(stat=\"summary\",        \n             fun.y=\"mean\",           \n             colour =\"red\",          \n             size=4)          \n\n\nWarning in geom_point(stat = \"summary\", fun.y = \"mean\", colour = \"red\", :\nIgnoring unknown parameters: `fun.y`\n\n\nNo summary function supplied, defaulting to `mean_se()`\n\n\n\n\n\nHow to add a best fit curve on a scatterplot? The scatterplot on the right shows the relationship of Maths and English grades of pupils.\nThe interpretability of this graph can be improved by adding a best fit curve.\nHow to add a best fit curve on a scatterplot? In the code chunk below, geom_smooth() is used to plot a best fit curve on the scatterplot.\nThe default method used is loess.]\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(size=0.5)\n\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\nHow to add a best fit curve on a scatterplot? The default smoothing method can be overridden as shown below.\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5)\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\nFacets Facetting generates small multiples (sometimes also called trellis plot), each displaying a different subset of the data.\nFacets are an alternative to aesthetics for displaying additional discrete variables.\nggplot2 supports two types of factes, namely: facet_grid() and facet_wrap.\nfacet_wrap() facet_wrap wraps a 1d sequence of panels into 2d.\nThis is generally a better use of screen space than facet_grid because most displays are roughly rectangular.\nWorking with facet_wrap() The code chunk below plots a trellis plot using facet-wrap().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_wrap(~ CLASS)\n\n\n\n\n\nfacet_grid() function facet_grid() forms a matrix of panels defined by row and column facetting variables.\nIt is most useful when you have two discrete variables, and all combinations of the variables exist in the data.\nWorking with facet_grid() The code chunk below plots a trellis plot using facet_grid().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)\n\n\n\n\n\nPlot a trellis boxplot looks similar to the figure below.\n\n\n\n\n\nCoordinates\n\nThe Coordinates functions map the position of objects onto the plane of the plot.\nThere are a number of different possible coordinate systems to use, they are:\n\ncoord_cartesian(): the default cartesian coordinate systems, where you specify x and y values (e.g. allows you to zoom in or out).\ncoord_flip(): a cartesian system with the x and y flipped.\ncoord_fixed(): a cartesian system with a “fixed” aspect ratio (e.g. 1.78 for a “widescreen” plot).\ncoord_quickmap(): a coordinate system that approximates a good aspect ratio for maps.\n\n\n\n\nWorking with Coordinate\nBy the default, the bar chart of ggplot2 is in vertical form.\nThe code chunk below flips the horizontal bar chart into vertical bar chart by using coord_flip().\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip()\n\n\n\n\n\n\n\nWorking with Coordinate\n\nHow to change to the y- and x-axis range?\nThe scatterplot on the right is slightly misleading because the y-aixs and x-axis range are not equal.\nThe code chunk below fixed both the y-axis and x-axis range from 0-100.\n\n\nShow the code\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\n\n`geom_smooth()` using formula = 'y ~ x'"
   }

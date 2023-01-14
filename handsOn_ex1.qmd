@@ -1,5 +1,5 @@
 ---
-title: "Hands-on 1 - Programming Elegant DataVis with ggplot2"
+title: "Hands-on 1 - DataVis with ggplot2"
 editor: visual
 date:  13 Jan 2023
 code-copy: true
@@ -13,13 +13,13 @@ format:
     css: styles.css
 ---
 
-# 1. OVERVIEW
+# **1. OVERVIEW**
 
 This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
 
-# 2. R PACKAGE REQUIRED
+# **2. R PACKAGE REQUIRED**
 
-## 2.1 Load R Packages
+## **2.1 Load R Packages**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
