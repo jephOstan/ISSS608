@@ -488,10 +488,13 @@ ggplot(data = exam_data,
 ```
 :::
 
-### 4.3 Coordinates
+## **4.3 Coordinates**
 
 -   The *Coordinates* functions map the position of objects onto the plane of the plot.
 
+```{=html}
+<!-- -->
+```
 -   There are a number of different possible coordinate systems to use, they are:
 
     -   [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html): the default cartesian coordinate systems, where you specify x and y values (e.g. allows you to zoom in or out).
@@ -535,7 +538,7 @@ ggplot(data = exam_data,
 ```
 :::
 
-## 5. NON-DATA CONTROL ELEMENT
+# **5. NON-DATA CONTROL ELEMENT**
 
 -   background colour
 
@@ -576,7 +579,7 @@ ggplot(data = exam_data,
   theme_gray()
 ```
 
-### 5.1.2 Plot Horizontal Bar Chart with `theme_classic( )`
+### **5.1.2 Plot Horizontal Bar Chart with `theme_classic( )`**
 
 ```{r}
 ggplot(data = exam_data, 
@@ -597,78 +600,229 @@ ggplot(data = exam_data,
 ```
 :::
 
-## 6. DESIGN DATA-DRIVEN VISUALISATION FOR ANALYSIS
+# **6. DATAVIZ ENHANCEMENT**
 
-## 6.1 Frequent Analysis
+## **6.1 Chart for Frequency Analysis**
 
-### 6.1.1 Original Bar Chart
-
+::: {.callout-warning appearance="simple" icon="false"}
 A simple vertical bar chart for frequency analysis.
 
-```{r}
-ggplot(data = exam_data, 
-       aes(x = RACE)) +
-  geom_bar()
-```
-
-Critics:
-
--   y-aixs label is not clear (i.e. count)
-
--   To support effective comparison, the bars should be sorted by their resepctive frequencies.
-
--   For static graph, frequency values should be added to provide addition information.
-
-### 6.1.2 Enhance Bar Chart
+### **6.1.1 Evaluate Original Bar Chart**
 
 ```{r}
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar()
 ```
+
+[Lecturer's input :]{style="color:#d69c3c"}
+
+-   [Y-axis label is not clear (i.e. count).]{style="color:#d69c3c"}
+
+-   [To support effective comparison, the bars should be sorted by their respective frequencies.]{style="color:#d69c3c"}
+
+-   [This is a static graph. So, the frequency value is needed to provide more context.]{style="color:#d69c3c"}
+
+<br>
+
+### **6.1.2 Enhance Bar Chart**
+
+#### **6.1.2.1 derive descriptive statistic**
+
+First understand the variable.
+
+```{r}
+questionr::freq(exam_data$RACE)
+```
+
+#### **6.1.2.2 plot bar chart**
+
+#### **\-- attempt 1**
+
+```{r}
+#| code-fold: false
+exam_data %>%
+  group_by(RACE) %>%
+  summarise(count = n()) %>%
+  rename(race = RACE) %>%
+  mutate(pct = scales::percent(count/sum(count)),
+         res = str_c(count, ", ", pct)) %>%
+  ggplot(aes(x = reorder(race, -count),
+             y = count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Race",
+       y = "No. of\nPupils",
+       title = "Primary 3 Students By Race",
+       subtitle = "Students from a local school") +
+  theme(axis.title.y = element_text(angle = 0, 
+                                    size = 10),
+        axis.title.x = element_text(size = 10),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10)) +
+  geom_text(aes(label = res),
+            vjust = -0.9) + 
+  scale_y_continuous(limits = c(0,210))
+```
+
+#### **\-- attempt 2 with recommended function - fct_infreq( )**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***fct_infreq( )*** - forcats -]{style="color:#d46e15"} to arrange factors according to count data.
+:::
+
+```{r}
+#| code-fold: false
+exam_data %>%
+  group_by(RACE) %>%
+  summarise(count = n()) %>%
+  rename(race = RACE) %>%
+  mutate(pct = scales::percent(count/sum(count)),
+         res = str_c(count, ", ", pct)) %>%
+  ggplot(aes(fct_infreq(race),
+             y = count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Race",
+       y = "No. of\nPupils",
+       title = "Primary 3 Students By Race",
+       subtitle = "Students from a local school") +
+  theme(axis.title.y = element_text(angle = 0, 
+                                    size = 10),
+        axis.title.x = element_text(size = 10),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10)) +
+  geom_text(aes(label = res),
+            vjust = -0.9) + 
+  scale_y_continuous(limits = c(0,210))
+```
+
+Credit: Iearned this lesson which sourced from [*Getting things into the right order*](https://wilkelab.org/SDS375/slides/getting-things-in-order.html#1) of Prof. Claus O. Wilke, the author of [**Fundamentals of Data Visualization**](https://clauswilke.com/dataviz/)
+
+#### **\-- attempt 3 with fct_reorder( )**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***fct_reorder( )*** - forcats -]{style="color:#d46e15"} to reorder data.
+:::
+
+```{r}
+#| code-fold: false
+exam_data %>%
+  group_by(RACE) %>%
+  summarise(count = n()) %>%
+  rename(race = RACE) %>%
+  mutate(pct = scales::percent(count/sum(count)),
+         res = str_c(count, ", ", pct)) %>%
+  ggplot(aes(fct_reorder(race, -count),
+             y = count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Race",
+       y = "No. of\nPupils",
+       title = "Primary 3 Students By Race",
+       subtitle = "Students from a local school") +
+  theme(axis.title.y = element_text(angle = 0, 
+                                    size = 10),
+        axis.title.x = element_text(size = 10),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10)) +
+  geom_text(aes(label = res),
+            vjust = -0.9) + 
+  scale_y_continuous(limits = c(0,210))
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+-   [Below is the sample answer provided for this lesson]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
+
+-   [Plot above added title and subtitle to set the main context for this plot]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
 
 ![](images/image-1254806109.png)
+:::
 
-## Designing Data-drive Graphics for Analysis I
+## **6.2 Histogram**
 
-**\
-The makeover design**
+::: {.callout-warning appearance="simple" icon="false"}
+text
 
-With reference to the critics on the earlier slide, create a makeover looks similar to the figure on the right.
+### **6.2.1 Evaluate Original Histogram**
 
-### The makeover design
+![](images/image-1349634026.png)
 
-This code chunk uses [`fct_infreq()`](https://forcats.tidyverse.org/reference/fct_inorder.html) of [**forcats**](https://forcats.tidyverse.org/articles/forcats.html) package.
-
-Credit: I learned this trick from [*Getting things into the right order*](https://wilkelab.org/SDS375/slides/getting-things-in-order.html#1) of Prof. Claus O. Wilke, the author of [**Fundamentals of Data Visualization**](https://clauswilke.com/dataviz/)
-
-## Designing Data-drive Graphics for Analysis II
-
-### The original design
-
-![](images/image-698286474.png)
-
-\
-
-## Designing Data-drive Graphics for Analysis II
+Lecturer's input :
 
 -   Adding mean and median lines on the histogram plot.
 
 -   Change fill color and line color
 
--   ![](images/image-92343967.png)
+<br>
 
-    ## Designing Data-drive Graphics for Analysis III
+### **6.2.2 Enhance Histogram**
 
-    ### The original design
+```{r}
+#| code-fold: false
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,            
+                 color = "black",      
+                 fill = "light blue") +
+  geom_vline(xintercept = mean(exam_data$MATHS),
+             col = "red",
+             lwd = 1,
+             linetype = "dashed") +
+  geom_vline(xintercept = median(exam_data$MATHS),
+             col = "black",
+             lwd = 1,
+             linetype = "dashed") +  
+  annotate("text",
+           x = mean(exam_data$MATHS)*0.84,
+           y = mean(exam_data$MATHS)*0.78,
+           label = paste("Mean =", round(mean(exam_data$MATHS),2)),
+           col = "red",
+           size = 5) +
+  annotate("text",
+           x = median(exam_data$MATHS)*0.8,
+           y = median(exam_data$MATHS)*0.8,
+           label = paste("Median =", round(median(exam_data$MATHS),2)),
+           col = "black",
+           size = 5)
+```
 
-    ![](images/image-347055578.png)
+[Remarks :]{style="color:#d69c3c"}
 
-    The histograms on the left are elegantly designed but not informative. This is because they only reveal the distribution of English scores by gender but without context such as all pupils.
+[Below is the sample answer provided for this lesson]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
 
-    Create a makeover looks similar to the figure below. The background histograms show the distribution of English scores for all pupils.
+[![](images/image-92343967.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/designing-data-drive-graphics-for-analysis-ii-1)
+:::
 
-    ![](images/image-468107029.png)
+## **6.3 Trellis Plot for Histogram**
+
+::: {.callout-warning appearance="simple" icon="false"}
+text
+
+### **6.3.1 Evaluate Original Trellis Plot for Histogram**
+
+![](images/image-347055578.png)
+
+Lecturer's input :
+
+The histograms above are elegantly designed but not informative. This is because they only reveal the distribution of English scores by gender but without context such as all pupils.
+
+Create a makeover looks similar to the figure below. The background histograms show the distribution of English scores for all pupils.
+
+### **6.3.2 Enhance Trellis Plot for Histogram**
+
+```{r}
+
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+-   [Below is the sample answer provided for this lesson]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
+
+[![](images/image-468107029.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/designing-data-drive-graphics-for-analysis-iii)
+:::
 
 ## Designing Data-drive Graphics for Analysis IV
 
@@ -680,25 +834,25 @@ Create a makeover looks similar to the figure on the right.
 
 A within group scatterplot with reference lines.
 
-![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/Hands-on_Ex01-ggplot2_files/figure-revealjs/unnamed-chunk-79-1.png)
+[![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/Hands-on_Ex01-ggplot2_files/figure-revealjs/unnamed-chunk-79-1.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/designing-data-drive-graphics-for-analysis-iv-1)
 
 Homework
 
 Plot a trellis boxplot looks similar to the figure below.
 
-![](images/image-339727884.png)
+[![](images/image-339727884.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/42)
 
-![](images/image-811211769.png)
+[![](images/image-811211769.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/43)
 
-![](images/image-468521342.png)
+[![](images/image-468521342.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/44)
 
 Plot a horizontal bar chart looks similar to the figure below.
 
 -   Changing the colors of plot panel background of `theme_minimal()` to light blue and the color of grid lines to white.
 
-![](images/image-78293342.png)
+[![](images/image-78293342.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/52)
 
-## Reference
+## 7. REFERENCES
 
 -   Hadley Wickham (2023) [**ggplot2: Elegant Graphics for Data Analysis**](https://ggplot2-book.org/). Online 3rd edition.
 
