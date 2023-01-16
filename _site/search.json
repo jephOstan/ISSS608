@@ -733,5 +733,47 @@
     "title": "Hands-on 1 - DataVis with ggplot2",
     "section": "6.6 Change Theme",
     "text": "6.6 Change Theme\n\n\n\n\n\n\n\n\n\n\n\nInstruction :\nChange the colour of plot panel background of theme_minimal() to light blue and the colour of grid lines to white.\n\nggplot(data = exam_data, \n       aes(x = RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal() +\n  theme(\n    panel.background = element_rect(fill = \"lightblue\",\n                                    colour = \"lightblue\"),\n    panel.grid.major = element_line(size = 0.5,\n                                    linetype = \"solid\",\n                                    colour = \"white\"),\n    axis.title.y = element_text(size = 7.5),\n    axis.title.x = element_text(size = 7.5),\n    axis.text.x = element_text(size = 6.5),\n    axis.text.y = element_text(size = 6.5)\n    )\n\n\n\n\nBelow is the code chunk provided by the lesson :\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal() +\n  theme(panel.background = element_rect(\n    fill = \"lightblue\",\n    colour = \"lightblue\",\n    size = 0.5,\n    linetype = \"solid\"),\n    panel.grid.major = element_line(\n      size = 0.5,\n      linetype = 'solid',\n      colour = \"white\"), \n    panel.grid.minor = element_line(\n      size = 0.25,\n      linetype = 'solid',\n      colour = \"white\"))"
+  },
+  {
+    "objectID": "takeHome/th_ex1/th_ex1.html",
+    "href": "takeHome/th_ex1/th_ex1.html",
+    "title": "Take Home Exercise 1",
+    "section": "",
+    "text": "This exercise focus on using Tableau Desktop to create a population pyramid for Singapore based on data up to June 2022."
+  },
+  {
+    "objectID": "takeHome/th_ex1/th_ex1.html#acquire-data",
+    "href": "takeHome/th_ex1/th_ex1.html#acquire-data",
+    "title": "Take Home Exercise 1",
+    "section": "2.1 Acquire Data",
+    "text": "2.1 Acquire Data\n\n\n\n\n\n\nThis study will be based on demographic data set downloadable from Singstat.gov.sg.\n\nDownload “Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022” in CSV format.\n\n\n\n\n\n\n\nHighlights of the data set\n\n\n\n\n\n\nData may not add up due to rounding.\nFor June 2022, Planning Areas refer to areas demarcated in the Urban Redevelopment Authority’s Master Plan 2019.\nData from 2003 onwards exclude residents who have been away from Singapore for a continuous period of 12 months or longer as at the reference period.\nMetadata :\n\nPA = Planning Area\nSZ = Subzone\nAG = Age Group\nSex = Sex\nTOD = Type of Dwelling\nPop = Resident Count\nTime - Time / Period"
+  },
+  {
+    "objectID": "takeHome/th_ex1/th_ex1.html#upload-data",
+    "href": "takeHome/th_ex1/th_ex1.html#upload-data",
+    "title": "Take Home Exercise 1",
+    "section": "2.2 Upload Data",
+    "text": "2.2 Upload Data\n\n\n\n\n\n\nStep 1 - Click “File” from the Tableau Desktop main menu and select “Open”.\nStep 2 - Select “respopagesextod2022” when prompted by an “Open” window."
+  },
+  {
+    "objectID": "takeHome/th_ex1/th_ex1.html#wrangle-data",
+    "href": "takeHome/th_ex1/th_ex1.html#wrangle-data",
+    "title": "Take Home Exercise 1",
+    "section": "2.3 Wrangle Data",
+    "text": "2.3 Wrangle Data\n\n\n\n\n\n\nFrom the Data Source panel -\nStep 1 - Click on the inverted triangle icon under the “Sex” field.\n\nStep 2 - Select “Create Calculated Field…” to open an input panel, as shown by the screenshot below.\n\nStep 3 - Create “Male Population” measured field by change the field title to “Male Population” and input “IF [Sex] =”Males” THEN [Pop] END”, as shown by the screenshot below.\n\nStep 4 - Repeat the same step for “Female Population” but with the value for “Sex” to “Females”."
+  },
+  {
+    "objectID": "takeHome/th_ex1/th_ex1.html#plot-population-pyramid-1",
+    "href": "takeHome/th_ex1/th_ex1.html#plot-population-pyramid-1",
+    "title": "Take Home Exercise 1",
+    "section": "2.4 Plot Population Pyramid",
+    "text": "2.4 Plot Population Pyramid\n::: {.callout-warning appearance=“simple” icon=“false”}\n\nStep 1 - Double click “AG” to place it within the “Rows” panel.\nStep 2 - Drag the “Sex” field to “Color” under the “Marks” panel.\nBy now, the sheet should have been set up like the screenshot below.\n\nStep 3 - Drag both Male and Female Population fields to the “Columns” pane. The square display will be turned into horizontal bar display, as shown below.\n\nStep 4 - Right click on the “Male Population” as shown above to select “Edit Axis…”.\nStep 5 - Tick the “Reversed” checkbox under the “Scale” section.\n\nThere you go, a basic population pyramid!"
+  },
+  {
+    "objectID": "takeHome/th_ex1/th_ex1.html#add-details-population-count",
+    "href": "takeHome/th_ex1/th_ex1.html#add-details-population-count",
+    "title": "Take Home Exercise 1",
+    "section": "3.1 Add Details :: Population Count",
+    "text": "3.1 Add Details :: Population Count\n\n\n\n\n\n\nStep 1 - Click on “Label” under “Marks” pane for both gender.\nStep 2 - Tick “Show mark labels” checkbox, as shown below.\n\n\n\n\nClick the image will direct to the Public Tableau site for more interactive details.\n\n\n\n\n\n- Please refer to the senior submission I shared for example 1 and 2."
   }
 ]

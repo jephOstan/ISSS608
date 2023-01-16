@@ -1,0 +1,139 @@
+---
+title: "Take Home Exercise 1"
+editor: visual
+date:  16 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# 1. OVERVIEW
+
+This exercise focus on using **Tableau Desktop** to create a **population pyramid** for Singapore based on data up to June 2022.
+
+# 2. PLOT POPULATION PYRAMID
+
+## **2.1 Acquire Data**
+
+::: {.callout-warning appearance="simple" icon="false"}
+This study will be based on demographic data set downloadable from [Singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data).
+
+-   Download "Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022" in CSV format.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  Data may not add up due to rounding.
+
+2.  For June 2022, Planning Areas refer to areas demarcated in the Urban Redevelopment Authority's Master Plan 2019.
+
+3.  Data from 2003 onwards exclude residents who have been away from Singapore for a continuous period of 12 months or longer as at the reference period.
+
+4.  Metadata :
+
+    -   PA = Planning Area
+
+    -   SZ = Subzone
+
+    -   AG = Age Group
+
+    -   Sex = Sex
+
+    -   TOD = Type of Dwelling
+
+    -   Pop = Resident Count
+
+    -   Time - Time / Period
+:::
+:::
+
+## **2.2 Upload Data**
+
+::: {.callout-warning appearance="simple" icon="false"}
+Step 1 - Click "File" from the Tableau Desktop main menu and select "Open".
+
+Step 2 - Select "respopagesextod2022" when prompted by an "Open" window.
+:::
+
+## 2.3 Wrangle Data
+
+::: {.callout-warning appearance="simple" icon="false"}
+From the Data Source panel -
+
+Step 1 - Click on the inverted triangle icon under the "Sex" field.
+
+![](images/image-1398127722.png)
+
+Step 2 - Select "Create Calculated Field..." to open an input panel, as shown by the screenshot below.
+
+![](images/image-726087864.png)
+
+Step 3 - Create "Male Population" measured field by change the field title to "**Male Population**" and input "**IF \[Sex\] ="Males" THEN \[Pop\] END**", as shown by the screenshot below.
+
+![](images/image-1552505160.png)
+
+Step 4 - Repeat the same step for "Female Population" but with the value for "Sex" to "Females".
+:::
+
+## 2.4 Plot Population Pyramid
+
+::: {.callout-warning appearance="simple" icon="false"}
+
+<div>
+
+Step 1 - Double click "AG" to place it within the "Rows" panel.
+
+Step 2 - Drag the "Sex" field to "Color" under the "Marks" panel.
+
+By now, the sheet should have been set up like the screenshot below.
+
+![](images/image-694405821.png)
+
+Step 3 - Drag both Male and Female Population fields to the "Columns" pane. The square display will be turned into horizontal bar display, as shown below.
+
+![](images/image-623100833.png)
+
+Step 4 - Right click on the "Male Population" as shown above to select "Edit Axis...".
+
+Step 5 - Tick the "Reversed" checkbox under the "Scale" section.
+
+![](images/image-397082679.png)
+
+There you go, a basic population pyramid!
+
+![](images/image-1982425736.png)
+
+</div>
+
+# 3. ENHANCEMENT FOR VISUAL ANALYTICS
+
+Enrich the population pyramid with more information for in-depth visual analytics.
+
+## 3.1 Add Details :: Population Count
+
+::: {.callout-warning appearance="simple" icon="false"}
+Step 1 - Click on "Label" under "Marks" pane for both gender.
+
+Step 2 - Tick "Show mark labels" checkbox, as shown below.
+
+![](images/image-1070783411.png)
+
+[![Click the image will direct to the Public Tableau site for more interactive details.](images/image-2128803489.png){fig-alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022"}](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes)
+:::
+
+\- Please refer to the senior submission I shared for example [1](https://bilian-mitb2021.netlify.app/th_ex/dataviz2/dataviz2#step-by-step-description) and [2](https://isss608visualanalyticssun.netlify.app/dataviz/dataviz1/dataviz1#step-by-step-preparation).
+
+# 4. DISCUSSION
+
+::: {.callout-warning appearance="simple" icon="false"}
+500 words
+
+\- discuss patterns reveal by the analytical visualisation prepared
+:::

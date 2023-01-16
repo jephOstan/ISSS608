@@ -2,6 +2,7 @@
 title: "Hands-on 1 - DataVis with ggplot2"
 editor: visual
 date:  13 Jan 2023
+date-modified: "`r Sys.Date()`"
 code-copy: true
 website: 
     google-analytics: "G-PKMQ2W4ZRC"

@@ -16,10 +16,10 @@ website:
           - text: In-class Ex[1] S & P Summary with Tableau
             href: https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&:origin=viz_share_link
             
-      - text: Projects
+      - text: Take-home Exercises
         menu: 
-          - text: Class Project 1
-            href: class_project/project_1/xxx.qmd
+          - text: Take Home Exercise 1
+            href: takeHome/th_ex1/th_ex1.qmd
      
       - text: Workshop & Notes
         menu:
