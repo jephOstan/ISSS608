@@ -163,6 +163,18 @@ test1 <- test0 %>%
 head(test1)
 ```
 
+```{r}
+th_test <- pop_sgp %>%
+  select(-c("SZ", "FA", "Time")) %>%
+  group_by(`PA`) %>%
+  summarise(`Count` = sum(`Pop`)) %>%
+  ungroup()
+```
+
+```{r}
+arrange(th_test, desc(th_test$Count))
+```
+
 #### 3.3.3.2 count population by Planning Area & Gender
 
 ```{r}

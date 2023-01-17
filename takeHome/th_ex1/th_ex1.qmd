@@ -14,13 +14,37 @@ format:
     css: styles.css
 ---
 
-# 1. OVERVIEW
+# **1. OVERVIEW**
 
-This exercise focus on using **Tableau Desktop** to create a **population pyramid** for Singapore based on data up to June 2022.
+This exercise focus on using **Tableau Desktop** to create **multiple** **population pyramids** for Singapore based on data updated to June 2022.
 
-# 2. PLOT POPULATION PYRAMID
+Population pyramid
 
-## **2.1 Acquire Data**
+definition? what insights can be derived?
+
+usage to analysts? decision makers?
+
+## **1.1 Instruction**
+
+-   Reveal the demographic structure of Singapore at the **Planning Area** level by using the **Age-Sex** **Population Pyramid** method.
+
+-   Display nine (9) Population Pyramids, each representing a planning area in a single view.
+
+# **2. PLOT MULTIPLE POPULATION PYRAMID with TABLEAU DESKTOP**
+
+There are four (4) main flows involved to plot multiple population pyramid.
+
+-   acquire and upload data.
+
+-   inspect and wrangle data.
+
+-   plot multiple population pyramid.
+
+-   organise plotted charts on dashboard.
+
+## **2.1 Acquire & Upload Data**
+
+### **2.1.1 Acquire Data**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 This study will be based on demographic data set downloadable from [Singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data).
@@ -54,40 +78,88 @@ This study will be based on demographic data set downloadable from [Singstat.gov
 :::
 :::
 
-## **2.2 Upload Data**
+### **2.1.2 Upload Data**
 
 ::: {.callout-warning appearance="simple" icon="false"}
-Step 1 - Click "File" from the Tableau Desktop main menu and select "Open".
+Step1 - Click "**File**" from the Tableau Desktop main menu and select "**Open**" from the drop-down options.
 
-Step 2 - Select "respopagesextod2022" when prompted by an "Open" window.
+![Figure 2.1](images/image-1671792539.png){fig-alt="To upload data into Tableau Desktop, first click on \"File\" from the main menu." width="400"}
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**note : If the above screen is not your landed screen, click here**]{style="color:#3a9c88"}
+
+Don't panic, click "**Data Source**" at the bottom left corner. Once landed on the homepage, can perform step-1.
+
+![Figure 2.2](images/image-987662873.png){fig-alt="Click on \"Data Source\" to direct the user to the homepage if the user landed on different page." width="400"}
 :::
 
-## 2.3 Wrangle Data
+Step-2 - Select "**respopagesextod2022**" when prompted by an "**Open**" window.
 
-::: {.callout-warning appearance="simple" icon="false"}
-From the Data Source panel -
-
-Step 1 - Click on the inverted triangle icon under the "Sex" field.
-
-![](images/image-1398127722.png)
-
-Step 2 - Select "Create Calculated Field..." to open an input panel, as shown by the screenshot below.
-
-![](images/image-726087864.png)
-
-Step 3 - Create "Male Population" measured field by change the field title to "**Male Population**" and input "**IF \[Sex\] ="Males" THEN \[Pop\] END**", as shown by the screenshot below.
-
-![](images/image-1552505160.png)
-
-Step 4 - Repeat the same step for "Female Population" but with the value for "Sex" to "Females".
+![Figure 2.3 Screen-look when loaded with data.](images/image-1547787260.png){fig-alt="To create a \"Calculated Field\", click the triangle icon next to the \"Sex\" field." width="400"}
 :::
 
-## 2.4 Plot Population Pyramid
+## **2.2 Wrangle Data**
+
+### **2.2.1 Derive New Calculated Fields**
 
 ::: {.callout-warning appearance="simple" icon="false"}
+Step-3 - Click on the inverted triangle icon under the "**Sex**" field, as highlighted in **Figure 2.3**.
 
-<div>
+![Figure 2.4](images/image-1398127722.png){fig-alt="To open the input panel for the creation of calculated field." width="400"}
 
+Step-4 - Select "**Create Calculated Field...**" from the drop-down options (refers to **Figure 2.4**) to open an input panel, as shown in **Figure 2.5**.
+
+![Figure 2.5](images/image-726087864.png){fig-alt="User will be prompted with the input panel for the creation of calculated field." width="400"}
+
+Step-5 - To create "**Male Population**" measured field, first change the field title to "**Male Population**". Next, input "**IF \[Sex\] ="Males" THEN \[Pop\] END**", as shown in **Figure 2.6**.
+
+![Figure 2.6](images/image-1552505160.png){fig-alt="Input title and formula to derive a new calculated field i.e. \"Male Population\"." width="400"}
+
+Step-6 - Repeat **Step-5** but with title as "**Female Population**", and replace "**Males**" with "**Females**".
+:::
+
+### **2.2.2 Identify Top 9 Planning Area by Population** 
+
+::: {.callout-warning appearance="simple" icon="false"}
+Step-7 - Double click "**PA**" field to place it within the "**Rows**" panel, as shown in **Figure 2.7**.
+
+Step-8 - Double click "**Pop**" field from the table on the left. It will be automatically summed up within the "**Rows**" panel.
+
+![Figure 2.7](images/image-1919704893.png){fig-alt="Sum population for each planning area in Singapore." width="400"}
+
+Step-9 - Change "**10**" to "**9**" for the "**Top**" value under the **"Top**" tab, as shown in **Figure 2.8**.
+
+![Figure 2.8](images/image-690824896.png){width="400"}
+
+Step-10 - Drag "**Sex**" to place at the "**Color**" under "**Marks**" pane, as shown in **Figure 2.9**.
+
+![Figure 2.9](images/image-714966271.png){fig-alt="Filtered output that shows top 9 planning area with the highest Singapore population count." width="400"}
+
+Step-11 - Select "**circle views**" from the "**Show Me**" pane.
+
+![Figure 2.10](images/image-306868433.png){fig-alt="Edit y-axis to reduce empty space below the plot." width="400"}
+
+Step-12 - Edit Axis :
+
+-   Tick the "Fixed" range option.
+
+```{=html}
+<!-- -->
+```
+-   Increase the value for "Fixed start" to 90,000.
+
+-   Reduce the value for "Fixed end" to 150,000.
+
+![Figure 2.11](images/image-453180512.png){fig-alt="Show mark label, chart title." width="400"}
+
+Step-13 - Show mark label, as shown in Figure 2.11.
+
+Step-114 - Add chart title.
+:::
+
+## 2.3 Plot Population Pyramid
+
+::: {.callout-warning appearance="simple" icon="false"}
 Step 1 - Double click "AG" to place it within the "Rows" panel.
 
 Step 2 - Drag the "Sex" field to "Color" under the "Marks" panel.
@@ -109,6 +181,7 @@ Step 5 - Tick the "Reversed" checkbox under the "Scale" section.
 There you go, a basic population pyramid!
 
 ![](images/image-1982425736.png)
+:::
 
 </div>
 
@@ -124,6 +197,10 @@ Step 1 - Click on "Label" under "Marks" pane for both gender.
 Step 2 - Tick "Show mark labels" checkbox, as shown below.
 
 ![](images/image-1070783411.png)
+
+Remarks :
+
+Notice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.
 
 [![Click the image will direct to the Public Tableau site for more interactive details.](images/image-2128803489.png){fig-alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022"}](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes)
 :::

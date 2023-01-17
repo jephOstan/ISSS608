@@ -188,13 +188,23 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. OVERVIEW</a></li>
-  <li><a href="#plot-population-pyramid" id="toc-plot-population-pyramid" class="nav-link" data-scroll-target="#plot-population-pyramid">2. PLOT POPULATION PYRAMID</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. OVERVIEW</strong></a>
   <ul class="collapse">
-  <li><a href="#acquire-data" id="toc-acquire-data" class="nav-link" data-scroll-target="#acquire-data"><strong>2.1 Acquire Data</strong></a></li>
-  <li><a href="#upload-data" id="toc-upload-data" class="nav-link" data-scroll-target="#upload-data"><strong>2.2 Upload Data</strong></a></li>
-  <li><a href="#wrangle-data" id="toc-wrangle-data" class="nav-link" data-scroll-target="#wrangle-data">2.3 Wrangle Data</a></li>
-  <li><a href="#plot-population-pyramid-1" id="toc-plot-population-pyramid-1" class="nav-link" data-scroll-target="#plot-population-pyramid-1">2.4 Plot Population Pyramid</a></li>
+  <li><a href="#instruction" id="toc-instruction" class="nav-link" data-scroll-target="#instruction"><strong>1.1 Instruction</strong></a></li>
+  </ul></li>
+  <li><a href="#plot-multiple-population-pyramid-with-tableau-desktop" id="toc-plot-multiple-population-pyramid-with-tableau-desktop" class="nav-link" data-scroll-target="#plot-multiple-population-pyramid-with-tableau-desktop"><strong>2. PLOT MULTIPLE POPULATION PYRAMID with TABLEAU DESKTOP</strong></a>
+  <ul class="collapse">
+  <li><a href="#acquire-upload-data" id="toc-acquire-upload-data" class="nav-link" data-scroll-target="#acquire-upload-data"><strong>2.1 Acquire &amp; Upload Data</strong></a>
+  <ul class="collapse">
+  <li><a href="#acquire-data" id="toc-acquire-data" class="nav-link" data-scroll-target="#acquire-data"><strong>2.1.1 Acquire Data</strong></a></li>
+  <li><a href="#upload-data" id="toc-upload-data" class="nav-link" data-scroll-target="#upload-data"><strong>2.1.2 Upload Data</strong></a></li>
+  </ul></li>
+  <li><a href="#wrangle-data" id="toc-wrangle-data" class="nav-link" data-scroll-target="#wrangle-data"><strong>2.2 Wrangle Data</strong></a>
+  <ul class="collapse">
+  <li><a href="#derive-new-calculated-fields" id="toc-derive-new-calculated-fields" class="nav-link" data-scroll-target="#derive-new-calculated-fields"><strong>2.2.1 Derive New Calculated Fields</strong></a></li>
+  <li><a href="#identify-top-9-planning-area-by-population" id="toc-identify-top-9-planning-area-by-population" class="nav-link" data-scroll-target="#identify-top-9-planning-area-by-population"><strong>2.2.2 Identify Top 9 Planning Area by Population</strong></a></li>
+  </ul></li>
+  <li><a href="#plot-population-pyramid" id="toc-plot-population-pyramid" class="nav-link" data-scroll-target="#plot-population-pyramid">2.3 Plot Population Pyramid</a></li>
   </ul></li>
   <li><a href="#enhancement-for-visual-analytics" id="toc-enhancement-for-visual-analytics" class="nav-link" data-scroll-target="#enhancement-for-visual-analytics">3. ENHANCEMENT FOR VISUAL ANALYTICS</a>
   <ul class="collapse">
@@ -227,7 +237,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 16, 2023</p>
+      <p class="date-modified">January 17, 2023</p>
     </div>
   </div>
     
@@ -237,13 +247,32 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </header>
 
 <section id="overview" class="level1">
-<h1>1. OVERVIEW</h1>
-<p>This exercise focus on using <strong>Tableau Desktop</strong> to create a <strong>population pyramid</strong> for Singapore based on data up to June 2022.</p>
+<h1><strong>1. OVERVIEW</strong></h1>
+<p>This exercise focus on using <strong>Tableau Desktop</strong> to create <strong>multiple</strong> <strong>population pyramids</strong> for Singapore based on data updated to June 2022.</p>
+<p>Population pyramid</p>
+<p>definition? what insights can be derived?</p>
+<p>usage to analysts? decision makers?</p>
+<section id="instruction" class="level2">
+<h2 class="anchored" data-anchor-id="instruction"><strong>1.1 Instruction</strong></h2>
+<ul>
+<li><p>Reveal the demographic structure of Singapore at the <strong>Planning Area</strong> level by using the <strong>Age-Sex</strong> <strong>Population Pyramid</strong> method.</p></li>
+<li><p>Display nine (9) Population Pyramids, each representing a planning area in a single view.</p></li>
+</ul>
 </section>
-<section id="plot-population-pyramid" class="level1">
-<h1>2. PLOT POPULATION PYRAMID</h1>
-<section id="acquire-data" class="level2">
-<h2 class="anchored" data-anchor-id="acquire-data"><strong>2.1 Acquire Data</strong></h2>
+</section>
+<section id="plot-multiple-population-pyramid-with-tableau-desktop" class="level1">
+<h1><strong>2. PLOT MULTIPLE POPULATION PYRAMID with TABLEAU DESKTOP</strong></h1>
+<p>There are four (4) main flows involved to plot multiple population pyramid.</p>
+<ul>
+<li><p>acquire and upload data.</p></li>
+<li><p>inspect and wrangle data.</p></li>
+<li><p>plot multiple population pyramid.</p></li>
+<li><p>organise plotted charts on dashboard.</p></li>
+</ul>
+<section id="acquire-upload-data" class="level2">
+<h2 class="anchored" data-anchor-id="acquire-upload-data"><strong>2.1 Acquire &amp; Upload Data</strong></h2>
+<section id="acquire-data" class="level3">
+<h3 class="anchored" data-anchor-id="acquire-data"><strong>2.1.1 Acquire Data</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -288,44 +317,158 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="upload-data" class="level2">
-<h2 class="anchored" data-anchor-id="upload-data"><strong>2.2 Upload Data</strong></h2>
+<section id="upload-data" class="level3">
+<h3 class="anchored" data-anchor-id="upload-data"><strong>2.1.2 Upload Data</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Step 1 - Click “File” from the Tableau Desktop main menu and select “Open”.</p>
-<p>Step 2 - Select “respopagesextod2022” when prompted by an “Open” window.</p>
+<p>Step1 - Click “<strong>File</strong>” from the Tableau Desktop main menu and select “<strong>Open</strong>” from the drop-down options.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1671792539.png" class="img-fluid figure-img" alt="To upload data into Tableau Desktop, first click on &quot;File&quot; from the main menu." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.1</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>note : If the above screen is not your landed screen, click here</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Don’t panic, click “<strong>Data Source</strong>” at the bottom left corner. Once landed on the homepage, can perform step-1.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-987662873.png" class="img-fluid figure-img" alt="Click on &quot;Data Source&quot; to direct the user to the homepage if the user landed on different page." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.2</figcaption><p></p>
+</figure>
 </div>
 </div>
 </div>
+</div>
+<p>Step-2 - Select “<strong>respopagesextod2022</strong>” when prompted by an “<strong>Open</strong>” window.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1547787260.png" class="img-fluid figure-img" alt="To create a &quot;Calculated Field&quot;, click the triangle icon next to the &quot;Sex&quot; field." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.3 Screen-look when loaded with data.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="wrangle-data" class="level2">
-<h2 class="anchored" data-anchor-id="wrangle-data">2.3 Wrangle Data</h2>
+<h2 class="anchored" data-anchor-id="wrangle-data"><strong>2.2 Wrangle Data</strong></h2>
+<section id="derive-new-calculated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="derive-new-calculated-fields"><strong>2.2.1 Derive New Calculated Fields</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>From the Data Source panel -</p>
-<p>Step 1 - Click on the inverted triangle icon under the “Sex” field.</p>
-<p><img src="images/image-1398127722.png" class="img-fluid"></p>
-<p>Step 2 - Select “Create Calculated Field…” to open an input panel, as shown by the screenshot below.</p>
-<p><img src="images/image-726087864.png" class="img-fluid"></p>
-<p>Step 3 - Create “Male Population” measured field by change the field title to “<strong>Male Population</strong>” and input “<strong>IF [Sex] =”Males” THEN [Pop] END</strong>”, as shown by the screenshot below.</p>
-<p><img src="images/image-1552505160.png" class="img-fluid"></p>
-<p>Step 4 - Repeat the same step for “Female Population” but with the value for “Sex” to “Females”.</p>
+<p>Step-3 - Click on the inverted triangle icon under the “<strong>Sex</strong>” field, as highlighted in <strong>Figure 2.3</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1398127722.png" class="img-fluid figure-img" alt="To open the input panel for the creation of calculated field." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.4</figcaption><p></p>
+</figure>
+</div>
+<p>Step-4 - Select “<strong>Create Calculated Field…</strong>” from the drop-down options (refers to <strong>Figure 2.4</strong>) to open an input panel, as shown in <strong>Figure 2.5</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-726087864.png" class="img-fluid figure-img" alt="User will be prompted with the input panel for the creation of calculated field." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.5</figcaption><p></p>
+</figure>
+</div>
+<p>Step-5 - To create “<strong>Male Population</strong>” measured field, first change the field title to “<strong>Male Population</strong>”. Next, input “<strong>IF [Sex] =”Males” THEN [Pop] END</strong>”, as shown in <strong>Figure 2.6</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1552505160.png" class="img-fluid figure-img" alt="Input title and formula to derive a new calculated field i.e. &quot;Male Population&quot;." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.6</figcaption><p></p>
+</figure>
+</div>
+<p>Step-6 - Repeat <strong>Step-5</strong> but with title as “<strong>Female Population</strong>”, and replace “<strong>Males</strong>” with “<strong>Females</strong>”.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="plot-population-pyramid-1" class="level2">
-<h2 class="anchored" data-anchor-id="plot-population-pyramid-1">2.4 Plot Population Pyramid</h2>
-<p>::: {.callout-warning appearance=“simple” icon=“false”}</p>
-<div>
+<section id="identify-top-9-planning-area-by-population" class="level3">
+<h3 class="anchored" data-anchor-id="identify-top-9-planning-area-by-population"><strong>2.2.2 Identify Top 9 Planning Area by Population</strong></h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Step-7 - Double click “<strong>PA</strong>” field to place it within the “<strong>Rows</strong>” panel, as shown in <strong>Figure 2.7</strong>.</p>
+<p>Step-8 - Double click “<strong>Pop</strong>” field from the table on the left. It will be automatically summed up within the “<strong>Rows</strong>” panel.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1919704893.png" class="img-fluid figure-img" alt="Sum population for each planning area in Singapore." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.7</figcaption><p></p>
+</figure>
+</div>
+<p>Step-9 - Change “<strong>10</strong>” to “<strong>9</strong>” for the “<strong>Top</strong>” value under the <strong>“Top</strong>” tab, as shown in <strong>Figure 2.8</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-690824896.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.8</figcaption><p></p>
+</figure>
+</div>
+<p>Step-10 - Drag “<strong>Sex</strong>” to place at the “<strong>Color</strong>” under “<strong>Marks</strong>” pane, as shown in <strong>Figure 2.9</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-714966271.png" class="img-fluid figure-img" alt="Filtered output that shows top 9 planning area with the highest Singapore population count." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.9</figcaption><p></p>
+</figure>
+</div>
+<p>Step-11 - Select “<strong>circle views</strong>” from the “<strong>Show Me</strong>” pane.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-306868433.png" class="img-fluid figure-img" alt="Edit y-axis to reduce empty space below the plot." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.10</figcaption><p></p>
+</figure>
+</div>
+<p>Step-12 - Edit Axis :</p>
+<ul>
+<li>Tick the “Fixed” range option.</li>
+</ul>
+<!-- -->
+<ul>
+<li><p>Increase the value for “Fixed start” to 90,000.</p></li>
+<li><p>Reduce the value for “Fixed end” to 150,000.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-453180512.png" class="img-fluid figure-img" alt="Show mark label, chart title." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.11</figcaption><p></p>
+</figure>
+</div>
+<p>Step-13 - Show mark label, as shown in Figure 2.11.</p>
+<p>Step-114 - Add chart title.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="plot-population-pyramid" class="level2">
+<h2 class="anchored" data-anchor-id="plot-population-pyramid">2.3 Plot Population Pyramid</h2>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>Step 1 - Double click “AG” to place it within the “Rows” panel.</p>
 <p>Step 2 - Drag the “Sex” field to “Color” under the “Marks” panel.</p>
 <p>By now, the sheet should have been set up like the screenshot below.</p>
@@ -338,13 +481,16 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <p>There you go, a basic population pyramid!</p>
 <p><img src="images/image-1982425736.png" class="img-fluid"></p>
 </div>
-</section>
-</section>
+</div>
+</div>
+</section></section></main></div>
+
+
 <section id="enhancement-for-visual-analytics" class="level1">
 <h1>3. ENHANCEMENT FOR VISUAL ANALYTICS</h1>
 <p>Enrich the population pyramid with more information for in-depth visual analytics.</p>
 <section id="add-details-population-count" class="level2">
-<h2 class="anchored" data-anchor-id="add-details-population-count">3.1 Add Details :: Population Count</h2>
+<h2 data-anchor-id="add-details-population-count">3.1 Add Details :: Population Count</h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -354,6 +500,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <p>Step 1 - Click on “Label” under “Marks” pane for both gender.</p>
 <p>Step 2 - Tick “Show mark labels” checkbox, as shown below.</p>
 <p><img src="images/image-1070783411.png" class="img-fluid"></p>
+<p>Remarks :</p>
+<p>Notice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes"><img src="images/image-2128803489.png" class="img-fluid figure-img" alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022"></a></p>
@@ -383,7 +531,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 </section>
 
-</main> <!-- /main -->
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -517,7 +665,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-</div> <!-- /content -->
+ <!-- /content -->
 
 
 
