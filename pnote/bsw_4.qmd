@@ -179,13 +179,13 @@ check_model(model1)
 
 # 5. SUMMARY
 
-## 5.1 Summarise with summary( ) 
+## 5.1 Summarise with summary( )
 
 ```{r}
 summary(model1)
 ```
 
-## 5.2 Summaries with gtsummary:: tbl_regression() 
+## 5.2 Summaries with gtsummary:: tbl_regression()
 
 ### 5.2.1 Summaries Model1
 
@@ -227,19 +227,19 @@ model's intercept, corresponding to Age_08_04 = 0, is at -2185.52 (95% CI \[-409
 
 = -2.25, p = 0.025). Within this model:
 
- - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+-   The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
 
 -114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
 
- - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+-   The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
 
 t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
 
- - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+-   The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
 
 t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
 
- - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+-   The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
 
 \[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
 
@@ -257,19 +257,19 @@ intercept, corresponding to KM = 0, is at -2185.52 (95% CI \[-4092.59, -278.45\]
 
 0.025). Within this model:
 
- - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+-   The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
 
 -114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
 
- - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+-   The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
 
 t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
 
- - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+-   The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
 
 t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
 
- - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+-   The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
 
 \[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
 
@@ -287,19 +287,19 @@ model's intercept, corresponding to Weight = 0, is at -2185.52 (95% CI \[-4092.5
 
 -2.25, p = 0.025). Within this model:
 
- - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+-   The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
 
 -114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
 
- - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+-   The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
 
 t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
 
- - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+-   The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
 
 t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
 
- - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+-   The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
 
 \[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
 
@@ -317,19 +317,19 @@ The model's intercept, corresponding to Guarantee_Period = 0, is at -2185.52 (95
 
 -278.45\], t(1431) = -2.25, p = 0.025). Within this model:
 
- - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+-   The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
 
 -114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
 
- - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+-   The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
 
 t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
 
- - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+-   The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
 
 t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
 
- - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+-   The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
 
 \[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
 
