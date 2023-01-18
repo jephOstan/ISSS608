@@ -134,6 +134,10 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
  <span class="dropdown-text">BSWorkshop - Programming Statistical Graphics</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../../pnote/bsw_4.html">
+ <span class="dropdown-text">BSWorkshop - Build Statistical Model</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="https://tskam.shinyapps.io/prototype-ShinyIDEA/">
  <span class="dropdown-text">Shiny Workshop - Prof’s Prototype</span></a>
   </li>  
@@ -207,14 +211,14 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#derive-new-calculated-fields" id="toc-derive-new-calculated-fields" class="nav-link" data-scroll-target="#derive-new-calculated-fields"><strong>2.2.1 Derive New Calculated Fields</strong></a></li>
   <li><a href="#identify-top-9-planning-area-by-population" id="toc-identify-top-9-planning-area-by-population" class="nav-link" data-scroll-target="#identify-top-9-planning-area-by-population"><strong>2.2.2 Identify Top 9 Planning Area by Population</strong></a></li>
+  <li><a href="#plot-trellis-population-pyramid" id="toc-plot-trellis-population-pyramid" class="nav-link" data-scroll-target="#plot-trellis-population-pyramid"><strong>2.2.3 Plot Trellis Population Pyramid</strong></a></li>
   </ul></li>
-  <li><a href="#plot-population-pyramid" id="toc-plot-population-pyramid" class="nav-link" data-scroll-target="#plot-population-pyramid">2.3 Plot Population Pyramid</a></li>
   </ul></li>
-  <li><a href="#enhancement-for-visual-analytics" id="toc-enhancement-for-visual-analytics" class="nav-link" data-scroll-target="#enhancement-for-visual-analytics">3. ENHANCEMENT FOR VISUAL ANALYTICS</a>
+  <li><a href="#enhancement-for-visual-analytics" id="toc-enhancement-for-visual-analytics" class="nav-link" data-scroll-target="#enhancement-for-visual-analytics"><strong>3. ENHANCEMENT FOR VISUAL ANALYTICS</strong></a>
   <ul class="collapse">
-  <li><a href="#add-details-population-count" id="toc-add-details-population-count" class="nav-link" data-scroll-target="#add-details-population-count">3.1 Add Details :: Population Count</a></li>
+  <li><a href="#add-details-population-count" id="toc-add-details-population-count" class="nav-link" data-scroll-target="#add-details-population-count"><strong>3.1 Add Details :: Population Count</strong></a></li>
   </ul></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">4. DISCUSSION</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>4. DISCUSSION</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -339,7 +343,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1671792539.png" class="img-fluid figure-img" alt="To upload data into Tableau Desktop, first click on &quot;File&quot; from the main menu." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.1</figcaption><p></p>
@@ -358,7 +362,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Fret not! If <strong>Figure 2.2</strong> is your landed screen, from the bottom left corner, click “<strong>Data Source</strong>”. You will be directed to the homepage, then perform <strong>Step-1</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-987662873.png" class="img-fluid figure-img" alt="This image shows the clickable &quot;Data Source&quot; to direct user to the homepage." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.2</figcaption><p></p>
@@ -377,7 +381,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1547787260.png" class="img-fluid figure-img" alt="To create a &quot;Calculated Field&quot;, click the triangle icon next to the &quot;Sex&quot; field." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.3 Screen-look when loaded with data.</figcaption><p></p>
@@ -398,28 +402,64 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Step-3 - Click on the inverted triangle icon under the “<strong>Sex</strong>” field, as highlighted in <strong>Figure 2.3</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-3 : Click on the inverted triangle icon under the “Sex</strong>” field, as highlighted in <strong>Figure 2.3</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1398127722.png" class="img-fluid figure-img" alt="To open the input panel for the creation of calculated field." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.4</figcaption><p></p>
 </figure>
 </div>
-<p>Step-4 - Select “<strong>Create Calculated Field…</strong>” from the drop-down options (refers to <strong>Figure 2.4</strong>) to open an input panel, as shown in <strong>Figure 2.5</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-4 : Select “Create Calculated Field…</strong>” from the drop-down options (refers to <strong>Figure 2.4)</strong> to open an input panel, as shown in <strong>Figure 2.5</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-726087864.png" class="img-fluid figure-img" alt="User will be prompted with the input panel for the creation of calculated field." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.5</figcaption><p></p>
 </figure>
 </div>
-<p>Step-5 - To create “<strong>Male Population</strong>” measured field, first change the field title to “<strong>Male Population</strong>”. Next, input “<strong>IF [Sex] =”Males” THEN [Pop] END</strong>”, as shown in <strong>Figure 2.6</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-5 :</strong> To create <strong>“Male Population” measured field, first change the field title to</strong> “Male Population”. Next, input <strong>“IF [Sex] =”Males” THEN [Pop] END</strong>”, as shown in <strong>Figure 2.6</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1552505160.png" class="img-fluid figure-img" alt="Input title and formula to derive a new calculated field i.e. &quot;Male Population&quot;." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.6</figcaption><p></p>
 </figure>
 </div>
-<p>Step-6 - Repeat <strong>Step-5</strong> but with title as “<strong>Female Population</strong>”, and replace “<strong>Males</strong>” with “<strong>Females</strong>”.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-6 :</strong> Repeat <em>Step-5</em> but with title as “<strong>Female Population</strong>”, and replace “<strong>Males</strong>” with “<strong>Females</strong>”.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -432,87 +472,159 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Step-7 - Double click “<strong>PA</strong>” field to place it within the “<strong>Rows</strong>” panel, as shown in <strong>Figure 2.7</strong>.</p>
-<p>Step-8 - Double click “<strong>Pop</strong>” field from the table on the left. It will be automatically summed up within the “<strong>Rows</strong>” panel.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-7 : PA</strong>” field to place it within the “<strong>Rows</strong>” panel, as shown in <strong>Figure 2.7</strong>.</p>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-8</strong> : Double click “<strong>Pop</strong>” field from the table on the left. It will be automatically summed up within the “<strong>Rows</strong>” panel.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/image-1919704893.png" class="img-fluid figure-img" alt="Sum population for each planning area in Singapore." width="400"></p>
+<p><img src="images/image-1871491101.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.7</figcaption><p></p>
 </figure>
 </div>
-<p>Step-9 - Change “<strong>10</strong>” to “<strong>9</strong>” for the “<strong>Top</strong>” value under the <strong>“Top</strong>” tab, as shown in <strong>Figure 2.8</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-9</strong> : Right click on the space highlighted in red, above the population count column to sort the counts in “<strong>Sort descending</strong>” order. Refer to <strong>Figure 2.8</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/image-690824896.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/image-1919704893.png" class="img-fluid figure-img" alt="Sum population for each planning area in Singapore." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.8</figcaption><p></p>
 </figure>
 </div>
-<p>Step-10 - Drag “<strong>Sex</strong>” to place at the “<strong>Color</strong>” under “<strong>Marks</strong>” pane, as shown in <strong>Figure 2.9</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-10</strong> : Click the inverted triangle icon (next to “<strong>PA</strong>” at the “<strong>Rows</strong>” pane) and select “<strong>Filter</strong>” to open the “<strong>Filter [PA]</strong>” pane.</p>
+<p>Next, change “<strong>10</strong>” to “<strong>9</strong>” for the “<strong>Top</strong>” value under the <strong>“Top</strong>” tab, as shown in <strong>Figure 2.9</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/image-714966271.png" class="img-fluid figure-img" alt="Filtered output that shows top 9 planning area with the highest Singapore population count." width="400"></p>
+<p><img src="images/image-690824896.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.9</figcaption><p></p>
 </figure>
 </div>
-<p>Step-11 - Select “<strong>circle views</strong>” from the “<strong>Show Me</strong>” pane.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/image-306868433.png" class="img-fluid figure-img" alt="Edit y-axis to reduce empty space below the plot." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.10</figcaption><p></p>
-</figure>
-</div>
-<p>Step-12 - Edit Axis :</p>
-<ul>
-<li>Tick the “Fixed” range option.</li>
-</ul>
-<!-- -->
-<ul>
-<li><p>Increase the value for “Fixed start” to 90,000.</p></li>
-<li><p>Reduce the value for “Fixed end” to 150,000.</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/image-453180512.png" class="img-fluid figure-img" alt="Show mark label, chart title." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.11</figcaption><p></p>
-</figure>
-</div>
-<p>Step-13 - Show mark label, as shown in Figure 2.11.</p>
-<p>Step-114 - Add chart title.</p>
 </div>
 </div>
 </div>
 </section>
-</section>
-<section id="plot-population-pyramid" class="level2">
-<h2 class="anchored" data-anchor-id="plot-population-pyramid">2.3 Plot Population Pyramid</h2>
+<section id="plot-trellis-population-pyramid" class="level3">
+<h3 class="anchored" data-anchor-id="plot-trellis-population-pyramid"><strong>2.2.3 Plot Trellis Population Pyramid</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Step 1 - Double click “AG” to place it within the “Rows” panel.</p>
-<p>Step 2 - Drag the “Sex” field to “Color” under the “Marks” panel.</p>
-<p>By now, the sheet should have been set up like the screenshot below.</p>
-<p><img src="images/image-694405821.png" class="img-fluid"></p>
-<p>Step 3 - Drag both Male and Female Population fields to the “Columns” pane. The square display will be turned into horizontal bar display, as shown below.</p>
-<p><img src="images/image-623100833.png" class="img-fluid"></p>
-<p>Step 4 - Right click on the “Male Population” as shown above to select “Edit Axis…”.</p>
-<p>Step 5 - Tick the “Reversed” checkbox under the “Scale” section.</p>
-<p><img src="images/image-397082679.png" class="img-fluid"></p>
-<p>There you go, a basic population pyramid!</p>
-<p><img src="images/image-1982425736.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1079669590.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.10</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-11</strong> : Select “horizontal bars” from the “Show Me” chart options.</p>
 </div>
 </div>
 </div>
-</section></section></main></div>
-
-
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1153609685.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.11</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-12</strong> : Drag “Gender” to “Color” under “Marks” pane. Next, drag the filtered “PA” to “Columns” and replace the “Rows” field with “Age Group”. Thereafter, place “Male Population” and “Female Population” fields to the “Columns”. Refers to <strong>Figure 2.11</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1115048381.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.12</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-13</strong> : Right click the “Male Population” at the x-axis to select “Edit Axis…”.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-23982472.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.13</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-14</strong> : Tick “Reversed” check box under “Scale” section, as shown in <strong>Figure 2.13</strong>.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><a href="https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_1/Dashboard2?:language=en-US&amp;publish=yes&amp;:display_count=n&amp;:origin=viz_share_link"><img src="images/image-1174017359.png" class="img-fluid figure-img" alt="Top 9 Highest Singapore Planning Area by Population Count based on June 2022 dataset." width="400"></a></p>
+<p></p><figcaption class="figure-caption">Figure 2.14</figcaption><p></p>
+</figure>
+</div>
+<p>Remarks :</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
 <section id="enhancement-for-visual-analytics" class="level1">
-<h1>3. ENHANCEMENT FOR VISUAL ANALYTICS</h1>
+<h1><strong>3. ENHANCEMENT FOR VISUAL ANALYTICS</strong></h1>
 <p>Enrich the population pyramid with more information for in-depth visual analytics.</p>
 <section id="add-details-population-count" class="level2">
-<h2 data-anchor-id="add-details-population-count">3.1 Add Details :: Population Count</h2>
+<h2 class="anchored" data-anchor-id="add-details-population-count"><strong>3.1 Add Details :: Population Count</strong></h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -539,12 +651,16 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p><img src="images/image-1070783411.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1070783411.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div>
 <p>Remarks :</p>
 <p>Notice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.</p>
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes"><img src="images/image-2128803489.png" class="img-fluid figure-img" alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022"></a></p>
+<p><a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes"><img src="images/image-2128803489.png" class="img-fluid figure-img" alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022" width="400"></a></p>
 <p></p><figcaption class="figure-caption">Click the image will direct to the Public Tableau site for more interactive details.</figcaption><p></p>
 </figure>
 </div>
@@ -555,7 +671,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </section>
 </section>
 <section id="discussion" class="level1">
-<h1>4. DISCUSSION</h1>
+<h1><strong>4. DISCUSSION</strong></h1>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -567,11 +683,40 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
+<p>Exploration to Improve Visual Analytics</p>
+<p>Step-10 - Drag “<strong>Sex</strong>” to place at the “<strong>Color</strong>” under “<strong>Marks</strong>” pane, as shown in <strong>Figure 2.9</strong>.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-714966271.png" class="img-fluid figure-img" alt="Filtered output that shows top 9 planning area with the highest Singapore population count." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.9</figcaption><p></p>
+</figure>
+</div>
+<p>Step-11 - Select “<strong>circle views</strong>” from the “<strong>Show Me</strong>” pane.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-306868433.png" class="img-fluid figure-img" alt="Edit y-axis to reduce empty space below the plot." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.10</figcaption><p></p>
+</figure>
+</div>
+<p>Step-12 - Edit Axis :</p>
+<ul>
+<li>Tick the “Fixed” range option.</li>
+<li>Increase the value for “Fixed start” to 90,000.</li>
+<li>Reduce the value for “Fixed end” to 150,000.</li>
+</ul>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-453180512.png" class="img-fluid figure-img" alt="Show mark label, chart title." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.11</figcaption><p></p>
+</figure>
+</div>
+<p>Step-13 - Show mark label, as shown in Figure 2.11.</p>
+<p>Step-14 - Add chart title.</p>
 
 
 </section>
 
- <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -705,7 +850,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
- <!-- /content -->
+</div> <!-- /content -->
 
 
 
