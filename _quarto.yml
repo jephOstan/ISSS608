@@ -23,8 +23,8 @@ website:
      
       - text: Workshop & Notes
         menu:
-          - text: Personal Note
-            href: pnote/note1.qmd 
+          - text: BSWorkshop - Programming Statistical Graphics
+            href: pnote/bsw_3.qmd
           - text: Shiny Workshop - Prof's Prototype
             href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
           - text: Exploration 0 - Explore with Geospatial Data
@@ -39,7 +39,8 @@ website:
             href: pnote/test4.qmd
           - text: Exploration 5 - Time-Series Visualisation
             href: pnote/test5.qmd           
-            
+          - text: Personal Note
+            href: pnote/note1.qmd
     right:
       - href: index.qmd
         text: Home

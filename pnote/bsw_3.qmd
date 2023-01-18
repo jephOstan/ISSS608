@@ -1,0 +1,137 @@
+---
+title: "BSW : Programming Statistical Graphics"
+editor: visual
+date:  18 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+An overview of explanatory model
+
+# 2. R PACKAGE REQUIRED
+
+## 2.1 Load R Packages
+
+::: {.callout-warning appearance="simple" icon="false"}
+```{r}
+pacman::p_load(tidyverse, esquisse, ggstatsplot, officer, rvg)
+```
+:::
+
+# **3. DATA**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  Year end examination grades of a cohort of primary 3 students from a local school.
+
+2.  There are a total of seven attributes. Four of them are categorical data type and the other three are in continuous data type.
+
+-   The categorical attributes are: ID, CLASS, GENDER and RACE.
+-   The continuous attributes are: MATHS, ENGLISH and SCIENCE.
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Data**
+
+::: {.callout-warning appearance="simple" icon="false"}
+```{r}
+#| code-fold: false
+exam_data <- read_csv("data/Exam_data.csv")
+
+problems(exam_data)
+```
+:::
+
+### 3.2.2 Explore Data
+
+```{r}
+glimpse(exam_data, 70)
+```
+
+Step 1 - View exam_data.
+
+Step 2 - Type "esquisse::esquisser(viewer ="browser") at the R Console.
+
+![](images/image-1245057292.png)
+
+Two-sample Comparison Test
+
+using mean
+
+```{r}
+ggbetweenstats(
+  data = exam_data,
+  x = GENDER,
+  y = MATHS,
+  type = "p",
+  messages = FALSE)
+```
+
+Change to non-parametric, "np", will be plotted using median.
+
+```{r}
+ggbetweenstats(
+  data = exam_data,
+  x = GENDER,
+  y = MATHS,
+  type = "np",
+  messages = FALSE)
+```
+
+ANOVA Test
+
+```{r}
+ggbetweenstats(
+  data = exam_data,
+  x = RACE,
+  y = MATHS,
+  type = "p",
+  messages = FALSE)
+```
+
+```{r}
+ggbetweenstats(
+  data = exam_data,
+  x = RACE,
+  y = ENGLISH,
+  type = "np",
+  mean.ci = TRUE,
+  pairwise.comparisons = TRUE,
+  pairwise.display = "s",
+  p.adjust.method = "fdr",
+  messages = FALSE)
+```
+
+Compare 3C and 3D Classes
+
+```{r}
+ggbetweenstats(
+  data = exam_data,
+  x = CLASS,
+  y = MATHS,
+  type = "np",
+  mean.ci = TRUE,
+  pairwise.comparisons = TRUE,
+  pairwise.display = "s",
+  messages = FALSE)
+```
+
+Remarks :
+
+Result shows that 3C and 3D are not statistically significant.

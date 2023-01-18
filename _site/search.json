@@ -774,7 +774,7 @@
     "href": "takeHome/th_ex1/th_ex1.html#add-details-population-count",
     "title": "Take Home Exercise 1",
     "section": "3.1 Add Details :: Population Count",
-    "text": "3.1 Add Details :: Population Count\n\n\n\n\n\n\nStep 1 - Click on “Label” under “Marks” pane for both gender.\nStep 2 - Tick “Show mark labels” checkbox, as shown below.\n\nRemarks :\nNotice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.\n\n\n\nClick the image will direct to the Public Tableau site for more interactive details.\n\n\n\n\n\n- Please refer to the senior submission I shared for example 1 and 2."
+    "text": "3.1 Add Details :: Population Count\n\n\n\n\n\n\n\n\n\n\n\n\nStep 1 - Click on “Label” under “Marks” pane for both gender.\n\n\n\n\n\n\n\n\n\nStep 2 - Tick “Show mark labels” checkbox, as shown below.\n\n\n\n\nRemarks :\nNotice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.\n\n\n\nClick the image will direct to the Public Tableau site for more interactive details.\n\n\n\n\n\n- Please refer to the senior submission I shared for example 1 and 2."
   },
   {
     "objectID": "takeHome/th_ex1/th_ex1.html#plot-population-pyramid",
@@ -816,6 +816,34 @@
     "href": "takeHome/th_ex1/th_ex1.html#acquire-upload-data",
     "title": "Take Home Exercise 1",
     "section": "2.1 Acquire & Upload Data",
-    "text": "2.1 Acquire & Upload Data\n\n2.1.1 Acquire Data\n\n\n\n\n\n\nThis study will be based on demographic data set downloadable from Singstat.gov.sg.\n\nDownload “Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022” in CSV format.\n\n\n\n\n\n\n\nHighlights of the data set\n\n\n\n\n\n\nData may not add up due to rounding.\nFor June 2022, Planning Areas refer to areas demarcated in the Urban Redevelopment Authority’s Master Plan 2019.\nData from 2003 onwards exclude residents who have been away from Singapore for a continuous period of 12 months or longer as at the reference period.\nMetadata :\n\nPA = Planning Area\nSZ = Subzone\nAG = Age Group\nSex = Sex\nTOD = Type of Dwelling\nPop = Resident Count\nTime - Time / Period\n\n\n\n\n\n\n\n\n\n\n2.1.2 Upload Data\n\n\n\n\n\n\nStep1 - Click “File” from the Tableau Desktop main menu and select “Open” from the drop-down options.\n\n\n\nFigure 2.1\n\n\n\n\n\n\n\n\nnote : If the above screen is not your landed screen, click here\n\n\n\n\n\nDon’t panic, click “Data Source” at the bottom left corner. Once landed on the homepage, can perform step-1.\n\n\n\nFigure 2.2\n\n\n\n\n\nStep-2 - Select “respopagesextod2022” when prompted by an “Open” window.\n\n\n\nFigure 2.3 Screen-look when loaded with data."
+    "text": "2.1 Acquire & Upload Data\n\n2.1.1 Acquire Data\n\n\n\n\n\n\nThis study will be based on demographic data set downloadable from Singstat.gov.sg.\n\nDownload “Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022” in CSV format.\n\n\n\n\n\n\n\nHighlights of the data set\n\n\n\n\n\n\nData may not add up due to rounding.\nFor June 2022, Planning Areas refer to areas demarcated in the Urban Redevelopment Authority’s Master Plan 2019.\nData from 2003 onwards exclude residents who have been away from Singapore for a continuous period of 12 months or longer as at the reference period.\nMetadata :\n\nPA = Planning Area\nSZ = Subzone\nAG = Age Group\nSex = Sex\nTOD = Type of Dwelling\nPop = Resident Count\nTime - Time / Period\n\n\n\n\n\n\n\n\n\n\n2.1.2 Upload Data\n\n\n\n\n\n\n\n\n\n\n\n\nStep-1 : Click “File” from the Tableau Desktop main menu and select “Open” from the drop-down options.\n\n\n\n\n\n\nFigure 2.1\n\n\n\n\n\n\n\n\nnote : If the above screen is not your landed screen, click here\n\n\n\n\n\nFret not! If Figure 2.2 is your landed screen, from the bottom left corner, click “Data Source”. You will be directed to the homepage, then perform Step-1.\n\n\n\nFigure 2.2\n\n\n\n\n\n\n\n\n\n\n\nStep-2 : Select “respopagesextod2022” when prompted by an “Open” window.\n\n\n\n\n\n\nFigure 2.3 Screen-look when loaded with data."
+  },
+  {
+    "objectID": "pnote/bsw_3.html",
+    "href": "pnote/bsw_3.html",
+    "title": "BSW : Programming Statistical Graphics",
+    "section": "",
+    "text": "An overview of explanatory model"
+  },
+  {
+    "objectID": "pnote/bsw_3.html#load-r-packages",
+    "href": "pnote/bsw_3.html#load-r-packages",
+    "title": "BSW : Programming Statistical Graphics",
+    "section": "2.1 Load R Packages",
+    "text": "2.1 Load R Packages\n\n\n\n\n\n\n\n\nShow the code\npacman::p_load(tidyverse, esquisse, ggstatsplot, officer, rvg)"
+  },
+  {
+    "objectID": "pnote/bsw_3.html#acquire-data-source",
+    "href": "pnote/bsw_3.html#acquire-data-source",
+    "title": "BSW : Programming Statistical Graphics",
+    "section": "3.1 Acquire Data Source",
+    "text": "3.1 Acquire Data Source\nThis study will be based on fictitious data set provided with this lesson.\n\n\n\n\n\n\nHighlights of the data set\n\n\n\n\n\n\nYear end examination grades of a cohort of primary 3 students from a local school.\nThere are a total of seven attributes. Four of them are categorical data type and the other three are in continuous data type.\n\n\nThe categorical attributes are: ID, CLASS, GENDER and RACE.\nThe continuous attributes are: MATHS, ENGLISH and SCIENCE."
+  },
+  {
+    "objectID": "pnote/bsw_3.html#import-data",
+    "href": "pnote/bsw_3.html#import-data",
+    "title": "BSW : Programming Statistical Graphics",
+    "section": "3.2 Import Data",
+    "text": "3.2 Import Data\n\n3.2.1 Import Data\n\n\n\n\n\n\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nproblems(exam_data)\n\n# A tibble: 0 × 5\n# … with 5 variables: row <int>, col <int>, expected <chr>, actual <chr>,\n#   file <chr>\n\n\n\n\n\n\n\n3.2.2 Explore Data\n\n\nShow the code\nglimpse(exam_data, 70)\n\n\nRows: 322\nColumns: 7\n$ ID      <chr> \"Student321\", \"Student305\", \"Student289\", \"Student22…\n$ CLASS   <chr> \"3I\", \"3I\", \"3H\", \"3F\", \"3I\", \"3I\", \"3I\", \"3I\", \"3I\"…\n$ GENDER  <chr> \"Male\", \"Female\", \"Male\", \"Male\", \"Male\", \"Female\", …\n$ RACE    <chr> \"Malay\", \"Malay\", \"Chinese\", \"Chinese\", \"Malay\", \"Ma…\n$ ENGLISH <dbl> 21, 24, 26, 27, 27, 31, 31, 31, 33, 34, 34, 36, 36, …\n$ MATHS   <dbl> 9, 22, 16, 77, 11, 16, 21, 18, 19, 49, 39, 35, 23, 3…\n$ SCIENCE <dbl> 15, 16, 16, 31, 25, 16, 25, 27, 15, 37, 42, 22, 32, …\n\n\nStep 1 - View exam_data.\nStep 2 - Type “esquisse::esquisser(viewer =”browser”) at the R Console.\n\nTwo-sample Comparison Test\nusing mean\n\n\nShow the code\nggbetweenstats(\n  data = exam_data,\n  x = GENDER,\n  y = MATHS,\n  type = \"p\",\n  messages = FALSE)\n\n\n\n\n\nChange to non-parametric, “np”, will be plotted using median.\n\n\nShow the code\nggbetweenstats(\n  data = exam_data,\n  x = GENDER,\n  y = MATHS,\n  type = \"np\",\n  messages = FALSE)\n\n\n\n\n\nANOVA Test\n\n\nShow the code\nggbetweenstats(\n  data = exam_data,\n  x = RACE,\n  y = MATHS,\n  type = \"p\",\n  messages = FALSE)\n\n\n\n\n\n\n\nShow the code\nggbetweenstats(\n  data = exam_data,\n  x = RACE,\n  y = ENGLISH,\n  type = \"np\",\n  mean.ci = TRUE,\n  pairwise.comparisons = TRUE,\n  pairwise.display = \"s\",\n  p.adjust.method = \"fdr\",\n  messages = FALSE)\n\n\n\n\n\nCompare 3C and 3D Classes\n\n\nShow the code\nggbetweenstats(\n  data = exam_data,\n  x = CLASS,\n  y = MATHS,\n  type = \"np\",\n  mean.ci = TRUE,\n  pairwise.comparisons = TRUE,\n  pairwise.display = \"s\",\n  messages = FALSE)\n\n\nWarning: Number of labels is greater than default palette color count.\n• Select another color `palette` (and/or `package`).\n\n\n\n\n\nRemarks :\nResult shows that 3C and 3D are not statistically significant."
   }
 ]
