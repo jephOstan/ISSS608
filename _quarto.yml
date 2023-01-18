@@ -25,6 +25,8 @@ website:
         menu:
           - text: BSWorkshop - Programming Statistical Graphics
             href: pnote/bsw_3.qmd
+          - text: BSWorkshop - Build Statistical Model
+            href: pnote/bsw_4.qmd
           - text: Shiny Workshop - Prof's Prototype
             href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
           - text: Exploration 0 - Explore with Geospatial Data
