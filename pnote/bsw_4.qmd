@@ -1,0 +1,338 @@
+---
+title: "BSW : Building Better Explanatory Models"
+editor: visual
+date:  18 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+An overview of explanatory model
+
+# 2. R PACKAGE REQUIRED
+
+## 2.1 Load R Packages
+
+```{r}
+pacman::p_load(tidyverse, readxl, report, performance, funModeling, parameters, gtsummary)
+```
+
+# **3. DATA**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  x
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Read Data into R**
+
+```{r}
+#| code-fold: false
+car_resale <- read_xls("data/ToyotaCorolla.xls",
+                       "data")
+
+problems(car_resale)
+```
+
+### **3.2.2 Inspect Data**
+
+#### **3.2.2.1 identify variable type**
+
+```{r}
+glimpse(car_resale,60)
+```
+
+#### **3.2.2.2 check for missing data**
+
+```{r}
+skimr::skim(car_resale)
+```
+
+#### **3.2.2.3 reveal unique value**
+
+When use funModeling function, turn the "tbl_df" into "data.frame".
+
+```{r}
+#status <- df_status(car_resale) << alternate way to code
+
+car_resale %>% 
+  df_status()
+```
+
+## 3.3 Data Wrangling
+
+### 3.3.1 Convert Variable Type
+
+```{r}
+cols <- c("Mfg_Month", "HP_Bin", "CC_bin", "Doors", "Gears", "Cylinders", "Fuel_Type", "Color", "Met_Color", "Automatic", "Mfr_Guarantee", "BOVAG_Guarantee", "ABS", "Airbag_1", "Airbag_2", "Airco", "Automatic_airco", "Boardcomputer", "CD_Player", "Central_Lock", "Powered_Windows", "Power_Steering", "Radio", "Mistlamps", "Sport_Model", "Backseat_Divider", "Metallic_Rim", "Radio_cassette", "Tow_Bar")
+
+
+car_resale <- read_xls("data/ToyotaCorolla.xls", 
+                       sheet = "data") %>%
+  mutate(Id = as.character(Id)) %>%
+  mutate_each_(funs(factor(.)),
+               cols)
+```
+
+#### 3.3.1.1 inspect output
+
+```{r}
+profiling_num(car_resale)
+```
+
+#### 3.3.1.2 EDA for Continuous Variables
+
+```{r}
+plot_num(car_resale)
+```
+
+#### 3.3.1.3 EDA for Character Variables
+
+```{r}
+freq(car_resale[3:38])
+```
+
+# 4. MODEL DIAGNOSTIC
+
+## 4.1 Create Model
+
+```{r}
+model <- lm(Price ~ Age_08_04 + 
+              Mfg_Year + 
+              KM + 
+              Weight + 
+              Guarantee_Period, 
+            data = car_resale)
+
+model
+```
+
+## 4.2 Diagnose Model's Multicollinearity
+
+### 4.2.1 Check Multicollinearity
+
+```{r}
+check_collinearity(model)
+```
+
+https://easystats.github.io/easystats/
+
+### 4.2.2 EDA for Multicollinearity
+
+```{r}
+check_c <- check_collinearity(model)
+
+plot(check_c)
+```
+
+## 4.3 Normality Analysis
+
+### 4.3.1 Create Model for Normality Analysis
+
+```{r}
+model1 <- lm(Price ~ Age_08_04 +
+               KM + 
+               Weight + 
+               Guarantee_Period, 
+             data = car_resale)
+
+check_normality(model1)
+```
+
+### 4.3.2 EDA Model
+
+```{r}
+check_n <- check_normality(model1) 
+plot(check_n)
+```
+
+## 4.4 Model Inspection on Homogeneity of Variances
+
+### 4.4.1 Overview
+
+```{r}
+check_h <- check_heteroscedasticity(model1)
+plot(check_h)
+```
+
+### 4.4.2 Complete Inspection
+
+```{r}
+check_model(model1)
+```
+
+# 5. SUMMARY
+
+## 5.1 Summarise with summary( ) 
+
+```{r}
+summary(model1)
+```
+
+## 5.2 Summaries with gtsummary:: tbl_regression() 
+
+### 5.2.1 Summaries Model1
+
+```{r}
+tbl_regression(model1,
+               intercept = TRUE)
+```
+
+### 5.2.2 Include Additional Parameters
+
+```{r}
+tbl_regression(model1,
+               intercept = TRUE) %>%
+  add_glance_source_note(
+    label = list(sigma ~ "\U03C3"),
+    include = c(r.squared, 
+                adj.r.squared,
+                AIC, 
+                statistic,
+                p.value, 
+                sigma))
+```
+
+## 5.3 Create Report for Model1
+
+```{r}
+#| echo: false
+#| eval: false
+report(model1)
+```
+
+We fitted a linear model (estimated using OLS) to predict Price with Age_08_04 (formula: Price \~
+
+Age_08_04 + KM + Weight + Guarantee_Period). The model explains a statistically significant and
+
+substantial proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p \< .001, adj. R2 = 0.85). The
+
+model's intercept, corresponding to Age_08_04 = 0, is at -2185.52 (95% CI \[-4092.59, -278.45\], t(1431)
+
+= -2.25, p = 0.025). Within this model:
+
+ - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+
+-114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
+
+ - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+
+t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
+
+ - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+
+t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
+
+ - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+
+\[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset.
+
+95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.,
+
+We fitted a linear model (estimated using OLS) to predict Price with KM (formula: Price \~ Age_08_04 +
+
+KM + Weight + Guarantee_Period). The model explains a statistically significant and substantial
+
+proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p \< .001, adj. R2 = 0.85). The model's
+
+intercept, corresponding to KM = 0, is at -2185.52 (95% CI \[-4092.59, -278.45\], t(1431) = -2.25, p =
+
+0.025). Within this model:
+
+ - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+
+-114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
+
+ - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+
+t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
+
+ - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+
+t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
+
+ - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+
+\[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset.
+
+95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.,
+
+We fitted a linear model (estimated using OLS) to predict Price with Weight (formula: Price \~
+
+Age_08_04 + KM + Weight + Guarantee_Period). The model explains a statistically significant and
+
+substantial proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p \< .001, adj. R2 = 0.85). The
+
+model's intercept, corresponding to Weight = 0, is at -2185.52 (95% CI \[-4092.59, -278.45\], t(1431) =
+
+-2.25, p = 0.025). Within this model:
+
+ - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+
+-114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
+
+ - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+
+t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
+
+ - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+
+t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
+
+ - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+
+\[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset.
+
+95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.
+
+and We fitted a linear model (estimated using OLS) to predict Price with Guarantee_Period (formula:
+
+Price \~ Age_08_04 + KM + Weight + Guarantee_Period). The model explains a statistically significant
+
+and substantial proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p \< .001, adj. R2 = 0.85).
+
+The model's intercept, corresponding to Guarantee_Period = 0, is at -2185.52 (95% CI \[-4092.59,
+
+-278.45\], t(1431) = -2.25, p = 0.025). Within this model:
+
+ - The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI \[-124.91,
+
+-114.08\], t(1431) = -43.29, p \< .001; Std. beta = -0.61, 95% CI \[-0.64, -0.59\])
+
+ - The effect of KM is statistically significant and negative (beta = -0.02, 95% CI \[-0.03, -0.02\],
+
+t(1431) = -20.04, p \< .001; Std. beta = -0.25, 95% CI \[-0.27, -0.22\])
+
+ - The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI \[18.08, 21.36\],
+
+t(1431) = 23.53, p \< .001; Std. beta = 0.29, 95% CI \[0.26, 0.31\])
+
+ - The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI
+
+\[2.08, 51.56\], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI \[1.73e-03, 0.04\])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset.
+
+95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.

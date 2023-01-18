@@ -1,0 +1,2806 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-01-18">
+
+<title>ISSS608 - BSW : Building Better Explanatory Models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PKMQ2W4ZRC"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ISSS608</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercises">    
+        <li>
+    <a class="dropdown-item" href="../handsOn_ex1.html">
+ <span class="dropdown-text">Hands-on Ex[1] DataVis with ggplot2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">In-class Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercises">    
+        <li>
+    <a class="dropdown-item" href="https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&amp;:origin=viz_share_link">
+ <span class="dropdown-text">In-class Ex[1] S &amp; P Summary with Tableau</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercises">    
+        <li>
+    <a class="dropdown-item" href="../takeHome/th_ex1/th_ex1.html">
+ <span class="dropdown-text">Take Home Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop--notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop &amp; Notes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop--notes">    
+        <li>
+    <a class="dropdown-item" href="../pnote/bsw_3.html">
+ <span class="dropdown-text">BSWorkshop - Programming Statistical Graphics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://tskam.shinyapps.io/prototype-ShinyIDEA/">
+ <span class="dropdown-text">Shiny Workshop - Prof’s Prototype</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test0.html">
+ <span class="dropdown-text">Exploration 0 - Explore with Geospatial Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test1.html">
+ <span class="dropdown-text">Exploration 1 - Pareto Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test2.html">
+ <span class="dropdown-text">Exploration 2 - Pyramid &amp; Other Charts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test3.html">
+ <span class="dropdown-text">Exploration 3 - Interactive &amp; Animated Pyramid Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test4.html">
+ <span class="dropdown-text">Exploration 4 - Interactive Heatmap Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/test5.html">
+ <span class="dropdown-text">Exploration 5 - Time-Series Visualisation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pnote/note1.html">
+ <span class="dropdown-text">Personal Note</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">Profile</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. OVERVIEW</strong></a></li>
+  <li><a href="#r-package-required" id="toc-r-package-required" class="nav-link" data-scroll-target="#r-package-required">2. R PACKAGE REQUIRED</a>
+  <ul class="collapse">
+  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">2.1 Load R Packages</a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><strong>3. DATA</strong></a>
+  <ul class="collapse">
+  <li><a href="#acquire-data-source" id="toc-acquire-data-source" class="nav-link" data-scroll-target="#acquire-data-source"><strong>3.1 Acquire Data Source</strong></a></li>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><strong>3.2 Import Data</strong></a>
+  <ul class="collapse">
+  <li><a href="#read-data-into-r" id="toc-read-data-into-r" class="nav-link" data-scroll-target="#read-data-into-r"><strong>3.2.1 Read Data into R</strong></a></li>
+  <li><a href="#inspect-data" id="toc-inspect-data" class="nav-link" data-scroll-target="#inspect-data"><strong>3.2.2 Inspect Data</strong></a></li>
+  </ul></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">3.3 Data Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#convert-variable-type" id="toc-convert-variable-type" class="nav-link" data-scroll-target="#convert-variable-type">3.3.1 Convert Variable Type</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#model-diagnostic" id="toc-model-diagnostic" class="nav-link" data-scroll-target="#model-diagnostic">4. MODEL DIAGNOSTIC</a>
+  <ul class="collapse">
+  <li><a href="#create-model" id="toc-create-model" class="nav-link" data-scroll-target="#create-model">4.1 Create Model</a></li>
+  <li><a href="#diagnose-models-multicollinearity" id="toc-diagnose-models-multicollinearity" class="nav-link" data-scroll-target="#diagnose-models-multicollinearity">4.2 Diagnose Model’s Multicollinearity</a>
+  <ul class="collapse">
+  <li><a href="#check-multicollinearity" id="toc-check-multicollinearity" class="nav-link" data-scroll-target="#check-multicollinearity">4.2.1 Check Multicollinearity</a></li>
+  <li><a href="#eda-for-multicollinearity" id="toc-eda-for-multicollinearity" class="nav-link" data-scroll-target="#eda-for-multicollinearity">4.2.2 EDA for Multicollinearity</a></li>
+  </ul></li>
+  <li><a href="#normality-analysis" id="toc-normality-analysis" class="nav-link" data-scroll-target="#normality-analysis">4.3 Normality Analysis</a>
+  <ul class="collapse">
+  <li><a href="#create-model-for-normality-analysis" id="toc-create-model-for-normality-analysis" class="nav-link" data-scroll-target="#create-model-for-normality-analysis">4.3.1 Create Model for Normality Analysis</a></li>
+  <li><a href="#eda-model" id="toc-eda-model" class="nav-link" data-scroll-target="#eda-model">4.3.2 EDA Model</a></li>
+  </ul></li>
+  <li><a href="#model-inspection-on-homogeneity-of-variances" id="toc-model-inspection-on-homogeneity-of-variances" class="nav-link" data-scroll-target="#model-inspection-on-homogeneity-of-variances">4.4 Model Inspection on Homogeneity of Variances</a>
+  <ul class="collapse">
+  <li><a href="#overview-1" id="toc-overview-1" class="nav-link" data-scroll-target="#overview-1">4.4.1 Overview</a></li>
+  <li><a href="#complete-inspection" id="toc-complete-inspection" class="nav-link" data-scroll-target="#complete-inspection">4.4.2 Complete Inspection</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">5. SUMMARY</a>
+  <ul class="collapse">
+  <li><a href="#summarise-with-summary" id="toc-summarise-with-summary" class="nav-link" data-scroll-target="#summarise-with-summary">5.1 Summarise with summary( )</a></li>
+  <li><a href="#summaries-with-gtsummary-tbl_regression" id="toc-summaries-with-gtsummary-tbl_regression" class="nav-link" data-scroll-target="#summaries-with-gtsummary-tbl_regression">5.2 Summaries with gtsummary:: tbl_regression()</a>
+  <ul class="collapse">
+  <li><a href="#summaries-model1" id="toc-summaries-model1" class="nav-link" data-scroll-target="#summaries-model1">5.2.1 Summaries Model1</a></li>
+  <li><a href="#include-additional-parameters" id="toc-include-additional-parameters" class="nav-link" data-scroll-target="#include-additional-parameters">5.2.2 Include Additional Parameters</a></li>
+  </ul></li>
+  <li><a href="#create-report-for-model1" id="toc-create-report-for-model1" class="nav-link" data-scroll-target="#create-report-for-model1">5.3 Create Report for Model1</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">BSW : Building Better Explanatory Models</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 18, 2023</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">January 18, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level1">
+<h1><strong>1. OVERVIEW</strong></h1>
+<p>An overview of explanatory model</p>
+</section>
+<section id="r-package-required" class="level1">
+<h1>2. R PACKAGE REQUIRED</h1>
+<section id="load-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-r-packages">2.1 Load R Packages</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, readxl, report, performance, funModeling, parameters, gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="data" class="level1">
+<h1><strong>3. DATA</strong></h1>
+<section id="acquire-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="acquire-data-source"><strong>3.1 Acquire Data Source</strong></h2>
+<p>This study will be based on fictitious data set provided with this lesson.</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Highlights of the data set</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>x</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="import-data" class="level2">
+<h2 class="anchored" data-anchor-id="import-data"><strong>3.2 Import Data</strong></h2>
+<section id="read-data-into-r" class="level3">
+<h3 class="anchored" data-anchor-id="read-data-into-r"><strong>3.2.1 Read Data into R</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>car_resale <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"data/ToyotaCorolla.xls"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"data"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="inspect-data" class="level3">
+<h3 class="anchored" data-anchor-id="inspect-data"><strong>3.2.2 Inspect Data</strong></h3>
+<section id="identify-variable-type" class="level4">
+<h4 class="anchored" data-anchor-id="identify-variable-type"><strong>3.2.2.1 identify variable type</strong></h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(car_resale,<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,436
+Columns: 38
+$ Id               &lt;dbl&gt; 81, 1, 2, 3, 4, 5, 6, 7, 8, 44, 4…
+$ Model            &lt;chr&gt; "TOYOTA Corolla 1.6 5drs 1 4/5-Do…
+$ Price            &lt;dbl&gt; 18950, 13500, 13750, 13950, 14950…
+$ Age_08_04        &lt;dbl&gt; 25, 23, 23, 24, 26, 30, 32, 27, 3…
+$ Mfg_Month        &lt;dbl&gt; 8, 10, 10, 9, 7, 3, 1, 6, 3, 6, 1…
+$ Mfg_Year         &lt;dbl&gt; 2002, 2002, 2002, 2002, 2002, 200…
+$ KM               &lt;dbl&gt; 20019, 46986, 72937, 41711, 48000…
+$ Quarterly_Tax    &lt;dbl&gt; 100, 210, 210, 210, 210, 210, 210…
+$ Weight           &lt;dbl&gt; 1180, 1165, 1165, 1165, 1165, 117…
+$ Guarantee_Period &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, …
+$ HP_Bin           &lt;chr&gt; "100-120", "&lt; 100", "&lt; 100", "&lt; 1…
+$ CC_bin           &lt;chr&gt; "1600", "&gt;1600", "&gt;1600", "&gt;1600"…
+$ Doors            &lt;dbl&gt; 5, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, …
+$ Gears            &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, …
+$ Cylinders        &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, …
+$ Fuel_Type        &lt;chr&gt; "Petrol", "Diesel", "Diesel", "Di…
+$ Color            &lt;chr&gt; "Blue", "Blue", "Silver", "Blue",…
+$ Met_Color        &lt;dbl&gt; 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, …
+$ Automatic        &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Mfr_Guarantee    &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, …
+$ BOVAG_Guarantee  &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ ABS              &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ Airbag_1         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ Airbag_2         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ Airco            &lt;dbl&gt; 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, …
+$ Automatic_airco  &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Boardcomputer    &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ CD_Player        &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, …
+$ Central_Lock     &lt;dbl&gt; 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, …
+$ Powered_Windows  &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, …
+$ Power_Steering   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ Radio            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Mistlamps        &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, …
+$ Sport_Model      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, …
+$ Backseat_Divider &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ Metallic_Rim     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Radio_cassette   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ Tow_Bar          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
+</div>
+</div>
+</section>
+<section id="check-for-missing-data" class="level4">
+<h4 class="anchored" data-anchor-id="check-for-missing-data"><strong>3.2.2.2 check for missing data</strong></h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">car_resale</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">1436</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Model</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">372</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HP_Bin</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CC_bin</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fuel_Type</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Color</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Id</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">721.56</td>
+<td style="text-align: right;">416.48</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">361.75</td>
+<td style="text-align: right;">721.5</td>
+<td style="text-align: right;">1081.25</td>
+<td style="text-align: right;">1442</td>
+<td style="text-align: left;">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Price</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10730.82</td>
+<td style="text-align: right;">3626.96</td>
+<td style="text-align: right;">4350</td>
+<td style="text-align: right;">8450.00</td>
+<td style="text-align: right;">9900.0</td>
+<td style="text-align: right;">11950.00</td>
+<td style="text-align: right;">32500</td>
+<td style="text-align: left;">▇▅▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age_08_04</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">55.95</td>
+<td style="text-align: right;">18.60</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">44.00</td>
+<td style="text-align: right;">61.0</td>
+<td style="text-align: right;">70.00</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: left;">▁▂▃▆▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mfg_Month</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5.55</td>
+<td style="text-align: right;">3.35</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">▇▅▅▃▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mfg_Year</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1999.63</td>
+<td style="text-align: right;">1.54</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">1998.00</td>
+<td style="text-align: right;">1999.0</td>
+<td style="text-align: right;">2001.00</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: left;">▇▂▂▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KM</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">68533.26</td>
+<td style="text-align: right;">37506.45</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">43000.00</td>
+<td style="text-align: right;">63389.5</td>
+<td style="text-align: right;">87020.75</td>
+<td style="text-align: right;">243000</td>
+<td style="text-align: left;">▅▇▂▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Quarterly_Tax</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">87.12</td>
+<td style="text-align: right;">41.13</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">69.00</td>
+<td style="text-align: right;">85.0</td>
+<td style="text-align: right;">85.00</td>
+<td style="text-align: right;">283</td>
+<td style="text-align: left;">▇▇▁▂▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weight</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1072.46</td>
+<td style="text-align: right;">52.64</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1040.00</td>
+<td style="text-align: right;">1070.0</td>
+<td style="text-align: right;">1085.00</td>
+<td style="text-align: right;">1615</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guarantee_Period</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.82</td>
+<td style="text-align: right;">3.01</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Doors</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.03</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">▁▇▁▂▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gears</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5.03</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">▁▁▁▇▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cylinders</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">▁▁▇▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Met_Color</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▃▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Automatic</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mfr_Guarantee</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▆</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BOVAG_Guarantee</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ABS</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▂▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Airbag_1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Airbag_2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▃▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Airco</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Automatic_airco</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Boardcomputer</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CD_Player</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Central_Lock</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▆▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Powered_Windows</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▆▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Power_Steering</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Radio</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mistlamps</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sport_Model</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Backseat_Divider</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▂▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Metallic_Rim</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Radio_cassette</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tow_Bar</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">▇▁▁▁▃</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="reveal-unique-value" class="level4">
+<h4 class="anchored" data-anchor-id="reveal-unique-value"><strong>3.2.2.3 reveal unique value</strong></h4>
+<p>When use funModeling function, turn the “tbl_df” into “data.frame”.</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#status &lt;- df_status(car_resale) &lt;&lt; alternate way to code</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>car_resale <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">df_status</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>           variable q_zeros p_zeros q_na p_na q_inf p_inf      type unique
+1                Id       0    0.00    0    0     0     0   numeric   1436
+2             Model       0    0.00    0    0     0     0 character    372
+3             Price       0    0.00    0    0     0     0   numeric    236
+4         Age_08_04       0    0.00    0    0     0     0   numeric     77
+5         Mfg_Month       0    0.00    0    0     0     0   numeric     12
+6          Mfg_Year       0    0.00    0    0     0     0   numeric      7
+7                KM       0    0.00    0    0     0     0   numeric   1263
+8     Quarterly_Tax       0    0.00    0    0     0     0   numeric     13
+9            Weight       0    0.00    0    0     0     0   numeric     59
+10 Guarantee_Period       0    0.00    0    0     0     0   numeric      9
+11           HP_Bin       0    0.00    0    0     0     0 character      3
+12           CC_bin       0    0.00    0    0     0     0 character      3
+13            Doors       0    0.00    0    0     0     0   numeric      4
+14            Gears       0    0.00    0    0     0     0   numeric      4
+15        Cylinders       0    0.00    0    0     0     0   numeric      1
+16        Fuel_Type       0    0.00    0    0     0     0 character      3
+17            Color       0    0.00    0    0     0     0 character     10
+18        Met_Color     467   32.52    0    0     0     0   numeric      2
+19        Automatic    1356   94.43    0    0     0     0   numeric      2
+20    Mfr_Guarantee     848   59.05    0    0     0     0   numeric      2
+21  BOVAG_Guarantee     150   10.45    0    0     0     0   numeric      2
+22              ABS     268   18.66    0    0     0     0   numeric      2
+23         Airbag_1      42    2.92    0    0     0     0   numeric      2
+24         Airbag_2     398   27.72    0    0     0     0   numeric      2
+25            Airco     706   49.16    0    0     0     0   numeric      2
+26  Automatic_airco    1355   94.36    0    0     0     0   numeric      2
+27    Boardcomputer    1013   70.54    0    0     0     0   numeric      2
+28        CD_Player    1122   78.13    0    0     0     0   numeric      2
+29     Central_Lock     603   41.99    0    0     0     0   numeric      2
+30  Powered_Windows     629   43.80    0    0     0     0   numeric      2
+31   Power_Steering      32    2.23    0    0     0     0   numeric      2
+32            Radio    1226   85.38    0    0     0     0   numeric      2
+33        Mistlamps    1067   74.30    0    0     0     0   numeric      2
+34      Sport_Model    1005   69.99    0    0     0     0   numeric      2
+35 Backseat_Divider     330   22.98    0    0     0     0   numeric      2
+36     Metallic_Rim    1142   79.53    0    0     0     0   numeric      2
+37   Radio_cassette    1227   85.45    0    0     0     0   numeric      2
+38          Tow_Bar    1037   72.21    0    0     0     0   numeric      2</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-wrangling" class="level2">
+<h2 class="anchored" data-anchor-id="data-wrangling">3.3 Data Wrangling</h2>
+<section id="convert-variable-type" class="level3">
+<h3 class="anchored" data-anchor-id="convert-variable-type">3.3.1 Convert Variable Type</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Mfg_Month"</span>, <span class="st">"HP_Bin"</span>, <span class="st">"CC_bin"</span>, <span class="st">"Doors"</span>, <span class="st">"Gears"</span>, <span class="st">"Cylinders"</span>, <span class="st">"Fuel_Type"</span>, <span class="st">"Color"</span>, <span class="st">"Met_Color"</span>, <span class="st">"Automatic"</span>, <span class="st">"Mfr_Guarantee"</span>, <span class="st">"BOVAG_Guarantee"</span>, <span class="st">"ABS"</span>, <span class="st">"Airbag_1"</span>, <span class="st">"Airbag_2"</span>, <span class="st">"Airco"</span>, <span class="st">"Automatic_airco"</span>, <span class="st">"Boardcomputer"</span>, <span class="st">"CD_Player"</span>, <span class="st">"Central_Lock"</span>, <span class="st">"Powered_Windows"</span>, <span class="st">"Power_Steering"</span>, <span class="st">"Radio"</span>, <span class="st">"Mistlamps"</span>, <span class="st">"Sport_Model"</span>, <span class="st">"Backseat_Divider"</span>, <span class="st">"Metallic_Rim"</span>, <span class="st">"Radio_cassette"</span>, <span class="st">"Tow_Bar"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>car_resale <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"data/ToyotaCorolla.xls"</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sheet =</span> <span class="st">"data"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Id =</span> <span class="fu">as.character</span>(Id)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_each_</span>(<span class="fu">funs</span>(<span class="fu">factor</span>(.)),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>               cols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `mutate_each_()` was deprecated in dplyr 0.7.0.
+ℹ Please use `across()` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `funs()` was deprecated in dplyr 0.8.0.
+ℹ Please use a list of either functions or lambdas:
+
+# Simple named list: list(mean = mean, median = median)
+
+# Auto named with `tibble::lst()`: tibble::lst(mean, median)
+
+# Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))</code></pre>
+</div>
+</div>
+<section id="inspect-output" class="level4">
+<h4 class="anchored" data-anchor-id="inspect-output">3.3.1.1 inspect output</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">profiling_num</span>(car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          variable        mean      std_dev variation_coef   p_01     p_05
+1            Price 10730.82451  3626.964585   0.3379949584 5917.5  6900.00
+2        Age_08_04    55.94708    18.599988   0.3324568491    8.0    19.00
+3         Mfg_Year  1999.62535     1.540722   0.0007705053 1998.0  1998.00
+4               KM 68533.25975 37506.448872   0.5472736743 4350.0 17047.75
+5    Quarterly_Tax    87.12256    41.128611   0.4720776117   19.0    34.75
+6           Weight  1072.45961    52.641120   0.0490844783 1000.0  1015.00
+7 Guarantee_Period     3.81546     3.011025   0.7891643405    3.0     3.00
+   p_25    p_50     p_75     p_95      p_99   skewness  kurtosis      iqr
+1  8450  9900.0 11950.00  18950.0  22250.00  1.7021046  6.720604  3500.00
+2    44    61.0    70.00     79.0     80.00 -0.8258381  2.919459    26.00
+3  1998  1999.0  2001.00   2003.0   2004.00  0.9103514  3.066152     3.00
+4 43000 63389.5 87020.75 138420.5 191368.00  1.0148507  4.675020 44020.75
+5    69    85.0    85.00    185.0    234.00  1.9917506  7.279218    16.00
+6  1040  1070.0  1085.00   1150.0   1263.25  3.1053913 22.291372    45.00
+7     3     3.0     3.00     12.0     12.00  5.8323346 48.731612     0.00
+         range_98            range_80
+1 [5917.5, 22250]       [7450, 15950]
+2         [8, 80]            [27, 77]
+3    [1998, 2004]        [1998, 2002]
+4  [4350, 191368] [26241.5, 117087.5]
+5       [19, 234]           [69, 185]
+6 [1000, 1263.25]        [1020, 1130]
+7         [3, 12]              [3, 6]</code></pre>
+</div>
+</div>
+</section>
+<section id="eda-for-continuous-variables" class="level4">
+<h4 class="anchored" data-anchor-id="eda-for-continuous-variables">3.3.1.2 EDA for Continuous Variables</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_num</span>(car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+of ggplot2 3.3.4.
+ℹ The deprecated feature was likely used in the funModeling package.
+  Please report the issue at &lt;https://github.com/pablo14/funModeling/issues&gt;.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="eda-for-character-variables" class="level4">
+<h4 class="anchored" data-anchor-id="eda-for-character-variables">3.3.1.3 EDA for Character Variables</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(car_resale[<span class="dv">3</span><span class="sc">:</span><span class="dv">38</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Mfg_Month frequency percentage cumulative_perc
+1          1       207      14.42           14.42
+2          4       154      10.72           25.14
+3          3       138       9.61           34.75
+4          2       134       9.33           44.08
+5          7       133       9.26           53.34
+6          6       120       8.36           61.70
+7          5       118       8.22           69.92
+8          8       115       8.01           77.93
+9         10       101       7.03           84.96
+10         9        76       5.29           90.25
+11        11        72       5.01           95.26
+12        12        68       4.74          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   HP_Bin frequency percentage cumulative_perc
+1 100-120       865      60.24           60.24
+2   &lt; 100       560      39.00           99.24
+3   &gt; 120        11       0.77          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  CC_bin frequency percentage cumulative_perc
+1   1600       854      59.47           59.47
+2  &lt;1600       416      28.97           88.44
+3  &gt;1600       166      11.56          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Doors frequency percentage cumulative_perc
+1     5       674      46.94           46.94
+2     3       622      43.31           90.25
+3     4       138       9.61           99.86
+4     2         2       0.14          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Gears frequency percentage cumulative_perc
+1     5      1390      96.80           96.80
+2     6        43       2.99           99.79
+3     3         2       0.14           99.93
+4     4         1       0.07          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-6.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Cylinders frequency percentage cumulative_perc
+1         4      1436        100             100</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-7.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Fuel_Type frequency percentage cumulative_perc
+1    Petrol      1264      88.02           88.02
+2    Diesel       155      10.79           98.81
+3       CNG        17       1.18          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-8.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Color frequency percentage cumulative_perc
+1    Grey       301      20.96           20.96
+2    Blue       283      19.71           40.67
+3     Red       278      19.36           60.03
+4   Green       220      15.32           75.35
+5   Black       191      13.30           88.65
+6  Silver       122       8.50           97.15
+7   White        31       2.16           99.31
+8  Violet         4       0.28           99.59
+9   Beige         3       0.21           99.80
+10 Yellow         3       0.21          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-9.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Met_Color frequency percentage cumulative_perc
+1         1       969      67.48           67.48
+2         0       467      32.52          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-10.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Automatic frequency percentage cumulative_perc
+1         0      1356      94.43           94.43
+2         1        80       5.57          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-11.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mfr_Guarantee frequency percentage cumulative_perc
+1             0       848      59.05           59.05
+2             1       588      40.95          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-12.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  BOVAG_Guarantee frequency percentage cumulative_perc
+1               1      1286      89.55           89.55
+2               0       150      10.45          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-13.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ABS frequency percentage cumulative_perc
+1   1      1168      81.34           81.34
+2   0       268      18.66          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-14.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Airbag_1 frequency percentage cumulative_perc
+1        1      1394      97.08           97.08
+2        0        42       2.92          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-15.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Airbag_2 frequency percentage cumulative_perc
+1        1      1038      72.28           72.28
+2        0       398      27.72          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-16.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Airco frequency percentage cumulative_perc
+1     1       730      50.84           50.84
+2     0       706      49.16          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-17.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Automatic_airco frequency percentage cumulative_perc
+1               0      1355      94.36           94.36
+2               1        81       5.64          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-18.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Boardcomputer frequency percentage cumulative_perc
+1             0      1013      70.54           70.54
+2             1       423      29.46          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-19.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  CD_Player frequency percentage cumulative_perc
+1         0      1122      78.13           78.13
+2         1       314      21.87          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-20.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Central_Lock frequency percentage cumulative_perc
+1            1       833      58.01           58.01
+2            0       603      41.99          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-21.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Powered_Windows frequency percentage cumulative_perc
+1               1       807       56.2            56.2
+2               0       629       43.8           100.0</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-22.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Power_Steering frequency percentage cumulative_perc
+1              1      1404      97.77           97.77
+2              0        32       2.23          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-23.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Radio frequency percentage cumulative_perc
+1     0      1226      85.38           85.38
+2     1       210      14.62          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-24.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mistlamps frequency percentage cumulative_perc
+1         0      1067       74.3            74.3
+2         1       369       25.7           100.0</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-25.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sport_Model frequency percentage cumulative_perc
+1           0      1005      69.99           69.99
+2           1       431      30.01          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-26.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Backseat_Divider frequency percentage cumulative_perc
+1                1      1106      77.02           77.02
+2                0       330      22.98          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-27.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Metallic_Rim frequency percentage cumulative_perc
+1            0      1142      79.53           79.53
+2            1       294      20.47          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-28.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Radio_cassette frequency percentage cumulative_perc
+1              0      1227      85.45           85.45
+2              1       209      14.55          100.00</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-9-29.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tow_Bar frequency percentage cumulative_perc
+1       0      1037      72.21           72.21
+2       1       399      27.79          100.00</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Variables processed: Mfg_Month, HP_Bin, CC_bin, Doors, Gears, Cylinders, Fuel_Type, Color, Met_Color, Automatic, Mfr_Guarantee, BOVAG_Guarantee, ABS, Airbag_1, Airbag_2, Airco, Automatic_airco, Boardcomputer, CD_Player, Central_Lock, Powered_Windows, Power_Steering, Radio, Mistlamps, Sport_Model, Backseat_Divider, Metallic_Rim, Radio_cassette, Tow_Bar"</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="model-diagnostic" class="level1">
+<h1>4. MODEL DIAGNOSTIC</h1>
+<section id="create-model" class="level2">
+<h2 class="anchored" data-anchor-id="create-model">4.1 Create Model</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>              Mfg_Year <span class="sc">+</span> </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>              KM <span class="sc">+</span> </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>              Weight <span class="sc">+</span> </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>              Guarantee_Period, </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> car_resale)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Age_08_04 + Mfg_Year + KM + Weight + Guarantee_Period, 
+    data = car_resale)
+
+Coefficients:
+     (Intercept)         Age_08_04          Mfg_Year                KM  
+      -2.637e+06        -1.409e+01         1.315e+03        -2.323e-02  
+          Weight  Guarantee_Period  
+       1.903e+01         2.770e+01  </code></pre>
+</div>
+</div>
+</section>
+<section id="diagnose-models-multicollinearity" class="level2">
+<h2 class="anchored" data-anchor-id="diagnose-models-multicollinearity">4.2 Diagnose Model’s Multicollinearity</h2>
+<section id="check-multicollinearity" class="level3">
+<h3 class="anchored" data-anchor-id="check-multicollinearity">4.2.1 Check Multicollinearity</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_collinearity</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+             Term   VIF     VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+ Guarantee_Period  1.04   [1.01, 1.17]         1.02      0.97     [0.86, 0.99]
+        Age_08_04 31.07 [28.08, 34.38]         5.57      0.03     [0.03, 0.04]
+         Mfg_Year 31.16 [28.16, 34.48]         5.58      0.03     [0.03, 0.04]
+
+High Correlation
+
+   Term  VIF   VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+     KM 1.46 [1.37, 1.57]         1.21      0.68     [0.64, 0.73]
+ Weight 1.41 [1.32, 1.51]         1.19      0.71     [0.66, 0.76]</code></pre>
+</div>
+</div>
+<p>https://easystats.github.io/easystats/</p>
+</section>
+<section id="eda-for-multicollinearity" class="level3">
+<h3 class="anchored" data-anchor-id="eda-for-multicollinearity">4.2.2 EDA for Multicollinearity</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>check_c <span class="ot">&lt;-</span> <span class="fu">check_collinearity</span>(model)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Variable `Component` is not in your data frame :/</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="normality-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="normality-analysis">4.3 Normality Analysis</h2>
+<section id="create-model-for-normality-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="create-model-for-normality-analysis">4.3.1 Create Model for Normality Analysis</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>               KM <span class="sc">+</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>               Weight <span class="sc">+</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>               Guarantee_Period, </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> car_resale)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">check_normality</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Warning: Non-normality of residuals detected (p &lt; .001).</code></pre>
+</div>
+</div>
+</section>
+<section id="eda-model" class="level3">
+<h3 class="anchored" data-anchor-id="eda-model">4.3.2 EDA Model</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>check_n <span class="ot">&lt;-</span> <span class="fu">check_normality</span>(model1) </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="model-inspection-on-homogeneity-of-variances" class="level2">
+<h2 class="anchored" data-anchor-id="model-inspection-on-homogeneity-of-variances">4.4 Model Inspection on Homogeneity of Variances</h2>
+<section id="overview-1" class="level3">
+<h3 class="anchored" data-anchor-id="overview-1">4.4.1 Overview</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>check_h <span class="ot">&lt;-</span> <span class="fu">check_heteroscedasticity</span>(model1)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="complete-inspection" class="level3">
+<h3 class="anchored" data-anchor-id="complete-inspection">4.4.2 Complete Inspection</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Variable `Component` is not in your data frame :/</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bsw_4_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>5. SUMMARY</h1>
+<section id="summarise-with-summary" class="level2">
+<h2 class="anchored" data-anchor-id="summarise-with-summary">5.1 Summarise with summary( )</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Age_08_04 + KM + Weight + Guarantee_Period, 
+    data = car_resale)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10249.4   -768.6    -15.4    738.5   6356.5 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      -2.186e+03  9.722e+02  -2.248   0.0247 *  
+Age_08_04        -1.195e+02  2.760e+00 -43.292   &lt;2e-16 ***
+KM               -2.406e-02  1.201e-03 -20.042   &lt;2e-16 ***
+Weight            1.972e+01  8.379e-01  23.533   &lt;2e-16 ***
+Guarantee_Period  2.682e+01  1.261e+01   2.126   0.0336 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1413 on 1431 degrees of freedom
+Multiple R-squared:  0.8486,    Adjusted R-squared:  0.8482 
+F-statistic:  2005 on 4 and 1431 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="summaries-with-gtsummary-tbl_regression" class="level2">
+<h2 class="anchored" data-anchor-id="summaries-with-gtsummary-tbl_regression">5.2 Summaries with gtsummary:: tbl_regression()</h2>
+<section id="summaries-model1" class="level3">
+<h3 class="anchored" data-anchor-id="summaries-model1">5.2.1 Summaries Model1</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(model1,</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div id="mobcncwkee" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#mobcncwkee) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#mobcncwkee) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#mobcncwkee) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#mobcncwkee) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#mobcncwkee) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#mobcncwkee) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#mobcncwkee) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#mobcncwkee) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#mobcncwkee) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#mobcncwkee) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#mobcncwkee) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#mobcncwkee) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#mobcncwkee) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#mobcncwkee) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mobcncwkee) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#mobcncwkee) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#mobcncwkee) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mobcncwkee) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#mobcncwkee) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mobcncwkee) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#mobcncwkee) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mobcncwkee) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#mobcncwkee) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#mobcncwkee) .gt_left {
+  text-align: left;
+}
+
+:where(#mobcncwkee) .gt_center {
+  text-align: center;
+}
+
+:where(#mobcncwkee) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#mobcncwkee) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#mobcncwkee) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#mobcncwkee) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#mobcncwkee) .gt_super {
+  font-size: 65%;
+}
+
+:where(#mobcncwkee) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#mobcncwkee) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#mobcncwkee) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#mobcncwkee) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#mobcncwkee) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#mobcncwkee) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#mobcncwkee) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Beta</strong>"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>95% CI</strong><sup class=&quot;gt_footnote_marks&quot;>1</sup>"><strong>95% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>p-value</strong>"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_center">-2,186</td>
+<td headers="ci" class="gt_row gt_center">-4,093, -278</td>
+<td headers="p.value" class="gt_row gt_center">0.025</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Age_08_04</td>
+<td headers="estimate" class="gt_row gt_center">-119</td>
+<td headers="ci" class="gt_row gt_center">-125, -114</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">KM</td>
+<td headers="estimate" class="gt_row gt_center">-0.02</td>
+<td headers="ci" class="gt_row gt_center">-0.03, -0.02</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Weight</td>
+<td headers="estimate" class="gt_row gt_center">20</td>
+<td headers="ci" class="gt_row gt_center">18, 21</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Guarantee_Period</td>
+<td headers="estimate" class="gt_row gt_center">27</td>
+<td headers="ci" class="gt_row gt_center">2.1, 52</td>
+<td headers="p.value" class="gt_row gt_center">0.034</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><sup class="gt_footnote_marks">1</sup> CI = Confidence Interval</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="include-additional-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="include-additional-parameters">5.2.2 Include Additional Parameters</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(model1,</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">intercept =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_glance_source_note</span>(</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(sigma <span class="sc">~</span> <span class="st">"\U03C3"</span>),</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> <span class="fu">c</span>(r.squared, </span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>                adj.r.squared,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>                AIC, </span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>                statistic,</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>                p.value, </span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>                sigma))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div id="iqlmhmvmnl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#iqlmhmvmnl) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#iqlmhmvmnl) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#iqlmhmvmnl) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#iqlmhmvmnl) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#iqlmhmvmnl) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#iqlmhmvmnl) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#iqlmhmvmnl) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#iqlmhmvmnl) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#iqlmhmvmnl) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#iqlmhmvmnl) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#iqlmhmvmnl) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#iqlmhmvmnl) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#iqlmhmvmnl) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#iqlmhmvmnl) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#iqlmhmvmnl) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#iqlmhmvmnl) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#iqlmhmvmnl) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#iqlmhmvmnl) .gt_left {
+  text-align: left;
+}
+
+:where(#iqlmhmvmnl) .gt_center {
+  text-align: center;
+}
+
+:where(#iqlmhmvmnl) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#iqlmhmvmnl) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#iqlmhmvmnl) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#iqlmhmvmnl) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#iqlmhmvmnl) .gt_super {
+  font-size: 65%;
+}
+
+:where(#iqlmhmvmnl) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#iqlmhmvmnl) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#iqlmhmvmnl) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#iqlmhmvmnl) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#iqlmhmvmnl) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#iqlmhmvmnl) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#iqlmhmvmnl) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Beta</strong>"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>95% CI</strong><sup class=&quot;gt_footnote_marks&quot;>1</sup>"><strong>95% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>p-value</strong>"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_center">-2,186</td>
+<td headers="ci" class="gt_row gt_center">-4,093, -278</td>
+<td headers="p.value" class="gt_row gt_center">0.025</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Age_08_04</td>
+<td headers="estimate" class="gt_row gt_center">-119</td>
+<td headers="ci" class="gt_row gt_center">-125, -114</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">KM</td>
+<td headers="estimate" class="gt_row gt_center">-0.02</td>
+<td headers="ci" class="gt_row gt_center">-0.03, -0.02</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Weight</td>
+<td headers="estimate" class="gt_row gt_center">20</td>
+<td headers="ci" class="gt_row gt_center">18, 21</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Guarantee_Period</td>
+<td headers="estimate" class="gt_row gt_center">27</td>
+<td headers="ci" class="gt_row gt_center">2.1, 52</td>
+<td headers="p.value" class="gt_row gt_center">0.034</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4">R² = 0.849; Adjusted R² = 0.848; AIC = 24,915; Statistic = 2,005; p-value = &lt;0.001; σ = 1,413</td>
+    </tr>
+  </tfoot>
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><sup class="gt_footnote_marks">1</sup> CI = Confidence Interval</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="create-report-for-model1" class="level2">
+<h2 class="anchored" data-anchor-id="create-report-for-model1">5.3 Create Report for Model1</h2>
+<div class="cell">
+
+</div>
+<p>We fitted a linear model (estimated using OLS) to predict Price with Age_08_04 (formula: Price ~</p>
+<p>Age_08_04 + KM + Weight + Guarantee_Period). The model explains a statistically significant and</p>
+<p>substantial proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p &lt; .001, adj. R2 = 0.85). The</p>
+<p>model’s intercept, corresponding to Age_08_04 = 0, is at -2185.52 (95% CI [-4092.59, -278.45], t(1431)</p>
+<p>= -2.25, p = 0.025). Within this model:</p>
+<ul>
+<li>The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI [-124.91,</li>
+</ul>
+<p>-114.08], t(1431) = -43.29, p &lt; .001; Std. beta = -0.61, 95% CI [-0.64, -0.59])</p>
+<ul>
+<li>The effect of KM is statistically significant and negative (beta = -0.02, 95% CI [-0.03, -0.02],</li>
+</ul>
+<p>t(1431) = -20.04, p &lt; .001; Std. beta = -0.25, 95% CI [-0.27, -0.22])</p>
+<ul>
+<li>The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI [18.08, 21.36],</li>
+</ul>
+<p>t(1431) = 23.53, p &lt; .001; Std. beta = 0.29, 95% CI [0.26, 0.31])</p>
+<ul>
+<li>The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI</li>
+</ul>
+<p>[2.08, 51.56], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI [1.73e-03, 0.04])</p>
+<p>Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</p>
+<p>95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.,</p>
+<p>We fitted a linear model (estimated using OLS) to predict Price with KM (formula: Price ~ Age_08_04 +</p>
+<p>KM + Weight + Guarantee_Period). The model explains a statistically significant and substantial</p>
+<p>proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p &lt; .001, adj. R2 = 0.85). The model’s</p>
+<p>intercept, corresponding to KM = 0, is at -2185.52 (95% CI [-4092.59, -278.45], t(1431) = -2.25, p =</p>
+<p>0.025). Within this model:</p>
+<ul>
+<li>The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI [-124.91,</li>
+</ul>
+<p>-114.08], t(1431) = -43.29, p &lt; .001; Std. beta = -0.61, 95% CI [-0.64, -0.59])</p>
+<ul>
+<li>The effect of KM is statistically significant and negative (beta = -0.02, 95% CI [-0.03, -0.02],</li>
+</ul>
+<p>t(1431) = -20.04, p &lt; .001; Std. beta = -0.25, 95% CI [-0.27, -0.22])</p>
+<ul>
+<li>The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI [18.08, 21.36],</li>
+</ul>
+<p>t(1431) = 23.53, p &lt; .001; Std. beta = 0.29, 95% CI [0.26, 0.31])</p>
+<ul>
+<li>The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI</li>
+</ul>
+<p>[2.08, 51.56], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI [1.73e-03, 0.04])</p>
+<p>Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</p>
+<p>95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.,</p>
+<p>We fitted a linear model (estimated using OLS) to predict Price with Weight (formula: Price ~</p>
+<p>Age_08_04 + KM + Weight + Guarantee_Period). The model explains a statistically significant and</p>
+<p>substantial proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p &lt; .001, adj. R2 = 0.85). The</p>
+<p>model’s intercept, corresponding to Weight = 0, is at -2185.52 (95% CI [-4092.59, -278.45], t(1431) =</p>
+<p>-2.25, p = 0.025). Within this model:</p>
+<ul>
+<li>The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI [-124.91,</li>
+</ul>
+<p>-114.08], t(1431) = -43.29, p &lt; .001; Std. beta = -0.61, 95% CI [-0.64, -0.59])</p>
+<ul>
+<li>The effect of KM is statistically significant and negative (beta = -0.02, 95% CI [-0.03, -0.02],</li>
+</ul>
+<p>t(1431) = -20.04, p &lt; .001; Std. beta = -0.25, 95% CI [-0.27, -0.22])</p>
+<ul>
+<li>The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI [18.08, 21.36],</li>
+</ul>
+<p>t(1431) = 23.53, p &lt; .001; Std. beta = 0.29, 95% CI [0.26, 0.31])</p>
+<ul>
+<li>The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI</li>
+</ul>
+<p>[2.08, 51.56], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI [1.73e-03, 0.04])</p>
+<p>Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</p>
+<p>95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.</p>
+<p>and We fitted a linear model (estimated using OLS) to predict Price with Guarantee_Period (formula:</p>
+<p>Price ~ Age_08_04 + KM + Weight + Guarantee_Period). The model explains a statistically significant</p>
+<p>and substantial proportion of variance (R2 = 0.85, F(4, 1431) = 2004.93, p &lt; .001, adj. R2 = 0.85).</p>
+<p>The model’s intercept, corresponding to Guarantee_Period = 0, is at -2185.52 (95% CI [-4092.59,</p>
+<p>-278.45], t(1431) = -2.25, p = 0.025). Within this model:</p>
+<ul>
+<li>The effect of Age 08 04 is statistically significant and negative (beta = -119.49, 95% CI [-124.91,</li>
+</ul>
+<p>-114.08], t(1431) = -43.29, p &lt; .001; Std. beta = -0.61, 95% CI [-0.64, -0.59])</p>
+<ul>
+<li>The effect of KM is statistically significant and negative (beta = -0.02, 95% CI [-0.03, -0.02],</li>
+</ul>
+<p>t(1431) = -20.04, p &lt; .001; Std. beta = -0.25, 95% CI [-0.27, -0.22])</p>
+<ul>
+<li>The effect of Weight is statistically significant and positive (beta = 19.72, 95% CI [18.08, 21.36],</li>
+</ul>
+<p>t(1431) = 23.53, p &lt; .001; Std. beta = 0.29, 95% CI [0.26, 0.31])</p>
+<ul>
+<li>The effect of Guarantee Period is statistically significant and positive (beta = 26.82, 95% CI</li>
+</ul>
+<p>[2.08, 51.56], t(1431) = 2.13, p = 0.034; Std. beta = 0.02, 95% CI [1.73e-03, 0.04])</p>
+<p>Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</p>
+<p>95% Confidence Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
