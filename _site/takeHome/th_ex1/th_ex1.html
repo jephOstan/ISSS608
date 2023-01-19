@@ -120,7 +120,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercises">    
         <li>
     <a class="dropdown-item" href="../../takeHome/th_ex1/th_ex1.html">
- <span class="dropdown-text">Take Home Exercise 1</span></a>
+ <span class="dropdown-text">Take Home Exercise 1 Singapore Population Pyramid 2022</span></a>
   </li>  
     </ul>
   </li>
@@ -210,14 +210,13 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <li><a href="#wrangle-data" id="toc-wrangle-data" class="nav-link" data-scroll-target="#wrangle-data"><strong>2.2 Wrangle Data</strong></a>
   <ul class="collapse">
   <li><a href="#derive-new-calculated-fields" id="toc-derive-new-calculated-fields" class="nav-link" data-scroll-target="#derive-new-calculated-fields"><strong>2.2.1 Derive New Calculated Fields</strong></a></li>
-  <li><a href="#identify-top-9-planning-area-by-population" id="toc-identify-top-9-planning-area-by-population" class="nav-link" data-scroll-target="#identify-top-9-planning-area-by-population"><strong>2.2.2 Identify Top 9 Planning Area by Population</strong></a></li>
-  <li><a href="#plot-trellis-population-pyramid" id="toc-plot-trellis-population-pyramid" class="nav-link" data-scroll-target="#plot-trellis-population-pyramid"><strong>2.2.3 Plot Trellis Population Pyramid</strong></a></li>
   </ul></li>
+  <li><a href="#filter-top-9-planning-area-by-population" id="toc-filter-top-9-planning-area-by-population" class="nav-link" data-scroll-target="#filter-top-9-planning-area-by-population"><strong>2.3 Filter Top 9 Planning Area by Population</strong></a></li>
+  <li><a href="#plot-population-pyramid-trellis-by-planning-area" id="toc-plot-population-pyramid-trellis-by-planning-area" class="nav-link" data-scroll-target="#plot-population-pyramid-trellis-by-planning-area"><strong>2.4 Plot Population Pyramid Trellis by Planning Area</strong></a></li>
+  <li><a href="#create-chart-to-reveal-gender-differences" id="toc-create-chart-to-reveal-gender-differences" class="nav-link" data-scroll-target="#create-chart-to-reveal-gender-differences"><strong>2.5 Create Chart to Reveal Gender Differences</strong></a></li>
+  <li><a href="#create-dashboard-for-visual-analytics" id="toc-create-dashboard-for-visual-analytics" class="nav-link" data-scroll-target="#create-dashboard-for-visual-analytics"><strong>2.6 Create Dashboard for Visual Analytics</strong></a></li>
   </ul></li>
-  <li><a href="#enhancement-for-visual-analytics" id="toc-enhancement-for-visual-analytics" class="nav-link" data-scroll-target="#enhancement-for-visual-analytics"><strong>3. ENHANCEMENT FOR VISUAL ANALYTICS</strong></a>
-  <ul class="collapse">
-  <li><a href="#add-details-population-count" id="toc-add-details-population-count" class="nav-link" data-scroll-target="#add-details-population-count"><strong>3.1 Add Details :: Population Count</strong></a></li>
-  </ul></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">3. OUTPUT</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>4. DISCUSSION</strong></a></li>
   </ul>
 </nav>
@@ -245,7 +244,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 18, 2023</p>
+      <p class="date-modified">January 19, 2023</p>
     </div>
   </div>
     
@@ -464,8 +463,9 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="identify-top-9-planning-area-by-population" class="level3">
-<h3 class="anchored" data-anchor-id="identify-top-9-planning-area-by-population"><strong>2.2.2 Identify Top 9 Planning Area by Population</strong></h3>
+</section>
+<section id="filter-top-9-planning-area-by-population" class="level2">
+<h2 class="anchored" data-anchor-id="filter-top-9-planning-area-by-population"><strong>2.3 Filter Top 9 Planning Area by Population</strong></h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -535,8 +535,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="plot-trellis-population-pyramid" class="level3">
-<h3 class="anchored" data-anchor-id="plot-trellis-population-pyramid"><strong>2.2.3 Plot Trellis Population Pyramid</strong></h3>
+<section id="plot-population-pyramid-trellis-by-planning-area" class="level2">
+<h2 class="anchored" data-anchor-id="plot-population-pyramid-trellis-by-planning-area"><strong>2.4 Plot Population Pyramid Trellis by Planning Area</strong></h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -609,22 +609,48 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><a href="https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_1/Dashboard2?:language=en-US&amp;publish=yes&amp;:display_count=n&amp;:origin=viz_share_link"><img src="images/image-1174017359.png" class="img-fluid figure-img" alt="Top 9 Highest Singapore Planning Area by Population Count based on June 2022 dataset." width="400"></a></p>
+<p><img src="images/image-1174017359.png" class="img-fluid figure-img" alt="Top 9 Highest Singapore Planning Area by Population Count based on June 2022 dataset." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.14</figcaption><p></p>
 </figure>
 </div>
-<p>Remarks :</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-15</strong> : Tick “Show mark label” via “Label” under “Marks” pane.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1417472999.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-16</strong> : Right click on the y-axis to add colour to differentiate rows for visual references. Example can be referred to Figure below.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-744804813.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure :</figcaption><p></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 </section>
-</section>
-</section>
-<section id="enhancement-for-visual-analytics" class="level1">
-<h1><strong>3. ENHANCEMENT FOR VISUAL ANALYTICS</strong></h1>
-<p>Enrich the population pyramid with more information for in-depth visual analytics.</p>
-<section id="add-details-population-count" class="level2">
-<h2 class="anchored" data-anchor-id="add-details-population-count"><strong>3.1 Add Details :: Population Count</strong></h2>
+<section id="create-chart-to-reveal-gender-differences" class="level2">
+<h2 class="anchored" data-anchor-id="create-chart-to-reveal-gender-differences"><strong>2.5 Create Chart to Reveal Gender Differences</strong></h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -637,7 +663,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Step 1 - Click on “Label” under “Marks” pane for both gender.</p>
+<p><strong>Step-17</strong> : Reproduce Figure 2.10.</p>
 </div>
 </div>
 </div>
@@ -647,31 +673,138 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Step 2 - Tick “Show mark labels” checkbox, as shown below.</p>
+<p><strong>Step-18</strong> : Adjust the following fields accordingly :</p>
+<ul>
+<li><p>filtered “PA” from “Rows” to “Columns”.</p></li>
+<li><p>“SUM(Pop)” to the “Rows” pane.</p></li>
+<li><p>“Gender” to “Color” under “Marks” pane.</p></li>
+</ul>
 </div>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/image-1070783411.png" class="img-fluid figure-img" width="400"></p>
-</figure>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-<p>Remarks :</p>
-<p>Notice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes"><img src="images/image-2128803489.png" class="img-fluid figure-img" alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022" width="400"></a></p>
-<p></p><figcaption class="figure-caption">Click the image will direct to the Public Tableau site for more interactive details.</figcaption><p></p>
-</figure>
+<div class="callout-body-container">
+<p><strong>Step-19</strong> : Select “circle views” from the “Show Me” chart options and change the “Shape” to “Circle” under “Marks” pane.</p>
 </div>
 </div>
 </div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-<p>- Please refer to the senior submission I shared for example <a href="https://bilian-mitb2021.netlify.app/th_ex/dataviz2/dataviz2#step-by-step-description">1</a> and <a href="https://isss608visualanalyticssun.netlify.app/dataviz/dataviz1/dataviz1#step-by-step-preparation">2</a>.</p>
+<div class="callout-body-container">
+<p><strong>Step-20</strong> : Update the y-axis via :</p>
+<p>“Edit Axis…” :</p>
+<ul>
+<li><p>Change the y-axis title to “Population Count”.</p></li>
+<li><p>Set the range to “Fixed” option.</p></li>
+<li><p>Set 80,000 as the “Fixed start” value.</p></li>
+<li><p>set 150,000 as the “Fixed end” value.</p></li>
+</ul>
+<p>“Format” :</p>
+<ul>
+<li>Set the “Shading” colour under “Default” to your preferred colour.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
+<section id="create-dashboard-for-visual-analytics" class="level2">
+<h2 class="anchored" data-anchor-id="create-dashboard-for-visual-analytics"><strong>2.6 Create Dashboard for Visual Analytics</strong></h2>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-21</strong> : Set the dashboard’s Size to “<strong>Generic Desktop</strong>” and place the population pyramid trellis above and the gender differences chart below at the empty what space.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1054010951.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure :</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-22</strong> - Right click the gender differences chart title to hide it.</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-514407683.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Figure :</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Step-23</strong> - Drag legend to place it below the gender differences chart. Set the “Arrange Items” to “Single Row”.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="output" class="level1">
+<h1>3. OUTPUT</h1>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_2/Dashboard2?:language=en-US&amp;publish=yes&amp;:display_count=n&amp;:origin=viz_share_link"><img src="images/image-564342359.png" class="img-fluid figure-img" alt="Add population count for each gender to add context of gender differences to the population pyramid."></a></p>
+<p></p><figcaption class="figure-caption">Figure 2.15</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="discussion" class="level1">
 <h1><strong>4. DISCUSSION</strong></h1>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Population Pyramid</p>
+<p>Can only derive descriptive analysis by itself.</p>
+<p>Combine with Other Chart</p>
+<p>Add more context and more effective visual analysis.</p>
+</div>
+</div>
+</div>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -683,35 +816,6 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>Exploration to Improve Visual Analytics</p>
-<p>Step-10 - Drag “<strong>Sex</strong>” to place at the “<strong>Color</strong>” under “<strong>Marks</strong>” pane, as shown in <strong>Figure 2.9</strong>.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/image-714966271.png" class="img-fluid figure-img" alt="Filtered output that shows top 9 planning area with the highest Singapore population count." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.9</figcaption><p></p>
-</figure>
-</div>
-<p>Step-11 - Select “<strong>circle views</strong>” from the “<strong>Show Me</strong>” pane.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/image-306868433.png" class="img-fluid figure-img" alt="Edit y-axis to reduce empty space below the plot." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.10</figcaption><p></p>
-</figure>
-</div>
-<p>Step-12 - Edit Axis :</p>
-<ul>
-<li>Tick the “Fixed” range option.</li>
-<li>Increase the value for “Fixed start” to 90,000.</li>
-<li>Reduce the value for “Fixed end” to 150,000.</li>
-</ul>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/image-453180512.png" class="img-fluid figure-img" alt="Show mark label, chart title." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.11</figcaption><p></p>
-</figure>
-</div>
-<p>Step-13 - Show mark label, as shown in Figure 2.11.</p>
-<p>Step-14 - Add chart title.</p>
 
 
 </section>

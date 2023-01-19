@@ -130,7 +130,7 @@ Fret not! If **Figure 2.2** is your landed screen, from the bottom left corner, 
 :::
 :::
 
-### **2.2.2 Identify Top 9 Planning Area by Population**
+## **2.3 Filter Top 9 Planning Area by Population**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-note appearance="simple" icon="false"}
@@ -158,7 +158,7 @@ Next, change "**10**" to "**9**" for the "**Top**" value under the **"Top**" tab
 ![Figure 2.9](images/image-690824896.png){fig-align="left" width="400"}
 :::
 
-### **2.2.3 Plot Trellis Population Pyramid**
+## **2.4 Plot Population Pyramid Trellis by Planning Area**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ![Figure 2.10](images/image-1079669590.png){fig-align="left" width="400"}
@@ -185,63 +185,101 @@ Next, change "**10**" to "**9**" for the "**Top**" value under the **"Top**" tab
 **Step-14** : Tick "Reversed" check box under "Scale" section, as shown in **Figure 2.13**.
 :::
 
-[![Figure 2.14](images/image-1174017359.png){fig-alt="Top 9 Highest Singapore Planning Area by Population Count based on June 2022 dataset." fig-align="left" width="400"}](https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_1/Dashboard2?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+![Figure 2.14](images/image-1174017359.png){fig-alt="Top 9 Highest Singapore Planning Area by Population Count based on June 2022 dataset." fig-align="left" width="400"}
 
-Remarks :
+::: {.callout-note appearance="simple" icon="false"}
+**Step-15** : Tick "Show mark label" via "Label" under "Marks" pane.
 :::
 
-# **3. ENHANCEMENT FOR VISUAL ANALYTICS**
+![Figure](images/image-1417472999.png){fig-align="left" width="400"}
 
-Enrich the population pyramid with more information for in-depth visual analytics.
+::: {.callout-note appearance="simple" icon="false"}
+**Step-16** : Right click on the y-axis to add colour to differentiate rows for visual references. Example can be referred to Figure below.
+:::
 
-## **3.1 Add Details :: Population Count**
+![Figure :](images/image-744804813.png){width="400"}
+:::
+
+## **2.5 Create Chart to Reveal Gender Differences**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-note appearance="simple" icon="false"}
-Step 1 - Click on "Label" under "Marks" pane for both gender.
+**Step-17** : Reproduce Figure 2.10.
 :::
 
 ::: {.callout-note appearance="simple" icon="false"}
-Step 2 - Tick "Show mark labels" checkbox, as shown below.
+**Step-18** : Adjust the following fields accordingly :
+
+-   filtered "PA" from "Rows" to "Columns".
+
+-   "SUM(Pop)" to the "Rows" pane.
+
+-   "Gender" to "Color" under "Marks" pane.
 :::
 
-![](images/image-1070783411.png){fig-align="left" width="400"}
-
-Remarks :
-
-Notice 19 nulls - indicates 19 PA for 85 to 89 AND 90 and over have 0 value.
-
-[![Click the image will direct to the Public Tableau site for more interactive details.](images/image-2128803489.png){fig-alt="Singapore Population Pyramid to illustrate the distribution of Gender by Age Groups, June 2022" fig-align="left" width="400"}](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_0/dashboard1?publish=yes)
+::: {.callout-note appearance="simple" icon="false"}
+**Step-19** : Select "circle views" from the "Show Me" chart options and change the "Shape" to "Circle" under "Marks" pane.
 :::
 
-\- Please refer to the senior submission I shared for example [1](https://bilian-mitb2021.netlify.app/th_ex/dataviz2/dataviz2#step-by-step-description) and [2](https://isss608visualanalyticssun.netlify.app/dataviz/dataviz1/dataviz1#step-by-step-preparation).
+::: {.callout-note appearance="simple" icon="false"}
+**Step-20** : Update the y-axis via :
+
+"Edit Axis..." :
+
+-   Change the y-axis title to "Population Count".
+
+-   Set the range to "Fixed" option.
+
+-   Set 80,000 as the "Fixed start" value.
+
+-   set 150,000 as the "Fixed end" value.
+
+"Format" :
+
+-   Set the "Shading" colour under "Default" to your preferred colour.
+:::
+:::
+
+## **2.6 Create Dashboard for Visual Analytics**
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-note appearance="simple" icon="false"}
+**Step-21** : Set the dashboard's Size to "**Generic Desktop**" and place the population pyramid trellis above and the gender differences chart below at the empty what space.
+:::
+
+![Figure :](images/image-1054010951.png){fig-align="left" width="400"}
+
+::: {.callout-note appearance="simple" icon="false"}
+**Step-22** - Right click the gender differences chart title to hide it.
+:::
+
+![Figure :](images/image-514407683.png){fig-align="left" width="400"}
+
+::: {.callout-note appearance="simple" icon="false"}
+**Step-23** - Drag legend to place it below the gender differences chart. Set the "Arrange Items" to "Single Row".
+:::
+:::
+
+# 3. OUTPUT
+
+::: {.callout-warning appearance="simple" icon="false"}
+[![Figure 2.15](images/image-564342359.png){fig-alt="Add population count for each gender to add context of gender differences to the population pyramid."}](https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_2/Dashboard2?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+:::
 
 # **4. DISCUSSION**
+
+::: {.callout-warning appearance="simple" icon="false"}
+Population Pyramid
+
+Can only derive descriptive analysis by itself.
+
+Combine with Other Chart
+
+Add more context and more effective visual analysis.
+:::
 
 ::: {.callout-warning appearance="simple" icon="false"}
 500 words
 
 \- discuss patterns reveal by the analytical visualisation prepared
 :::
-
-Exploration to Improve Visual Analytics
-
-Step-10 - Drag "**Sex**" to place at the "**Color**" under "**Marks**" pane, as shown in **Figure 2.9**.
-
-![Figure 2.9](images/image-714966271.png){alt="Figure 2.9" fig-alt="Filtered output that shows top 9 planning area with the highest Singapore population count." fig-align="left" width="400"}
-
-Step-11 - Select "**circle views**" from the "**Show Me**" pane.
-
-![Figure 2.10](images/image-306868433.png){alt="Figure 2.10" fig-alt="Edit y-axis to reduce empty space below the plot." fig-align="left" width="400"}
-
-Step-12 - Edit Axis :
-
--   Tick the "Fixed" range option.
--   Increase the value for "Fixed start" to 90,000.
--   Reduce the value for "Fixed end" to 150,000.
-
-![Figure 2.11](images/image-453180512.png){alt="Figure 2.11" fig-alt="Show mark label, chart title." fig-align="left" width="400"}
-
-Step-13 - Show mark label, as shown in Figure 2.11.
-
-Step-14 - Add chart title.
