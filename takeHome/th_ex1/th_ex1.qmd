@@ -18,9 +18,31 @@ format:
 
 This exercise focus on using **Tableau Desktop** to create **multiple** **population pyramids** for Singapore based on data updated to June 2022.
 
-Population pyramid
+::: {.callout-warning appearance="simple" icon="false"}
+Population Pyramid helps to visualise the distribution of age and gender for a given location.
 
-definition? what insights can be derived?
+The chart generally have three trends : [^1]
+
++-----------------------+------------------------------+--------------------------------------------------------------+
+| trend (shape)         | character                    | remarks                                                      |
++=======================+==============================+==============================================================+
+| Expansive             | -   High fertility rate.     | -   larger percentage of young population.                   |
+|                       |                              |                                                              |
+| (triangle)            | -   High mortality rate.     | -   lower than average life expectancy.                      |
+|                       |                              |                                                              |
+|                       |                              | -   usually associate with developing nation.                |
++-----------------------+------------------------------+--------------------------------------------------------------+
+| Constrictive          | -   Constant fertility rate. | -   High numbers of middle aged population.                  |
+|                       |                              |                                                              |
+| (wider in the mdidle) | -   Low mortality rate.      | -   Senior population may be larger than younger population. |
++-----------------------+------------------------------+--------------------------------------------------------------+
+| Stationary            | -   Low fertility rate.      | -   depict stable population.                                |
+|                       |                              |                                                              |
+| ("pillar" )           | -   Low mortality rate.      |                                                              |
++-----------------------+------------------------------+--------------------------------------------------------------+
+:::
+
+[^1]: National Geographic Society. (2022). Population Pyramid. https://education.nationalgeographic.org/resource/population-pyramid
 
 usage to analysts? decision makers?
 
@@ -163,6 +185,22 @@ Next, change "**10**" to "**9**" for the "**Top**" value under the **"Top**" tab
 ::: {.callout-warning appearance="simple" icon="false"}
 ![Figure 2.10](images/image-1079669590.png){fig-align="left" width="400"}
 
+Remarks :
+
+| Planning Area | Region     | Col3 |
+|---------------|------------|------|
+| Bedok         | East       |      |
+| Tampines      | East       |      |
+| Jurong West   | West       |      |
+| Sengkang      | North-East |      |
+| Woodlands     | North      |      |
+| Hougang       | North-East |      |
+| Yishun        | North      |      |
+| Choa Chu Kang | West       |      |
+| Punggol       | North-East |      |
+
+: Table 2.1 : Details of Top 9 Planning Area
+
 ::: {.callout-note appearance="simple" icon="false"}
 **Step-11** : Select "horizontal bars" from the "Show Me" chart options.
 :::
@@ -263,23 +301,32 @@ Next, change "**10**" to "**9**" for the "**Top**" value under the **"Top**" tab
 # 3. OUTPUT
 
 ::: {.callout-warning appearance="simple" icon="false"}
-[![Figure 2.15](images/image-564342359.png){fig-alt="Add population count for each gender to add context of gender differences to the population pyramid."}](https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_2/Dashboard2?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+[![Figure 2.15](images/image-709267252.png){fig-alt="Add population count for each gender to add context of gender differences to the population pyramid."}](https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_2/Dashboard2?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+
+| range           | label                  |
+|-----------------|------------------------|
+| 45-49 to 65-69  | Baby Boomer Generation |
+| 35-39 to 40-44  | Gen X                  |
+| 25-29 to 30-34  | Gen Y                  |
+| 15-19 to 20 -24 | Gen Z                  |
 :::
 
 # **4. DISCUSSION**
 
 ::: {.callout-warning appearance="simple" icon="false"}
-Population Pyramid
+Out of 55 Singapore Planning Areas (PAs) in this study, nine are filtered based on the top 9 highest population count. Then, explore the distribution of age and sex for each PA with the population pyramid.
 
-Can only derive descriptive analysis by itself.
+Only two PAs, namely Bedok and Jurong West, have a predominantly constrictive trend pattern. The rest of the 7 PAs show a mixture of constrictive trends with some form of either expansive or stationary trend.
 
-Combine with Other Chart
+On the other hand, Punggol area is the only PA showing a mixture of **constrictive trends** with the noticeable **expansive trend** observed below age 30. While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the age range 15 to 29. This developing township was re-vitalised by the **Punggol 21-plus** plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.[^2]
 
-Add more context and more effective visual analysis.
+Tampines, Sengkang and Yishun are the PAs with "pillar"-like distributions. Unlike Tampines and Yishun, which have a higher Gen Y population, Sengkang has a higher Gen X population.
+
+6 out of 9 PAs, Bedok, Tampines, Woodlands, Hougang, Yishun and Chua Chu Kang, have a relatively large population of age groups above age 55. More resources and services will be needed to support senior welfare and probably set up more facilities or infrastructures.
+
+However, there are a few downsides to the population pyramid. First, it's not easy to visually analyse or identify which PA has a wider gap by gender.
+
+263 words.
 :::
 
-::: {.callout-warning appearance="simple" icon="false"}
-500 words
-
-\- discuss patterns reveal by the analytical visualisation prepared
-:::
+[^2]: Singapore Department of Statistics. (2020). Census of Population 2020 - Statistical Release 2 : Households, Geographic Distribution, Transport and Difficulty in Basic Activities. https://www.parliament.gov.sg/docs/default-source/default-document-library/cop2020sr2.pdf
