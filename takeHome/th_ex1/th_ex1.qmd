@@ -303,6 +303,12 @@ Remarks :
 ::: {.callout-warning appearance="simple" icon="false"}
 [![Figure 2.15](images/image-709267252.png){fig-alt="Add population count for each gender to add context of gender differences to the population pyramid."}](https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_2/Dashboard2?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
 
+Remarks :
+
+For more interactive view, find out more from [[my viz on Tableau Public]{.underline}](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_2/Dashboard2?publish=yes).
+
+For quick reference of age groups, the labels below are adopted for further discussion.
+
 | range           | label                  |
 |-----------------|------------------------|
 | 45-49 to 65-69  | Baby Boomer Generation |
