@@ -10,6 +10,8 @@ website:
         menu: 
           - text: Hands-on Ex[1] DataVis with ggplot2
             href: handsOn_ex1.qmd
+          - text: Hands-on Ex[2] DataVis with Advanced ggplot2
+            href: handsOn_ex2.qmd
             
       - text: In-class Exercises
         menu: 
