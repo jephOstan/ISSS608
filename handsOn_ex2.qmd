@@ -1,0 +1,215 @@
+---
+title: "Hands-on 2 - DataVis with Advanced ggplot2"
+editor: visual
+date:  20 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
+:::
+
+```{r}
+#| code-fold: false
+pacman::p_load(tidyverse, patchwork, ggthemes, hrbrthemes, ggrepel) 
+```
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  Year end examination grades of a cohort of primary 3 students from a local school.
+
+2.  There are a total of seven attributes. Four of them are categorical data type and the other three are in continuous data type.
+
+-   The categorical attributes are: ID, CLASS, GENDER and RACE.
+-   The continuous attributes are: MATHS, ENGLISH and SCIENCE.
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Data**
+
+::: {.callout-warning appearance="simple" icon="false"}
+Involved two (2) steps : import and inspect imported data set.
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+#| code-fold: false
+exam_data <- read_csv("data/Exam_data.csv")
+
+problems(exam_data)
+```
+:::
+
+### **3.2.2 Inspect Missing Value**
+
+::: {.callout-warning appearance="simple" icon="false"}
+```{r}
+skimr::skim(exam_data)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[No missing data.]{style="color:#d69c3c"}
+:::
+
+# **4. DATA VISUALISATION**
+
+## **4.1 ??**
+
+::: {.callout-warning appearance="simple" icon="false"}
+Compare histogram by R Graphics and ggplot2 -
+
+### **4.1.1 Plot with R Graphics**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***hist( )*** - graphics -]{style="color:#d46e15"} to compute a histogram.
+:::
+
+```{r}
+ggplot(data=exam_data, 
+       aes(x= MATHS, 
+           y=ENGLISH)) +
+  geom_point() +
+  geom_smooth(method=lm, 
+              size=0.5) +  
+  geom_label(aes(label = ID), 
+             hjust = .5, 
+             vjust = -.5) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+
+### **4.1.2 Plot with ggplot2**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***ggplot( )*** - ggplot2 -]{style="color:#d46e15"} to initialise a ggplot object.
+
+-   geom_histogram( )
+
+-   ggtitle( )
+:::
+
+```{r}
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_histogram(bins = 10, 
+                 boundary = 100,
+                 color = "black", 
+                 fill = "grey") +
+  ggtitle("Distribution of Maths scores")
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[ggplot2 allows to customise axis labels, title, grid lines.]{style="color:#d69c3c"}
+:::
+
+## **4.2 Explore Functions in ggplot2**
+
+### **4.2.1 Create Base for a ggplot Object**
+
+::: {.callout-warning appearance="simple" icon="false"}
+text
+
+#### **\-- initialise a ggplot Object**
+
+```{r}
+#| code-fold: false
+ggplot(data = exam_data)
+```
+
+#### **\-- introduce aesthetic mappings**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***aes( )*** - ggplot2 -]{style="color:#d46e15"} to visualise the attributes of the data.
+:::
+
+```{r}
+#| code-fold: false
+ggplot(data = exam_data,
+       aes(x = MATHS))
+```
+:::
+
+### **4.2.2 Add Geometric Objects**
+
+::: {.callout-warning appearance="simple" icon="false"}
+text
+
+#### **4.2.2.1 plot bar chart**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***geom_bar( )*** - ggplot2 -]{style="color:#d46e15"} to makes the height of the bar proportional to the number of "MaTHS".
+
+::: callout-note
+## [**use geom_col( ) if the bars need to represent values in the data.**]{style="color:#3a9c88"}
+:::
+:::
+
+```{r}
+#| code-fold: false
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
+  geom_bar()
+```
+
+#### 
+:::
+
+# **7. REFERENCES**
+
+-   Hadley Wickham (2023) [**ggplot2: Elegant Graphics for Data Analysis**](https://ggplot2-book.org/). Online 3rd edition.
+
+-   Winston Chang (2013) [**R Graphics Cookbook 2nd edition**](https://r-graphics.org/). Online version.
+
+-   Healy, Kieran (2019) [**Data Visualization: A practical introduction**](https://socviz.co/). Online version
+
+-   [Learning ggplot2 on Paper -- Components](https://henrywang.nl/learning-ggplot2-on-paper-components/)
+
+-   [Learning ggplot2 on Paper -- Layer](https://henrywang.nl/learning-ggplot2-on-paper-layer/)
+
+-   [Learning ggplot2 on Paper -- Scale](https://henrywang.nl/tag/learning-ggplot2-on-paper/)
