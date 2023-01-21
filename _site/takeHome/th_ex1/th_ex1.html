@@ -228,6 +228,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <li><a href="#create-dashboard-for-visual-analytics" id="toc-create-dashboard-for-visual-analytics" class="nav-link" data-scroll-target="#create-dashboard-for-visual-analytics"><strong>3.4 Create Dashboard for Visual Analytics</strong></a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>4. DISCUSSION</strong></a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">5. REFERENCES</a></li>
   </ul>
 </nav>
     </div>
@@ -646,7 +647,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <caption>Table 2.1 : List of Singapore Region for the top 9 Planning Area.</caption>
 <colgroup>
 <col style="width: 23%">
-<col style="width: 25%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1187,26 +1188,38 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <div class="callout-body-container">
 <p>Out of 55 Singapore Planning Areas (PAs) in this study, nine are filtered based on the top 9 highest population count. Then, explore the distribution of age and sex for each PA with the population pyramid.</p>
+<section id="trends-of-the-population-pyramids" class="level3">
+<h3 class="anchored" data-anchor-id="trends-of-the-population-pyramids"><strong>Trends of the Population Pyramids</strong></h3>
+<p>Only two PAs, namely Bedok and Jurong West, have a predominantly constrictive trend pattern. Unlike Bedok area, Jurong West may maintain its constrictive trend due to the rental potential to the type of workforce required to support Tuas Megaport. The rest of the 7 PAs show a mixture of constrictive trends with some form of either expansive or stationary trend.</p>
+<p>On the other hand, Punggol area is the only PA showing a mixture of&nbsp;<strong>constrictive trends</strong>&nbsp;with the noticeable&nbsp;<strong>expansive trend</strong>&nbsp;observed below age 30.&nbsp;While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the age ranges 15 to 29. This developing township was re-vitalised by the&nbsp;<strong>Punggol 21-plus</strong>&nbsp;plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/image-847043300.png" class="img-fluid figure-img" alt="Comparing 2 types of trellis layout. First is the 9 population pyramid in a row while the second laid out 3 by 3 matrix."></p>
 <p></p><figcaption class="figure-caption">Figure 4.1 : For more interactive view, find out more from <a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_3/trel3x3_d?publish=yes">my viz on Tableau Public</a>.</figcaption><p></p>
 </figure>
 </div>
-<p>Only two PAs, namely Bedok and Jurong West, have a predominantly constrictive trend pattern. Unlike Bedok area, Jurong West may maintain its constrictive trend due to the rental potential to the type of workforce required to support Tuas Megaport. The rest of the 7 PAs show a mixture of constrictive trends with some form of either expansive or stationary trend.</p>
-<p>On the other hand, Punggol area is the only PA showing a mixture of&nbsp;<strong>constrictive trends</strong>&nbsp;with the noticeable&nbsp;<strong>expansive trend</strong>&nbsp;observed below age 30.&nbsp;While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the age ranges 15 to 29. This developing township was re-vitalised by the&nbsp;<strong>Punggol 21-plus</strong>&nbsp;plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>Tampines, Sengkang and Yishun are the PAs with “pillar”-like distributions. Unlike Tampines and Yishun, which have a higher Gen Y population, Sengkang has a higher Gen X population.</p>
-<p>6 out of 9 PAs, Bedok, Tampines, Woodlands, Hougang, Yishun and Chua Chu Kang, have a relatively large population of age groups above age 55. More resources and services will be needed to support senior welfare and probably set up more facilities or infrastructures.</p>
-<p>However, there are a few downsides to the population pyramid. First, it’s not easy to visually analyse or identify which PA has a wider gap by gender.</p>
+<p>As shown in <strong>Figure 4.1</strong> above, Tampines, Sengkang and Yishun are the PAs with “pillar”-like distributions. Unlike Tampines and Yishun, which have a higher Gen Y population, Sengkang has a higher Gen X population.</p>
+<p>6 out of 9 Singapore Planning Areas, namely Bedok, Tampines, Woodlands, Hougang, Yishun and Chua Chu Kang, have a relatively large population of age groups above age 55. More resources and services will be needed to support senior welfare and probably set up more facilities or infrastructures.</p>
+</section>
+<section id="limitation-of-trellis-population-pyramid" class="level3">
+<h3 class="anchored" data-anchor-id="limitation-of-trellis-population-pyramid">Limitation of Trellis Population Pyramid</h3>
+<p>Generally, the Population Pyramid can, to certain extend, allow users to perform high level visual analysis. However, to analyse gender and age fields more in depth, for example, the gender populations gap for each planning area, it is not easy to measure or gauge the gap easily based on the population pyramid. What’s more if it’s a trellis plot of population pyramid.</p>
+<p>Hence, additional chart such as circles plot for genders population will be needed to subsidise the visual analysis.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/image-709267252.png" class="img-fluid figure-img" alt="Add population count for each gender to add context of gender differences to the population pyramid."></p>
 <p></p><figcaption class="figure-caption">Figure 4.2 : For more interactive view, find out more from <a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_2/Dashboard2?publish=yes" style="font-size: 11pt;"><u>my viz on Tableau Public</u></a>.</figcaption><p></p>
 </figure>
 </div>
+</section>
 </div>
 </div>
 </div>
+</section>
+<section id="references" class="level1">
+<h1>5. REFERENCES</h1>
+<p>Stanke L. (2020). Trellis Chart in Tableau. phdata.io. https://www.phdata.io/blog/trellis-chart/</p>
+<p>Ryan S. (2020). How to Make Trellis / Tile / Small Multiple Maps in Tableau. PlayfairData. https://playfairdata.com/how-to-make-trellis-tile-small-multiple-maps-in-tableau/</p>
 
 
 </section>

@@ -200,27 +200,27 @@ Remarks :
 
 Figure 2.10 shows the filtered Planning Areas.
 
-+----------------+-----------------+
-| Planning Area  | Region          |
-+================+=================+
-| Bedok          | East            |
-+----------------+-----------------+
-| Tampines       | East            |
-+----------------+-----------------+
-| Jurong West    | West            |
-+----------------+-----------------+
-| Sengkang       | North-East      |
-+----------------+-----------------+
-| Woodlands      | North           |
-+----------------+-----------------+
-| Hougang        | North-East      |
-+----------------+-----------------+
-| Yishun         | North           |
-+----------------+-----------------+
-| Choa Chu Kang  | West            |
-+----------------+-----------------+
-| Punggol        | North-East      |
-+----------------+-----------------+
++----------------+----------------+
+| Planning Area  | Region         |
++================+================+
+| Bedok          | East           |
++----------------+----------------+
+| Tampines       | East           |
++----------------+----------------+
+| Jurong West    | West           |
++----------------+----------------+
+| Sengkang       | North-East     |
++----------------+----------------+
+| Woodlands      | North          |
++----------------+----------------+
+| Hougang        | North-East     |
++----------------+----------------+
+| Yishun         | North          |
++----------------+----------------+
+| Choa Chu Kang  | West           |
++----------------+----------------+
+| Punggol        | North-East     |
++----------------+----------------+
 
 : Table 2.1 : List of Singapore Region for the top 9 Planning Area.
 :::
@@ -456,19 +456,31 @@ Once placed these fields, reversed the "Male Population" as entails under **Step
 ::: {.callout-warning appearance="simple" icon="false"}
 Out of 55 Singapore Planning Areas (PAs) in this study, nine are filtered based on the top 9 highest population count. Then, explore the distribution of age and sex for each PA with the population pyramid.
 
-![Figure 4.1 : For more interactive view, find out more from [my viz on Tableau Public](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_3/trel3x3_d?publish=yes).](images/image-847043300.png){fig-alt="Comparing 2 types of trellis layout. First is the 9 population pyramid in a row while the second laid out 3 by 3 matrix."}
+### **Trends of the Population Pyramids**
 
 Only two PAs, namely Bedok and Jurong West, have a predominantly constrictive trend pattern. Unlike Bedok area, Jurong West may maintain its constrictive trend due to the rental potential to the type of workforce required to support Tuas Megaport. The rest of the 7 PAs show a mixture of constrictive trends with some form of either expansive or stationary trend.
 
 On the other hand, Punggol area is the only PA showing a mixture of **constrictive trends** with the noticeable **expansive trend** observed below age 30. While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the age ranges 15 to 29. This developing township was re-vitalised by the **Punggol 21-plus** plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.[^3]
 
-Tampines, Sengkang and Yishun are the PAs with "pillar"-like distributions. Unlike Tampines and Yishun, which have a higher Gen Y population, Sengkang has a higher Gen X population.
+![Figure 4.1 : For more interactive view, find out more from [my viz on Tableau Public](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_3/trel3x3_d?publish=yes).](images/image-847043300.png){fig-alt="Comparing 2 types of trellis layout. First is the 9 population pyramid in a row while the second laid out 3 by 3 matrix."}
 
-6 out of 9 PAs, Bedok, Tampines, Woodlands, Hougang, Yishun and Chua Chu Kang, have a relatively large population of age groups above age 55. More resources and services will be needed to support senior welfare and probably set up more facilities or infrastructures.
+As shown in **Figure 4.1** above, Tampines, Sengkang and Yishun are the PAs with "pillar"-like distributions. Unlike Tampines and Yishun, which have a higher Gen Y population, Sengkang has a higher Gen X population.
 
-However, there are a few downsides to the population pyramid. First, it's not easy to visually analyse or identify which PA has a wider gap by gender.
+6 out of 9 Singapore Planning Areas, namely Bedok, Tampines, Woodlands, Hougang, Yishun and Chua Chu Kang, have a relatively large population of age groups above age 55. More resources and services will be needed to support senior welfare and probably set up more facilities or infrastructures.
+
+### Limitation of Trellis Population Pyramid
+
+Generally, the Population Pyramid can, to certain extend, allow users to perform high level visual analysis. However, to analyse gender and age fields more in depth, for example, the gender populations gap for each planning area, it is not easy to measure or gauge the gap easily based on the population pyramid. What's more if it's a trellis plot of population pyramid.
+
+Hence, additional chart such as circles plot for genders population will be needed to subsidise the visual analysis.
 
 ![Figure 4.2 : For more interactive view, find out more from [[my viz on Tableau Public]{.underline}](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_2/Dashboard2?publish=yes){style="font-size: 11pt;"}.](images/image-709267252.png){alt="Figure 2.15" fig-alt="Add population count for each gender to add context of gender differences to the population pyramid."}
 :::
 
 [^3]: Singapore Department of Statistics. (2020). Census of Population 2020 - Statistical Release 2 : Households, Geographic Distribution, Transport and Difficulty in Basic Activities. https://www.parliament.gov.sg/docs/default-source/default-document-library/cop2020sr2.pdf
+
+# 5. REFERENCES
+
+Stanke L. (2020). Trellis Chart in Tableau. phdata.io. https://www.phdata.io/blog/trellis-chart/
+
+Ryan S. (2020). How to Make Trellis / Tile / Small Multiple Maps in Tableau. PlayfairData. https://playfairdata.com/how-to-make-trellis-tile-small-multiple-maps-in-tableau/
