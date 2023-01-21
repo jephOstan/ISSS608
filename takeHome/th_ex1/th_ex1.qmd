@@ -475,6 +475,8 @@ Generally, the Population Pyramid can, to certain extend, allow users to perform
 Hence, additional chart such as circles plot for genders population will be needed to subsidise the visual analysis.
 
 ![Figure 4.2 : For more interactive view, find out more from [[my viz on Tableau Public]{.underline}](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_2/Dashboard2?publish=yes){style="font-size: 11pt;"}.](images/image-709267252.png){alt="Figure 2.15" fig-alt="Add population count for each gender to add context of gender differences to the population pyramid."}
+
+Visual Aesthetic vs Clarity
 :::
 
 [^3]: Singapore Department of Statistics. (2020). Census of Population 2020 - Statistical Release 2 : Households, Geographic Distribution, Transport and Difficulty in Basic Activities. https://www.parliament.gov.sg/docs/default-source/default-document-library/cop2020sr2.pdf
