@@ -17,6 +17,8 @@ website:
         menu: 
           - text: In-class Ex[1] S & P Summary with Tableau
             href: https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&:origin=viz_share_link
+          - text: In-class Ex[2] Design Enlightening Graphs with R
+            href: inClass/inClass_ex02/inClass_ex2.qmd
             
       - text: Take-home Exercises
         menu: 
