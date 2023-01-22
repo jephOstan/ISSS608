@@ -206,14 +206,20 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. OVERVIEW</strong></a>
   <ul class="collapse">
-  <li><a href="#instruction" id="toc-instruction" class="nav-link" data-scroll-target="#instruction"><strong>1.1 Instruction</strong></a></li>
+  <li><a href="#population-pyramids" id="toc-population-pyramids" class="nav-link" data-scroll-target="#population-pyramids">1.1 Population Pyramids</a></li>
+  <li><a href="#classification-of-age-group" id="toc-classification-of-age-group" class="nav-link" data-scroll-target="#classification-of-age-group">1.2 Classification of Age Group</a>
+  <ul class="collapse">
+  <li><a href="#types-of-age-group" id="toc-types-of-age-group" class="nav-link" data-scroll-target="#types-of-age-group"><strong>1.2.1 Types of Age Group</strong></a></li>
+  <li><a href="#bins-of-age-group" id="toc-bins-of-age-group" class="nav-link" data-scroll-target="#bins-of-age-group">1.2.2 Bins of Age Group</a></li>
   </ul></li>
-  <li><a href="#plot-multiple-population-pyramid-with-tableau-desktop" id="toc-plot-multiple-population-pyramid-with-tableau-desktop" class="nav-link" data-scroll-target="#plot-multiple-population-pyramid-with-tableau-desktop"><strong>2. PLOT MULTIPLE POPULATION PYRAMID with TABLEAU DESKTOP</strong></a>
+  <li><a href="#scope-of-study" id="toc-scope-of-study" class="nav-link" data-scroll-target="#scope-of-study"><strong>1.3 Scope of Study</strong></a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><strong>2. DATA</strong></a>
   <ul class="collapse">
   <li><a href="#acquire-upload-data" id="toc-acquire-upload-data" class="nav-link" data-scroll-target="#acquire-upload-data"><strong>2.1 Acquire &amp; Upload Data</strong></a>
   <ul class="collapse">
   <li><a href="#acquire-data" id="toc-acquire-data" class="nav-link" data-scroll-target="#acquire-data"><strong>2.1.1 Acquire Data</strong></a></li>
-  <li><a href="#upload-data" id="toc-upload-data" class="nav-link" data-scroll-target="#upload-data"><strong>2.1.2 Upload Data</strong></a></li>
+  <li><a href="#upload-data-into-tableau-desktop" id="toc-upload-data-into-tableau-desktop" class="nav-link" data-scroll-target="#upload-data-into-tableau-desktop"><strong>2.1.2 Upload Data into Tableau Desktop</strong></a></li>
   </ul></li>
   <li><a href="#wrangle-data" id="toc-wrangle-data" class="nav-link" data-scroll-target="#wrangle-data"><strong>2.2 Wrangle Data</strong></a>
   <ul class="collapse">
@@ -225,11 +231,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#trellis-plot-for-population-pyramid" id="toc-trellis-plot-for-population-pyramid" class="nav-link" data-scroll-target="#trellis-plot-for-population-pyramid"><strong>3.1 Trellis Plot for Population Pyramid</strong></a>
   <ul class="collapse">
-  <li><a href="#plot-population-pyramids-in-a-row" id="toc-plot-population-pyramids-in-a-row" class="nav-link" data-scroll-target="#plot-population-pyramids-in-a-row">3.1.1 Plot Population Pyramids in a Row</a></li>
+  <li><a href="#grid-facet---plot-by-single-row" id="toc-grid-facet---plot-by-single-row" class="nav-link" data-scroll-target="#grid-facet---plot-by-single-row"><strong>3.1.1 Grid Facet - Plot by Single Row</strong></a></li>
+  <li><a href="#wrap-facet---plot-by-3x3-matrix" id="toc-wrap-facet---plot-by-3x3-matrix" class="nav-link" data-scroll-target="#wrap-facet---plot-by-3x3-matrix"><strong>3.1.2 Wrap Facet - Plot by 3x3 Matrix</strong></a></li>
   </ul></li>
-  <li><a href="#plot-population-pyramids-by-3x3-matrix" id="toc-plot-population-pyramids-by-3x3-matrix" class="nav-link" data-scroll-target="#plot-population-pyramids-by-3x3-matrix">3.1.2 Plot Population Pyramids by 3x3 Matrix</a></li>
-  <li><a href="#create-chart-to-reveal-gender-differences" id="toc-create-chart-to-reveal-gender-differences" class="nav-link" data-scroll-target="#create-chart-to-reveal-gender-differences"><strong>3.3 Create Chart to Reveal Gender Differences</strong></a></li>
-  <li><a href="#create-dashboard-for-visual-analytics" id="toc-create-dashboard-for-visual-analytics" class="nav-link" data-scroll-target="#create-dashboard-for-visual-analytics"><strong>3.4 Create Dashboard for Visual Analytics</strong></a></li>
+  <li><a href="#create-supplementary-chart" id="toc-create-supplementary-chart" class="nav-link" data-scroll-target="#create-supplementary-chart"><strong>3.3 Create Supplementary Chart</strong></a></li>
+  <li><a href="#create-visual-analytics-dashboard" id="toc-create-visual-analytics-dashboard" class="nav-link" data-scroll-target="#create-visual-analytics-dashboard"><strong>3.4 Create Visual Analytics Dashboard</strong></a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>4. DISCUSSION</strong></a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">5. REFERENCES</a></li>
@@ -259,7 +265,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 21, 2023</p>
+      <p class="date-modified">January 22, 2023</p>
     </div>
   </div>
     
@@ -271,6 +277,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <section id="overview" class="level1">
 <h1><strong>1. OVERVIEW</strong></h1>
 <p>This exercise focus on using <strong>Tableau Desktop</strong> to create <strong>multiple</strong> <strong>population pyramids</strong> for Singapore based on data updated to June 2022.</p>
+<section id="population-pyramids" class="level2">
+<h2 class="anchored" data-anchor-id="population-pyramids">1.1 Population Pyramids</h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -278,7 +286,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <div class="callout-body-container">
 <p>Population Pyramid helps to visualise the distribution of age and gender for a given location.</p>
-<p>The chart generally have three trends : <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The chart can generally have three trends : <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <table class="table">
 <colgroup>
 <col style="width: 16%">
@@ -294,7 +302,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>Expansive</p>
+<td><p><strong>Expansive</strong></p>
 <p>(triangle)</p></td>
 <td><ul>
 <li><p>High fertility rate.</p></li>
@@ -307,8 +315,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </ul></td>
 </tr>
 <tr class="even">
-<td><p>Constrictive</p>
-<p>(wider in the mdidle)</p></td>
+<td><p><strong>Constrictive</strong></p>
+<p>(wider in the middle)</p></td>
 <td><ul>
 <li><p>Constant fertility rate.</p></li>
 <li><p>Low mortality rate.</p></li>
@@ -324,7 +332,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </ul></td>
 </tr>
 <tr class="odd">
-<td><p>Stationary</p>
+<td><p><strong>Stationary</strong></p>
 <p>(“pillar” )</p></td>
 <td><ul>
 <li><p>Low fertility rate.</p></li>
@@ -337,8 +345,78 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </tr>
 </tbody>
 </table>
-<p>For quick reference of age groups, the labels below are adopted for further discussion.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-of-age-group" class="level2">
+<h2 class="anchored" data-anchor-id="classification-of-age-group">1.2 Classification of Age Group</h2>
+<p>As one of the key elements for population pyramids, there are two main aspects for age groups :</p>
+<section id="types-of-age-group" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-age-group"><strong>1.2.1 Types of Age Group</strong></h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Generally, there are two classifications, <strong>quinquennial</strong> or <strong>broad age</strong> groups (e.g.&nbsp;0-14 years or 65 years and over).</p>
+<p>According to <a href="https://www.singstat.gov.sg/-/media/files/standards_and_classifications/nsa.ashx">Singapore National Statistical Standards</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, the quinquennial age groups (classify age in five years intervals) should be used for age distribution.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="bins-of-age-group" class="level3">
+<h3 class="anchored" data-anchor-id="bins-of-age-group">1.2.2 Bins of Age Group</h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The amount of bins depends on the context required for the plots. Hence,</p>
 <table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 25%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>context to plot population pyramids</th>
+<th>youngest age group</th>
+<th>eldest age group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>population</td>
+<td>0 - 4</td>
+<td>90 &amp; Over</td>
+</tr>
+<tr class="even">
+<td>resident labour force</td>
+<td>15 - 19</td>
+<td>70 &amp; Over</td>
+</tr>
+<tr class="odd">
+<td>unemployed residents</td>
+<td>0 - 12</td>
+<td>55 &amp; Over</td>
+</tr>
+<tr class="even">
+<td>married couples in resident households</td>
+<td>below 30</td>
+<td>65 &amp; Over</td>
+</tr>
+</tbody>
+</table>
+<p>note : for quick reference, the labels below will be adopted in section 4 Discussion.</p>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 34%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>range</th>
@@ -352,38 +430,41 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </tr>
 <tr class="even">
 <td>35-39 to 40-44</td>
-<td>Gen X</td>
+<td>Gen-X</td>
 </tr>
 <tr class="odd">
 <td>25-29 to 30-34</td>
-<td>Gen Y</td>
+<td>Gen-Y</td>
 </tr>
 <tr class="even">
 <td>15-19 to 20 -24</td>
-<td>Gen Z</td>
+<td>Gen-Z</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<section id="instruction" class="level2">
-<h2 class="anchored" data-anchor-id="instruction"><strong>1.1 Instruction</strong></h2>
+</section>
+</section>
+<section id="scope-of-study" class="level2">
+<h2 class="anchored" data-anchor-id="scope-of-study"><strong>1.3 Scope of Study</strong></h2>
 <ul>
 <li><p>Reveal the demographic structure of Singapore at the <strong>Planning Area</strong> level by using the <strong>Age-Sex</strong> <strong>Population Pyramid</strong> method.</p></li>
-<li><p>Display nine (9) Population Pyramids, each representing a planning area in a single view.</p></li>
-</ul>
-</section>
-</section>
-<section id="plot-multiple-population-pyramid-with-tableau-desktop" class="level1">
-<h1><strong>2. PLOT MULTIPLE POPULATION PYRAMID with TABLEAU DESKTOP</strong></h1>
-<p>There are four (4) main flows involved to plot multiple population pyramid.</p>
+<li><p>Display nine (9) Population Pyramids in a single view.</p>
 <ul>
-<li><p>acquire and upload data.</p></li>
-<li><p>inspect and wrangle data.</p></li>
-<li><p>plot multiple population pyramid.</p></li>
-<li><p>organise plotted charts on dashboard.</p></li>
+<li><span style="color:#d69c3c">My approach in essence :</span>
+<ul>
+<li><p><span style="color:#d69c3c">Out of this study’s 55 Singapore Planning Areas (PAs), nine are filtered based on the top 9 highest population count.</span></p></li>
+<li><p><span style="color:#d69c3c">Plot 2 types of facets i.e.&nbsp;grid and wrap to explore the feasibility of visual analysis</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>Write 500 words to discuss the pattern revealed by the plot.</p></li>
 </ul>
+</section>
+</section>
+<section id="data" class="level1">
+<h1><strong>2. DATA</strong></h1>
 <section id="acquire-upload-data" class="level2">
 <h2 class="anchored" data-anchor-id="acquire-upload-data"><strong>2.1 Acquire &amp; Upload Data</strong></h2>
 <section id="acquire-data" class="level3">
@@ -432,8 +513,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="upload-data" class="level3">
-<h3 class="anchored" data-anchor-id="upload-data"><strong>2.1.2 Upload Data</strong></h3>
+<section id="upload-data-into-tableau-desktop" class="level3">
+<h3 class="anchored" data-anchor-id="upload-data-into-tableau-desktop"><strong>2.1.2 Upload Data into Tableau Desktop</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -447,14 +528,14 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <div class="callout-body-container">
 <p><strong>Step-2.1</strong> : Click “<strong>File</strong>” from the Tableau Desktop main menu and select “<strong>Open</strong>” from the drop-down options.</p>
-</div>
-</div>
-</div>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1671792539.png" class="img-fluid figure-img" alt="To upload data into Tableau Desktop, first click on &quot;File&quot; from the main menu." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.1</figcaption><p></p>
 </figure>
+</div>
+</div>
+</div>
 </div>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -468,7 +549,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Fret not! If <strong>Figure 2.2</strong> is your landed screen, from the bottom left corner, click “<strong>Data Source</strong>”. You will be directed to the homepage, then perform <strong>Step-1</strong>.</p>
+<p>Fret not! If <strong>Figure 2.2</strong> is your landed screen, from the bottom left corner, click “<strong>Data Source</strong>”. You will be directed to the homepage, then perform <strong>Step-2.1</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-987662873.png" class="img-fluid figure-img" alt="This image shows the clickable &quot;Data Source&quot; to direct user to the homepage." width="400"></p>
@@ -484,15 +565,9 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.2</strong> : Select “<strong>respopagesextod2022</strong>” when prompted by an “<strong>Open</strong>” window.</p>
+<p><strong>Step-2.2</strong> : Select “<strong>respopagesextod2022</strong>” to load the file into Tableau Desktop when prompted by an “<strong>Open</strong>” window. Once the data is loaded, your screen should look similar to <strong>Figure 2.3</strong>.</p>
 </div>
 </div>
-</div>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="images/image-1547787260.png" class="img-fluid figure-img" alt="To create a &quot;Calculated Field&quot;, click the triangle icon next to the &quot;Sex&quot; field." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.3</figcaption><p></p>
-</figure>
 </div>
 </div>
 </div>
@@ -515,15 +590,15 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.3 : Click on the inverted triangle icon under the “Sex</strong>” field, as highlighted in <strong>Figure 2.3</strong>.</p>
-</div>
-</div>
-</div>
+<p><strong>Step-2.3 :</strong> Click on the inverted triangle icon within the <strong>“Sex</strong>” field, as highlighted in <strong>Figure 2.3</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/image-1398127722.png" class="img-fluid figure-img" alt="To open the input panel for the creation of calculated field." width="400"></p>
-<p></p><figcaption class="figure-caption">Figure 2.4</figcaption><p></p>
+<p><img src="images/image-1547787260.png" class="img-fluid figure-img" alt="To create a &quot;Calculated Field&quot;, click the triangle icon next to the &quot;Sex&quot; field." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.3</figcaption><p></p>
 </figure>
+</div>
+</div>
+</div>
 </div>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
@@ -531,7 +606,13 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.4 : Select “Create Calculated Field…</strong>” from the drop-down options (refers to <strong>Figure 2.4)</strong> to open an input panel, as shown in <strong>Figure 2.5</strong>.</p>
+<p><strong>Step-2.4 :</strong> As shown in <strong>Figure 2.4</strong>, select <strong>“Create Calculated Field…</strong>” from the drop-down options to open an input panel, as shown in <strong>Figure 2.5</strong>.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/image-1398127722.png" class="img-fluid figure-img" alt="To open the input panel for the creation of calculated field." width="400"></p>
+<p></p><figcaption class="figure-caption">Figure 2.4</figcaption><p></p>
+</figure>
+</div>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-726087864.png" class="img-fluid figure-img" alt="User will be prompted with the input panel for the creation of calculated field." width="400"></p>
@@ -547,7 +628,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.5 :</strong> To create <strong>“Male Population” measured field, first change the field title to</strong> “Male Population”. Next, input <strong>“IF [Sex] =”Males” THEN [Pop] END</strong>”, as shown in <strong>Figure 2.6</strong>.</p>
+<p><strong>Step-2.5 :</strong> To create <strong>“Male Population”</strong> measured field, first change the field title to “<strong>Male Population</strong>”.</p>
+<p>Next, input <strong>“IF [Sex] =”Males” THEN [Pop] END</strong>”, as shown in <strong>Figure 2.6</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1552505160.png" class="img-fluid figure-img" alt="Input title and formula to derive a new calculated field i.e. &quot;Male Population&quot;." width="400"></p>
@@ -563,7 +645,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.6 :</strong> Repeat <em>Step-5</em> but with title as “<strong>Female Population</strong>”, and replace “<strong>Males</strong>” with “<strong>Females</strong>”.</p>
+<p><strong>Step-2.6 :</strong> Repeat <strong>Step-2.5</strong> but this time set the title as “<strong>Female Population</strong>”, and replace “<strong>Males</strong>” with “<strong>Females</strong>”.</p>
 </div>
 </div>
 </div>
@@ -586,7 +668,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.7 : PA</strong>” field to place it within the “<strong>Rows</strong>” panel, as shown in <strong>Figure 2.7</strong>.</p>
+<p><strong>Step-2.7 :</strong> Place “<strong>PA</strong>” field on the “<strong>Rows</strong>” shelf, as shown in <strong>Figure 2.7</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1871491101.png" class="img-fluid figure-img" width="400"></p>
@@ -602,7 +684,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.8</strong> : Double click “<strong>Pop</strong>” field from the table on the left. It will be automatically summed up within the “<strong>Rows</strong>” panel.</p>
+<p><strong>Step-2.8</strong> : Double click “<strong>Pop</strong>” field from the “Data” pane on the left. It will be automatically summed up on the “<strong>Rows</strong>” shelf.</p>
 </div>
 </div>
 </div>
@@ -612,7 +694,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.9</strong> : Right click on the space highlighted in red, above the population count column to sort the counts in “<strong>Sort descending</strong>” order. Refer to <strong>Figure 2.8</strong>.</p>
+<p><strong>Step-2.9</strong> : Right-click on the space highlighted in red (refers to <strong>Figure 2.7</strong>) above the column of the population count to sort it in “<strong>Sort descending</strong>” order. Refer to <strong>Figure 2.8</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1919704893.png" class="img-fluid figure-img" alt="Sum population for each planning area in Singapore." width="400"></p>
@@ -628,11 +710,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-2.10</strong> : Click the inverted triangle icon (next to “<strong>PA</strong>” at the “<strong>Rows</strong>” pane) and select “<strong>Filter</strong>” to open the “<strong>Filter [PA]</strong>” pane.</p>
-<p>Next, change “<strong>10</strong>” to “<strong>9</strong>” for the “<strong>Top</strong>” value under the <strong>“Top</strong>” tab, as shown in <strong>Figure 2.9</strong>.</p>
+<p><strong>Step-2.10</strong> : Click the inverted triangle icon (next to “<strong>PA</strong>” on the “<strong>Rows</strong>” shelf) and select “<strong>Filter</strong>” to open the “<strong>Filter [PA]</strong>” window.</p>
+<p>Next, change “<strong>10</strong>” to “<strong>9</strong>” for the “<strong>Top</strong>” value under section “<strong>By field:</strong>”, under the <strong>“Top</strong>” tab, as shown in <strong>Figure 2.9</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/image-690824896.png" class="img-fluid figure-img" width="400"></p>
+<p><img src="images/image-690824896.png" class="img-fluid figure-img" alt="Filter top 9 Singapore Planning Area by the sum of population." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 2.9</figcaption><p></p>
 </figure>
 </div>
@@ -645,13 +727,12 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <p></p><figcaption class="figure-caption">Figure 2.10</figcaption><p></p>
 </figure>
 </div>
-<p>Remarks :</p>
-<p>Figure 2.10 shows the filtered Planning Areas.</p>
+<p>For future references, the table below list out the regions for each of these filtered Planning Areas.</p>
 <table class="table">
 <caption>Table 2.1 : List of Singapore Region for the top 9 Planning Area.</caption>
 <colgroup>
-<col style="width: 23%">
-<col style="width: 23%">
+<col style="width: 22%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -707,13 +788,13 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <h1><strong>3. VISUAL ANALYTICS</strong></h1>
 <section id="trellis-plot-for-population-pyramid" class="level2">
 <h2 class="anchored" data-anchor-id="trellis-plot-for-population-pyramid"><strong>3.1 Trellis Plot for Population Pyramid</strong></h2>
-<p>This section entails steps for two trellis layout for 9 population pyramids :</p>
+<p>This section entails steps for two trellis layouts for 9 population pyramids :</p>
 <ul>
-<li><p>plot in a row.</p></li>
-<li><p>plot on 3 x 3 matrix.</p></li>
+<li><p>grid facet - plot all pyramids in a row.</p></li>
+<li><p>wrap facet - plot all pyramids 3 x 3 matrix.</p></li>
 </ul>
-<section id="plot-population-pyramids-in-a-row" class="level3">
-<h3 class="anchored" data-anchor-id="plot-population-pyramids-in-a-row">3.1.1 Plot Population Pyramids in a Row</h3>
+<section id="grid-facet---plot-by-single-row" class="level3">
+<h3 class="anchored" data-anchor-id="grid-facet---plot-by-single-row"><strong>3.1.1 Grid Facet - Plot by Single Row</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -726,7 +807,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.1</strong> : Select “horizontal bars” from the “Show Me” chart options.</p>
+<p><strong>Step-3.1</strong> : Select “horizontal bars” from the chart options under “<strong>Show Me</strong>” at the top right corner.</p>
 </div>
 </div>
 </div>
@@ -736,7 +817,9 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.2</strong> : Drag “Gender” to “Color” under “Marks” pane. Next, drag the filtered “PA” to “Columns” and replace the “Rows” field with “Age Group”. Thereafter, place “Male Population” and “Female Population” fields to the “Columns”. Refers to <strong>Figure 3.1</strong>.</p>
+<p><strong>Step-3.2</strong> : Drag “Gender” to “Color” under the “Marks” card.</p>
+<p>Next, drag the filtered “PA” to the “Columns” shelf and place “Age Group” on the “Rows” shelf.</p>
+<p>Thereafter, place the “Male Population” and “Female Population” fields on the “Columns” shelf. Refers to <strong>Figure 3.1</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1153609685.png" class="img-fluid figure-img" width="400"></p>
@@ -752,7 +835,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.3</strong> : Right click the “Male Population” at the x-axis to select “Edit Axis…”.</p>
+<p><strong>Step-3.3</strong> : Right-click the “Male Population” on the x-axis to select “Edit Axis…” function. You will be prompted with a window name “Edit Axis [Male Population]”.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1115048381.png" class="img-fluid figure-img" width="400"></p>
@@ -768,15 +851,13 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.4</strong> : Tick “Reversed” check box under “Scale” section, as shown in <strong>Figure 3.3</strong>.</p>
+<p><strong>Step-3.4</strong> : Tick the “Reversed” check box under the “Scale” section, as shown in <strong>Figure 3.3</strong>.</p>
+<p>Once reversed, the chart should look similar to <strong>Figure 3.4</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-23982472.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 3.3</figcaption><p></p>
 </figure>
-</div>
-</div>
-</div>
 </div>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -784,13 +865,16 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <p></p><figcaption class="figure-caption">Figure 3.4</figcaption><p></p>
 </figure>
 </div>
+</div>
+</div>
+</div>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.5</strong> : Tick “Show mark label” via “Label” under “Marks” pane.</p>
+<p><strong>Step-3.5</strong> : Tick “<strong>Show mark label</strong>” via “<strong>Label</strong>” under “<strong>Marks</strong>” card.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1417472999.png" class="img-fluid figure-img" width="400"></p>
@@ -806,7 +890,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.6</strong> : Right-click the y-axis to add colour to differentiate rows for visual references. The example can be referred to in the figure below.</p>
+<p><strong>Step-3.6</strong> : Right-click the y-axis to add colour to differentiate rows for visual references. Refers to <strong>Figure 3.6</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/image-744804813.png" class="img-fluid figure-img" width="400"></p>
@@ -820,29 +904,29 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-</section>
-<section id="plot-population-pyramids-by-3x3-matrix" class="level2">
-<h2 class="anchored" data-anchor-id="plot-population-pyramids-by-3x3-matrix">3.1.2 Plot Population Pyramids by 3x3 Matrix</h2>
+<section id="wrap-facet---plot-by-3x3-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="wrap-facet---plot-by-3x3-matrix"><strong>3.1.2 Wrap Facet - Plot by 3x3 Matrix</strong></h3>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>There are 2 parts to this approach :</p>
+<p>There are two main parts to this approach :</p>
 <ul>
 <li><p>Create a layout matrix that consists of parameter, index, columns and rows fields.</p></li>
 <li><p>Plot chart.</p></li>
 </ul>
 <section id="create-new-fields-required-for-the-layout-matrix" class="level4">
-<h4 class="anchored" data-anchor-id="create-new-fields-required-for-the-layout-matrix">3.1.2.1 create new fields required for the layout matrix</h4>
+<h4 class="anchored" data-anchor-id="create-new-fields-required-for-the-layout-matrix"><strong>3.1.2.1 create new fields required for the layout matrix</strong></h4>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.7</strong> : Start with a new worksheet. Click the inverted triangle icon from the “Data” pane to select the “Create Parameter…” function, as highlighted in red in <strong>Figure 3.7</strong>.</p>
+<p><strong>Step-3.7</strong> : Start with a new worksheet.</p>
+<p>Click the inverted triangle icon from the “<strong>Data</strong>” pane to select the “<strong>Create Parameter…</strong>” function, as highlighted in red in <strong>Figure 3.7</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-299717765.png" class="img-fluid figure-img" alt="Create new parameter by  select the &quot;Create Parameter...&quot; option." width="400"></p>
@@ -858,7 +942,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.8</strong> : Create a new parameter with “Total Columns” as the name, “Integer” for the “Data Type”, and set “Current Value” to 3 when prompted with the “Create Parameter” pane, as shown in <strong>Figure 3.8</strong>.</p>
+<p><strong>Step-3.8</strong> : Create a new parameter with “<strong>Total Columns</strong>” as the name, “<strong>Integer</strong>” for the “<strong>Data Type</strong>”, and set “<strong>Current Value</strong>” to 3 when prompted with the “<strong>Create Parameter</strong>” window, as shown in <strong>Figure 3.8</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1794749795.png" class="img-fluid figure-img" alt="Create an &quot;Integer&quot; type new parameter named with &quot;Total Columns&quot;, and set the &quot;Current value&quot; to 3." width="400"></p>
@@ -874,7 +958,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.9</strong> : Select “Create Calculated Field…” from the “Analysis” main menu. Refer to <strong>Figure 3.9</strong>.</p>
+<p><strong>Step-3.9</strong> : Select “<strong>Create Calculated Field…</strong>” from the “<strong>Analysis</strong>” main menu. Refer to <strong>Figure 3.9</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1514198003.png" class="img-fluid figure-img" alt="From the &quot;Analysis&quot; main menu, select &quot;Create Calculated Field...&quot;" width="400"></p>
@@ -902,16 +986,16 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>Field Title : <strong>Index</strong></p>
-<p>Code : <strong>INT((INDEX())%[Total Columns]^2+1)</strong></p></td>
+<td><p>field title : <strong>Index</strong></p>
+<p>code : <strong>INT((INDEX())%[Total Columns]^2+1)</strong></p></td>
 </tr>
 <tr class="even">
-<td><p>Field Title : <strong>Column</strong></p>
-<p>Code : <strong>(([Index]-1)%[Total Columns])+1</strong></p></td>
+<td><p>field title : <strong>Column</strong></p>
+<p>code : <strong>(([Index]-1)%[Total Columns])+1</strong></p></td>
 </tr>
 <tr class="odd">
-<td><p>Field Title : <strong>Row</strong></p>
-<p>Code : <strong>INT(([Index]-[Column])/[Total Columns])+1</strong></p></td>
+<td><p>field title : <strong>Row</strong></p>
+<p>code : <strong>INT(([Index]-[Column])/[Total Columns])+1</strong></p></td>
 </tr>
 </tbody>
 </table>
@@ -925,8 +1009,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="set-the-framework-for-trellis-population-pyramid" class="level4">
-<h4 class="anchored" data-anchor-id="set-the-framework-for-trellis-population-pyramid">3.1.2.2 set the framework for trellis population pyramid</h4>
+<section id="set-the-framework-to-wrap-the-population-pyramids" class="level4">
+<h4 class="anchored" data-anchor-id="set-the-framework-to-wrap-the-population-pyramids">3.1.2.2 set the framework to wrap the population pyramids</h4>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -935,9 +1019,9 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div class="callout-body-container">
 <p><strong>Step-3.11</strong> : Place the following fields accordingly (refers to <strong>Figure 3.11</strong>) :</p>
 <ul>
-<li><p>“PA” and “Index” to the “Detail” under “Marks”.</p></li>
-<li><p>“Column” to the “Columns” pane.</p></li>
-<li><p>“Row” to the “Rows” pane.</p></li>
+<li><p>“<strong>PA</strong>” and “<strong>Index</strong>” to the “<strong>Detail</strong>” under “<strong>Marks</strong>” card.</p></li>
+<li><p>“<strong>Column</strong>” to the “<strong>Columns</strong>” shelf.</p></li>
+<li><p>“<strong>Row</strong>” to the “<strong>Rows</strong>” shelf.</p></li>
 </ul>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -954,7 +1038,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.12</strong> : Click the inverted triangle icon next to the “PA” (highlighted in <strong>Figure 3.11</strong>) within the “Marks” pane to select the “Filter…” option.</p>
+<p><strong>Step-3.12</strong> : Click the inverted triangle icon next to the “<strong>PA</strong>” (highlighted in <strong>Figure 3.11</strong>) within the “<strong>Marks</strong>” card to select the “<strong>Filter…</strong>” option.</p>
 </div>
 </div>
 </div>
@@ -964,14 +1048,14 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.13</strong> : Change the value “10” to “9” and input the following formula “Sum([Pop])”, as shown in <strong>Figure 3.12</strong>.</p>
+<p><strong>Step-3.13</strong> : Change the value “<strong>10</strong>” to “<strong>9</strong>” and input the following formula “<strong>Sum([Pop])</strong>”, as shown in <strong>Figure 3.12</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1006918750.png" class="img-fluid figure-img" alt="Filter top 9 Singapore Planning Area by the highest population via formula input." width="400"></p>
 <p></p><figcaption class="figure-caption">Figure 3.12</figcaption><p></p>
 </figure>
 </div>
-<p>Note : Can repeat the same step entails under <strong>Step-2.10</strong>. The output will be the same.</p>
+<p>Note : alternately, you can repeat the same step entails under <strong>Step-2.10</strong>. The output will still be the same.</p>
 </div>
 </div>
 </div>
@@ -981,7 +1065,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.14</strong> : Change the “Continuous” field to a “Discrete” type. Without this step, Tableau is unable to plot horizontal bar chart without auto-adjust the “Row” to “Columns” pane.</p>
+<p><strong>Step-3.14</strong> : Change the field type from “<strong>Continuous</strong>” to “<strong>Discrete</strong>” type. Do this to both the “<strong>Column</strong>” and “<strong>Row</strong>” fields.”Without first performing this step, Tableau cannot plot a horizontal bar chart.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1610326101.png" class="img-fluid figure-img" alt="Change the &quot;Continuous&quot; field to a &quot;Discrete&quot; type." width="400"></p>
@@ -997,8 +1081,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.15</strong> : Select the “PA” option under the “Compute Using” function, as shown in <strong>Figure 3.14</strong>. Do this to both “Column” and “Row” fields.</p>
-<p>Once done, 9 blocks will be laid out in the manner of 3 by 3. Refers to <strong>Figure 3.15</strong>.</p>
+<p><strong>Step-3.15</strong> : From the triangle icon, click on the “<strong>Compute Using</strong>” option to select “<strong>PA</strong>”, as shown in <strong>Figure 3.14</strong>. Do this to both the “<strong>Column</strong>” and “<strong>Row</strong>” fields.</p>
+<p>Once done, 9 cubics will be laid out in the manner of 3 by 3. Refers to <strong>Figure 3.15</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1228855018.png" class="img-fluid figure-img" alt="Compute the &quot;Row&quot; field with &quot;PA&quot;" width="400"></p>
@@ -1025,11 +1109,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div class="callout-body-container">
 <p><strong>Step-3.16</strong> : Place the following fields accordingly (refers to <strong>Figure 3.16</strong>) :</p>
 <ul>
-<li><p>“Gender” to the “Color” under “Marks”.</p></li>
-<li><p>“Male Population” and “Female Population” to the “Columns” pane.</p></li>
-<li><p>“Age Group” to the “Rows” pane.</p></li>
+<li><p>“<strong>Gender</strong>” to the “<strong>Color</strong>” on the “<strong>Marks</strong>” card.</p></li>
+<li><p>“<strong>Male Population</strong>” and “<strong>Female Population</strong>” to the “<strong>Columns</strong>” shelf.</p></li>
+<li><p>“<strong>Age Group</strong>” to the “<strong>Rows</strong>” shelf.</p></li>
 </ul>
-<p>Once placed these fields, reversed the “Male Population” as entails under <strong>Step-3.4</strong>.</p>
+<p>Once placed these fields are placed, reverse the “<strong>Male Population</strong>” as entails under <strong>Step-3.4</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-184031338.png" class="img-fluid figure-img" alt="Plot population pyramid by place the &quot;gender&quot; field to &quot;color&quot; under &quot;Marks&quot;, both &quot;Male Population&quot; and &quot;Female Population&quot; to the &quot;Columns&quot;." width="400"></p>
@@ -1045,7 +1129,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.17</strong> : Un-tick the option “Show Header” for column “Row”, as shown in <strong>Figure 3.17</strong>.</p>
+<p><strong>Step-3.17</strong> : Un-tick the option “<strong>Show Header</strong>” for column “<strong>Row</strong>”, as shown in <strong>Figure 3.17</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-545167032.png" class="img-fluid figure-img" alt="Hide &quot;Row&quot; column by un-tick the &quot;Hide Header&quot; option." width="400"></p>
@@ -1060,8 +1144,10 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="create-chart-to-reveal-gender-differences" class="level2">
-<h2 class="anchored" data-anchor-id="create-chart-to-reveal-gender-differences"><strong>3.3 Create Chart to Reveal Gender Differences</strong></h2>
+</section>
+<section id="create-supplementary-chart" class="level2">
+<h2 class="anchored" data-anchor-id="create-supplementary-chart"><strong>3.3 Create Supplementary Chart</strong></h2>
+<p>This section lists the steps to plot circles that reveal the differences in gender population for each planning area.</p>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1074,7 +1160,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.18</strong> : Reproduce Figure 3.10.</p>
+<p><strong>Step-3.18</strong> : Reproduce <strong>Figure 3.10</strong>.</p>
 </div>
 </div>
 </div>
@@ -1086,9 +1172,9 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div class="callout-body-container">
 <p><strong>Step-3.19</strong> : Adjust the following fields accordingly :</p>
 <ul>
-<li><p>filtered “PA” from “Rows” to “Columns”.</p></li>
-<li><p>“SUM(Pop)” to the “Rows” pane.</p></li>
-<li><p>“Gender” to “Color” under “Marks” pane.</p></li>
+<li><p>filtered “<strong>PA</strong>” from “<strong>Rows</strong>” to “<strong>Columns</strong>” shelf.</p></li>
+<li><p>“<strong>SUM(Pop)</strong>” to the “<strong>Rows</strong>” shelf.</p></li>
+<li><p>“<strong>Gender</strong>” to “<strong>Color</strong>” on the “<strong>Marks</strong>” card.</p></li>
 </ul>
 </div>
 </div>
@@ -1099,7 +1185,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3.20</strong> : Select “circle views” from the “Show Me” chart options and change the “Shape” to “Circle” under “Marks” pane.</p>
+<p><strong>Step-3.20</strong> : Select “<strong>circle views</strong>” from the “<strong>Show Me</strong>” chart options and change the “<strong>Shape</strong>” to “<strong>Circle</strong>” on the “<strong>Marks</strong>” card.</p>
 </div>
 </div>
 </div>
@@ -1110,16 +1196,16 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <div class="callout-body-container">
 <p><strong>Step-3.21</strong> : Update the y-axis via :</p>
-<p>“Edit Axis…” :</p>
+<p>“<strong>Edit Axis…</strong>” :</p>
 <ul>
-<li><p>Change the y-axis title to “Population Count”.</p></li>
-<li><p>Set the range to “Fixed” option.</p></li>
-<li><p>Set 80,000 as the “Fixed start” value.</p></li>
-<li><p>set 150,000 as the “Fixed end” value.</p></li>
+<li><p>Change the y-axis title to “<strong>Population Count</strong>”.</p></li>
+<li><p>Set the range to “<strong>Fixed</strong>” option.</p></li>
+<li><p>Set 80,000 as the “<strong>Fixed start</strong>” value.</p></li>
+<li><p>set 150,000 as the “<strong>Fixed end</strong>” value.</p></li>
 </ul>
-<p>“Format” :</p>
+<p>“<strong>Format</strong>” :</p>
 <ul>
-<li>Set the “Shading” under “Default” to your preferred colour.</li>
+<li>Set the “<strong>Shading</strong>” under “<strong>Default</strong>” to your preferred colour.</li>
 </ul>
 </div>
 </div>
@@ -1128,8 +1214,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="create-dashboard-for-visual-analytics" class="level2">
-<h2 class="anchored" data-anchor-id="create-dashboard-for-visual-analytics"><strong>3.4 Create Dashboard for Visual Analytics</strong></h2>
+<section id="create-visual-analytics-dashboard" class="level2">
+<h2 class="anchored" data-anchor-id="create-visual-analytics-dashboard"><strong>3.4 Create Visual Analytics Dashboard</strong></h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1142,7 +1228,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-3-21</strong> : Set the dashboard’s Size to “<strong>Generic Desktop</strong>” and place the population pyramid trellis above and the gender differences chart below at the empty what space.</p>
+<p><strong>Step-3.22</strong> : Set the dashboard’s size to “<strong>Generic Desktop</strong>” and place the population pyramid trellis above, and the circles chart for gender population differences below.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-1054010951.png" class="img-fluid figure-img" alt="Initiate a new dashboard." width="400"></p>
@@ -1158,7 +1244,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-22</strong> - Right click the gender differences chart title to hide it, as shown in the <strong>Figure 3.19</strong>.</p>
+<p><strong>Step-3.23</strong> : Right-click the circles chart for the gender differences to hide it, as shown in the <strong>Figure 3.19</strong>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="images/image-514407683.png" class="img-fluid figure-img" alt="Hide the title of the chart below that repeating similar context to the chart above." width="400"></p>
@@ -1174,7 +1260,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Step-23</strong> - Drag legend to place it below the gender differences chart. Set the “Arrange Items” to “Single Row”.</p>
+<p><strong>Step-3.24</strong> : Drag the legend to place it below the circles chart.</p>
+<p>Set the “<strong>Arrange Items</strong>” to “<strong>Single Row</strong>”.</p>
 </div>
 </div>
 </div>
@@ -1191,31 +1278,51 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Out of 55 Singapore Planning Areas (PAs) in this study, nine are filtered based on the top 9 highest population count. Then, explore the distribution of age and sex for each PA with the population pyramid.</p>
-<section id="trends-of-the-population-pyramids" class="level3">
-<h3 class="anchored" data-anchor-id="trends-of-the-population-pyramids"><strong>Trends of the Population Pyramids</strong></h3>
-<p>Only two PAs, namely Bedok and Jurong West, have a predominantly constrictive trend pattern. Unlike Bedok area, Jurong West may maintain its constrictive trend due to the rental potential to the type of workforce required to support Tuas Megaport. The rest of the 7 PAs show a mixture of constrictive trends with some form of either expansive or stationary trend.</p>
-<p>On the other hand, Punggol area is the only PA showing a mixture of&nbsp;<strong>constrictive trends</strong>&nbsp;with the noticeable&nbsp;<strong>expansive trend</strong>&nbsp;observed below age 30.&nbsp;While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the age ranges 15 to 29. This developing township was re-vitalised by the&nbsp;<strong>Punggol 21-plus</strong>&nbsp;plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<div class="quarto-figure quarto-figure-center">
+<p>The discussion will be focused on two (2) aspects, <strong>design</strong> and <strong>insights.</strong></p>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/image-847043300.png" class="img-fluid figure-img" alt="Comparing 2 types of trellis layout. First is the 9 population pyramid in a row while the second laid out 3 by 3 matrix."></p>
-<p></p><figcaption class="figure-caption">Figure 4.1 : For more interactive view, find out more from <a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_3/trel3x3_d?publish=yes">my viz on Tableau Public</a>.</figcaption><p></p>
+<p><img src="images/image-517277541.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 4.1 : Compare feasibility for visual analysis by 2 trellis layouts, Grid facet and Wrap facet for 9 population pyramids. Find out more from <a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_3/trel3x3_d?publish=yes" style="font-size: 11pt;">my viz on Tableau Public</a> for a more interactive view.</figcaption><p></p>
 </figure>
 </div>
-<p>As shown in <strong>Figure 4.1</strong> above, Tampines, Sengkang and Yishun are the PAs with “pillar”-like distributions. Unlike Tampines and Yishun, which have a higher Gen Y population, Sengkang has a higher Gen X population.</p>
-<p>6 out of 9 Singapore Planning Areas, namely Bedok, Tampines, Woodlands, Hougang, Yishun and Chua Chu Kang, have a relatively large population of age groups above age 55. More resources and services will be needed to support senior welfare and probably set up more facilities or infrastructures.</p>
+<section id="design-aspects" class="level2">
+<h2 class="anchored" data-anchor-id="design-aspects">Design Aspects</h2>
+<section id="horizontal-references" class="level3">
+<h3 class="anchored" data-anchor-id="horizontal-references">#Horizontal References</h3>
+<p>Using quinquennial age groups for this study means the chart will have 19 age groups. Unlike a single population pyramid plot, for a trellis plot, this type of age group classification can be visually challenging when referring to an age group of a bar for the population pyramids that are plotted further away from the age group axis. This issue is more noticeable for the grid facet than the wrap facet.</p>
+<p>Hence, regardless of the type of trellis plot, the background rows for the female population are coloured alternately to facilitate references horizontally across the cells. Refers to <strong>Figure 4.1</strong>. However, the background rows for the Male population are left blank to minimise the cluttering sense.</p>
 </section>
-<section id="limitation-of-trellis-population-pyramid" class="level3">
-<h3 class="anchored" data-anchor-id="limitation-of-trellis-population-pyramid">Limitation of Trellis Population Pyramid</h3>
-<p>Generally, the Population Pyramid can, to certain extend, allow users to perform high level visual analysis. However, to analyse gender and age fields more in depth, for example, the gender populations gap for each planning area, it is not easy to measure or gauge the gap easily based on the population pyramid. What’s more if it’s a trellis plot of population pyramid.</p>
-<p>Hence, additional chart such as circles plot for genders population will be needed to subsidise the visual analysis.</p>
+<section id="single-context-versus-multiple-contexts" class="level3">
+<h3 class="anchored" data-anchor-id="single-context-versus-multiple-contexts">#Single Context versus Multiple Contexts</h3>
+<p>As shown in <strong>Figure 4.1</strong>, these demographic plots, regardless of which type of facet, can be challenging for other contexts’ visual analysis. For example, without an additional indicator, it is difficult to derive the sum and the ratio of the employed and unemployed population for each Planning Area. Thus, this plot may not be helpful for discussions that involve allocating resources for public infrastructures or services.</p>
+<p>But, the clarity and aesthetic aspects can be compromised when considering a plot for multiple contexts. Too many indicators can distract or dilute the key aspects or patterns intended to convey or highlight.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/image-709267252.png" class="img-fluid figure-img" alt="Add population count for each gender to add context of gender differences to the population pyramid."></p>
-<p></p><figcaption class="figure-caption">Figure 4.2 : For more interactive view, find out more from <a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_2/Dashboard2?publish=yes" style="font-size: 11pt;"><u>my viz on Tableau Public</u></a>.</figcaption><p></p>
+<p><img src="images/image-215019503.png" class="img-fluid figure-img" alt="Grid facet to plot 9 trellis population pyramids."></p>
+<p></p><figcaption class="figure-caption">Figure 4.2 : Additional chart to supplement visual analytics. Find out more from <a href="https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_4/trel1r_d?:language=en-US&amp;publish=yes&amp;:display_count=n&amp;:origin=viz_share_link">my viz on Tableau Public</a> for a more interactive view.</figcaption><p></p>
 </figure>
 </div>
-<p>Visual Aesthetic vs Clarity</p>
+</section>
+<section id="visualise-the-differences-for-age-group-or-gender" class="level3">
+<h3 class="anchored" data-anchor-id="visualise-the-differences-for-age-group-or-gender"><strong>#Visualise the Differences for Age Group or Gender</strong></h3>
+<p>Even when displaying the population figure for each bar, it can be challenging to quickly identify which Planning Area has the most prominent differences between Male and Female populations or the genders are evenly distributed. Hence, an additional chart, such as a circle plot, as shown in <strong>Figure 4.2</strong> can facilitate a reader to identify or gauge the differences effectively.</p>
+</section>
+</section>
+<section id="insights" class="level2">
+<h2 class="anchored" data-anchor-id="insights">Insights</h2>
+<p>As indicated by the figures, comparing the medium-old age groups, which is age 75 or older, the female population is larger than the males across all these 9 Singapore Planning Areas.</p>
+<section id="constrictive-trend" class="level3">
+<h3 class="anchored" data-anchor-id="constrictive-trend"><strong>#Constrictive Trend</strong></h3>
+<p>Only Bedok and Jurong West have a predominantly constrictive trend pattern with a small dent around middle-aged, especially the Gen-X. The rest of the 7 Planning Areas, however, show a mixture of constrictive trends with some form of either expansive or stationary trend.</p>
+</section>
+<section id="expansive-trend" class="level3">
+<h3 class="anchored" data-anchor-id="expansive-trend">#Expansive Trend</h3>
+<p>On the other hand, only Punggol area shows a mixture of&nbsp;<strong>constrictive trends</strong>&nbsp;with a noticeable <strong>expansive trend</strong> observed below age 30.&nbsp;While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the ages 15 to 29. This indicates a higher birth rate, which is true as this developing township was re-vitalised by the <strong>Punggol 21-plus</strong>&nbsp;plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+</section>
+<section id="stationary-trend" class="level3">
+<h3 class="anchored" data-anchor-id="stationary-trend">#Stationary Trend</h3>
+<p>As shown in <strong>Figure 4.1</strong> above, Tampines, Sengkang and Yishun are the PAs with “pillar”-like distributions. Unlike Tampines and Yishun, which have a higher Gen-Y population, Sengkang has a higher Gen-X population.</p>
+</section>
 </section>
 </div>
 </div>
@@ -1235,7 +1342,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <ol>
 <li id="fn1"><p>National Geographic Society. (2022). Population Pyramid. https://education.nationalgeographic.org/resource/population-pyramid<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Boucher L. (2016). What are the Different Types of Population Pyramids? <strong>Population Education</strong>. https://populationeducation.org/what-are-different-types-population-pyramids/<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Singapore Department of Statistics. (2020). Census of Population 2020 - Statistical Release 2 : Households, Geographic Distribution, Transport and Difficulty in Basic Activities. https://www.parliament.gov.sg/docs/default-source/default-document-library/cop2020sr2.pdf<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Singapore Department of Statistics. (2020). National Statistical Standards - Recommendations on Definition and Classification of Age. https://www.singstat.gov.sg/-/media/files/standards_and_classifications/nsa.ashx<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Singapore Department of Statistics. (2020). Census of Population 2020 - Statistical Release 2 : Households, Geographic Distribution, Transport and Difficulty in Basic Activities. https://www.parliament.gov.sg/docs/default-source/default-document-library/cop2020sr2.pdf<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
