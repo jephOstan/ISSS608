@@ -435,7 +435,7 @@ Once placed these fields are placed, reverse the "**Male Population**" as entail
 :::
 :::
 
-## **3.3 Create Supplementary Chart** 
+## **3.2 Create Supplementary Chart** 
 
 This section lists the steps to plot circles that reveal the differences in gender population for each planning area.
 
@@ -477,7 +477,7 @@ This section lists the steps to plot circles that reveal the differences in gend
 :::
 :::
 
-## **3.4 Create Visual Analytics Dashboard**
+## **3.3 Create Visual Analytics Dashboard**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-note appearance="simple" icon="false"}

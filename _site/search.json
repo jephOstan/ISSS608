@@ -752,15 +752,15 @@
     "objectID": "takeHome/th_ex1/th_ex1.html#create-supplementary-chart",
     "href": "takeHome/th_ex1/th_ex1.html#create-supplementary-chart",
     "title": "Take Home Exercise 1",
-    "section": "3.3 Create Supplementary Chart",
-    "text": "3.3 Create Supplementary Chart\nThis section lists the steps to plot circles that reveal the differences in gender population for each planning area.\n\n\n\n\n\n\n\n\n\n\n\n\nStep-3.18 : Reproduce Figure 3.10.\n\n\n\n\n\n\n\n\n\nStep-3.19 : Adjust the following fields accordingly :\n\nfiltered “PA” from “Rows” to “Columns” shelf.\n“SUM(Pop)” to the “Rows” shelf.\n“Gender” to “Color” on the “Marks” card.\n\n\n\n\n\n\n\n\n\n\nStep-3.20 : Select “circle views” from the “Show Me” chart options and change the “Shape” to “Circle” on the “Marks” card.\n\n\n\n\n\n\n\n\n\nStep-3.21 : Update the y-axis via :\n“Edit Axis…” :\n\nChange the y-axis title to “Population Count”.\nSet the range to “Fixed” option.\nSet 80,000 as the “Fixed start” value.\nset 150,000 as the “Fixed end” value.\n\n“Format” :\n\nSet the “Shading” under “Default” to your preferred colour."
+    "section": "3.2 Create Supplementary Chart",
+    "text": "3.2 Create Supplementary Chart\nThis section lists the steps to plot circles that reveal the differences in gender population for each planning area.\n\n\n\n\n\n\n\n\n\n\n\n\nStep-3.18 : Reproduce Figure 3.10.\n\n\n\n\n\n\n\n\n\nStep-3.19 : Adjust the following fields accordingly :\n\nfiltered “PA” from “Rows” to “Columns” shelf.\n“SUM(Pop)” to the “Rows” shelf.\n“Gender” to “Color” on the “Marks” card.\n\n\n\n\n\n\n\n\n\n\nStep-3.20 : Select “circle views” from the “Show Me” chart options and change the “Shape” to “Circle” on the “Marks” card.\n\n\n\n\n\n\n\n\n\nStep-3.21 : Update the y-axis via :\n“Edit Axis…” :\n\nChange the y-axis title to “Population Count”.\nSet the range to “Fixed” option.\nSet 80,000 as the “Fixed start” value.\nset 150,000 as the “Fixed end” value.\n\n“Format” :\n\nSet the “Shading” under “Default” to your preferred colour."
   },
   {
     "objectID": "takeHome/th_ex1/th_ex1.html#create-visual-analytics-dashboard",
     "href": "takeHome/th_ex1/th_ex1.html#create-visual-analytics-dashboard",
     "title": "Take Home Exercise 1",
-    "section": "3.4 Create Visual Analytics Dashboard",
-    "text": "3.4 Create Visual Analytics Dashboard\n\n\n\n\n\n\n\n\n\n\n\n\nStep-3.22 : Set the dashboard’s size to “Generic Desktop” and place the population pyramid trellis above, and the circles chart for gender population differences below.\n\n\n\nFigure 3.18\n\n\n\n\n\n\n\n\n\n\n\nStep-3.23 : Right-click the circles chart for the gender differences to hide it, as shown in the Figure 3.19.\n\n\n\nFigure 3.19\n\n\n\n\n\n\n\n\n\n\n\nStep-3.24 : Drag the legend to place it below the circles chart.\nSet the “Arrange Items” to “Single Row”."
+    "section": "3.3 Create Visual Analytics Dashboard",
+    "text": "3.3 Create Visual Analytics Dashboard\n\n\n\n\n\n\n\n\n\n\n\n\nStep-3.22 : Set the dashboard’s size to “Generic Desktop” and place the population pyramid trellis above, and the circles chart for gender population differences below.\n\n\n\nFigure 3.18\n\n\n\n\n\n\n\n\n\n\n\nStep-3.23 : Right-click the circles chart for the gender differences to hide it, as shown in the Figure 3.19.\n\n\n\nFigure 3.19\n\n\n\n\n\n\n\n\n\n\n\nStep-3.24 : Drag the legend to place it below the circles chart.\nSet the “Arrange Items” to “Single Row”."
   },
   {
     "objectID": "takeHome/th_ex1/th_ex1.html#design-aspects",
