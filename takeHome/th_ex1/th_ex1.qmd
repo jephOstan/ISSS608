@@ -18,7 +18,7 @@ format:
 
 This exercise focus on using **Tableau Desktop** to create **multiple** **population pyramids** for Singapore based on data updated to June 2022.
 
-## 1.1 Population Pyramids
+## **1.1 Population Pyramids**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 Population Pyramid helps to visualise the distribution of age and gender for a given location.
@@ -54,7 +54,7 @@ The chart can generally have three trends : [^1]
 
 [^2]: Boucher L. (2016). What are the Different Types of Population Pyramids? **Population Education**. https://populationeducation.org/what-are-different-types-population-pyramids/
 
-## 1.2 Classification of Age Group
+## **1.2 Classification of Age Group**
 
 As one of the key elements for population pyramids, there are two main aspects for age groups :
 
@@ -68,7 +68,7 @@ According to [Singapore National Statistical Standards](https://www.singstat.gov
 
 [^3]: Singapore Department of Statistics. (2020). National Statistical Standards - Recommendations on Definition and Classification of Age. https://www.singstat.gov.sg/-/media/files/standards_and_classifications/nsa.ashx
 
-### 1.2.2 Bins of Age Group
+### **1.2.2 Bins of Age Group**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 The amount of bins depends on the context required for the plots. Hence,
@@ -370,7 +370,7 @@ Click the inverted triangle icon from the "**Data**" pane to select the "**Creat
 ![Figure 3.10](images/image-1766035259.png){alt="Figure :" fig-align="left" width="400"}
 :::
 
-#### 3.1.2.2 set the framework to wrap the population pyramids
+#### **3.1.2.2 set the framework to wrap the population pyramids**
 
 ::: {.callout-note appearance="simple" icon="false"}
 **Step-3.11** : Place the following fields accordingly (refers to **Figure 3.11**) :
@@ -412,7 +412,7 @@ Once done, 9 cubics will be laid out in the manner of 3 by 3. Refers to **Figure
 ![Figure 3.15](images/image-1994142143.png){alt="Figure :" fig-alt="9 blocks laid out in the manner of 3 by 3 matrix." fig-align="left" width="400"}
 :::
 
-#### 3.1.2.3 plot trellis population pyramid
+#### **3.1.2.3 plot trellis population pyramid**
 
 ::: {.callout-note appearance="simple" icon="false"}
 **Step-3.16** : Place the following fields accordingly (refers to **Figure 3.16**) :
@@ -506,15 +506,15 @@ The discussion will be focused on two (2) aspects, **design** and **insights.**
 
 ![Figure 4.1 : Compare feasibility for visual analysis by 2 trellis layouts, Grid facet and Wrap facet for 9 population pyramids. Find out more from [my viz on Tableau Public](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SingaporePopulationPyramindJun2022v1_3/trel3x3_d?publish=yes){style="font-size: 11pt;"} for a more interactive view.](images/image-517277541.png){fig-align="left"}
 
-## Design Aspects
+## **Design Aspects**
 
-### #Horizontal References
+#### ***Horizontal References***
 
 Using quinquennial age groups for this study means the chart will have 19 age groups. Unlike a single population pyramid plot, for a trellis plot, this type of age group classification can be visually challenging when referring to an age group of a bar for the population pyramids that are plotted further away from the age group axis. This issue is more noticeable for the grid facet than the wrap facet.
 
 Hence, regardless of the type of trellis plot, the background rows for the female population are coloured alternately to facilitate references horizontally across the cells. Refers to **Figure 4.1**. However, the background rows for the Male population are left blank to minimise the cluttering sense.
 
-### #Single Context versus Multiple Contexts
+#### ***Single Context versus Multiple Contexts***
 
 As shown in **Figure 4.1**, these demographic plots, regardless of which type of facet, can be challenging for other contexts' visual analysis. For example, without an additional indicator, it is difficult to derive the sum and the ratio of the employed and unemployed population for each Planning Area. Thus, this plot may not be helpful for discussions that involve allocating resources for public infrastructures or services.
 
@@ -522,30 +522,30 @@ But, the clarity and aesthetic aspects can be compromised when considering a plo
 
 ![Figure 4.2 : Additional chart to supplement visual analytics. Find out more from [my viz on Tableau Public](https://public.tableau.com/views/SingaporePopulationPyramindJun2022v1_4/trel1r_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link) for a more interactive view.](images/image-215019503.png){fig-alt="Grid facet to plot 9 trellis population pyramids."}
 
-### **#Visualise the Differences for Age Group or Gender**
+#### ***Visualise the Differences for Age Group or Gender***
 
 Even when displaying the population figure for each bar, it can be challenging to quickly identify which Planning Area has the most prominent differences between Male and Female populations or the genders are evenly distributed. Hence, an additional chart, such as a circle plot, as shown in **Figure 4.2** can facilitate a reader to identify or gauge the differences effectively.
 
-## Insights
+## **Insights**
 
 As indicated by the figures, comparing the medium-old age groups, which is age 75 or older, the female population is larger than the males across all these 9 Singapore Planning Areas.
 
-### **#Constrictive Trend**
+#### ***Constrictive Trend***
 
 Only Bedok and Jurong West have a predominantly constrictive trend pattern with a small dent around middle-aged, especially the Gen-X. The rest of the 7 Planning Areas, however, show a mixture of constrictive trends with some form of either expansive or stationary trend.
 
-### #Expansive Trend
+#### ***Expansive Trend***
 
 On the other hand, only Punggol area shows a mixture of **constrictive trends** with a noticeable **expansive trend** observed below age 30. While the middle-aged group is the largest population, its younger generation population (below age 14) is higher than the ages 15 to 29. This indicates a higher birth rate, which is true as this developing township was re-vitalised by the **Punggol 21-plus** plan around the early 2010s that envisioned having 96,000 units when fully developed, attracting Gen-X and older generation, and their descendants contributed to the observed expansive trend, especially those below age 9.[^4]
 
-### #Stationary Trend
+#### ***Stationary Trend***
 
 As shown in **Figure 4.1** above, Tampines, Sengkang and Yishun are the PAs with "pillar"-like distributions. Unlike Tampines and Yishun, which have a higher Gen-Y population, Sengkang has a higher Gen-X population.
 :::
 
 [^4]: Singapore Department of Statistics. (2020). Census of Population 2020 - Statistical Release 2 : Households, Geographic Distribution, Transport and Difficulty in Basic Activities. https://www.parliament.gov.sg/docs/default-source/default-document-library/cop2020sr2.pdf
 
-# 5. REFERENCES
+# **5. REFERENCES**
 
 Stanke L. (2020). Trellis Chart in Tableau. phdata.io. https://www.phdata.io/blog/trellis-chart/
 
