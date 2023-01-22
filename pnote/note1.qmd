@@ -15,41 +15,60 @@ format:
     tbl-cap-location: bottom
 ---
 
-start with a clear message?
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**CHECKLIST - REMINDER!!!!!**]{style="color:#3a9c88"}
 
-reveal more patterns? dual axis bar chart for revenue vs customers vs month-to-month % change.
+1.  Start with a clear message or context?
 
--   rate
+2.  Suitability to have dual axis?
 
--   percentage change
+3.  Derive useful **MEASURED FIELDS** such as :
 
--   revenue per customer plot against revenue
+    -   rate
 
-Clarity of the message??
+    -   percentage change (note : **percentage point** != **percent**)
 
-excessive grouping resulted in lower clarity.
+    -   revenue per customer against revenue
 
-Add texture to the bar chart differentiate age group
+4.  **CLARITY** check
 
-percentage point != percent
+5.  Unnecessary **GROUPING** that reduce clarity
 
-plot title - subject + details
+6.  Does **TEXTURE** help to highlight main context?
 
-Example of title :
+7.  **AESTHETIC** check
+:::
 
-**Figure 1-1(b) Summarised Data**
+2 types of visual analysis :
 
-Example of axis-label
+-   **Formative visual analysis** - during the course of the study to make data-based decisions, such as when to change conditions or make modifications to the intervention.
 
-+-------------+--------------------------------------+----------------------------------------------+
-| chart       | label                                | remarks                                      |
-+=============+======================================+==============================================+
-| pie chart   | "Percent Enrollment by Major (2010)" | \- param + subject + variable + time context |
-+-------------+--------------------------------------+----------------------------------------------+
-|             |                                      |                                              |
-+-------------+--------------------------------------+----------------------------------------------+
-|             |                                      |                                              |
-+-------------+--------------------------------------+----------------------------------------------+
+-   **Summative visual analysis** - used after the study is completed to determine both the presence and strength of the functional relation.
+
+# **1. TABLEAU**
+
+![](images/image-861623313.png)
+
+## **1.1 Component Terms**
+
+| item                                                | term use by Tableau official |
+|-----------------------------------------------------|------------------------------|
+| term - "Columns" or "Rows"                          | shelf                        |
+| term - "Marks"                                      | card                         |
+| term - "Filter"                                     | shelf                        |
+| term - "Data" or "Analytics"                        | pane                         |
+| icon - inverted triangle, next to "View Data" icon. | drop-down arrow              |
+| window - "Create Parameter"                         | "dialog box"                 |
+
+# 2. Samples for Title and Axis Label
+
++--------------+--------------------------------------+----------------------------------------------+
+| chart        | label                                | remarks                                      |
++==============+======================================+==============================================+
+| pie chart    | "Percent Enrollment by Major (2010)" | \- param + subject + variable + time context |
++--------------+--------------------------------------+----------------------------------------------+
+
+# **3. Chart Types**
 
 cv = continuous variables
 
@@ -83,6 +102,8 @@ cv = continuous variables
 
 [^1]: Tracy R. (N.A.). Which Type of Chart or Graph is Right for You? Tableau. https://www.tableau.com/learn/whitepapers/which-chart-or-graph-is-right-for-you
 
+## 3.1 Distribution
+
 +-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 | understand distribution | measure                                                                                                                                                       | remark / note                                                                          |
 +=========================+===============================================================================================================================================================+========================================================================================+
@@ -111,6 +132,8 @@ cv = continuous variables
 |                         |                                                                                                                                                               | **leptokurtic** = high kurtosis (fat)                                                  |
 +-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 
+### 3.1.1 Kurtosis
+
 Definition :
 
 **Kurtosis** = measures the heaviness of a distribution's tails relative to a normal distribution. Tails represent the probability or frequency of values that are extreme high or low from the mean. Tailedness is how often outliers occur.
@@ -127,24 +150,16 @@ Definition :
 
 [^2]: Shaun T. (2022). What Is Kurtosis? \| Definition, Examples & Formula. Scribbr. https://www.scribbr.com/statistics/kurtosis/#:\~:text=Kurtosis%20is%20a%20measure%20of,(thin%20tails)%20are%20platykurtic.
 
-+-------------------------+------------------------------+----------------------+-----------+-----------+
-| topic                   | measure / parameter / aspect | Col3                 | Col4      | Col5      |
-+=========================+==============================+======================+===========+===========+
-| population distribution | total population             | absolute, percentage |           |           |
-|                         |                              |                      |           |           |
-|                         | young population             |                      |           |           |
-|                         |                              |                      |           |           |
-|                         | elderly population           |                      |           |           |
-|                         |                              |                      |           |           |
-|                         | working age population       |                      |           |           |
-+-------------------------+------------------------------+----------------------+-----------+-----------+
-|                         |                              |                      |           |           |
-+-------------------------+------------------------------+----------------------+-----------+-----------+
-|                         |                              |                      |           |           |
-+-------------------------+------------------------------+----------------------+-----------+-----------+
-|                         |                              |                      |           |           |
-+-------------------------+------------------------------+----------------------+-----------+-----------+
-|                         |                              |                      |           |           |
-+-------------------------+------------------------------+----------------------+-----------+-----------+
-|                         |                              |                      |           |           |
-+-------------------------+------------------------------+----------------------+-----------+-----------+
++-------------------------+------------------------------+----------------------+
+| topic                   | measure / parameter / aspect | Col3                 |
++=========================+==============================+======================+
+| population distribution | total population             | absolute, percentage |
+|                         |                              |                      |
+|                         | young population             |                      |
+|                         |                              |                      |
+|                         | elderly population           |                      |
+|                         |                              |                      |
+|                         | working age population       |                      |
++-------------------------+------------------------------+----------------------+
+|                         |                              |                      |
++-------------------------+------------------------------+----------------------+

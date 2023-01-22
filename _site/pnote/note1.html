@@ -200,7 +200,24 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tableau" id="toc-tableau" class="nav-link active" data-scroll-target="#tableau"><strong>1. TABLEAU</strong></a>
+  <ul class="collapse">
+  <li><a href="#component-terms" id="toc-component-terms" class="nav-link" data-scroll-target="#component-terms"><strong>1.1 Component Terms</strong></a></li>
+  </ul></li>
+  <li><a href="#samples-for-title-and-axis-label" id="toc-samples-for-title-and-axis-label" class="nav-link" data-scroll-target="#samples-for-title-and-axis-label">2. Samples for Title and Axis Label</a></li>
+  <li><a href="#chart-types" id="toc-chart-types" class="nav-link" data-scroll-target="#chart-types"><strong>3. Chart Types</strong></a>
+  <ul class="collapse">
+  <li><a href="#distribution" id="toc-distribution" class="nav-link" data-scroll-target="#distribution">3.1 Distribution</a>
+  <ul class="collapse">
+  <li><a href="#kurtosis" id="toc-kurtosis" class="nav-link" data-scroll-target="#kurtosis">3.1.1 Kurtosis</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -234,24 +251,90 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 </header>
 
-<p>start with a clear message?</p>
-<p>reveal more patterns? dual axis bar chart for revenue vs customers vs month-to-month % change.</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>CHECKLIST - REMINDER!!!!!</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Start with a clear message or context?</p></li>
+<li><p>Suitability to have dual axis?</p></li>
+<li><p>Derive useful <strong>MEASURED FIELDS</strong> such as :</p>
 <ul>
 <li><p>rate</p></li>
-<li><p>percentage change</p></li>
-<li><p>revenue per customer plot against revenue</p></li>
+<li><p>percentage change (note : <strong>percentage point</strong> != <strong>percent</strong>)</p></li>
+<li><p>revenue per customer against revenue</p></li>
+</ul></li>
+<li><p><strong>CLARITY</strong> check</p></li>
+<li><p>Unnecessary <strong>GROUPING</strong> that reduce clarity</p></li>
+<li><p>Does <strong>TEXTURE</strong> help to highlight main context?</p></li>
+<li><p><strong>AESTHETIC</strong> check</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p>2 types of visual analysis :</p>
+<ul>
+<li><p><strong>Formative visual analysis</strong> - during the course of the study to make data-based decisions, such as when to change conditions or make modifications to the intervention.</p></li>
+<li><p><strong>Summative visual analysis</strong> - used after the study is completed to determine both the presence and strength of the functional relation.</p></li>
 </ul>
-<p>Clarity of the message??</p>
-<p>excessive grouping resulted in lower clarity.</p>
-<p>Add texture to the bar chart differentiate age group</p>
-<p>percentage point != percent</p>
-<p>plot title - subject + details</p>
-<p>Example of title :</p>
-<p><strong>Figure 1-1(b) Summarised Data</strong></p>
-<p>Example of axis-label</p>
+<section id="tableau" class="level1">
+<h1><strong>1. TABLEAU</strong></h1>
+<p><img src="images/image-861623313.png" class="img-fluid"></p>
+<section id="component-terms" class="level2">
+<h2 class="anchored" data-anchor-id="component-terms"><strong>1.1 Component Terms</strong></h2>
 <table class="table">
 <colgroup>
-<col style="width: 13%">
+<col style="width: 63%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>item</th>
+<th>term use by Tableau official</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>term - “Columns” or “Rows”</td>
+<td>shelf</td>
+</tr>
+<tr class="even">
+<td>term - “Marks”</td>
+<td>card</td>
+</tr>
+<tr class="odd">
+<td>term - “Filter”</td>
+<td>shelf</td>
+</tr>
+<tr class="even">
+<td>term - “Data” or “Analytics”</td>
+<td>pane</td>
+</tr>
+<tr class="odd">
+<td>icon - inverted triangle, next to “View Data” icon.</td>
+<td>drop-down arrow</td>
+</tr>
+<tr class="even">
+<td>window - “Create Parameter”</td>
+<td>“dialog box”</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="samples-for-title-and-axis-label" class="level1">
+<h1>2. Samples for Title and Axis Label</h1>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
 <col style="width: 38%">
 <col style="width: 46%">
 </colgroup>
@@ -268,18 +351,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <td>“Percent Enrollment by Major (2010)”</td>
 <td>- param + subject + variable + time context</td>
 </tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+</section>
+<section id="chart-types" class="level1">
+<h1><strong>3. Chart Types</strong></h1>
 <p>cv = continuous variables</p>
 <table class="table">
 <colgroup>
@@ -364,6 +440,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </tr>
 </tbody>
 </table>
+<section id="distribution" class="level2">
+<h2 class="anchored" data-anchor-id="distribution">3.1 Distribution</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -413,6 +491,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </tr>
 </tbody>
 </table>
+<section id="kurtosis" class="level3">
+<h3 class="anchored" data-anchor-id="kurtosis">3.1.1 Kurtosis</h3>
 <p>Definition :</p>
 <p><strong>Kurtosis</strong> = measures the heaviness of a distribution’s tails relative to a normal distribution. Tails represent the probability or frequency of values that are extreme high or low from the mean. Tailedness is how often outliers occur.</p>
 <table class="table">
@@ -460,19 +540,15 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </table>
 <table class="table">
 <colgroup>
-<col style="width: 24%">
+<col style="width: 32%">
+<col style="width: 38%">
 <col style="width: 28%">
-<col style="width: 21%">
-<col style="width: 11%">
-<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>topic</th>
 <th>measure / parameter / aspect</th>
 <th>Col3</th>
-<th>Col4</th>
-<th>Col5</th>
 </tr>
 </thead>
 <tbody>
@@ -483,40 +559,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <p>elderly population</p>
 <p>working age population</p></td>
 <td>absolute, percentage</td>
-<td></td>
-<td></td>
 </tr>
 <tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -525,6 +569,9 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </table>
 
 
+</section>
+</section>
+</section>
 
 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
