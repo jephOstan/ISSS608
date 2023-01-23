@@ -8,21 +8,21 @@ website:
     left: 
       - text: Hands-on Exercises
         menu: 
-          - text: Hands-on Ex[1] DataVis with ggplot2
+          - text: Ex[1] DataVis with ggplot2
             href: handsOn_ex1.qmd
-          - text: Hands-on Ex[2] DataVis with Advanced ggplot2
+          - text: Ex[2] DataVis with Advanced ggplot2
             href: handsOn_ex2.qmd
             
       - text: In-class Exercises
         menu: 
-          - text: In-class Ex[1] S & P Summary with Tableau
+          - text: Ex[1] S & P Summary with Tableau
             href: https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&:origin=viz_share_link
-          - text: In-class Ex[2] Design Enlightening Graphs with R
+          - text: Ex[2] Design Enlightening Graphs with R
             href: inClass/inClass_ex02/inClass_ex2.qmd
             
       - text: Take-home Exercises
         menu: 
-          - text: Take-home Ex[1] Singapore Population Pyramid 2022
+          - text: Ex[1] Trellis Population Pyramids
             href: takeHome/th_ex1/th_ex1.qmd
      
       - text: Workshop & Notes
@@ -47,6 +47,9 @@ website:
             href: pnote/test5.qmd           
           - text: Personal Note
             href: pnote/note1.qmd
+          - text: Tableau Note
+            href: pnote/tableauNote.qmd
+            
     right:
       - href: index.qmd
         text: Home

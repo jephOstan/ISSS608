@@ -45,22 +45,11 @@ format:
 
 -   **Summative visual analysis** - used after the study is completed to determine both the presence and strength of the functional relation.
 
-# **1. TABLEAU**
++-------------------------------------------+
+|                                           |
++-------------------------------------------+
 
-![](images/image-861623313.png)
-
-## **1.1 Component Terms**
-
-| item                                                | term use by Tableau official |
-|-----------------------------------------------------|------------------------------|
-| term - "Columns" or "Rows"                          | shelf                        |
-| term - "Marks"                                      | card                         |
-| term - "Filter"                                     | shelf                        |
-| term - "Data" or "Analytics"                        | pane                         |
-| icon - inverted triangle, next to "View Data" icon. | drop-down arrow              |
-| window - "Create Parameter"                         | "dialog box"                 |
-
-# 2. Samples for Title and Axis Label
+# 1. Samples for Title and Axis Label
 
 +--------------+--------------------------------------+----------------------------------------------+
 | chart        | label                                | remarks                                      |
@@ -68,7 +57,7 @@ format:
 | pie chart    | "Percent Enrollment by Major (2010)" | \- param + subject + variable + time context |
 +--------------+--------------------------------------+----------------------------------------------+
 
-# **3. Chart Types**
+# **2. Chart Types**
 
 cv = continuous variables
 
@@ -102,7 +91,7 @@ cv = continuous variables
 
 [^1]: Tracy R. (N.A.). Which Type of Chart or Graph is Right for You? Tableau. https://www.tableau.com/learn/whitepapers/which-chart-or-graph-is-right-for-you
 
-## 3.1 Distribution
+## 2.1 Distribution
 
 +-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 | understand distribution | measure                                                                                                                                                       | remark / note                                                                          |
@@ -132,7 +121,7 @@ cv = continuous variables
 |                         |                                                                                                                                                               | **leptokurtic** = high kurtosis (fat)                                                  |
 +-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 
-### 3.1.1 Kurtosis
+### 2.1.1 Kurtosis
 
 Definition :
 

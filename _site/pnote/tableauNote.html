@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-01-07">
+<meta name="dcterms.date" content="2022-01-23">
 
-<title>ISSS608 - Encountered Shiny Errors</title>
+<title>ISSS608 - Personal Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -204,14 +204,28 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tableau" id="toc-tableau" class="nav-link active" data-scroll-target="#tableau"><strong>1. TABLEAU</strong></a>
+  <ul class="collapse">
+  <li><a href="#component-terminology" id="toc-component-terminology" class="nav-link" data-scroll-target="#component-terminology"><strong>1.1 Component &amp; Terminology</strong></a></li>
+  <li><a href="#create-parameter-calculated-field" id="toc-create-parameter-calculated-field" class="nav-link" data-scroll-target="#create-parameter-calculated-field">1.2 Create Parameter / Calculated Field</a></li>
+  </ul></li>
+  <li><a href="#exploration" id="toc-exploration" class="nav-link" data-scroll-target="#exploration">2. Exploration</a>
+  <ul class="collapse">
+  <li><a href="#attempts-on-executive-overview" id="toc-attempts-on-executive-overview" class="nav-link" data-scroll-target="#attempts-on-executive-overview">2.1 Attempts on Executive Overview</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Encountered Shiny Errors</h1>
+<h1 class="title">Personal Note</h1>
 </div>
 
 
@@ -222,25 +236,270 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 7, 2022</p>
+      <p class="date">January 23, 2022</p>
     </div>
   </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">January 23, 2023</p>
+    </div>
+  </div>
     
   </div>
   
 
 </header>
 
-<p>Error Message :</p>
-<pre><code>Error in func(fname, ...) : app.R did not return a shiny.appobj object.</code></pre>
-<p>Cause : Curly bracket is missing.</p>
-<p>Example : server &lt;- function(input, output)</p>
-<p>Solution : server &lt;- function(input, output) {}</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>CHECKLIST - REMINDER!!!!!</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Start with a clear message or context?</p></li>
+<li><p>Suitability to have dual axis?</p></li>
+<li><p>Derive useful <strong>MEASURED FIELDS</strong> such as :</p>
+<ul>
+<li><p>rate</p></li>
+<li><p>percentage change (note : <strong>percentage point</strong> != <strong>percent</strong>)</p></li>
+<li><p>revenue per customer against revenue</p></li>
+</ul></li>
+<li><p><strong>CLARITY</strong> check</p></li>
+<li><p>Unnecessary <strong>GROUPING</strong> that reduce clarity</p></li>
+<li><p>Does <strong>TEXTURE</strong> help to highlight main context?</p></li>
+<li><p><strong>AESTHETIC</strong> check</p></li>
+</ol>
+</div>
+</div>
+</div>
+<p>2 types of visual analysis :</p>
+<ul>
+<li><p><strong>Formative visual analysis</strong> - during the course of the study to make data-based decisions, such as when to change conditions or make modifications to the intervention.</p></li>
+<li><p><strong>Summative visual analysis</strong> - used after the study is completed to determine both the presence and strength of the functional relation.</p></li>
+</ul>
+<section id="tableau" class="level1">
+<h1><strong>1. TABLEAU</strong></h1>
+<p><img src="images/image-861623313.png" class="img-fluid"></p>
+<section id="component-terminology" class="level2">
+<h2 class="anchored" data-anchor-id="component-terminology"><strong>1.1 Component &amp; Terminology</strong></h2>
+<table class="table">
+<colgroup>
+<col style="width: 37%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>item</th>
+<th>term use by Tableau official</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>term - &lt;field&gt;</td>
+<td>2 types : measures, dimensions</td>
+</tr>
+<tr class="even">
+<td>term - “Columns” or “Rows”</td>
+<td>shelf</td>
+</tr>
+<tr class="odd">
+<td>term - “Marks”</td>
+<td>card</td>
+</tr>
+<tr class="even">
+<td>term - “Filter” 2nd column from left</td>
+<td>shelf</td>
+</tr>
+<tr class="odd">
+<td>term - “Filter”right column</td>
+<td>filter <strong>card settings</strong> to control the filter’s <strong>appearance</strong> and <strong>functionality</strong>.</td>
+</tr>
+<tr class="even">
+<td>term - “Data” or “Analytics”</td>
+<td>pane</td>
+</tr>
+<tr class="odd">
+<td>icon - inverted triangle, next to “View Data” icon.</td>
+<td>drop-down arrow</td>
+</tr>
+<tr class="even">
+<td>window - “Create Parameter”</td>
+<td>“dialog box”</td>
+</tr>
+<tr class="odd">
+<td><p>sub-menu - 2nd level or drop down for field level.</p>
+<p><img src="images/image-2034964982.png" class="img-fluid"></p></td>
+<td>add to hierarchy = context menus</td>
+</tr>
+<tr class="even">
+<td>text - location (region, state, city)</td>
+<td>not “group” but “hierarchy”</td>
+</tr>
+<tr class="odd">
+<td>space - &lt;largest area of the workspace&gt;</td>
+<td>“view”</td>
+</tr>
+<tr class="even">
+<td><p>icons panel</p>
+<p><img src="images/image-2128732961.png" class="img-fluid"></p></td>
+<td>“toolbar”</td>
+</tr>
+<tr class="odd">
+<td>text - Show Me</td>
+<td>a list of <strong>common visualisation types</strong>, <strong>recommended</strong> visualisation type.</td>
+</tr>
+</tbody>
+</table>
+<p>Remarks :</p>
+<ul>
+<li><p>Dimensions are fields that contain qualitative and descriptive values.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<ul>
+<li><p>ID fields are also dimensions.</p></li>
+<li><p>Can be organised into hierarchies.</p></li>
+<li><p>Control the level of aggregation of the measures in a visualisation.</p></li>
+</ul></li>
+<li><p>Measures are fields that contain numeric, quantitative values that can be aggregated using <strong>sum</strong> or <strong>average</strong> functions</p></li>
+<li><p>Toolbar to access <strong>commands</strong>, <strong>analysis</strong> and <strong>navigation</strong> tools.</p></li>
+<li><p>Use “Stepped Color”to group values into uniform bins of colour.</p></li>
+</ul>
+</section>
+<section id="create-parameter-calculated-field" class="level2">
+<h2 class="anchored" data-anchor-id="create-parameter-calculated-field">1.2 Create Parameter / Calculated Field</h2>
+<p>The properties and instruction are from “Superstore” workbook from the Tableau Accelerators.</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 10%">
+<col style="width: 67%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>parameters / calculated field</th>
+<th>role</th>
+<th>instruction / properties</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>p - Base Salary</td>
+<td></td>
+<td>Integer, range, fixed,</td>
+</tr>
+<tr class="even">
+<td>p - Churn Rate</td>
+<td></td>
+<td><p>Float, 0.064, range, fixed</p>
+<p>min = 0, max = 0.25, step size = 0.001</p></td>
+</tr>
+<tr class="odd">
+<td>cf - Days to Ship Actual</td>
+<td></td>
+<td>DATEDIFF(‘day’,[Order Date],[Ship Date])</td>
+</tr>
+<tr class="even">
+<td>cf - Days to Ship Scheduled</td>
+<td></td>
+<td><p>CASE [Ship Mode]</p>
+<p>WHEN “Same Day” THEN 0</p>
+<p>WHEN “First Class” THEN 1</p>
+<p>WHEN “Second Class” THEN 3</p>
+<p>WHEN “Standard Class” THEN 6</p>
+<p>END</p></td>
+</tr>
+<tr class="odd">
+<td>cf - Profit per Order</td>
+<td></td>
+<td>Sum([Profit]) / countD([Order ID])</td>
+</tr>
+<tr class="even">
+<td>cf - Order Profitable?</td>
+<td></td>
+<td><p>{fixed [Order ID]:sum([Profit])}&gt;0</p>
+<p>// or</p>
+<p>{ FIXED [Order ID]: SUM([Profit]) } &gt; 0</p>
+<p>// calculates the profit at the order level regardless of the dimensions.</p></td>
+</tr>
+<tr class="odd">
+<td>cf - Profit Ratio</td>
+<td></td>
+<td>sum([Profit]) / sum([Sales])</td>
+</tr>
+<tr class="even">
+<td>cf - Sales above target?</td>
+<td>Marks - Color</td>
+<td>If Sum([Sales]) &gt; SUM([Sales Target].[Sales Target]) then “Above Target” else “Below Target” end</td>
+</tr>
+<tr class="odd">
+<td>cf - Sales Forecast</td>
+<td>Marks - Detail</td>
+<td>[Sales]*(1-[Churn Rate])*(1+[New Business Growth])</td>
+</tr>
+<tr class="even">
+<td>cf - Sales per Customer</td>
+<td></td>
+<td>Sum([Sales]) / countD([Customer Name])</td>
+</tr>
+<tr class="odd">
+<td>cf - Ship Status</td>
+<td></td>
+<td><p>if [Days to Ship Actual]&gt; [Days to Ship Scheduled] then “Shipped Late”</p>
+<p>elseIF [Days to Ship Actual]= [Days to Ship Scheduled] then “Shipped On Time”</p>
+<p>Else “Shipped Early” end</p></td>
+</tr>
+<tr class="even">
+<td>p - Sort by</td>
+<td></td>
+<td><p>String, list, fixed</p>
+<p>value = % quota ascending, % quota descending, Names</p></td>
+</tr>
+</tbody>
+</table>
+<p>Remarks :</p>
+<ul>
+<li><p>Use // to add a single-line comment</p></li>
+<li><p>Use /* */ to add multi-line comment</p></li>
+</ul>
+</section>
+</section>
+<section id="exploration" class="level1">
+<h1>2. Exploration</h1>
+<section id="attempts-on-executive-overview" class="level2">
+<h2 class="anchored" data-anchor-id="attempts-on-executive-overview">2.1 Attempts on Executive Overview</h2>
+<p>Data : <strong>Tableau Superstore</strong></p>
+<p>Workbook : <a href="https://public.tableau.com/shared/RGQQXB4NY?:display_count=n&amp;:origin=viz_share_link"><strong>Explore Tableau to Create Executive Overview</strong></a></p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><a href="https://public.tableau.com/shared/RGQQXB4NY?:display_count=n&amp;:origin=viz_share_link"><img src="images/image-1482656177.png" class="img-fluid figure-img" alt="This chart shows a table that consists of sales, profit, profit ratio, profit per order, sales per customer, average discount and quantity, together with a map of United States that reflects profit ratio, and area charts of monthly sales by Segment and Category."></a></p>
+<p></p><figcaption class="figure-caption">Figure 2.1 : Executive Overview for the Profitability of Superstore</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><a href="https://public.tableau.com/shared/RGQQXB4NY?:display_count=n&amp;:origin=viz_share_link"><img src="images/image-1269491674.png" class="img-fluid figure-img" alt="This image to show the capability of filter function."></a></p>
+<p></p><figcaption class="figure-caption">Figure 2.2 : Filtered specific state to shows the monthly sales.</figcaption><p></p>
+</figure>
+</div>
 
 
+</section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Tableau.com. The Workspace Area. https://www.tableau.com/learn/tutorials/on-demand/getting-started-part4?playlist=432161<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

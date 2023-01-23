@@ -160,11 +160,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercises">    
         <li>
     <a class="dropdown-item" href="./handsOn_ex1.html">
- <span class="dropdown-text">Hands-on Ex[1] DataVis with ggplot2</span></a>
+ <span class="dropdown-text">Ex[1] DataVis with ggplot2</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./handsOn_ex2.html">
- <span class="dropdown-text">Hands-on Ex[2] DataVis with Advanced ggplot2</span></a>
+ <span class="dropdown-text">Ex[2] DataVis with Advanced ggplot2</span></a>
   </li>  
     </ul>
   </li>
@@ -175,11 +175,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercises">    
         <li>
     <a class="dropdown-item" href="https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&amp;:origin=viz_share_link">
- <span class="dropdown-text">In-class Ex[1] S &amp; P Summary with Tableau</span></a>
+ <span class="dropdown-text">Ex[1] S &amp; P Summary with Tableau</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./inClass/inClass_ex02/inClass_ex2.html">
- <span class="dropdown-text">In-class Ex[2] Design Enlightening Graphs with R</span></a>
+ <span class="dropdown-text">Ex[2] Design Enlightening Graphs with R</span></a>
   </li>  
     </ul>
   </li>
@@ -190,7 +190,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercises">    
         <li>
     <a class="dropdown-item" href="./takeHome/th_ex1/th_ex1.html">
- <span class="dropdown-text">Take-home Ex[1] Singapore Population Pyramid 2022</span></a>
+ <span class="dropdown-text">Ex[1] Trellis Population Pyramids</span></a>
   </li>  
     </ul>
   </li>
@@ -238,6 +238,10 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="./pnote/note1.html">
  <span class="dropdown-text">Personal Note</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pnote/tableauNote.html">
+ <span class="dropdown-text">Tableau Note</span></a>
   </li>  
     </ul>
   </li>
@@ -322,7 +326,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 22, 2023</p>
+      <p class="date-modified">January 23, 2023</p>
     </div>
   </div>
     
@@ -823,7 +827,7 @@ increasing max.overlaps</code></pre>
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><a href="https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html">ggthemes</a> provides extension to replicate the look of plots by Edward Tufte, Stephen Few, <a href="https://fivethirtyeight.com/">Fivethirtyeight</a>, <a href="https://www.economist.com/graphic-detail">The Economist</a>, 'Stata', 'Excel', and <a href="https://www.pinterest.com/wsjgraphics/wsj-graphics/">The Wall Street Journal</a>, among others.</p>
+<p><a href="https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html">ggthemes</a> provides extension to replicate the look of plots by Edward Tufte, Stephen Few, <a href="https://fivethirtyeight.com/">Fivethirtyeight</a>, <a href="https://www.economist.com/graphic-detail">The Economist</a>, ‘Stata’, ‘Excel’, and <a href="https://www.pinterest.com/wsjgraphics/wsj-graphics/">The Wall Street Journal</a>, among others.</p>
 <div class="callout-alert callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -872,7 +876,7 @@ increasing max.overlaps</code></pre>
 <h3 class="anchored" data-anchor-id="themes-by-ggplot2-hrbrthemes"><strong>4.2.3 Themes by ggplot2 :: hrbrthemes</strong></h3>
 <p><a href="https://cinc.rud.is/web/packages/hrbrthemes/">hrbrthemes</a> package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.</p>
 <ul>
-<li>The second goal centers around productivity for a production workflow. In fact, this "production workflow" is the context for where the elements of hrbrthemes should be used. Consult <a href="https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html">this vignette</a> to learn more.</li>
+<li>The second goal centers around productivity for a production workflow. In fact, this “production workflow” is the context for where the elements of hrbrthemes should be used. Consult <a href="https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html">this vignette</a> to learn more.</li>
 </ul>
 <div class="cell">
 <details>
@@ -1014,7 +1018,7 @@ What can we learn from the code chunk below?</strong></p>
 <p>4.3 Composite Plot with Facet Option</p>
 <p>Creating Composite Graphics: pathwork methods</p>
 <p>It is not unusual that multiple graphs are required to tell a compelling visual story. There are several ggplot2 extensions provide functions to compose figure with multiple graphs. In this section, I am going to shared with you <a href="https://patchwork.data-imaginist.com/index.html"><strong>patchwork</strong></a>.</p>
-<p>Patchwork package has a very simple syntax where we can create layouts super easily. Here's the general syntax that combines: - Two-Column Layout using the Plus Sign +. - Parenthesis () to create a subplot group. - Two-Row Layout using the Division Sign <code>\</code></p>
+<p>Patchwork package has a very simple syntax where we can create layouts super easily. Here’s the general syntax that combines: - Two-Column Layout using the Plus Sign +. - Parenthesis () to create a subplot group. - Two-Row Layout using the Division Sign <code>\</code></p>
 <p>create composite plot by combining multiple graphs. First, let us create three statistical graphics.\</p>
 <div class="cell">
 <details>
