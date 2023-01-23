@@ -504,7 +504,7 @@ Set the "**Arrange Items**" to "**Single Row**".
 ::: {.callout-warning appearance="simple" icon="false"}
 The discussion will be focused on two (2) aspects, **design** and **insights.**
 
-[![Figure 4.1 : Compare feasibility for visual analysis by 2 trellis layouts, Grid facet and Wrap facet for 9 population pyramids. Find out more from [my viz on Tableau Public](https://public.tableau.com/views/Compare2TrellisLayoutsfor9PopulationPyramindsSingapore2022/trel3x3_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link){style="font-size: 11pt;"} for a more interactive view.](images/image-517277541.png){fig-alt="This image is to compare the feasibility of 2 trellis layout to facilitate visual analysis of 9 population pyramids." fig-align="left"}](https://public.tableau.com/views/Compare2TrellisLayoutsfor9PopulationPyramindsSingapore2022/trel3x3_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+[![Figure 4.1 : Compare feasibility for visual analysis by 2 trellis layouts, Grid facet and Wrap facet for 9 population pyramids. Find out more from my viz on Tableau Public for a more interactive view.](images/image-517277541.png){fig-alt="This image is to compare the feasibility of 2 trellis layout to facilitate visual analysis of 9 population pyramids." fig-align="left"}](https://public.tableau.com/views/Compare2TrellisLayoutsfor9PopulationPyramindsSingapore2022/trel3x3_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
 
 ## **Design Aspects**
 
@@ -520,7 +520,7 @@ As shown in **Figure 4.1**, these demographic plots, regardless of which type of
 
 But, the clarity and aesthetic aspects can be compromised when considering a plot for multiple contexts. Too many indicators can distract or dilute the key aspects or patterns intended to convey or highlight.
 
-[![Figure 4.2 : Additional chart to supplement visual analytics. Find out more from [my viz on Tableau Public](https://public.tableau.com/views/IllustrateSingaporeDemographic2022withPopulationPyramindCirclesPlot/trel1r_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link) for a more interactive view.](images/image-215019503.png){fig-alt="Grid facet to plot 9 trellis population pyramids." fig-align="left"}](https://public.tableau.com/views/IllustrateSingaporeDemographic2022withPopulationPyramindCirclesPlot/trel1r_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+[![Figure 4.2 : Additional chart to supplement visual analytics. Find out more from my viz on Tableau Public for a more interactive view.](images/image-215019503.png){fig-alt="Grid facet to plot 9 trellis population pyramids." fig-align="left"}](https://public.tableau.com/views/IllustrateSingaporeDemographic2022withPopulationPyramindCirclesPlot/trel1r_d?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
 
 #### ***Visualise the Differences for Age Group or Gender***
 
