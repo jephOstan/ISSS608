@@ -1,0 +1,456 @@
+---
+title: "DataViz Makeover"
+editor: visual
+date:  23 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# 1. OVERVIEW
+
+This study focus on make over a trellis plot of 9 population pyramids by
+
+explores the **Pyramid chart** using **ggplot2** and supporting R packages.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Challenges in wrangling the raw data :**]{style="color:#3a9c88"}
+
+The age group variable, "AG", is a character data type.
+
+If it is used to plot the population pyramid, "10_to_14" will be parsed first instead of "5_to_9" after "0_to_4 is parsed.
+
+Because of that, the order in the chart will be incorrect.
+
+[Resolve manually with these functions - *mutate( )* and *arrange( )*.]{style="color:#d69c3c"}
+:::
+
+## 1.1 Task Instruction
+
+I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn\'t work, why those things don\'t work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!
+
+==========
+
+In this take-home exercise, you are required to:
+
+-   select one of the Take-home Exercise 1 prepared by your classmate,
+
+-   critic the submission in terms of clarity and aesthetics,
+
+-   prepare a sketch for the alternative design by using the data visualisation design principles and best practices you had learned in Lesson 1 and 2, and
+
+-   remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.
+
+The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn\'t work, why those things don\'t work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.
+
+submission instructions
+
+This is an individual assignment. You are required to work on the take-home exercises and prepare submission individually.
+
+The specific submission instructions are as follows:
+
+-   The analytical visualisation must be prepared by using **R and appropriate R packages**.
+
+-   The write-up of the take-home exercise must be in **Quarto html document** format. You are required to publish the write-up on [**Netlify**](https://www.netlify.com/).
+
+-   Provide the links to the Take-home Exercise write-up and github repository onto eLearn (i.e. Take-home Exercise section)
+
+## 1.2 Scope of Reworks
+
+With consent given by fellow coursemate, [Chen Yi Man](https://public.tableau.com/app/profile/yiman.chen/viz/takehome_ex01/Story1), below is my draft to refine her works with R Studio and Tidyverse, sf and tmap packages.
+
+# 2. R PACKAGE REQUIRED
+
+The following are the packages required for this exercise :
+
+## 2.1 Load R Packages
+
+::: {.callout-warning appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
+
+```{r}
+pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+:::
+
+# 3. DATA
+
+## 3.1 Acquire Data Source
+
+::: {.callout-warning appearance="simple" icon="false"}
+This study will be based on demographic data set downloadable from [Singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data).
+
+-   Download "Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022" in CSV format.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  Data may not add up due to rounding.
+
+2.  For June 2022, Planning Areas refer to areas demarcated in the Urban Redevelopment Authority's Master Plan 2019.
+
+3.  Data from 2003 onwards exclude residents who have been away from Singapore for a continuous period of 12 months or longer as at the reference period.
+
+4.  Metadata :
+
+    -   PA = Planning Area
+
+    -   SZ = Subzone
+
+    -   AG = Age Group
+
+    -   Sex = Sex
+
+    -   TOD = Type of Dwelling
+
+    -   Pop = Resident Count
+
+    -   Time - Time / Period
+:::
+:::
+
+-   Singstat Dataset for Population
+
+    1.  Download "Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022" [dataset](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data) in csv format from Singstat.gov.sg.
+
+Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.
+
+Data
+
+| Source(s) | Urban Redevelopment Authority                                        |
+|:----------|----------------------------------------------------------------------|
+| Licence   | [Singapore Open Data Licence](https://data.gov.sg/open-data-licence) |
+
+https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web
+
+## 3.2 Import Data
+
+### 3.2.1 Import Population Attributes Data
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+Two (2) steps : import and inspect imported data set.
+
+#### 3.2.1.1 import data
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+pop_attribute <- read_csv("data/aspatial/respopagesextod2022.csv")
+
+problems(pop_attribute)
+```
+
+#### 3.2.1.2 inspect missing value
+
+```{r}
+skim(pop_attribute)
+```
+
+[Remarks :]{style="color:#d69c3c"}
+
+[Preliminary data interpretation - based on 2022 consensus data, .]{style="color:#d69c3c"}
+:::
+
+### 3.2.2 Import Boundary Data
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+```{r}
+bdy_web <- st_read(dsn = "data/geospatial/web_shp", 
+                layer = "MP14_PLNG_AREA_WEB_PL")
+```
+
+```{r}
+bdy_noSea <- st_read(dsn = "data/geospatial/noSea_shp", 
+                layer = "MP14_PLNG_AREA_NO_SEA_PL")
+```
+
+inspect
+
+```{r}
+plot(st_geometry(bdy_web))
+```
+
+```{r}
+plot(st_geometry(bdy_noSea))
+```
+
+Remarks :
+
+file size and plotted shape are the same for both.
+
+The only differences is the last update date.
+
+With No Sea version last updated on May 23, 2016.
+
+Web version to be used as the last updated date was 4 Nov 2016.
+
+```{r}
+skim(bdy_web)
+```
+:::
+
+## 3.3 Data Wrangling
+
+Data Inspection
+
+```{r}
+unique(pop_attribute$AG)
+```
+
+```{r}
+names(pop_attribute) <- tolower(names(pop_attribute))
+```
+
+to make pa field same name
+
+only first letter to upper case
+
+```{r}
+bdy_pa <- bdy_web %>% 
+  rename(`pa` = `PLN_AREA_N`) 
+
+bdy_pa$pa <- str_to_title(bdy_pa$pa)
+```
+
+transform crs
+
+## 1.4 GEODATA PROCESSING
+
+### 1.4.1 Transform CRS
+
+::: {.callout-warning appearance="simple" icon="false"}
+Ensure all dataframes are in the same projected CRS.
+
+#### 1.4.1.1 transform with st_set_crs( ) function
+
+Generally, there are two main steps involved.
+
+#### -- retrieve CRS information
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***st_crs( )*** - sf -]{style="color:#d46e15"} to retrieve coordinate reference system for mpsz.
+:::
+
+```{r}
+st_crs(bdy_pa)
+```
+
+#### -- transform CRS
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***st_transform( )*** - sf -]{style="color:#d46e15"} to reproject x from one coordinate system wgs84 to svy21 mathematically, which is not capable by *st_set_crs()*.
+:::
+
+```{r}
+bdy_trans <- st_transform(bdy_pa,
+                          crs = 3414)
+```
+
+#### -- verify CRS
+
+```{r}
+st_crs(bdy_trans)
+```
+:::
+
+```{r}
+pop_pa <- left_join(pop_attribute, bdy_trans)
+```
+
+```{r}
+pop_pa$ag <- sub("_", " ", pop_pa$ag)
+```
+
+### 3.3.1 Compute Frequency Count
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+Compute the frequency count by "age" and "sex".
+
+#### **3.3.1.1 compute returns by "Sub-category"**
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***group_by( )*** - dplyr -]{style="color:#d46e15"} to group Singapore population by age and gender.
+
+[***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of residents for each group.
+
+[***arrange( )*** - dplyr -]{style="color:#d46e15"} to sort the rows in descending order of the counted "Returned" value of each "Sub-category".
+:::
+
+```{r}
+ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to89", "90 and over")
+
+test0 <- pop_pa %>%
+  group_by(`ag`,`sex`) %>%
+  summarise(`count` = sum(`pop`)) %>%
+  mutate(ag = factor(ag, levels = ag_sequence)) %>%
+  arrange(ag) %>%
+  ungroup()
+
+head(test0)
+```
+:::
+
+### 
+
+```{r}
+test <- pop_pa %>%
+  group_by(pa, ag) %>%
+  summarise(`count_pop` = sum(`pop`)) %>%
+  ungroup()
+```
+
+```{r}
+test1 <- pop_pa %>%
+  group_by(pa, ag) %>%
+  summarise(`count_pop` = sum(`pop`)) %>%
+  ungroup() %>%
+  pivot_wider(names_from = ag, 
+              values_from = count_pop) 
+```
+
+test2 \<- pop_pa %\>%
+
+group_by(pa, ag) %\>%
+
+summarise(\`count_pop\` = sum(\`pop\`)) %\>%
+
+ungroup() %\>%
+
+pivot_wider(names_from = ag,
+
+values_from = count_pop) %\>%
+
+mutate(young = rowSums(.\[3:6\]) + rowSums(.\[12\])) %\>%
+
+mutate(\`ECONOMY ACTIVE\` = rowSums(.\[7:11\])+
+
+rowSums(.\[13:15\]))%\>%
+
+mutate(\`AGED\`=rowSums(.\[16:21\])) %\>%
+
+mutate(\`TOTAL\`=rowSums(.\[3:21\])) %\>%
+
+mutate(\`DEPENDENCY\` = (\`YOUNG\` + \`AGED\`)
+
+/\`ECONOMY ACTIVE\`) %\>%
+
+select(\`PA\`, \`SZ\`, \`YOUNG\`,
+
+\`ECONOMY ACTIVE\`, \`AGED\`,
+
+\`TOTAL\`, \`DEPENDENCY\`)
+
+#\| eval: false
+
+mutate(YOUNG = rowSums(.\[3:6\])
+
++rowSums(.\[12\])) %\>%
+
+mutate(\`ECONOMY ACTIVE\` = rowSums(.\[7:11\])+
+
+rowSums(.\[13:15\]))%\>%
+
+mutate(\`AGED\`=rowSums(.\[16:21\])) %\>%
+
+mutate(\`TOTAL\`=rowSums(.\[3:21\])) %\>%
+
+mutate(\`DEPENDENCY\` = (\`YOUNG\` + \`AGED\`)
+
+/\`ECONOMY ACTIVE\`) %\>%
+
+select(\`PA\`, \`SZ\`, \`YOUNG\`,
+
+\`ECONOMY ACTIVE\`, \`AGED\`,
+
+\`TOTAL\`, \`DEPENDENCY\`)
+
+# 4 EXPLORATORY DATA ANALYSIS (EDA)
+
+## 4.1 Plot Pyramid Chart
+
+#### **4.1.1 Plot Static Pyramid**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***geom_col( )*** - ggplot2 -]{style="color:#d46e15"} to create the bar chart with the bar length represent the actual population stats.
+
+[***scale_x\_continuous( )*** - ggplot2 -]{style="color:#d46e15"} to modify the labels on the x-axis to provide better readability.
+
+[***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative, so that their data will be plotted on the left side of the pyramid.
+:::
+
+```{r}
+test_plot <- ggplot(test0, 
+                       aes(x = ifelse(sex == "Males",
+                                      yes = -count,
+                                      no = count),
+                           y = ag,
+                           fill = sex)) + 
+  geom_col() +
+  scale_x_continuous(breaks = seq(-150000, 150000, 50000), 
+                     labels = paste0(
+                       as.character(
+                         c(seq(150, 0, -50), 
+                           seq(50, 150, 50))),
+                       "k")) +
+  labs (x = "pop", 
+        y = "age", 
+        title = 'Singapore Age-Sex Population Pyramid 2022') +
+  theme_bw() +
+  theme(axis.ticks.y = element_blank()) +
+  scale_fill_manual(values = c("Males" = "lightblue", 
+                               "Females" = "lightpink")) 
+
+test_plot
+```
+:::
+
+#### **4.1.2 Interactive Pyramid Chart**
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+```{r}
+ggplotly(test_plot, 
+         session = "knitr")
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[The pyramid above shows the younger generation's lower percentage, making Singapore's population structure a constrictive type. That means an ageing population.]{style="color:#d69c3c"}
+
+[By June 2022, 4.07 million residents population with a median age of 42.1,]{style="color:#d69c3c"}[^1] [which is approximately a 19% increase from the median age of 35.3 back in the year 2002]{style="color:#d69c3c"}[^2].
+
+[Also, another observation is from 25 age onward, the female population is higher than the male population. As of 2020, Singapore's adjusted gender pay gap (GPG) is at 6%]{style="color:#d69c3c"}[^3].
+
+[Measures and new schemes may be required to further narrow the gender pay gap and encourage the birth rate or may have long-lasting socio-economic repercussions.]{style="color:#d69c3c"}
+:::
+
+[^1]: [Singstat. (2022). Population Dashboard. https://www.singstat.gov.sg/find-data/search-by-theme/population/population-and-population-structure/visualising-data/population-dashboard]{style="color:#d69c3c"}
+
+[^2]: [Singstat. (2002). Indicators On Population. https://tablebuilder.singstat.gov.sg/table/TS/M810001]{style="color:#d69c3c"}
+
+[^3]: [Ministry of Manpower. (2020). Report: Singapore's Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx]{style="color:#d69c3c"}

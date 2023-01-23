@@ -24,6 +24,8 @@ website:
         menu: 
           - text: Ex[1] Trellis Population Pyramids
             href: takeHome/th_ex1/th_ex1.qmd
+          - text: Ex[1] DataViz Makeover for Trellis Population Pyramids
+            href: takeHome/th_ex2/th_ex2.qmd
      
       - text: Workshop & Notes
         menu:

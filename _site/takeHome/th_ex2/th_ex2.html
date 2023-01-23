@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-01-23">
+
+<title>ISSS608 - DataViz Makeover</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PKMQ2W4ZRC"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
+</script>
+<script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="../../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ISSS608</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercises">    
+        <li>
+    <a class="dropdown-item" href="../../handsOn_ex1.html">
+ <span class="dropdown-text">Ex[1] DataVis with ggplot2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../handsOn_ex2.html">
+ <span class="dropdown-text">Ex[2] DataVis with Advanced ggplot2</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">In-class Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercises">    
+        <li>
+    <a class="dropdown-item" href="https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&amp;:origin=viz_share_link">
+ <span class="dropdown-text">Ex[1] S &amp; P Summary with Tableau</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../inClass/inClass_ex02/inClass_ex2.html">
+ <span class="dropdown-text">Ex[2] Design Enlightening Graphs with R</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercises" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercises</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercises">    
+        <li>
+    <a class="dropdown-item" href="../../takeHome/th_ex1/th_ex1.html">
+ <span class="dropdown-text">Ex[1] Trellis Population Pyramids</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../takeHome/th_ex2/th_ex2.html">
+ <span class="dropdown-text">Ex[1] DataViz Makeover for Trellis Population Pyramids</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workshop--notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Workshop &amp; Notes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-workshop--notes">    
+        <li>
+    <a class="dropdown-item" href="../../pnote/bsw_3.html">
+ <span class="dropdown-text">BSWorkshop - Programming Statistical Graphics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/bsw_4.html">
+ <span class="dropdown-text">BSWorkshop - Build Statistical Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://tskam.shinyapps.io/prototype-ShinyIDEA/">
+ <span class="dropdown-text">Shiny Workshop - Prof’s Prototype</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/test0.html">
+ <span class="dropdown-text">Exploration 0 - Explore with Geospatial Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/test1.html">
+ <span class="dropdown-text">Exploration 1 - Pareto Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/test2.html">
+ <span class="dropdown-text">Exploration 2 - Pyramid &amp; Other Charts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/test3.html">
+ <span class="dropdown-text">Exploration 3 - Interactive &amp; Animated Pyramid Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/test4.html">
+ <span class="dropdown-text">Exploration 4 - Interactive Heatmap Chart</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/test5.html">
+ <span class="dropdown-text">Exploration 5 - Time-Series Visualisation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/note1.html">
+ <span class="dropdown-text">Personal Note</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pnote/tableauNote.html">
+ <span class="dropdown-text">Tableau Note</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Profile</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. OVERVIEW</a>
+  <ul class="collapse">
+  <li><a href="#task-instruction" id="toc-task-instruction" class="nav-link" data-scroll-target="#task-instruction">1.1 Task Instruction</a></li>
+  <li><a href="#scope-of-reworks" id="toc-scope-of-reworks" class="nav-link" data-scroll-target="#scope-of-reworks">1.2 Scope of Reworks</a></li>
+  </ul></li>
+  <li><a href="#r-package-required" id="toc-r-package-required" class="nav-link" data-scroll-target="#r-package-required">2. R PACKAGE REQUIRED</a>
+  <ul class="collapse">
+  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">2.1 Load R Packages</a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">3. DATA</a>
+  <ul class="collapse">
+  <li><a href="#acquire-data-source" id="toc-acquire-data-source" class="nav-link" data-scroll-target="#acquire-data-source">3.1 Acquire Data Source</a></li>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">3.2 Import Data</a>
+  <ul class="collapse">
+  <li><a href="#import-population-attributes-data" id="toc-import-population-attributes-data" class="nav-link" data-scroll-target="#import-population-attributes-data">3.2.1 Import Population Attributes Data</a></li>
+  <li><a href="#import-boundary-data" id="toc-import-boundary-data" class="nav-link" data-scroll-target="#import-boundary-data">3.2.2 Import Boundary Data</a></li>
+  </ul></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">3.3 Data Wrangling</a></li>
+  <li><a href="#geodata-processing" id="toc-geodata-processing" class="nav-link" data-scroll-target="#geodata-processing">1.4 GEODATA PROCESSING</a>
+  <ul class="collapse">
+  <li><a href="#transform-crs" id="toc-transform-crs" class="nav-link" data-scroll-target="#transform-crs">1.4.1 Transform CRS</a></li>
+  <li><a href="#compute-frequency-count" id="toc-compute-frequency-count" class="nav-link" data-scroll-target="#compute-frequency-count">3.3.1 Compute Frequency Count</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">4 EXPLORATORY DATA ANALYSIS (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#plot-pyramid-chart" id="toc-plot-pyramid-chart" class="nav-link" data-scroll-target="#plot-pyramid-chart">4.1 Plot Pyramid Chart</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DataViz Makeover</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2023</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">January 23, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level1">
+<h1>1. OVERVIEW</h1>
+<p>This study focus on make over a trellis plot of 9 population pyramids by</p>
+<p>explores the <strong>Pyramid chart</strong> using <strong>ggplot2</strong> and supporting R packages.</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Challenges in wrangling the raw data :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The age group variable, “AG”, is a character data type.</p>
+<p>If it is used to plot the population pyramid, “10_to_14” will be parsed first instead of “5_to_9” after “0_to_4 is parsed.</p>
+<p>Because of that, the order in the chart will be incorrect.</p>
+<p><span style="color:#d69c3c">Resolve manually with these functions - <em>mutate( )</em> and <em>arrange( )</em>.</span></p>
+</div>
+</div>
+</div>
+<section id="task-instruction" class="level2">
+<h2 class="anchored" data-anchor-id="task-instruction">1.1 Task Instruction</h2>
+<p>I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!</p>
+<p>==========</p>
+<p>In this take-home exercise, you are required to:</p>
+<ul>
+<li><p>select one of the Take-home Exercise 1 prepared by your classmate,</p></li>
+<li><p>critic the submission in terms of clarity and aesthetics,</p></li>
+<li><p>prepare a sketch for the alternative design by using the data visualisation design principles and best practices you had learned in Lesson 1 and 2, and</p></li>
+<li><p>remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.</p></li>
+</ul>
+<p>The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.</p>
+<p>submission instructions</p>
+<p>This is an individual assignment. You are required to work on the take-home exercises and prepare submission individually.</p>
+<p>The specific submission instructions are as follows:</p>
+<ul>
+<li><p>The analytical visualisation must be prepared by using <strong>R and appropriate R packages</strong>.</p></li>
+<li><p>The write-up of the take-home exercise must be in <strong>Quarto html document</strong> format. You are required to publish the write-up on <a href="https://www.netlify.com/"><strong>Netlify</strong></a>.</p></li>
+<li><p>Provide the links to the Take-home Exercise write-up and github repository onto eLearn (i.e.&nbsp;Take-home Exercise section)</p></li>
+</ul>
+</section>
+<section id="scope-of-reworks" class="level2">
+<h2 class="anchored" data-anchor-id="scope-of-reworks">1.2 Scope of Reworks</h2>
+<p>With consent given by fellow coursemate, <a href="https://public.tableau.com/app/profile/yiman.chen/viz/takehome_ex01/Story1">Chen Yi Man</a>, below is my draft to refine her works with R Studio and Tidyverse, sf and tmap packages.</p>
+</section>
+</section>
+<section id="r-package-required" class="level1">
+<h1>2. R PACKAGE REQUIRED</h1>
+<p>The following are the packages required for this exercise :</p>
+<section id="load-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-r-packages">2.1 Load R Packages</h2>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>p_load( )</em></strong> - pacman -</span> to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><span style="color:#d69c3c">Remarks :</span></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data" class="level1 page-columns page-full">
+<h1>3. DATA</h1>
+<section id="acquire-data-source" class="level2">
+<h2 class="anchored" data-anchor-id="acquire-data-source">3.1 Acquire Data Source</h2>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This study will be based on demographic data set downloadable from <a href="https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data">Singstat.gov.sg</a>.</p>
+<ul>
+<li>Download “Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022” in CSV format.</li>
+</ul>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Highlights of the data set</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Data may not add up due to rounding.</p></li>
+<li><p>For June 2022, Planning Areas refer to areas demarcated in the Urban Redevelopment Authority’s Master Plan 2019.</p></li>
+<li><p>Data from 2003 onwards exclude residents who have been away from Singapore for a continuous period of 12 months or longer as at the reference period.</p></li>
+<li><p>Metadata :</p>
+<ul>
+<li><p>PA = Planning Area</p></li>
+<li><p>SZ = Subzone</p></li>
+<li><p>AG = Age Group</p></li>
+<li><p>Sex = Sex</p></li>
+<li><p>TOD = Type of Dwelling</p></li>
+<li><p>Pop = Resident Count</p></li>
+<li><p>Time - Time / Period</p></li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Singstat Dataset for Population</p>
+<ol type="1">
+<li>Download “Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022” <a href="https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data">dataset</a> in csv format from Singstat.gov.sg.</li>
+</ol></li>
+</ul>
+<p>Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.</p>
+<p>Data</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Source(s)</th>
+<th>Urban Redevelopment Authority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Licence</td>
+<td><a href="https://data.gov.sg/open-data-licence">Singapore Open Data Licence</a></td>
+</tr>
+</tbody>
+</table>
+<p>https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web</p>
+</section>
+<section id="import-data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="import-data">3.2 Import Data</h2>
+<section id="import-population-attributes-data" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="import-population-attributes-data">3.2.1 Import Population Attributes Data</h3>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Two (2) steps : import and inspect imported data set.</p>
+<section id="import-data-1" class="level4">
+<h4 class="anchored" data-anchor-id="import-data-1">3.2.1.1 import data</h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>read_csv( )</em></strong> - readr -</span> to read CSV file into a tibble.</p>
+<p><span style="color:#d46e15"><strong><em>problems( )</em></strong> - readr -</span> to reveal any parsing errors when importing the CSV file.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop_attribute <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/aspatial/respopagesextod2022.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 100928 Columns: 7
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (5): PA, SZ, AG, Sex, TOD
+dbl (2): Pop, Time
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(pop_attribute)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 5
+# … with 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;,
+#   file &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="inspect-missing-value" class="level4">
+<h4 class="anchored" data-anchor-id="inspect-missing-value">3.2.1.2 inspect missing value</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(pop_attribute)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">pop_attribute</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">100928</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SZ</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">332</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AG</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOD</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pop</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40.44</td>
+<td style="text-align: right;">125.73</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2300</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2022.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">▁▁▇▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><span style="color:#d69c3c">Remarks :</span></p>
+<p><span style="color:#d69c3c">Preliminary data interpretation - based on 2022 consensus data, .</span></p>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="import-boundary-data" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="import-boundary-data">3.2.2 Import Boundary Data</h3>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bdy_web <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial/web_shp"</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_PLNG_AREA_WEB_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MP14_PLNG_AREA_WEB_PL' from data source 
+  `D:\jephOstan\ISSS608\takeHome\th_ex2\data\geospatial\web_shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 55 features and 12 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
+Projected CRS: SVY21</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bdy_noSea <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial/noSea_shp"</span>, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_PLNG_AREA_NO_SEA_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MP14_PLNG_AREA_NO_SEA_PL' from data source 
+  `D:\jephOstan\ISSS608\takeHome\th_ex2\data\geospatial\noSea_shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 55 features and 12 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
+Projected CRS: SVY21</code></pre>
+</div>
+</div>
+<p>inspect</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bdy_web))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bdy_noSea))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Remarks :</p>
+<p>file size and plotted shape are the same for both.</p>
+<p>The only differences is the last update date.</p>
+<p>With No Sea version last updated on May 23, 2016.</p>
+<p>Web version to be used as the last updated date was 4 Nov 2016.</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(bdy_web)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Couldn't find skimmers for class: sfc_MULTIPOLYGON, sfc; No
+user-defined `sfl` provided. Falling back to `character`.</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">bdy_web</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Date</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 11%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PLN_AREA_N</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PLN_AREA_C</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CA_IND</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">REGION_N</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">REGION_C</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">INC_CRC</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">geometry</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3859</td>
+<td style="text-align: right;">143818</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">min</th>
+<th style="text-align: left;">max</th>
+<th style="text-align: left;">median</th>
+<th style="text-align: right;">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">FMEL_UPD_D</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2014-12-05</td>
+<td style="text-align: left;">2014-12-05</td>
+<td style="text-align: left;">2014-12-05</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">OBJECTID</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">16.02</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">14.50</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">41.50</td>
+<td style="text-align: right;">55.00</td>
+<td style="text-align: left;">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X_ADDR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27626.51</td>
+<td style="text-align: right;">9376.38</td>
+<td style="text-align: right;">5687.97</td>
+<td style="text-align: right;">21930.25</td>
+<td style="text-align: right;">28529.66</td>
+<td style="text-align: right;">32091.72</td>
+<td style="text-align: right;">50424.79</td>
+<td style="text-align: left;">▂▃▇▃▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y_ADDR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">36003.90</td>
+<td style="text-align: right;">5846.95</td>
+<td style="text-align: right;">25069.98</td>
+<td style="text-align: right;">31596.09</td>
+<td style="text-align: right;">34689.00</td>
+<td style="text-align: right;">40147.77</td>
+<td style="text-align: right;">48594.64</td>
+<td style="text-align: left;">▃▇▅▃▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SHAPE_Leng</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20852.21</td>
+<td style="text-align: right;">17766.55</td>
+<td style="text-align: right;">4385.93</td>
+<td style="text-align: right;">13238.12</td>
+<td style="text-align: right;">16932.55</td>
+<td style="text-align: right;">22021.75</td>
+<td style="text-align: right;">111546.68</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SHAPE_Area</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14217177.88</td>
+<td style="text-align: right;">14839193.40</td>
+<td style="text-align: right;">830273.06</td>
+<td style="text-align: right;">6630101.56</td>
+<td style="text-align: right;">10100544.26</td>
+<td style="text-align: right;">16652231.46</td>
+<td style="text-align: right;">69748298.79</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-wrangling" class="level2">
+<h2 class="anchored" data-anchor-id="data-wrangling">3.3 Data Wrangling</h2>
+<p>Data Inspection</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pop_attribute<span class="sc">$</span>AG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "0_to_4"      "5_to_9"      "10_to_14"    "15_to_19"    "20_to_24"   
+ [6] "25_to_29"    "30_to_34"    "35_to_39"    "40_to_44"    "45_to_49"   
+[11] "50_to_54"    "55_to_59"    "60_to_64"    "65_to_69"    "70_to_74"   
+[16] "75_to_79"    "80_to_84"    "85_to_89"    "90_and_over"</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop_attribute) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">names</span>(pop_attribute))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>to make pa field same name</p>
+<p>only first letter to upper case</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bdy_pa <span class="ot">&lt;-</span> bdy_web <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">pa</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">PLN_AREA_N</span><span class="st">`</span>) </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>bdy_pa<span class="sc">$</span>pa <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(bdy_pa<span class="sc">$</span>pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>transform crs</p>
+</section>
+<section id="geodata-processing" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="geodata-processing">1.4 GEODATA PROCESSING</h2>
+<section id="transform-crs" class="level3">
+<h3 class="anchored" data-anchor-id="transform-crs">1.4.1 Transform CRS</h3>
+<div class="callout-warning callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Ensure all dataframes are in the same projected CRS.</p>
+<section id="transform-with-st_set_crs-function" class="level4">
+<h4 class="anchored" data-anchor-id="transform-with-st_set_crs-function">1.4.1.1 transform with st_set_crs( ) function</h4>
+<p>Generally, there are two main steps involved.</p>
+</section>
+<section id="retrieve-crs-information" class="level4">
+<h4 class="anchored" data-anchor-id="retrieve-crs-information">– retrieve CRS information</h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>st_crs( )</em></strong> - sf -</span> to retrieve coordinate reference system for mpsz.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(bdy_pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: SVY21 
+  wkt:
+PROJCRS["SVY21",
+    BASEGEOGCRS["SVY21[WGS84]",
+        DATUM["World Geodetic System 1984",
+            ELLIPSOID["WGS 84",6378137,298.257223563,
+                LENGTHUNIT["metre",1]],
+            ID["EPSG",6326]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["unnamed",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",1.36666666666667,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",103.833333333333,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",1,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",28001.642,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",38744.572,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]</code></pre>
+</div>
+</div>
+</section>
+<section id="transform-crs-1" class="level4">
+<h4 class="anchored" data-anchor-id="transform-crs-1">– transform CRS</h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>st_transform( )</em></strong> - sf -</span> to reproject x from one coordinate system wgs84 to svy21 mathematically, which is not capable by <em>st_set_crs()</em>.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bdy_trans <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(bdy_pa,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crs =</span> <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="verify-crs" class="level4">
+<h4 class="anchored" data-anchor-id="verify-crs">– verify CRS</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(bdy_trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:3414 
+  wkt:
+PROJCRS["SVY21 / Singapore TM",
+    BASEGEOGCRS["SVY21",
+        DATUM["SVY21",
+            ELLIPSOID["WGS 84",6378137,298.257223563,
+                LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4757]],
+    CONVERSION["Singapore Transverse Mercator",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",1.36666666666667,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",103.833333333333,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",1,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",28001.642,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",38744.572,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["northing (N)",north,
+            ORDER[1],
+            LENGTHUNIT["metre",1]],
+        AXIS["easting (E)",east,
+            ORDER[2],
+            LENGTHUNIT["metre",1]],
+    USAGE[
+        SCOPE["Cadastre, engineering survey, topographic mapping."],
+        AREA["Singapore - onshore and offshore."],
+        BBOX[1.13,103.59,1.47,104.07]],
+    ID["EPSG",3414]]</code></pre>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pop_pa <span class="ot">&lt;-</span> <span class="fu">left_join</span>(pop_attribute, bdy_trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "pa"</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pop_pa<span class="sc">$</span>ag <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, pop_pa<span class="sc">$</span>ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="compute-frequency-count" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="compute-frequency-count">3.3.1 Compute Frequency Count</h3>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Compute the frequency count by “age” and “sex”.</p>
+<section id="compute-returns-by-sub-category" class="level4">
+<h4 class="anchored" data-anchor-id="compute-returns-by-sub-category"><strong>3.3.1.1 compute returns by “Sub-category”</strong></h4>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>group_by( )</em></strong> - dplyr -</span> to group Singapore population by age and gender.</p>
+<p><span style="color:#d46e15"><strong><em>summarise( )</em></strong> - dplyr -</span> to count the number of residents for each group.</p>
+<p><span style="color:#d46e15"><strong><em>arrange( )</em></strong> - dplyr -</span> to sort the rows in descending order of the counted “Returned” value of each “Sub-category”.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ag_sequence <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>, <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>, <span class="st">"30 to 34"</span>, <span class="st">"35 to 39"</span>, <span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>, <span class="st">"60 to 64"</span>, <span class="st">"65 to 69"</span>, <span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to89"</span>, <span class="st">"90 and over"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>test0 <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">ag</span><span class="st">`</span>,<span class="st">`</span><span class="at">sex</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ag =</span> <span class="fu">factor</span>(ag, <span class="at">levels =</span> ag_sequence)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ag) <span class="sc">%&gt;%</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'ag'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(test0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  ag    sex      count
+  &lt;fct&gt; &lt;chr&gt;    &lt;dbl&gt;
+1 &lt;NA&gt;  Females  87430
+2 &lt;NA&gt;  Males    90930
+3 &lt;NA&gt;  Females  99700
+4 &lt;NA&gt;  Males   103230
+5 &lt;NA&gt;  Females 101380
+6 &lt;NA&gt;  Males   105590</code></pre>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa, ag) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'pa'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>test1 <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa, ag) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> ag, </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> count_pop) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'pa'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+</div>
+<p>test2 &lt;- pop_pa %&gt;%</p>
+<p>group_by(pa, ag) %&gt;%</p>
+<p>summarise(`count_pop` = sum(`pop`)) %&gt;%</p>
+<p>ungroup() %&gt;%</p>
+<p>pivot_wider(names_from = ag,</p>
+<p>values_from = count_pop) %&gt;%</p>
+<p>mutate(young = rowSums(.[3:6]) + rowSums(.[12])) %&gt;%</p>
+<p>mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+</p>
+<p>rowSums(.[13:15]))%&gt;%</p>
+<p>mutate(`AGED`=rowSums(.[16:21])) %&gt;%</p>
+<p>mutate(`TOTAL`=rowSums(.[3:21])) %&gt;%</p>
+<p>mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)</p>
+<p>/`ECONOMY ACTIVE`) %&gt;%</p>
+<p>select(`PA`, `SZ`, `YOUNG`,</p>
+<p>`ECONOMY ACTIVE`, `AGED`,</p>
+<p>`TOTAL`, `DEPENDENCY`)</p>
+<p>#| eval: false</p>
+<p>mutate(YOUNG = rowSums(.[3:6])</p>
+<p>+rowSums(.[12])) %&gt;%</p>
+<p>mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+</p>
+<p>rowSums(.[13:15]))%&gt;%</p>
+<p>mutate(`AGED`=rowSums(.[16:21])) %&gt;%</p>
+<p>mutate(`TOTAL`=rowSums(.[3:21])) %&gt;%</p>
+<p>mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)</p>
+<p>/`ECONOMY ACTIVE`) %&gt;%</p>
+<p>select(`PA`, `SZ`, `YOUNG`,</p>
+<p>`ECONOMY ACTIVE`, `AGED`,</p>
+<p>`TOTAL`, `DEPENDENCY`)</p>
+</section>
+</section>
+</section>
+<section id="exploratory-data-analysis-eda" class="level1 page-columns page-full">
+<h1>4 EXPLORATORY DATA ANALYSIS (EDA)</h1>
+<section id="plot-pyramid-chart" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="plot-pyramid-chart">4.1 Plot Pyramid Chart</h2>
+<section id="plot-static-pyramid" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="plot-static-pyramid"><strong>4.1.1 Plot Static Pyramid</strong></h4>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>geom_col( )</em></strong> - ggplot2 -</span> to create the bar chart with the bar length represent the actual population stats.</p>
+<p><span style="color:#d46e15"><strong><em>scale_x_continuous( )</em></strong> - ggplot2 -</span> to modify the labels on the x-axis to provide better readability.</p>
+<p><span style="color:#d46e15"><strong><em>ifelse( )</em></strong> - base -</span> to convert population count of Male residents to be negative, so that their data will be plotted on the left side of the pyramid.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>test_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(test0, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(sex <span class="sc">==</span> <span class="st">"Males"</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">yes =</span> <span class="sc">-</span>count,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">no =</span> count),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> ag,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">150000</span>, <span class="dv">150000</span>, <span class="dv">50000</span>), </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">as.character</span>(</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">50</span>), </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">50</span>))),</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"k"</span>)) <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"pop"</span>, </span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"age"</span>, </span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">'Singapore Age-Sex Population Pyramid 2022'</span>) <span class="sc">+</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, </span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"lightpink"</span>)) </span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>test_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="interactive-pyramid-chart" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="interactive-pyramid-chart"><strong>4.1.2 Interactive Pyramid Chart</strong></h4>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(test_plot, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">session =</span> <span class="st">"knitr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-33d0e7203fa3e83c824f" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-33d0e7203fa3e83c824f">{"x":{"data":[{"orientation":"v","width":[87430,99700,101380,113870,140710,164050,153650,157730,157260,98250,150430,151070,144840,126400,98790,57970,44200,23870,16100],"base":[0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55],"x":[43715,137280,237820,345445,472735,625115,783965,939655,1097150,1224905,1349245,1499995,1647950,1783570,1896165,1974545,2025630,2059665,2079650],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"text":["ifelse(sex == \"Males\", yes = -count, no = count):   87430<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   99700<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  101380<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  113870<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  140710<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  164050<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  153650<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  157730<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  157260<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   98250<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  150430<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  151070<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  144840<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  126400<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   98790<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   57970<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   44200<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   23870<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   16100<br />ag: NA<br />sex: Females"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,182,193,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Females","legendgroup":"Females","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[90930,103230,105590,119750,140120,153560,137650,142600,147570,103490,142920,149430,143770,122090,90330,48520,31280,14140,6870],"base":[0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55],"x":[-45465,-142545,-246955,-359625,-489560,-636400,-782005,-922130,-1067215,-1192745,-1315950,-1462125,-1608725,-1741655,-1847865,-1917290,-1957190,-1979900,-1990405],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"text":["ifelse(sex == \"Males\", yes = -count, no = count):  -90930<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -103230<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -105590<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -119750<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -140120<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -153560<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -137650<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -142600<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -147570<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -103490<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -142920<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -149430<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -143770<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -122090<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -90330<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -48520<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -31280<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -14140<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):   -6870<br />ag: NA<br />sex: Males"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Males","legendgroup":"Males","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":25.5707762557078},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Singapore Age-Sex Population Pyramid 2022","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2197917,2291777],"tickmode":"array","ticktext":["150k","100k","50k","0k","50k","100k","150k"],"tickvals":[-150000,-100000,-50000,0,50000,100000,150000],"categoryorder":"array","categoryarray":["150k","100k","50k","0k","50k","100k","150k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"pop","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,1.6],"tickmode":"array","ticktext":[],"tickvals":[],"categoryorder":"array","categoryarray":[],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"age","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"sex","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"2dd8634c6f3e":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"2dd8634c6f3e","visdat":{"2dd8634c6f3e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><span style="color:#d69c3c">Remark :</span></p>
+<p><span style="color:#d69c3c">The pyramid above shows the younger generation’s lower percentage, making Singapore’s population structure a constrictive type. That means an ageing population.</span></p>
+<p><span style="color:#d69c3c">By June 2022, 4.07 million residents population with a median age of 42.1,</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span style="color:#d69c3c">which is approximately a 19% increase from the median age of 35.3 back in the year 2002</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p><span style="color:#d69c3c">Also, another observation is from 25 age onward, the female population is higher than the male population. As of 2020, Singapore’s adjusted gender pay gap (GPG) is at 6%</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p><span style="color:#d69c3c">Measures and new schemes may be required to further narrow the gender pay gap and encourage the birth rate or may have long-lasting socio-economic repercussions.</span></p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><span style="color:#d69c3c">Singstat. (2022). Population Dashboard. https://www.singstat.gov.sg/find-data/search-by-theme/population/population-and-population-structure/visualising-data/population-dashboard</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><span style="color:#d69c3c">Singstat. (2002). Indicators On Population. https://tablebuilder.singstat.gov.sg/table/TS/M810001</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span style="color:#d69c3c">Ministry of Manpower. (2020). Report: Singapore’s Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx</span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
