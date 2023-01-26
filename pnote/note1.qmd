@@ -45,11 +45,93 @@ format:
 
 -   **Summative visual analysis** - used after the study is completed to determine both the presence and strength of the functional relation.
 
-+-------------------------------------------+
-|                                           |
-+-------------------------------------------+
+# **0. DATA ANALYTICS LIFE CYCLE (REMINDER)**
 
-# 1. Samples for Title and Axis Label
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [personal [checklist](https://intellipaat.com/blog/tutorial/data-analytics-tutorial/data-analytics-lifecycle/#:~:text=The%20Data%20Analytics%20Life%20Cycle%20covers%20the%20process%20of%20generating,achieve%20organizational%20and%20project%20goals.) :]{style="color:#3a9c88"}
+
+### 0.1 Objective / Business Issue
+
+Business Issue Understanding :
+
+-   define business objective - clear? ambiguous?
+
+-   gather required information
+
+-   determine appropriate analysis method
+
+-   clarify scope of works
+
+-   identify deliverable
+
+### 0.2 Understanding Data
+
+Data Understanding :
+
+-   collect initial data
+
+-   identify data requirements
+
+-   determine data availability
+
+-   explore data and characteristics
+
+### 0.3 Data Cleaning & Data Transformation
+
+Data Prepration
+
+-   gather data from multiple sources
+
+-   cleanse
+
+-   format
+
+-   blend
+
+-   sample
+
+### 0.4 Data Enhancement
+
+Exploratory Analysis and Modeling :
+
+-   develop methodology
+
+-   determine important variable
+
+-   build model
+
+-   assess model
+
+    -   Rand PL/R, Octave, and WEKA are examples of free or open-source tools.
+
+### 0.5 Data Analytics
+
+Validation :
+
+-   evaluate results
+
+-   review process
+
+-   determine next steps
+
+    -   next if results are valid
+
+    -   revisit step 0.4 if invalid
+
+### 0.6 Data Visualisation
+
+Visualisation and Presentation :
+
+-   Communicate results
+
+-   Determine best method to present insights based on analysis and audience
+
+-   craft a compelling story
+
+-   make recommendations
+:::
+
+# **1. Samples for Title and Axis Label**
 
 +--------------+--------------------------------------+----------------------------------------------+
 | chart        | label                                | remarks                                      |
@@ -91,7 +173,7 @@ cv = continuous variables
 
 [^1]: Tracy R. (N.A.). Which Type of Chart or Graph is Right for You? Tableau. https://www.tableau.com/learn/whitepapers/which-chart-or-graph-is-right-for-you
 
-## 2.1 Distribution
+## **2.1 Distribution**
 
 +-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 | understand distribution | measure                                                                                                                                                       | remark / note                                                                          |
@@ -121,7 +203,7 @@ cv = continuous variables
 |                         |                                                                                                                                                               | **leptokurtic** = high kurtosis (fat)                                                  |
 +-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+
 
-### 2.1.1 Kurtosis
+### **2.1.1 Kurtosis**
 
 Definition :
 

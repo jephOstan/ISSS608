@@ -300,13 +300,26 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <li><a href="#import-population-attributes-data" id="toc-import-population-attributes-data" class="nav-link" data-scroll-target="#import-population-attributes-data">3.2.1 Import Population Attributes Data</a></li>
   <li><a href="#import-boundary-data" id="toc-import-boundary-data" class="nav-link" data-scroll-target="#import-boundary-data">3.2.2 Import Boundary Data</a></li>
   </ul></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">3.3 Data Wrangling</a></li>
-  <li><a href="#geodata-processing" id="toc-geodata-processing" class="nav-link" data-scroll-target="#geodata-processing">1.4 GEODATA PROCESSING</a>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><strong>3.3 Data Wrangling</strong></a>
   <ul class="collapse">
-  <li><a href="#transform-crs" id="toc-transform-crs" class="nav-link" data-scroll-target="#transform-crs">1.4.1 Transform CRS</a></li>
-  <li><a href="#compute-frequency-count" id="toc-compute-frequency-count" class="nav-link" data-scroll-target="#compute-frequency-count">3.3.1 Compute Frequency Count</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#change-field-names-to-lowercase" id="toc-change-field-names-to-lowercase" class="nav-link" data-scroll-target="#change-field-names-to-lowercase"><strong>3.3.1 Change Field Names to Lowercase</strong></a></li>
+  <li><a href="#convert-case-for-planning-area-values" id="toc-convert-case-for-planning-area-values" class="nav-link" data-scroll-target="#convert-case-for-planning-area-values"><strong>3.3.2 Convert Case for Planning Area Values</strong></a></li>
+  <li><a href="#rename-planning-area-for-boundary-dataset" id="toc-rename-planning-area-for-boundary-dataset" class="nav-link" data-scroll-target="#rename-planning-area-for-boundary-dataset"><strong>3.3.3 Rename Planning Area for Boundary Dataset</strong></a></li>
+  <li><a href="#remove-non-alphameric-character" id="toc-remove-non-alphameric-character" class="nav-link" data-scroll-target="#remove-non-alphameric-character"><strong>3.3.4 Remove Non-Alphameric Character</strong></a></li>
   </ul></li>
+  <li><a href="#create-data-frame-for-population-pyramids-plot" id="toc-create-data-frame-for-population-pyramids-plot" class="nav-link" data-scroll-target="#create-data-frame-for-population-pyramids-plot">3.4 Create Data Frame for Population Pyramids Plot</a>
+  <ul class="collapse">
+  <li><a href="#explore-with-single-planning-area" id="toc-explore-with-single-planning-area" class="nav-link" data-scroll-target="#explore-with-single-planning-area">3.4.1 Explore with Single Planning Area</a></li>
+  </ul></li>
+  <li><a href="#create-9-planning-areas-data-set" id="toc-create-9-planning-areas-data-set" class="nav-link" data-scroll-target="#create-9-planning-areas-data-set"><strong>3.5 Create 9 Planning Areas Data Set</strong></a>
+  <ul class="collapse">
+  <li><a href="#identify-top-9-planning-areas" id="toc-identify-top-9-planning-areas" class="nav-link" data-scroll-target="#identify-top-9-planning-areas"><strong>3.5.1 Identify Top 9 Planning Areas</strong></a></li>
+  <li><a href="#filter-top-9-filter" id="toc-filter-top-9-filter" class="nav-link" data-scroll-target="#filter-top-9-filter"><strong>3.5.2 Filter Top 9 Filter</strong></a></li>
+  </ul></li>
+  <li><a href="#create" id="toc-create" class="nav-link" data-scroll-target="#create">3.6 Create</a></li>
+  <li><a href="#transform-data" id="toc-transform-data" class="nav-link" data-scroll-target="#transform-data">3.6 Transform Data</a></li>
+  <li><a href="#transform-crs" id="toc-transform-crs" class="nav-link" data-scroll-target="#transform-crs">3.6.1 Transform CRS</a></li>
+  <li><a href="#combine-data-sets" id="toc-combine-data-sets" class="nav-link" data-scroll-target="#combine-data-sets">3.7 Combine Data Sets</a></li>
   </ul></li>
   <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">4 EXPLORATORY DATA ANALYSIS (EDA)</a>
   <ul class="collapse">
@@ -338,7 +351,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 23, 2023</p>
+      <p class="date-modified">January 26, 2023</p>
     </div>
   </div>
     
@@ -372,7 +385,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </div>
 <section id="task-instruction" class="level2">
 <h2 class="anchored" data-anchor-id="task-instruction">1.1 Task Instruction</h2>
-<p>I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!</p>
+<p>I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn’t work, why those things don’t work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!</p>
 <p>==========</p>
 <p>In this take-home exercise, you are required to:</p>
 <ul>
@@ -381,7 +394,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <li><p>prepare a sketch for the alternative design by using the data visualisation design principles and best practices you had learned in Lesson 1 and 2, and</p></li>
 <li><p>remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.</p></li>
 </ul>
-<p>The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.</p>
+<p>The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn’t work, why those things don’t work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.</p>
 <p>submission instructions</p>
 <p>This is an individual assignment. You are required to work on the take-home exercises and prepare submission individually.</p>
 <p>The specific submission instructions are as follows:</p>
@@ -733,6 +746,21 @@ dbl (2): Pop, Time
 <p><span style="color:#d69c3c">Remarks :</span></p>
 <p><span style="color:#d69c3c">Preliminary data interpretation - based on 2022 consensus data, .</span></p>
 </section>
+<section id="inspect-values" class="level4">
+<h4 class="anchored" data-anchor-id="inspect-values">3.2.1.3 inspect values</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pop_attribute<span class="sc">$</span>AG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "0_to_4"      "5_to_9"      "10_to_14"    "15_to_19"    "20_to_24"   
+ [6] "25_to_29"    "30_to_34"    "35_to_39"    "40_to_44"    "45_to_49"   
+[11] "50_to_54"    "55_to_59"    "60_to_64"    "65_to_69"    "70_to_74"   
+[16] "75_to_79"    "80_to_84"    "85_to_89"    "90_and_over"</code></pre>
+</div>
+</div>
+</section>
 </div>
 </div>
 </div>
@@ -748,8 +776,8 @@ dbl (2): Pop, Time
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bdy_web <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial/web_shp"</span>, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_PLNG_AREA_WEB_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bdy_web <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial/web_shp"</span>, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_PLNG_AREA_WEB_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `MP14_PLNG_AREA_WEB_PL' from data source 
@@ -762,11 +790,20 @@ Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
 Projected CRS: SVY21</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bdy_noSea <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial/noSea_shp"</span>, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_PLNG_AREA_NO_SEA_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bdy_noSea <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial/noSea_shp"</span>, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_PLNG_AREA_NO_SEA_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `MP14_PLNG_AREA_NO_SEA_PL' from data source 
@@ -779,23 +816,69 @@ Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
 Projected CRS: SVY21</code></pre>
 </div>
 </div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(bdy_web,<span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 55
+Columns: 13
+$ OBJECTID   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15…
+$ PLN_AREA_N &lt;chr&gt; "BISHAN", "BUKIT BATOK", "BUKIT MERAH", "BUKIT PA…
+$ PLN_AREA_C &lt;chr&gt; "BS", "BK", "BM", "BP", "BT", "CC", "CH", "CB", "…
+$ CA_IND     &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "N",…
+$ REGION_N   &lt;chr&gt; "CENTRAL REGION", "WEST REGION", "CENTRAL REGION"…
+$ REGION_C   &lt;chr&gt; "CR", "WR", "CR", "WR", "CR", "NR", "ER", "ER", "…
+$ INC_CRC    &lt;chr&gt; "BA616285F402846F", "FB44C870B04B7F57", "738B4798…
+$ FMEL_UPD_D &lt;date&gt; 2014-12-05, 2014-12-05, 2014-12-05, 2014-12-05, …
+$ X_ADDR     &lt;dbl&gt; 28789.76, 19255.42, 26865.78, 21287.04, 23256.76,…
+$ Y_ADDR     &lt;dbl&gt; 37450.89, 37527.65, 28662.87, 38761.84, 34689.00,…
+$ SHAPE_Leng &lt;dbl&gt; 13517.12, 15234.22, 29156.29, 15891.85, 22492.84,…
+$ SHAPE_Area &lt;dbl&gt; 7618921, 11133256, 14462472, 9019940, 17526654, 3…
+$ geometry   &lt;MULTIPOLYGON [m]&gt; MULTIPOLYGON (((29772.19 38..., MULT…</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(bdy_noSea,<span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 55
+Columns: 13
+$ OBJECTID   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15…
+$ PLN_AREA_N &lt;chr&gt; "ANG MO KIO", "BEDOK", "BISHAN", "BOON LAY", "BUK…
+$ PLN_AREA_C &lt;chr&gt; "AM", "BD", "BS", "BL", "BK", "BM", "BP", "BT", "…
+$ CA_IND     &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "N",…
+$ REGION_N   &lt;chr&gt; "NORTH-EAST REGION", "EAST REGION", "CENTRAL REGI…
+$ REGION_C   &lt;chr&gt; "NER", "ER", "CR", "WR", "WR", "CR", "WR", "CR", …
+$ INC_CRC    &lt;chr&gt; "E5CBDDE0C2113055", "1719251260799DF6", "BA616285…
+$ FMEL_UPD_D &lt;date&gt; 2016-05-11, 2016-05-11, 2016-05-11, 2016-05-11, …
+$ X_ADDR     &lt;dbl&gt; 28976.88, 38582.67, 28789.76, 13410.38, 19255.42,…
+$ Y_ADDR     &lt;dbl&gt; 40229.12, 34032.10, 37450.89, 33008.99, 37527.65,…
+$ SHAPE_Leng &lt;dbl&gt; 17494.24, 21872.80, 13517.12, 18528.47, 15234.22,…
+$ SHAPE_Area &lt;dbl&gt; 13941380, 21733188, 7618921, 8279408, 11133256, 1…
+$ geometry   &lt;MULTIPOLYGON [m]&gt; MULTIPOLYGON (((30658.5 420..., MULT…</code></pre>
+</div>
+</div>
 <p>inspect</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bdy_web))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bdy_web))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="th_ex2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bdy_noSea))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bdy_noSea))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="th_ex2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Remarks :</p>
@@ -803,291 +886,18 @@ Projected CRS: SVY21</code></pre>
 <p>The only differences is the last update date.</p>
 <p>With No Sea version last updated on May 23, 2016.</p>
 <p>Web version to be used as the last updated date was 4 Nov 2016.</p>
+<p>Save Simple Feature Data Frame into RDS Format</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(bdy_web)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(bdy_web,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data/rds/bdy_web.rds"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">compress =</span> <span class="st">"xz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Couldn't find skimmers for class: sfc_MULTIPOLYGON, sfc; No
-user-defined `sfl` provided. Falling back to `character`.</code></pre>
 </div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<caption>Data summary</caption>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Name</td>
-<td style="text-align: left;">bdy_web</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Number of rows</td>
-<td style="text-align: left;">55</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">13</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">_______________________</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Column type frequency:</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">character</td>
-<td style="text-align: left;">7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Date</td>
-<td style="text-align: left;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">________________________</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group variables</td>
-<td style="text-align: left;">None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: character</strong></p>
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 18%">
-<col style="width: 13%">
-<col style="width: 18%">
-<col style="width: 6%">
-<col style="width: 9%">
-<col style="width: 7%">
-<col style="width: 11%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">skim_variable</th>
-<th style="text-align: right;">n_missing</th>
-<th style="text-align: right;">complete_rate</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">empty</th>
-<th style="text-align: right;">n_unique</th>
-<th style="text-align: right;">whitespace</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">PLN_AREA_N</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PLN_AREA_C</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CA_IND</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">REGION_N</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">REGION_C</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">INC_CRC</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">geometry</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3859</td>
-<td style="text-align: right;">143818</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: Date</strong></p>
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 12%">
-<col style="width: 17%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">skim_variable</th>
-<th style="text-align: right;">n_missing</th>
-<th style="text-align: right;">complete_rate</th>
-<th style="text-align: left;">min</th>
-<th style="text-align: left;">max</th>
-<th style="text-align: left;">median</th>
-<th style="text-align: right;">n_unique</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">FMEL_UPD_D</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2014-12-05</td>
-<td style="text-align: left;">2014-12-05</td>
-<td style="text-align: left;">2014-12-05</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: numeric</strong></p>
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 8%">
-<col style="width: 11%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 4%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">skim_variable</th>
-<th style="text-align: right;">n_missing</th>
-<th style="text-align: right;">complete_rate</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">p0</th>
-<th style="text-align: right;">p25</th>
-<th style="text-align: right;">p50</th>
-<th style="text-align: right;">p75</th>
-<th style="text-align: right;">p100</th>
-<th style="text-align: left;">hist</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">OBJECTID</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">28.00</td>
-<td style="text-align: right;">16.02</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">14.50</td>
-<td style="text-align: right;">28.00</td>
-<td style="text-align: right;">41.50</td>
-<td style="text-align: right;">55.00</td>
-<td style="text-align: left;">▇▇▇▇▇</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">X_ADDR</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">27626.51</td>
-<td style="text-align: right;">9376.38</td>
-<td style="text-align: right;">5687.97</td>
-<td style="text-align: right;">21930.25</td>
-<td style="text-align: right;">28529.66</td>
-<td style="text-align: right;">32091.72</td>
-<td style="text-align: right;">50424.79</td>
-<td style="text-align: left;">▂▃▇▃▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Y_ADDR</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">36003.90</td>
-<td style="text-align: right;">5846.95</td>
-<td style="text-align: right;">25069.98</td>
-<td style="text-align: right;">31596.09</td>
-<td style="text-align: right;">34689.00</td>
-<td style="text-align: right;">40147.77</td>
-<td style="text-align: right;">48594.64</td>
-<td style="text-align: left;">▃▇▅▃▃</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SHAPE_Leng</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">20852.21</td>
-<td style="text-align: right;">17766.55</td>
-<td style="text-align: right;">4385.93</td>
-<td style="text-align: right;">13238.12</td>
-<td style="text-align: right;">16932.55</td>
-<td style="text-align: right;">22021.75</td>
-<td style="text-align: right;">111546.68</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SHAPE_Area</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">14217177.88</td>
-<td style="text-align: right;">14839193.40</td>
-<td style="text-align: right;">830273.06</td>
-<td style="text-align: right;">6630101.56</td>
-<td style="text-align: right;">10100544.26</td>
-<td style="text-align: right;">16652231.46</td>
-<td style="text-align: right;">69748298.79</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>Read RDS File</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bdy_web <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/rds/bdy_web.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1095,43 +905,321 @@ user-defined `sfl` provided. Falling back to `character`.</code></pre>
 </section>
 </section>
 <section id="data-wrangling" class="level2">
-<h2 class="anchored" data-anchor-id="data-wrangling">3.3 Data Wrangling</h2>
-<p>Data Inspection</p>
+<h2 class="anchored" data-anchor-id="data-wrangling"><strong>3.3 Data Wrangling</strong></h2>
+<section id="change-field-names-to-lowercase" class="level3">
+<h3 class="anchored" data-anchor-id="change-field-names-to-lowercase"><strong>3.3.1 Change Field Names to Lowercase</strong></h3>
+<p>To avoid confusion between field names used in data and discussions, change all fields’ name to lowercase.</p>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>tolower( )</em></strong> - quanteda -</span> to convert fields’ name into lower case.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop_attribute) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">names</span>(pop_attribute))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bdy_web) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">names</span>(bdy_web))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="convert-case-for-planning-area-values" class="level3">
+<h3 class="anchored" data-anchor-id="convert-case-for-planning-area-values"><strong>3.3.2 Convert Case for Planning Area Values</strong></h3>
+<p>The Planning Areas’ values in the boundary data-set are strings of entirely upper case.</p>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>str_to_title( )</em></strong> - stringr -</span> to set the initial of the string to upper case.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>bdy_web<span class="sc">$</span>pln_area_n <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(bdy_web<span class="sc">$</span>pln_area_n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="rename-planning-area-for-boundary-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="rename-planning-area-for-boundary-dataset"><strong>3.3.3 Rename Planning Area for Boundary Dataset</strong></h3>
+<p>Setting same name for Planning Area fields to facilitate left join between two datasets at section 3.xxx.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>bdy_pa <span class="ot">&lt;-</span> bdy_web <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">pa</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">pln_area_n</span><span class="st">`</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="remove-non-alphameric-character" class="level3">
+<h3 class="anchored" data-anchor-id="remove-non-alphameric-character"><strong>3.3.4 Remove Non-Alphameric Character</strong></h3>
+<p>There are special character such as “_” among Age Groups’ value.</p>
+<p>Unable to use str_sub( ) function from stringr package as the position of “_” is varied among values.</p>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>gsub( )</em></strong> - base -</span> to replace “_” with space.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pop_attribute<span class="sc">$</span>ag <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                         <span class="st">" "</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                         pop_attribute<span class="sc">$</span>ag, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="create-data-frame-for-population-pyramids-plot" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="create-data-frame-for-population-pyramids-plot">3.4 Create Data Frame for Population Pyramids Plot</h2>
+<section id="explore-with-single-planning-area" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="explore-with-single-planning-area">3.4.1 Explore with Single Planning Area</h3>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>group_by( )</em></strong> - dplyr -</span> to group Singapore population by age and gender.</p>
+<p><span style="color:#d46e15"><strong><em>summarise( )</em></strong> - dplyr -</span> to count the number of residents for each group.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>test0 <span class="ot">&lt;-</span> pop_attribute <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pa <span class="sc">==</span> <span class="st">"Ang Mo Kio"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ag, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'ag'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+</div>
+<section id="visualise-data" class="level4">
+<h4 class="anchored" data-anchor-id="visualise-data">3.4.1.1 visualise data</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Visualise Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Inspect Data</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pop_attribute<span class="sc">$</span>AG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> test0,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> ag)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>  </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Test Age Group Distribution"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pop_attribute<span class="sc">$</span>ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "0_to_4"      "5_to_9"      "10_to_14"    "15_to_19"    "20_to_24"   
- [6] "25_to_29"    "30_to_34"    "35_to_39"    "40_to_44"    "45_to_49"   
-[11] "50_to_54"    "55_to_59"    "60_to_64"    "65_to_69"    "70_to_74"   
-[16] "75_to_79"    "80_to_84"    "85_to_89"    "90_and_over"</code></pre>
+<pre><code> [1] "0 to 4"      "5 to 9"      "10 to 14"    "15 to 19"    "20 to 24"   
+ [6] "25 to 29"    "30 to 34"    "35 to 39"    "40 to 44"    "45 to 49"   
+[11] "50 to 54"    "55 to 59"    "60 to 64"    "65 to 69"    "70 to 74"   
+[16] "75 to 79"    "80 to 84"    "85 to 89"    "90 and over"</code></pre>
 </div>
 </div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop_attribute) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">names</span>(pop_attribute))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
-<p>to make pa field same name</p>
-<p>only first letter to upper case</p>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bdy_pa <span class="ot">&lt;-</span> bdy_web <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">pa</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">PLN_AREA_N</span><span class="st">`</span>) </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>bdy_pa<span class="sc">$</span>pa <span class="ot">&lt;-</span> <span class="fu">str_to_title</span>(bdy_pa<span class="sc">$</span>pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
-<p>transform crs</p>
+</div>
+<div class="panel-tabset">
+<p>Remarks :</p>
+<p>Notice the age group “5 to 9” is placed after “45 to 49” instead of placed at 2nd value as shown under the “Inspect Data” tab.</p>
+</div>
 </section>
-<section id="geodata-processing" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="geodata-processing">1.4 GEODATA PROCESSING</h2>
-<section id="transform-crs" class="level3">
-<h3 class="anchored" data-anchor-id="transform-crs">1.4.1 Transform CRS</h3>
+<section id="update-age-groups-display-sequence" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="update-age-groups-display-sequence">3.4.1.2 update age groups display sequence</h4>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>for entire singapore</p>
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>arrange( )</em></strong> - dplyr -</span> to sort the rows in descending order of the counted “Returned” value of each “Sub-category”.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ag_sequence <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>, <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>, <span class="st">"30 to 34"</span>, <span class="st">"35 to 39"</span>, <span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>, <span class="st">"60 to 64"</span>, <span class="st">"65 to 69"</span>, <span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to89"</span>, <span class="st">"90 and over"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>pop_sgp <span class="ot">&lt;-</span> pop_attribute <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ag, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ag =</span> <span class="fu">factor</span>(ag, <span class="at">levels =</span> ag_sequence)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ag) <span class="sc">%&gt;%</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'ag'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+</div>
+<p>at Planning Area level</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ag_sequence <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>, <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>, <span class="st">"30 to 34"</span>, <span class="st">"35 to 39"</span>, <span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>, <span class="st">"60 to 64"</span>, <span class="st">"65 to 69"</span>, <span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to89"</span>, <span class="st">"90 and over"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>pop_pa <span class="ot">&lt;-</span> pop_attribute <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa, ag, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ag =</span> <span class="fu">factor</span>(ag, <span class="at">levels =</span> ag_sequence)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ag) <span class="sc">%&gt;%</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'pa', 'ag'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+</div>
+<p>remarks :</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="create-9-planning-areas-data-set" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="create-9-planning-areas-data-set"><strong>3.5 Create 9 Planning Areas Data Set</strong></h2>
+<section id="identify-top-9-planning-areas" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="identify-top-9-planning-areas"><strong>3.5.1 Identify Top 9 Planning Areas</strong></h3>
+<p>Based on top 9 highest population</p>
+<div class="callout-warning column-page-right callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="callout-alert callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
+<p><span style="color:#d46e15"><strong><em>slice( )</em></strong> - dplyr -</span> to filter based on the first 9 rows.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>t9_paPop <span class="ot">&lt;-</span> pop_attribute <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>t9 <span class="ot">&lt;-</span> <span class="fu">arrange</span>(t9_paPop, <span class="fu">desc</span>(t9_paPop<span class="sc">$</span>count_pop)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="filter-top-9-filter" class="level3">
+<h3 class="anchored" data-anchor-id="filter-top-9-filter"><strong>3.5.2 Filter Top 9 Filter</strong></h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>t9_filtered <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pop_pa<span class="sc">$</span>pa <span class="sc">%in%</span> t9<span class="sc">$</span>pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="create" class="level2">
+<h2 class="anchored" data-anchor-id="create">3.6 Create</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pop_males <span class="ot">&lt;-</span> t9_filtered <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">%in%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Males"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pop_females <span class="ot">&lt;-</span> t9_filtered <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">%in%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"Females"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>t9_map <span class="ot">&lt;-</span> bdy_pa <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">total_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(bdy_pa, pop_pa))) <span class="sc">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">males</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(bdy_pa, pop_males))) <span class="sc">%&gt;%</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">females</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">lengths</span>(</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(bdy_pa, pop_females)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>test3 <span class="ot">&lt;-</span> pop_attribute <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa, ag) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> ag, </span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> count_pop) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'pa'. You can override using the `.groups`
+argument.</code></pre>
+</div>
+</div>
+<p>#| eval: false</p>
+<p>mutate(YOUNG = rowSums(.[3:6])</p>
+<p>+rowSums(.[12])) %&gt;%</p>
+<p>mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+</p>
+<p>rowSums(.[13:15]))%&gt;%</p>
+<p>mutate(`AGED`=rowSums(.[16:21])) %&gt;%</p>
+<p>mutate(`TOTAL`=rowSums(.[3:21])) %&gt;%</p>
+<p>mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)</p>
+<p>/`ECONOMY ACTIVE`) %&gt;%</p>
+<p>select(`PA`, `SZ`, `YOUNG`,</p>
+<p>`ECONOMY ACTIVE`, `AGED`,</p>
+<p>`TOTAL`, `DEPENDENCY`)</p>
+</section>
+<section id="transform-data" class="level2">
+<h2 class="anchored" data-anchor-id="transform-data">3.6 Transform Data</h2>
+</section>
+<section id="transform-crs" class="level2">
+<h2 class="anchored" data-anchor-id="transform-crs">3.6.1 Transform CRS</h2>
 <div class="callout-warning callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1140,7 +1228,7 @@ user-defined `sfl` provided. Falling back to `character`.</code></pre>
 <div class="callout-body-container">
 <p>Ensure all dataframes are in the same projected CRS.</p>
 <section id="transform-with-st_set_crs-function" class="level4">
-<h4 class="anchored" data-anchor-id="transform-with-st_set_crs-function">1.4.1.1 transform with st_set_crs( ) function</h4>
+<h4 class="anchored" data-anchor-id="transform-with-st_set_crs-function">3.6.1.1 transform with st_set_crs( ) function</h4>
 <p>Generally, there are two main steps involved.</p>
 </section>
 <section id="retrieve-crs-information" class="level4">
@@ -1157,10 +1245,7 @@ user-defined `sfl` provided. Falling back to `character`.</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(bdy_pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(bdy_pa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: SVY21 
@@ -1217,11 +1302,8 @@ PROJCRS["SVY21",
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bdy_trans <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(bdy_pa,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crs =</span> <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>bdy_trans <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(bdy_pa,</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">crs =</span> <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="verify-crs" class="level4">
@@ -1229,7 +1311,7 @@ PROJCRS["SVY21",
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(bdy_trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(bdy_trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
@@ -1279,150 +1361,26 @@ PROJCRS["SVY21 / Singapore TM",
 </div>
 </div>
 </div>
+</section>
+<section id="combine-data-sets" class="level2">
+<h2 class="anchored" data-anchor-id="combine-data-sets">3.7 Combine Data Sets</h2>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pop_pa <span class="ot">&lt;-</span> <span class="fu">left_join</span>(pop_attribute, bdy_trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pop_pa <span class="ot">&lt;-</span> <span class="fu">left_join</span>(pop_attribute, bdy_trans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining, by = "pa"</code></pre>
 </div>
 </div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pop_pa<span class="sc">$</span>ag <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, pop_pa<span class="sc">$</span>ag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="compute-frequency-count" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="compute-frequency-count">3.3.1 Compute Frequency Count</h3>
-<div class="callout-warning column-page-right callout callout-style-simple no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Compute the frequency count by “age” and “sex”.</p>
-<section id="compute-returns-by-sub-category" class="level4">
-<h4 class="anchored" data-anchor-id="compute-returns-by-sub-category"><strong>3.3.1.1 compute returns by “Sub-category”</strong></h4>
-<div class="callout-alert callout callout-style-simple no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
-<p><span style="color:#d46e15"><strong><em>group_by( )</em></strong> - dplyr -</span> to group Singapore population by age and gender.</p>
-<p><span style="color:#d46e15"><strong><em>summarise( )</em></strong> - dplyr -</span> to count the number of residents for each group.</p>
-<p><span style="color:#d46e15"><strong><em>arrange( )</em></strong> - dplyr -</span> to sort the rows in descending order of the counted “Returned” value of each “Sub-category”.</p>
-</div>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ag_sequence <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>, <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>, <span class="st">"30 to 34"</span>, <span class="st">"35 to 39"</span>, <span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>, <span class="st">"60 to 64"</span>, <span class="st">"65 to 69"</span>, <span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to89"</span>, <span class="st">"90 and over"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>test0 <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">ag</span><span class="st">`</span>,<span class="st">`</span><span class="at">sex</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ag =</span> <span class="fu">factor</span>(ag, <span class="at">levels =</span> ag_sequence)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ag) <span class="sc">%&gt;%</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'ag'. You can override using the `.groups`
-argument.</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(test0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  ag    sex      count
-  &lt;fct&gt; &lt;chr&gt;    &lt;dbl&gt;
-1 &lt;NA&gt;  Females  87430
-2 &lt;NA&gt;  Males    90930
-3 &lt;NA&gt;  Females  99700
-4 &lt;NA&gt;  Males   103230
-5 &lt;NA&gt;  Females 101380
-6 &lt;NA&gt;  Males   105590</code></pre>
-</div>
-</div>
-</section>
-</div>
-</div>
-</div>
-</section>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section"></h3>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa, ag) <span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'pa'. You can override using the `.groups`
-argument.</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>test1 <span class="ot">&lt;-</span> pop_pa <span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pa, ag) <span class="sc">%&gt;%</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">count_pop</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">pop</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> ag, </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> count_pop) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'pa'. You can override using the `.groups`
-argument.</code></pre>
-</div>
-</div>
-<p>test2 &lt;- pop_pa %&gt;%</p>
-<p>group_by(pa, ag) %&gt;%</p>
-<p>summarise(`count_pop` = sum(`pop`)) %&gt;%</p>
-<p>ungroup() %&gt;%</p>
-<p>pivot_wider(names_from = ag,</p>
-<p>values_from = count_pop) %&gt;%</p>
-<p>mutate(young = rowSums(.[3:6]) + rowSums(.[12])) %&gt;%</p>
-<p>mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+</p>
-<p>rowSums(.[13:15]))%&gt;%</p>
-<p>mutate(`AGED`=rowSums(.[16:21])) %&gt;%</p>
-<p>mutate(`TOTAL`=rowSums(.[3:21])) %&gt;%</p>
-<p>mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)</p>
-<p>/`ECONOMY ACTIVE`) %&gt;%</p>
-<p>select(`PA`, `SZ`, `YOUNG`,</p>
-<p>`ECONOMY ACTIVE`, `AGED`,</p>
-<p>`TOTAL`, `DEPENDENCY`)</p>
-<p>#| eval: false</p>
-<p>mutate(YOUNG = rowSums(.[3:6])</p>
-<p>+rowSums(.[12])) %&gt;%</p>
-<p>mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+</p>
-<p>rowSums(.[13:15]))%&gt;%</p>
-<p>mutate(`AGED`=rowSums(.[16:21])) %&gt;%</p>
-<p>mutate(`TOTAL`=rowSums(.[3:21])) %&gt;%</p>
-<p>mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)</p>
-<p>/`ECONOMY ACTIVE`) %&gt;%</p>
-<p>select(`PA`, `SZ`, `YOUNG`,</p>
-<p>`ECONOMY ACTIVE`, `AGED`,</p>
-<p>`TOTAL`, `DEPENDENCY`)</p>
-</section>
 </section>
 </section>
 <section id="exploratory-data-analysis-eda" class="level1 page-columns page-full">
 <h1>4 EXPLORATORY DATA ANALYSIS (EDA)</h1>
 <section id="plot-pyramid-chart" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="plot-pyramid-chart">4.1 Plot Pyramid Chart</h2>
-<section id="plot-static-pyramid" class="level4 page-columns page-full">
-<h4 class="anchored" data-anchor-id="plot-static-pyramid"><strong>4.1.1 Plot Static Pyramid</strong></h4>
+<section id="plot-a-single-population-pyramid-static" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="plot-a-single-population-pyramid-static"><strong>4.1.1 Plot A Single Population Pyramid (Static)</strong></h4>
 <div class="callout-warning column-page-right callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1442,65 +1400,115 @@ argument.</code></pre>
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>test_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(test0, </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(sex <span class="sc">==</span> <span class="st">"Males"</span>,</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">yes =</span> <span class="sc">-</span>count,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">no =</span> count),</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> ag,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">150000</span>, <span class="dv">150000</span>, <span class="dv">50000</span>), </span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">as.character</span>(</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">50</span>), </span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">50</span>))),</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"k"</span>)) <span class="sc">+</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"pop"</span>, </span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"age"</span>, </span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">'Singapore Age-Sex Population Pyramid 2022'</span>) <span class="sc">+</span></span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, </span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"lightpink"</span>)) </span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>test_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>popPyr_sgp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pop_sgp, </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">ifelse</span>(sex <span class="sc">==</span> <span class="st">"Males"</span>,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">yes =</span> <span class="sc">-</span>count_pop,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">no =</span> count_pop),</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> ag,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> sex)) <span class="sc">+</span> </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">150000</span>, <span class="dv">150000</span>, <span class="dv">50000</span>), </span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">as.character</span>(</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">50</span>), </span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">50</span>))),</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"k"</span>)) <span class="sc">+</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Population"</span>, </span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Age"</span>, </span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">'Singapore Age-Sex Population Pyramid 2022'</span>) <span class="sc">+</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, </span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"lightpink"</span>)) </span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>popPyr_sgp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="th_ex2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="interactive-pyramid-chart" class="level4 page-columns page-full">
-<h4 class="anchored" data-anchor-id="interactive-pyramid-chart"><strong>4.1.2 Interactive Pyramid Chart</strong></h4>
+<section id="plot-a-single-population-pyramid-interactive" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="plot-a-single-population-pyramid-interactive"><strong>4.1.2 Plot A Single Population Pyramid (Interactive)</strong></h4>
 <div class="callout-warning column-page-right callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(test_plot, </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">session =</span> <span class="st">"knitr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-33d0e7203fa3e83c824f" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-33d0e7203fa3e83c824f">{"x":{"data":[{"orientation":"v","width":[87430,99700,101380,113870,140710,164050,153650,157730,157260,98250,150430,151070,144840,126400,98790,57970,44200,23870,16100],"base":[0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55],"x":[43715,137280,237820,345445,472735,625115,783965,939655,1097150,1224905,1349245,1499995,1647950,1783570,1896165,1974545,2025630,2059665,2079650],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"text":["ifelse(sex == \"Males\", yes = -count, no = count):   87430<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   99700<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  101380<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  113870<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  140710<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  164050<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  153650<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  157730<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  157260<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   98250<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  150430<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  151070<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  144840<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):  126400<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   98790<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   57970<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   44200<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   23870<br />ag: NA<br />sex: Females","ifelse(sex == \"Males\", yes = -count, no = count):   16100<br />ag: NA<br />sex: Females"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,182,193,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Females","legendgroup":"Females","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[90930,103230,105590,119750,140120,153560,137650,142600,147570,103490,142920,149430,143770,122090,90330,48520,31280,14140,6870],"base":[0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55,0.55],"x":[-45465,-142545,-246955,-359625,-489560,-636400,-782005,-922130,-1067215,-1192745,-1315950,-1462125,-1608725,-1741655,-1847865,-1917290,-1957190,-1979900,-1990405],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9],"text":["ifelse(sex == \"Males\", yes = -count, no = count):  -90930<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -103230<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -105590<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -119750<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -140120<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -153560<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -137650<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -142600<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -147570<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -103490<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -142920<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -149430<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -143770<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count): -122090<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -90330<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -48520<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -31280<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):  -14140<br />ag: NA<br />sex: Males","ifelse(sex == \"Males\", yes = -count, no = count):   -6870<br />ag: NA<br />sex: Males"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Males","legendgroup":"Males","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":25.5707762557078},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Singapore Age-Sex Population Pyramid 2022","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2197917,2291777],"tickmode":"array","ticktext":["150k","100k","50k","0k","50k","100k","150k"],"tickvals":[-150000,-100000,-50000,0,50000,100000,150000],"categoryorder":"array","categoryarray":["150k","100k","50k","0k","50k","100k","150k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"pop","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,1.6],"tickmode":"array","ticktext":[],"tickvals":[],"categoryorder":"array","categoryarray":[],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"age","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"sex","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"2dd8634c6f3e":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"2dd8634c6f3e","visdat":{"2dd8634c6f3e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
 <p><span style="color:#d69c3c">Remark :</span></p>
 <p><span style="color:#d69c3c">The pyramid above shows the younger generation’s lower percentage, making Singapore’s population structure a constrictive type. That means an ageing population.</span></p>
 <p><span style="color:#d69c3c">By June 2022, 4.07 million residents population with a median age of 42.1,</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span style="color:#d69c3c">which is approximately a 19% increase from the median age of 35.3 back in the year 2002</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p><span style="color:#d69c3c">Also, another observation is from 25 age onward, the female population is higher than the male population. As of 2020, Singapore’s adjusted gender pay gap (GPG) is at 6%</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p><span style="color:#d69c3c">Measures and new schemes may be required to further narrow the gender pay gap and encourage the birth rate or may have long-lasting socio-economic repercussions.</span></p>
 </div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(popPyr_sgp, </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">session =</span> <span class="st">"knitr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3cc5b89d7652f78410db" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-3cc5b89d7652f78410db">{"x":{"data":[{"orientation":"v","width":[87430,98250,99700,101380,113870,140710,164050,153650,157730,157260,150430,151070,144840,126400,98790,57970,44200,16100,23870],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55,15.55,16.55,17.55,18.55],"x":[43715,49125,49850,50690,56935,70355,82025,76825,78865,78630,75215,75535,72420,63200,49395,28985,22100,8050,11935],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   87430<br />ag: 0 to 4<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   98250<br />ag: 5 to 9<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   99700<br />ag: 10 to 14<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  101380<br />ag: 15 to 19<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  113870<br />ag: 20 to 24<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  140710<br />ag: 25 to 29<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  164050<br />ag: 30 to 34<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  153650<br />ag: 35 to 39<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  157730<br />ag: 40 to 44<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  157260<br />ag: 45 to 49<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  150430<br />ag: 50 to 54<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  151070<br />ag: 55 to 59<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  144840<br />ag: 60 to 64<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  126400<br />ag: 65 to 69<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   98790<br />ag: 70 to 74<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   57970<br />ag: 75 to 79<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   44200<br />ag: 80 to 84<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   16100<br />ag: 90 and over<br />sex: Females","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   23870<br />ag: NA<br />sex: Females"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,182,193,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Females","legendgroup":"Females","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[90930,103490,103230,105590,119750,140120,153560,137650,142600,147570,142920,149430,143770,122090,90330,48520,31280,6870,14140],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55,15.55,16.55,17.55,18.55],"x":[-45465,-51745,-51615,-52795,-59875,-70060,-76780,-68825,-71300,-73785,-71460,-74715,-71885,-61045,-45165,-24260,-15640,-3435,-7070],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  -90930<br />ag: 0 to 4<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -103490<br />ag: 5 to 9<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -103230<br />ag: 10 to 14<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -105590<br />ag: 15 to 19<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -119750<br />ag: 20 to 24<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -140120<br />ag: 25 to 29<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -153560<br />ag: 30 to 34<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -137650<br />ag: 35 to 39<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -142600<br />ag: 40 to 44<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -147570<br />ag: 45 to 49<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -142920<br />ag: 50 to 54<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -149430<br />ag: 55 to 59<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -143770<br />ag: 60 to 64<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop): -122090<br />ag: 65 to 69<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  -90330<br />ag: 70 to 74<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  -48520<br />ag: 75 to 79<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  -31280<br />ag: 80 to 84<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):   -6870<br />ag: 90 and over<br />sex: Males","ifelse(sex == \"Males\", yes = -count_pop, no = count_pop):  -14140<br />ag: NA<br />sex: Males"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(173,216,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Males","legendgroup":"Males","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":89.8630136986302},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Singapore Age-Sex Population Pyramid 2022","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-169440.5,179930.5],"tickmode":"array","ticktext":["150k","100k","50k","0k","50k","100k","150k"],"tickvals":[-150000,-100000,-50000,0,50000,100000,150000],"categoryorder":"array","categoryarray":["150k","100k","50k","0k","50k","100k","150k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Population","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,19.6],"tickmode":"array","ticktext":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"categoryorder":"array","categoryarray":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Age","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"sex","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"9cc0b24351":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"9cc0b24351","visdat":{"9cc0b24351":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>4.1.3 <strong>Plot A Single Population Pyramid (Static)</strong></p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>popPyr_t9 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data =</span> <span class="fu">subset</span>(t9_filtered, </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                         sex <span class="sc">==</span> <span class="st">"Males"</span>), </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> ag, </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> <span class="sc">-</span>count_pop, </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> pa), </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat =</span> <span class="st">"identity"</span>, </span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"orange"</span>) <span class="sc">+</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">data =</span> <span class="fu">subset</span>(t9_filtered, </span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>                         sex <span class="sc">==</span> <span class="st">"Females"</span>), </span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> ag, </span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> count_pop, </span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> pa), </span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat =</span> <span class="st">"identity"</span>, </span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">150000</span>, <span class="dv">150000</span>, <span class="dv">50000</span>), </span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">as.character</span>(</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">50</span>), </span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">50</span>))),</span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"k"</span>)) <span class="sc">+</span></span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>pa, <span class="at">drop =</span> <span class="cn">FALSE</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Population"</span>, </span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Age"</span>, </span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">'Singapore Age-Sex Population Pyramid 2022'</span>) <span class="sc">+</span></span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, </span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"lightpink"</span>)) </span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a>popPyr_t9</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="th_ex2_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(popPyr_t9, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">session =</span> <span class="st">"knitr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a5b6e83de8c092a2c9bf" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a5b6e83de8c092a2c9bf">{"x":{"data":[{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-5090,-5960,-6440,-6770,-7860,-9060,-9750,-8250,-8860,-9880,-9880,-10080,-10580,-9470,-7920,-4470,-2740,-660,-1300],"x":[5090,5960,6440,6770,7860,9060,9750,8250,8860,9880,9880,10080,10580,9470,7920,4470,2740,660,1300],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  5090<br />pa: orange","ag: 5 to 9<br />-count_pop:  5960<br />pa: orange","ag: 10 to 14<br />-count_pop:  6440<br />pa: orange","ag: 15 to 19<br />-count_pop:  6770<br />pa: orange","ag: 20 to 24<br />-count_pop:  7860<br />pa: orange","ag: 25 to 29<br />-count_pop:  9060<br />pa: orange","ag: 30 to 34<br />-count_pop:  9750<br />pa: orange","ag: 35 to 39<br />-count_pop:  8250<br />pa: orange","ag: 40 to 44<br />-count_pop:  8860<br />pa: orange","ag: 45 to 49<br />-count_pop:  9880<br />pa: orange","ag: 50 to 54<br />-count_pop:  9880<br />pa: orange","ag: 55 to 59<br />-count_pop: 10080<br />pa: orange","ag: 60 to 64<br />-count_pop: 10580<br />pa: orange","ag: 65 to 69<br />-count_pop:  9470<br />pa: orange","ag: 70 to 74<br />-count_pop:  7920<br />pa: orange","ag: 75 to 79<br />-count_pop:  4470<br />pa: orange","ag: 80 to 84<br />-count_pop:  2740<br />pa: orange","ag: 90 and over<br />-count_pop:   660<br />pa: orange","ag: NA<br />-count_pop:  1300<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-4260,-4690,-4880,-5590,-7270,-8700,-7390,-6200,-5920,-6250,-6860,-8340,-7120,-5200,-3170,-1480,-800,-150,-380],"x":[4260,4690,4880,5590,7270,8700,7390,6200,5920,6250,6860,8340,7120,5200,3170,1480,800,150,380],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  4260<br />pa: orange","ag: 5 to 9<br />-count_pop:  4690<br />pa: orange","ag: 10 to 14<br />-count_pop:  4880<br />pa: orange","ag: 15 to 19<br />-count_pop:  5590<br />pa: orange","ag: 20 to 24<br />-count_pop:  7270<br />pa: orange","ag: 25 to 29<br />-count_pop:  8700<br />pa: orange","ag: 30 to 34<br />-count_pop:  7390<br />pa: orange","ag: 35 to 39<br />-count_pop:  6200<br />pa: orange","ag: 40 to 44<br />-count_pop:  5920<br />pa: orange","ag: 45 to 49<br />-count_pop:  6250<br />pa: orange","ag: 50 to 54<br />-count_pop:  6860<br />pa: orange","ag: 55 to 59<br />-count_pop:  8340<br />pa: orange","ag: 60 to 64<br />-count_pop:  7120<br />pa: orange","ag: 65 to 69<br />-count_pop:  5200<br />pa: orange","ag: 70 to 74<br />-count_pop:  3170<br />pa: orange","ag: 75 to 79<br />-count_pop:  1480<br />pa: orange","ag: 80 to 84<br />-count_pop:   800<br />pa: orange","ag: 90 and over<br />-count_pop:   150<br />pa: orange","ag: NA<br />-count_pop:   380<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-4520,-4880,-4910,-5410,-6740,-8460,-8990,-7390,-7180,-7680,-7480,-8940,-9400,-7990,-5510,-2900,-1770,-330,-780],"x":[4520,4880,4910,5410,6740,8460,8990,7390,7180,7680,7480,8940,9400,7990,5510,2900,1770,330,780],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  4520<br />pa: orange","ag: 5 to 9<br />-count_pop:  4880<br />pa: orange","ag: 10 to 14<br />-count_pop:  4910<br />pa: orange","ag: 15 to 19<br />-count_pop:  5410<br />pa: orange","ag: 20 to 24<br />-count_pop:  6740<br />pa: orange","ag: 25 to 29<br />-count_pop:  8460<br />pa: orange","ag: 30 to 34<br />-count_pop:  8990<br />pa: orange","ag: 35 to 39<br />-count_pop:  7390<br />pa: orange","ag: 40 to 44<br />-count_pop:  7180<br />pa: orange","ag: 45 to 49<br />-count_pop:  7680<br />pa: orange","ag: 50 to 54<br />-count_pop:  7480<br />pa: orange","ag: 55 to 59<br />-count_pop:  8940<br />pa: orange","ag: 60 to 64<br />-count_pop:  9400<br />pa: orange","ag: 65 to 69<br />-count_pop:  7990<br />pa: orange","ag: 70 to 74<br />-count_pop:  5510<br />pa: orange","ag: 75 to 79<br />-count_pop:  2900<br />pa: orange","ag: 80 to 84<br />-count_pop:  1770<br />pa: orange","ag: 90 and over<br />-count_pop:   330<br />pa: orange","ag: NA<br />-count_pop:   780<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-5010,-6230,-7210,-7860,-8640,-9590,-9320,-8370,-9610,-10260,-10060,-9990,-9110,-7830,-5660,-2670,-1470,-200,-610],"x":[5010,6230,7210,7860,8640,9590,9320,8370,9610,10260,10060,9990,9110,7830,5660,2670,1470,200,610],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  5010<br />pa: orange","ag: 5 to 9<br />-count_pop:  6230<br />pa: orange","ag: 10 to 14<br />-count_pop:  7210<br />pa: orange","ag: 15 to 19<br />-count_pop:  7860<br />pa: orange","ag: 20 to 24<br />-count_pop:  8640<br />pa: orange","ag: 25 to 29<br />-count_pop:  9590<br />pa: orange","ag: 30 to 34<br />-count_pop:  9320<br />pa: orange","ag: 35 to 39<br />-count_pop:  8370<br />pa: orange","ag: 40 to 44<br />-count_pop:  9610<br />pa: orange","ag: 45 to 49<br />-count_pop: 10260<br />pa: orange","ag: 50 to 54<br />-count_pop: 10060<br />pa: orange","ag: 55 to 59<br />-count_pop:  9990<br />pa: orange","ag: 60 to 64<br />-count_pop:  9110<br />pa: orange","ag: 65 to 69<br />-count_pop:  7830<br />pa: orange","ag: 70 to 74<br />-count_pop:  5660<br />pa: orange","ag: 75 to 79<br />-count_pop:  2670<br />pa: orange","ag: 80 to 84<br />-count_pop:  1470<br />pa: orange","ag: 90 and over<br />-count_pop:   200<br />pa: orange","ag: NA<br />-count_pop:   610<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-7090,-8240,-6700,-4950,-4170,-4110,-7330,-9640,-9630,-8380,-5890,-4700,-3570,-2880,-2190,-1140,-670,-80,-240],"x":[7090,8240,6700,4950,4170,4110,7330,9640,9630,8380,5890,4700,3570,2880,2190,1140,670,80,240],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  7090<br />pa: orange","ag: 5 to 9<br />-count_pop:  8240<br />pa: orange","ag: 10 to 14<br />-count_pop:  6700<br />pa: orange","ag: 15 to 19<br />-count_pop:  4950<br />pa: orange","ag: 20 to 24<br />-count_pop:  4170<br />pa: orange","ag: 25 to 29<br />-count_pop:  4110<br />pa: orange","ag: 30 to 34<br />-count_pop:  7330<br />pa: orange","ag: 35 to 39<br />-count_pop:  9640<br />pa: orange","ag: 40 to 44<br />-count_pop:  9630<br />pa: orange","ag: 45 to 49<br />-count_pop:  8380<br />pa: orange","ag: 50 to 54<br />-count_pop:  5890<br />pa: orange","ag: 55 to 59<br />-count_pop:  4700<br />pa: orange","ag: 60 to 64<br />-count_pop:  3570<br />pa: orange","ag: 65 to 69<br />-count_pop:  2880<br />pa: orange","ag: 70 to 74<br />-count_pop:  2190<br />pa: orange","ag: 75 to 79<br />-count_pop:  1140<br />pa: orange","ag: 80 to 84<br />-count_pop:   670<br />pa: orange","ag: 90 and over<br />-count_pop:    80<br />pa: orange","ag: NA<br />-count_pop:   240<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-7400,-8900,-8180,-7290,-6950,-7200,-9360,-10890,-11230,-10460,-8680,-7780,-7010,-5670,-3780,-1860,-1090,-150,-350],"x":[7400,8900,8180,7290,6950,7200,9360,10890,11230,10460,8680,7780,7010,5670,3780,1860,1090,150,350],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  7400<br />pa: orange","ag: 5 to 9<br />-count_pop:  8900<br />pa: orange","ag: 10 to 14<br />-count_pop:  8180<br />pa: orange","ag: 15 to 19<br />-count_pop:  7290<br />pa: orange","ag: 20 to 24<br />-count_pop:  6950<br />pa: orange","ag: 25 to 29<br />-count_pop:  7200<br />pa: orange","ag: 30 to 34<br />-count_pop:  9360<br />pa: orange","ag: 35 to 39<br />-count_pop: 10890<br />pa: orange","ag: 40 to 44<br />-count_pop: 11230<br />pa: orange","ag: 45 to 49<br />-count_pop: 10460<br />pa: orange","ag: 50 to 54<br />-count_pop:  8680<br />pa: orange","ag: 55 to 59<br />-count_pop:  7780<br />pa: orange","ag: 60 to 64<br />-count_pop:  7010<br />pa: orange","ag: 65 to 69<br />-count_pop:  5670<br />pa: orange","ag: 70 to 74<br />-count_pop:  3780<br />pa: orange","ag: 75 to 79<br />-count_pop:  1860<br />pa: orange","ag: 80 to 84<br />-count_pop:  1090<br />pa: orange","ag: 90 and over<br />-count_pop:   150<br />pa: orange","ag: NA<br />-count_pop:   350<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-6540,-6430,-6210,-6330,-8040,-10500,-11690,-9130,-8450,-8010,-7910,-9480,-10350,-9140,-6140,-2720,-1550,-300,-740],"x":[6540,6430,6210,6330,8040,10500,11690,9130,8450,8010,7910,9480,10350,9140,6140,2720,1550,300,740],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  6540<br />pa: orange","ag: 5 to 9<br />-count_pop:  6430<br />pa: orange","ag: 10 to 14<br />-count_pop:  6210<br />pa: orange","ag: 15 to 19<br />-count_pop:  6330<br />pa: orange","ag: 20 to 24<br />-count_pop:  8040<br />pa: orange","ag: 25 to 29<br />-count_pop: 10500<br />pa: orange","ag: 30 to 34<br />-count_pop: 11690<br />pa: orange","ag: 35 to 39<br />-count_pop:  9130<br />pa: orange","ag: 40 to 44<br />-count_pop:  8450<br />pa: orange","ag: 45 to 49<br />-count_pop:  8010<br />pa: orange","ag: 50 to 54<br />-count_pop:  7910<br />pa: orange","ag: 55 to 59<br />-count_pop:  9480<br />pa: orange","ag: 60 to 64<br />-count_pop: 10350<br />pa: orange","ag: 65 to 69<br />-count_pop:  9140<br />pa: orange","ag: 70 to 74<br />-count_pop:  6140<br />pa: orange","ag: 75 to 79<br />-count_pop:  2720<br />pa: orange","ag: 80 to 84<br />-count_pop:  1550<br />pa: orange","ag: 90 and over<br />-count_pop:   300<br />pa: orange","ag: NA<br />-count_pop:   740<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-5670,-6320,-6860,-8050,-10390,-11100,-9450,-8020,-8310,-8920,-9790,-10800,-8880,-6450,-3940,-1850,-1200,-210,-500],"x":[5670,6320,6860,8050,10390,11100,9450,8020,8310,8920,9790,10800,8880,6450,3940,1850,1200,210,500],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  5670<br />pa: orange","ag: 5 to 9<br />-count_pop:  6320<br />pa: orange","ag: 10 to 14<br />-count_pop:  6860<br />pa: orange","ag: 15 to 19<br />-count_pop:  8050<br />pa: orange","ag: 20 to 24<br />-count_pop: 10390<br />pa: orange","ag: 25 to 29<br />-count_pop: 11100<br />pa: orange","ag: 30 to 34<br />-count_pop:  9450<br />pa: orange","ag: 35 to 39<br />-count_pop:  8020<br />pa: orange","ag: 40 to 44<br />-count_pop:  8310<br />pa: orange","ag: 45 to 49<br />-count_pop:  8920<br />pa: orange","ag: 50 to 54<br />-count_pop:  9790<br />pa: orange","ag: 55 to 59<br />-count_pop: 10800<br />pa: orange","ag: 60 to 64<br />-count_pop:  8880<br />pa: orange","ag: 65 to 69<br />-count_pop:  6450<br />pa: orange","ag: 70 to 74<br />-count_pop:  3940<br />pa: orange","ag: 75 to 79<br />-count_pop:  1850<br />pa: orange","ag: 80 to 84<br />-count_pop:  1200<br />pa: orange","ag: 90 and over<br />-count_pop:   210<br />pa: orange","ag: NA<br />-count_pop:   500<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[-5570,-6100,-5680,-5570,-6470,-7760,-9220,-8440,-8190,-7720,-7330,-8180,-8200,-6670,-4550,-2140,-1240,-190,-530],"x":[5570,6100,5680,5570,6470,7760,9220,8440,8190,7720,7330,8180,8200,6670,4550,2140,1240,190,530],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />-count_pop:  5570<br />pa: orange","ag: 5 to 9<br />-count_pop:  6100<br />pa: orange","ag: 10 to 14<br />-count_pop:  5680<br />pa: orange","ag: 15 to 19<br />-count_pop:  5570<br />pa: orange","ag: 20 to 24<br />-count_pop:  6470<br />pa: orange","ag: 25 to 29<br />-count_pop:  7760<br />pa: orange","ag: 30 to 34<br />-count_pop:  9220<br />pa: orange","ag: 35 to 39<br />-count_pop:  8440<br />pa: orange","ag: 40 to 44<br />-count_pop:  8190<br />pa: orange","ag: 45 to 49<br />-count_pop:  7720<br />pa: orange","ag: 50 to 54<br />-count_pop:  7330<br />pa: orange","ag: 55 to 59<br />-count_pop:  8180<br />pa: orange","ag: 60 to 64<br />-count_pop:  8200<br />pa: orange","ag: 65 to 69<br />-count_pop:  6670<br />pa: orange","ag: 70 to 74<br />-count_pop:  4550<br />pa: orange","ag: 75 to 79<br />-count_pop:  2140<br />pa: orange","ag: 80 to 84<br />-count_pop:  1240<br />pa: orange","ag: 90 and over<br />-count_pop:   190<br />pa: orange","ag: NA<br />-count_pop:   530<br />pa: orange"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,165,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[4970,5700,6220,6660,7310,8820,10050,9380,10330,10850,10170,10570,11070,10300,8710,5180,3750,1440,2140],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  4970<br />pa: steelblue","ag: 5 to 9<br />count_pop:  5700<br />pa: steelblue","ag: 10 to 14<br />count_pop:  6220<br />pa: steelblue","ag: 15 to 19<br />count_pop:  6660<br />pa: steelblue","ag: 20 to 24<br />count_pop:  7310<br />pa: steelblue","ag: 25 to 29<br />count_pop:  8820<br />pa: steelblue","ag: 30 to 34<br />count_pop: 10050<br />pa: steelblue","ag: 35 to 39<br />count_pop:  9380<br />pa: steelblue","ag: 40 to 44<br />count_pop: 10330<br />pa: steelblue","ag: 45 to 49<br />count_pop: 10850<br />pa: steelblue","ag: 50 to 54<br />count_pop: 10170<br />pa: steelblue","ag: 55 to 59<br />count_pop: 10570<br />pa: steelblue","ag: 60 to 64<br />count_pop: 11070<br />pa: steelblue","ag: 65 to 69<br />count_pop: 10300<br />pa: steelblue","ag: 70 to 74<br />count_pop:  8710<br />pa: steelblue","ag: 75 to 79<br />count_pop:  5180<br />pa: steelblue","ag: 80 to 84<br />count_pop:  3750<br />pa: steelblue","ag: 90 and over<br />count_pop:  1440<br />pa: steelblue","ag: NA<br />count_pop:  2140<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[4080,4510,4670,5310,6820,8250,7550,6530,6550,6760,7900,8270,6480,4780,3140,1690,1250,430,710],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  4080<br />pa: steelblue","ag: 5 to 9<br />count_pop:  4510<br />pa: steelblue","ag: 10 to 14<br />count_pop:  4670<br />pa: steelblue","ag: 15 to 19<br />count_pop:  5310<br />pa: steelblue","ag: 20 to 24<br />count_pop:  6820<br />pa: steelblue","ag: 25 to 29<br />count_pop:  8250<br />pa: steelblue","ag: 30 to 34<br />count_pop:  7550<br />pa: steelblue","ag: 35 to 39<br />count_pop:  6530<br />pa: steelblue","ag: 40 to 44<br />count_pop:  6550<br />pa: steelblue","ag: 45 to 49<br />count_pop:  6760<br />pa: steelblue","ag: 50 to 54<br />count_pop:  7900<br />pa: steelblue","ag: 55 to 59<br />count_pop:  8270<br />pa: steelblue","ag: 60 to 64<br />count_pop:  6480<br />pa: steelblue","ag: 65 to 69<br />count_pop:  4780<br />pa: steelblue","ag: 70 to 74<br />count_pop:  3140<br />pa: steelblue","ag: 75 to 79<br />count_pop:  1690<br />pa: steelblue","ag: 80 to 84<br />count_pop:  1250<br />pa: steelblue","ag: 90 and over<br />count_pop:   430<br />pa: steelblue","ag: NA<br />count_pop:   710<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[4430,4960,4920,5190,6330,8220,9290,8170,7940,8100,8280,9170,9350,8040,5860,3320,2470,900,1340],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  4430<br />pa: steelblue","ag: 5 to 9<br />count_pop:  4960<br />pa: steelblue","ag: 10 to 14<br />count_pop:  4920<br />pa: steelblue","ag: 15 to 19<br />count_pop:  5190<br />pa: steelblue","ag: 20 to 24<br />count_pop:  6330<br />pa: steelblue","ag: 25 to 29<br />count_pop:  8220<br />pa: steelblue","ag: 30 to 34<br />count_pop:  9290<br />pa: steelblue","ag: 35 to 39<br />count_pop:  8170<br />pa: steelblue","ag: 40 to 44<br />count_pop:  7940<br />pa: steelblue","ag: 45 to 49<br />count_pop:  8100<br />pa: steelblue","ag: 50 to 54<br />count_pop:  8280<br />pa: steelblue","ag: 55 to 59<br />count_pop:  9170<br />pa: steelblue","ag: 60 to 64<br />count_pop:  9350<br />pa: steelblue","ag: 65 to 69<br />count_pop:  8040<br />pa: steelblue","ag: 70 to 74<br />count_pop:  5860<br />pa: steelblue","ag: 75 to 79<br />count_pop:  3320<br />pa: steelblue","ag: 80 to 84<br />count_pop:  2470<br />pa: steelblue","ag: 90 and over<br />count_pop:   900<br />pa: steelblue","ag: NA<br />count_pop:  1340<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[4820,5930,6980,7400,8030,9290,9450,9360,10500,9990,9560,9320,8650,7770,5520,2890,1870,610,900],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  4820<br />pa: steelblue","ag: 5 to 9<br />count_pop:  5930<br />pa: steelblue","ag: 10 to 14<br />count_pop:  6980<br />pa: steelblue","ag: 15 to 19<br />count_pop:  7400<br />pa: steelblue","ag: 20 to 24<br />count_pop:  8030<br />pa: steelblue","ag: 25 to 29<br />count_pop:  9290<br />pa: steelblue","ag: 30 to 34<br />count_pop:  9450<br />pa: steelblue","ag: 35 to 39<br />count_pop:  9360<br />pa: steelblue","ag: 40 to 44<br />count_pop: 10500<br />pa: steelblue","ag: 45 to 49<br />count_pop:  9990<br />pa: steelblue","ag: 50 to 54<br />count_pop:  9560<br />pa: steelblue","ag: 55 to 59<br />count_pop:  9320<br />pa: steelblue","ag: 60 to 64<br />count_pop:  8650<br />pa: steelblue","ag: 65 to 69<br />count_pop:  7770<br />pa: steelblue","ag: 70 to 74<br />count_pop:  5520<br />pa: steelblue","ag: 75 to 79<br />count_pop:  2890<br />pa: steelblue","ag: 80 to 84<br />count_pop:  1870<br />pa: steelblue","ag: 90 and over<br />count_pop:   610<br />pa: steelblue","ag: NA<br />count_pop:   900<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6940,7660,6070,4860,3900,4890,9370,11140,9820,7770,5370,4340,3680,3260,2660,1370,880,270,420],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  6940<br />pa: steelblue","ag: 5 to 9<br />count_pop:  7660<br />pa: steelblue","ag: 10 to 14<br />count_pop:  6070<br />pa: steelblue","ag: 15 to 19<br />count_pop:  4860<br />pa: steelblue","ag: 20 to 24<br />count_pop:  3900<br />pa: steelblue","ag: 25 to 29<br />count_pop:  4890<br />pa: steelblue","ag: 30 to 34<br />count_pop:  9370<br />pa: steelblue","ag: 35 to 39<br />count_pop: 11140<br />pa: steelblue","ag: 40 to 44<br />count_pop:  9820<br />pa: steelblue","ag: 45 to 49<br />count_pop:  7770<br />pa: steelblue","ag: 50 to 54<br />count_pop:  5370<br />pa: steelblue","ag: 55 to 59<br />count_pop:  4340<br />pa: steelblue","ag: 60 to 64<br />count_pop:  3680<br />pa: steelblue","ag: 65 to 69<br />count_pop:  3260<br />pa: steelblue","ag: 70 to 74<br />count_pop:  2660<br />pa: steelblue","ag: 75 to 79<br />count_pop:  1370<br />pa: steelblue","ag: 80 to 84<br />count_pop:   880<br />pa: steelblue","ag: 90 and over<br />count_pop:   270<br />pa: steelblue","ag: NA<br />count_pop:   420<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6900,8380,7880,6940,6640,7570,10980,12520,12140,10600,8490,7520,7250,5830,4110,2290,1460,570,820],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  6900<br />pa: steelblue","ag: 5 to 9<br />count_pop:  8380<br />pa: steelblue","ag: 10 to 14<br />count_pop:  7880<br />pa: steelblue","ag: 15 to 19<br />count_pop:  6940<br />pa: steelblue","ag: 20 to 24<br />count_pop:  6640<br />pa: steelblue","ag: 25 to 29<br />count_pop:  7570<br />pa: steelblue","ag: 30 to 34<br />count_pop: 10980<br />pa: steelblue","ag: 35 to 39<br />count_pop: 12520<br />pa: steelblue","ag: 40 to 44<br />count_pop: 12140<br />pa: steelblue","ag: 45 to 49<br />count_pop: 10600<br />pa: steelblue","ag: 50 to 54<br />count_pop:  8490<br />pa: steelblue","ag: 55 to 59<br />count_pop:  7520<br />pa: steelblue","ag: 60 to 64<br />count_pop:  7250<br />pa: steelblue","ag: 65 to 69<br />count_pop:  5830<br />pa: steelblue","ag: 70 to 74<br />count_pop:  4110<br />pa: steelblue","ag: 75 to 79<br />count_pop:  2290<br />pa: steelblue","ag: 80 to 84<br />count_pop:  1460<br />pa: steelblue","ag: 90 and over<br />count_pop:   570<br />pa: steelblue","ag: NA<br />count_pop:   820<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[6300,6010,5680,5950,7580,10580,11830,9600,9090,8540,9400,10810,11310,9340,6200,3190,2420,890,1310],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  6300<br />pa: steelblue","ag: 5 to 9<br />count_pop:  6010<br />pa: steelblue","ag: 10 to 14<br />count_pop:  5680<br />pa: steelblue","ag: 15 to 19<br />count_pop:  5950<br />pa: steelblue","ag: 20 to 24<br />count_pop:  7580<br />pa: steelblue","ag: 25 to 29<br />count_pop: 10580<br />pa: steelblue","ag: 30 to 34<br />count_pop: 11830<br />pa: steelblue","ag: 35 to 39<br />count_pop:  9600<br />pa: steelblue","ag: 40 to 44<br />count_pop:  9090<br />pa: steelblue","ag: 45 to 49<br />count_pop:  8540<br />pa: steelblue","ag: 50 to 54<br />count_pop:  9400<br />pa: steelblue","ag: 55 to 59<br />count_pop: 10810<br />pa: steelblue","ag: 60 to 64<br />count_pop: 11310<br />pa: steelblue","ag: 65 to 69<br />count_pop:  9340<br />pa: steelblue","ag: 70 to 74<br />count_pop:  6200<br />pa: steelblue","ag: 75 to 79<br />count_pop:  3190<br />pa: steelblue","ag: 80 to 84<br />count_pop:  2420<br />pa: steelblue","ag: 90 and over<br />count_pop:   890<br />pa: steelblue","ag: NA<br />count_pop:  1310<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[5430,5950,6530,7360,9620,10340,9410,8600,8940,9560,10790,10030,8240,5910,4010,2210,1630,440,800],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  5430<br />pa: steelblue","ag: 5 to 9<br />count_pop:  5950<br />pa: steelblue","ag: 10 to 14<br />count_pop:  6530<br />pa: steelblue","ag: 15 to 19<br />count_pop:  7360<br />pa: steelblue","ag: 20 to 24<br />count_pop:  9620<br />pa: steelblue","ag: 25 to 29<br />count_pop: 10340<br />pa: steelblue","ag: 30 to 34<br />count_pop:  9410<br />pa: steelblue","ag: 35 to 39<br />count_pop:  8600<br />pa: steelblue","ag: 40 to 44<br />count_pop:  8940<br />pa: steelblue","ag: 45 to 49<br />count_pop:  9560<br />pa: steelblue","ag: 50 to 54<br />count_pop: 10790<br />pa: steelblue","ag: 55 to 59<br />count_pop: 10030<br />pa: steelblue","ag: 60 to 64<br />count_pop:  8240<br />pa: steelblue","ag: 65 to 69<br />count_pop:  5910<br />pa: steelblue","ag: 70 to 74<br />count_pop:  4010<br />pa: steelblue","ag: 75 to 79<br />count_pop:  2210<br />pa: steelblue","ag: 80 to 84<br />count_pop:  1630<br />pa: steelblue","ag: 90 and over<br />count_pop:   440<br />pa: steelblue","ag: NA<br />count_pop:   800<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[5240,5820,5320,5260,6010,7730,9770,9390,8480,8010,7560,8680,8430,6790,4790,2610,1850,550,920],"y":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"text":["ag: 0 to 4<br />count_pop:  5240<br />pa: steelblue","ag: 5 to 9<br />count_pop:  5820<br />pa: steelblue","ag: 10 to 14<br />count_pop:  5320<br />pa: steelblue","ag: 15 to 19<br />count_pop:  5260<br />pa: steelblue","ag: 20 to 24<br />count_pop:  6010<br />pa: steelblue","ag: 25 to 29<br />count_pop:  7730<br />pa: steelblue","ag: 30 to 34<br />count_pop:  9770<br />pa: steelblue","ag: 35 to 39<br />count_pop:  9390<br />pa: steelblue","ag: 40 to 44<br />count_pop:  8480<br />pa: steelblue","ag: 45 to 49<br />count_pop:  8010<br />pa: steelblue","ag: 50 to 54<br />count_pop:  7560<br />pa: steelblue","ag: 55 to 59<br />count_pop:  8680<br />pa: steelblue","ag: 60 to 64<br />count_pop:  8430<br />pa: steelblue","ag: 65 to 69<br />count_pop:  6790<br />pa: steelblue","ag: 70 to 74<br />count_pop:  4790<br />pa: steelblue","ag: 75 to 79<br />count_pop:  2610<br />pa: steelblue","ag: 80 to 84<br />count_pop:  1850<br />pa: steelblue","ag: 90 and over<br />count_pop:   550<br />pa: steelblue","ag: NA<br />count_pop:   920<br />pa: steelblue"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":55.4520547945205,"r":7.30593607305936,"b":40.1826484018265,"l":89.8630136986302},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Singapore Age-Sex Population Pyramid 2022","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,0.329256360078278],"automargin":true,"type":"linear","autorange":false,"range":[-12900.5,13730.5],"tickmode":"array","ticktext":["0k"],"tickvals":[0],"categoryorder":"array","categoryarray":["0k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"annotations":[{"text":"Age","x":0.5,"y":0,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis","yshift":-21.9178082191781},{"text":"Population","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-74.5205479452055},{"text":"Bedok","x":0.164628180039139,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Choa Chu Kang","x":0.5,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Hougang","x":0.835371819960861,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Jurong West","x":0.164628180039139,"y":0.651826484018265,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Punggol","x":0.5,"y":0.651826484018265,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Sengkang","x":0.835371819960861,"y":0.651826484018265,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Tampines","x":0.164628180039139,"y":0.318493150684932,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Woodlands","x":0.5,"y":0.318493150684932,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Yishun","x":0.835371819960861,"y":0.318493150684932,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"yaxis":{"domain":[0.681506849315069,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,19.6],"tickmode":"array","ticktext":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"categoryorder":"array","categoryarray":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.329256360078278,"y0":0.681506849315069,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.329256360078278,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.337410306588389,"x1":0.662589693411611,"y0":0.681506849315069,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.337410306588389,"x1":0.662589693411611,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.670743639921722,"x1":1,"y0":0.681506849315069,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.670743639921722,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.329256360078278,"y0":0.348173515981735,"y1":0.651826484018265},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.329256360078278,"y0":0,"y1":23.37899543379,"yanchor":0.651826484018265,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.337410306588389,"x1":0.662589693411611,"y0":0.348173515981735,"y1":0.651826484018265},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.337410306588389,"x1":0.662589693411611,"y0":0,"y1":23.37899543379,"yanchor":0.651826484018265,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.670743639921722,"x1":1,"y0":0.348173515981735,"y1":0.651826484018265},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.670743639921722,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.651826484018265,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.329256360078278,"y0":0,"y1":0.318493150684932},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.329256360078278,"y0":0,"y1":23.37899543379,"yanchor":0.318493150684932,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.337410306588389,"x1":0.662589693411611,"y0":0,"y1":0.318493150684932},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.337410306588389,"x1":0.662589693411611,"y0":0,"y1":23.37899543379,"yanchor":0.318493150684932,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.670743639921722,"x1":1,"y0":0,"y1":0.318493150684932},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.670743639921722,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.318493150684932,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[-12900.5,13730.5],"tickmode":"array","ticktext":["0k"],"tickvals":[0],"categoryorder":"array","categoryarray":["0k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.337410306588389,0.662589693411611],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"xaxis3":{"type":"linear","autorange":false,"range":[-12900.5,13730.5],"tickmode":"array","ticktext":["0k"],"tickvals":[0],"categoryorder":"array","categoryarray":["0k"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.670743639921722,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[0.4,19.6],"tickmode":"array","ticktext":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"categoryorder":"array","categoryarray":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.348173515981735,0.651826484018265],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[0.4,19.6],"tickmode":"array","ticktext":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"categoryorder":"array","categoryarray":["0 to 4","5 to 9","10 to 14","15 to 19","20 to 24","25 to 29","30 to 34","35 to 39","40 to 44","45 to 49","50 to 54","55 to 59","60 to 64","65 to 69","70 to 74","75 to 79","80 to 84","90 and over"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.318493150684932],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"9cc050d524f8":{"x":{},"y":{},"fill":{},"type":"bar"},"9cc06e4b64d2":{"x":{},"y":{},"fill":{}}},"cur_data":"9cc050d524f8","visdat":{"9cc050d524f8":["function (y) ","x"],"9cc06e4b64d2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

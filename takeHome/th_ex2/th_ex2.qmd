@@ -34,7 +34,7 @@ Because of that, the order in the chart will be incorrect.
 
 ## 1.1 Task Instruction
 
-I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn\'t work, why those things don\'t work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!
+I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!
 
 ==========
 
@@ -48,7 +48,7 @@ In this take-home exercise, you are required to:
 
 -   remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.
 
-The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn\'t work, why those things don\'t work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.
+The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.
 
 submission instructions
 
@@ -129,7 +129,7 @@ Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.
 Data
 
 | Source(s) | Urban Redevelopment Authority                                        |
-|:----------|----------------------------------------------------------------------|
+|:-------------------|----------------------------------------------------|
 | Licence   | [Singapore Open Data Licence](https://data.gov.sg/open-data-licence) |
 
 https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web
@@ -166,6 +166,12 @@ skim(pop_attribute)
 [Remarks :]{style="color:#d69c3c"}
 
 [Preliminary data interpretation - based on 2022 consensus data, .]{style="color:#d69c3c"}
+
+#### 3.2.1.3 inspect values
+
+```{r}
+unique(pop_attribute$AG)
+```
 :::
 
 ### 3.2.2 Import Boundary Data
@@ -175,10 +181,20 @@ skim(pop_attribute)
 bdy_web <- st_read(dsn = "data/geospatial/web_shp", 
                 layer = "MP14_PLNG_AREA_WEB_PL")
 ```
+:::
 
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 ```{r}
 bdy_noSea <- st_read(dsn = "data/geospatial/noSea_shp", 
                 layer = "MP14_PLNG_AREA_NO_SEA_PL")
+```
+
+```{r}
+glimpse(bdy_web,70)
+```
+
+```{r}
+glimpse(bdy_noSea,70)
 ```
 
 inspect
@@ -201,100 +217,141 @@ With No Sea version last updated on May 23, 2016.
 
 Web version to be used as the last updated date was 4 Nov 2016.
 
+Save Simple Feature Data Frame into RDS Format
+
 ```{r}
-skim(bdy_web)
+write_rds(bdy_web,
+          "data/rds/bdy_web.rds",
+          compress = "xz")
+```
+
+Read RDS File
+
+```{r}
+#| code-fold: false
+bdy_web <- read_rds("data/rds/bdy_web.rds")
 ```
 :::
 
-## 3.3 Data Wrangling
+## **3.3 Data Wrangling**
 
-Data Inspection
+### **3.3.1 Change Field Names to Lowercase**
+
+To avoid confusion between field names used in data and discussions, change all fields' name to lowercase.
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***tolower( )*** - quanteda -]{style="color:#d46e15"} to convert fields' name into lower case.
+:::
 
 ```{r}
-unique(pop_attribute$AG)
-```
-
-```{r}
+#| code-fold: false
 names(pop_attribute) <- tolower(names(pop_attribute))
+names(bdy_web) <- tolower(names(bdy_web))
 ```
 
-to make pa field same name
+### **3.3.2 Convert Case for Planning Area Values**
 
-only first letter to upper case
+The Planning Areas' values in the boundary data-set are strings of entirely upper case.
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***str_to_title( )*** - stringr -]{style="color:#d46e15"} to set the initial of the string to upper case.
+:::
 
 ```{r}
+#| code-fold: false
+bdy_web$pln_area_n <- str_to_title(bdy_web$pln_area_n)
+```
+
+### **3.3.3 Rename Planning Area for Boundary Dataset**
+
+Setting same name for Planning Area fields to facilitate left join between two datasets at section 3.xxx.
+
+```{r}
+#| code-fold: false
 bdy_pa <- bdy_web %>% 
-  rename(`pa` = `PLN_AREA_N`) 
-
-bdy_pa$pa <- str_to_title(bdy_pa$pa)
+  rename(`pa` = `pln_area_n`) 
 ```
 
-transform crs
+### **3.3.4 Remove Non-Alphameric Character**
 
-## 1.4 GEODATA PROCESSING
+There are special character such as "\_" among Age Groups' value.
 
-### 1.4.1 Transform CRS
-
-::: {.callout-warning appearance="simple" icon="false"}
-Ensure all dataframes are in the same projected CRS.
-
-#### 1.4.1.1 transform with st_set_crs( ) function
-
-Generally, there are two main steps involved.
-
-#### -- retrieve CRS information
+Unable to use str_sub( ) function from stringr package as the position of "\_" is varied among values.
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
-[***st_crs( )*** - sf -]{style="color:#d46e15"} to retrieve coordinate reference system for mpsz.
+[***gsub( )*** - base -]{style="color:#d46e15"} to replace "\_" with space.
 :::
 
 ```{r}
-st_crs(bdy_pa)
+#| code-fold: false
+pop_attribute$ag <- gsub("_", 
+                         " ", 
+                         pop_attribute$ag, 
+                         fixed = TRUE)
 ```
 
-#### -- transform CRS
+## 3.4 Create Data Frame for Population Pyramids Plot
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***st_transform( )*** - sf -]{style="color:#d46e15"} to reproject x from one coordinate system wgs84 to svy21 mathematically, which is not capable by *st_set_crs()*.
-:::
-
-```{r}
-bdy_trans <- st_transform(bdy_pa,
-                          crs = 3414)
-```
-
-#### -- verify CRS
-
-```{r}
-st_crs(bdy_trans)
-```
-:::
-
-```{r}
-pop_pa <- left_join(pop_attribute, bdy_trans)
-```
-
-```{r}
-pop_pa$ag <- sub("_", " ", pop_pa$ag)
-```
-
-### 3.3.1 Compute Frequency Count
+### 3.4.1 Explore with Single Planning Area
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-Compute the frequency count by "age" and "sex".
-
-#### **3.3.1.1 compute returns by "Sub-category"**
-
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
 [***group_by( )*** - dplyr -]{style="color:#d46e15"} to group Singapore population by age and gender.
 
 [***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of residents for each group.
+:::
+:::
+
+```{r}
+#| code-fold: false
+test0 <- pop_attribute %>% 
+  filter(pa == "Ang Mo Kio") %>%
+  group_by(ag, sex) %>%
+  summarise(`count_pop` = sum(`pop`)) %>%
+  ungroup()
+```
+
+#### 3.4.1.1 visualise data
+
+::: panel-tabset
+## Visualise Data
+
+```{r}
+ggplot(data = test0,
+       aes(y = ag)) +
+  geom_bar() +
+  theme_bw() +  
+  ggtitle("Test Age Group Distribution") 
+```
+
+## Inspect Data
+
+```{r}
+unique(pop_attribute$ag)
+```
+:::
+
+::: panel-tabset
+Remarks :
+
+Notice the age group "5 to 9" is placed after "45 to 49" instead of placed at 2nd value as shown under the "Inspect Data" tab.
+:::
+
+#### 3.4.1.2 update age groups display sequence
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+for entire singapore
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
 
 [***arrange( )*** - dplyr -]{style="color:#d46e15"} to sort the rows in descending order of the counted "Returned" value of each "Sub-category".
 :::
@@ -302,66 +359,97 @@ Compute the frequency count by "age" and "sex".
 ```{r}
 ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to89", "90 and over")
 
-test0 <- pop_pa %>%
-  group_by(`ag`,`sex`) %>%
-  summarise(`count` = sum(`pop`)) %>%
+pop_sgp <- pop_attribute %>%
+  group_by(ag, sex) %>%
+  summarise(`count_pop` = sum(`pop`)) %>%
   mutate(ag = factor(ag, levels = ag_sequence)) %>%
   arrange(ag) %>%
   ungroup()
-
-head(test0)
 ```
-:::
 
-### 
+at Planning Area level
 
 ```{r}
-test <- pop_pa %>%
-  group_by(pa, ag) %>%
+#| code-fold: false
+ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to89", "90 and over")
+
+pop_pa <- pop_attribute %>%
+  group_by(pa, ag, sex) %>%
   summarise(`count_pop` = sum(`pop`)) %>%
+  mutate(ag = factor(ag, levels = ag_sequence)) %>%
+  arrange(ag) %>%
   ungroup()
 ```
 
+remarks :
+:::
+
+## **3.5 Create 9 Planning Areas Data Set**
+
+### **3.5.1 Identify Top 9 Planning Areas**
+
+Based on top 9 highest population
+
+::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***slice( )*** - dplyr -]{style="color:#d46e15"} to filter based on the first 9 rows.
+:::
+:::
+
 ```{r}
-test1 <- pop_pa %>%
+#| code-fold: false
+t9_paPop <- pop_attribute %>%
+  group_by(pa) %>%
+  summarise(`count_pop` = sum(`pop`)) %>%
+  ungroup()
+
+t9 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+  slice(1:9) %>%
+  select(pa)
+```
+
+### **3.5.2 Filter Top 9 Filter** 
+
+```{r}
+t9_filtered <- pop_pa %>% 
+  filter(pop_pa$pa %in% t9$pa)
+```
+
+## 3.6 Create 
+
+```{r}
+pop_males <- t9_filtered %>%
+  filter(sex %in%
+           c("Males"))
+```
+
+```{r}
+pop_females <- t9_filtered %>%
+  filter(sex %in%
+           c("Females"))
+```
+
+```{r}
+#| eval: false
+t9_map <- bdy_pa %>%
+  mutate(`total_pop` = lengths(
+    st_intersects(bdy_pa, pop_pa))) %>%
+  mutate(`males` = lengths(
+    st_intersects(bdy_pa, pop_males))) %>%
+  mutate(`females` = lengths(
+    st_intersects(bdy_pa, pop_females)))
+```
+
+```{r}
+test3 <- pop_attribute %>%
   group_by(pa, ag) %>%
   summarise(`count_pop` = sum(`pop`)) %>%
   ungroup() %>%
   pivot_wider(names_from = ag, 
               values_from = count_pop) 
 ```
-
-test2 \<- pop_pa %\>%
-
-group_by(pa, ag) %\>%
-
-summarise(\`count_pop\` = sum(\`pop\`)) %\>%
-
-ungroup() %\>%
-
-pivot_wider(names_from = ag,
-
-values_from = count_pop) %\>%
-
-mutate(young = rowSums(.\[3:6\]) + rowSums(.\[12\])) %\>%
-
-mutate(\`ECONOMY ACTIVE\` = rowSums(.\[7:11\])+
-
-rowSums(.\[13:15\]))%\>%
-
-mutate(\`AGED\`=rowSums(.\[16:21\])) %\>%
-
-mutate(\`TOTAL\`=rowSums(.\[3:21\])) %\>%
-
-mutate(\`DEPENDENCY\` = (\`YOUNG\` + \`AGED\`)
-
-/\`ECONOMY ACTIVE\`) %\>%
-
-select(\`PA\`, \`SZ\`, \`YOUNG\`,
-
-\`ECONOMY ACTIVE\`, \`AGED\`,
-
-\`TOTAL\`, \`DEPENDENCY\`)
 
 #\| eval: false
 
@@ -387,11 +475,62 @@ select(\`PA\`, \`SZ\`, \`YOUNG\`,
 
 \`TOTAL\`, \`DEPENDENCY\`)
 
+## 3.6 Transform Data
+
+## 3.6.1 Transform CRS
+
+::: {.callout-warning appearance="simple" icon="false"}
+Ensure all dataframes are in the same projected CRS.
+
+#### 3.6.1.1 transform with st_set_crs( ) function
+
+Generally, there are two main steps involved.
+
+#### -- retrieve CRS information
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***st_crs( )*** - sf -]{style="color:#d46e15"} to retrieve coordinate reference system for mpsz.
+:::
+
+```{r}
+#| code-fold: false
+st_crs(bdy_pa)
+```
+
+#### -- transform CRS
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***st_transform( )*** - sf -]{style="color:#d46e15"} to reproject x from one coordinate system wgs84 to svy21 mathematically, which is not capable by *st_set_crs()*.
+:::
+
+```{r}
+#| code-fold: false
+bdy_trans <- st_transform(bdy_pa,
+                          crs = 3414)
+```
+
+#### -- verify CRS
+
+```{r}
+st_crs(bdy_trans)
+```
+:::
+
+## 3.7 Combine Data Sets
+
+```{r}
+pop_pa <- left_join(pop_attribute, bdy_trans)
+```
+
 # 4 EXPLORATORY DATA ANALYSIS (EDA)
 
 ## 4.1 Plot Pyramid Chart
 
-#### **4.1.1 Plot Static Pyramid**
+#### **4.1.1 Plot A Single Population Pyramid (Static)**
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
@@ -403,12 +542,14 @@ select(\`PA\`, \`SZ\`, \`YOUNG\`,
 
 [***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative, so that their data will be plotted on the left side of the pyramid.
 :::
+:::
 
 ```{r}
-test_plot <- ggplot(test0, 
+#| code-fold: false
+popPyr_sgp <- ggplot(pop_sgp, 
                        aes(x = ifelse(sex == "Males",
-                                      yes = -count,
-                                      no = count),
+                                      yes = -count_pop,
+                                      no = count_pop),
                            y = ag,
                            fill = sex)) + 
   geom_col() +
@@ -418,26 +559,20 @@ test_plot <- ggplot(test0,
                          c(seq(150, 0, -50), 
                            seq(50, 150, 50))),
                        "k")) +
-  labs (x = "pop", 
-        y = "age", 
+  labs (x = "Population", 
+        y = "Age", 
         title = 'Singapore Age-Sex Population Pyramid 2022') +
   theme_bw() +
   theme(axis.ticks.y = element_blank()) +
   scale_fill_manual(values = c("Males" = "lightblue", 
                                "Females" = "lightpink")) 
 
-test_plot
+popPyr_sgp
 ```
-:::
 
-#### **4.1.2 Interactive Pyramid Chart**
+#### **4.1.2 Plot A Single Population Pyramid (Interactive)**
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-```{r}
-ggplotly(test_plot, 
-         session = "knitr")
-```
-
 [Remark :]{style="color:#d69c3c"}
 
 [The pyramid above shows the younger generation's lower percentage, making Singapore's population structure a constrictive type. That means an ageing population.]{style="color:#d69c3c"}
@@ -454,3 +589,51 @@ ggplotly(test_plot,
 [^2]: [Singstat. (2002). Indicators On Population. https://tablebuilder.singstat.gov.sg/table/TS/M810001]{style="color:#d69c3c"}
 
 [^3]: [Ministry of Manpower. (2020). Report: Singapore's Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx]{style="color:#d69c3c"}
+
+```{r}
+ggplotly(popPyr_sgp, 
+         session = "knitr")
+```
+
+4.1.3 **Plot A Single Population Pyramid (Static)**
+
+```{r}
+popPyr_t9 <- ggplot() +
+  geom_bar(data = subset(t9_filtered, 
+                         sex == "Males"), 
+           aes(x = ag, 
+               y = -count_pop, 
+               fill = pa), 
+           stat = "identity", 
+           fill = "orange") +
+  geom_bar(data = subset(t9_filtered, 
+                         sex == "Females"), 
+           aes(x = ag, 
+               y = count_pop, 
+               fill = pa), 
+           stat = "identity", 
+           fill = "steelblue") +
+  
+  scale_y_continuous(breaks = seq(-150000, 150000, 50000), 
+                     labels = paste0(
+                       as.character(
+                         c(seq(150, 0, -50), 
+                           seq(50, 150, 50))),
+                       "k")) +
+  coord_flip() +
+  facet_wrap(~pa, drop = FALSE, ncol = 3) +
+  labs (x = "Population", 
+        y = "Age", 
+        title = 'Singapore Age-Sex Population Pyramid 2022') +
+  theme_bw() +
+  theme(axis.ticks.y = element_blank()) +
+  scale_fill_manual(values = c("Males" = "lightblue", 
+                               "Females" = "lightpink")) 
+
+popPyr_t9
+```
+
+```{r}
+ggplotly(popPyr_t9, 
+         session = "knitr")
+```

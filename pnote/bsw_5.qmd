@@ -1,0 +1,330 @@
+---
+title: "BSW : Predictive Models with Tidymodels Approach"
+editor: visual
+date:  26 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+An overview of predictive model based on Diamond data set includes in ggplot2 package.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Reminder : Predictive Modelling Process**]{style="color:#3a9c88"}
+
+-   business problem
+    -   analytical data mart
+-   data preparation
+-   data exploration
+-   data sampling
+-   model fitting
+-   model evaluation
+-   model assessment
+-   model comparison
+:::
+
+# **2. R PACKAGE REQUIRED**
+
+**Conventional R packages for predictive modelling** :
+
+-   caret (classification and regression training) - retired package
+
+-   mlr3
+
+-   rpart (recursive partitioning)
+
+-   etc.
+
+**Focus points for tidymodels package**
+
+-   integrated, modular, extensible set of packages
+
+-   framework facilitates in creation of predicative stochastic
+
+-   parallel execution for tasks - resampling, cross-validation, parameter tuning.
+
+**tidyverse** - importing, wrangling, visualising data
+
+**tidymodels** - sampling, calibrating, modelling and assessing models.
+
+## **2.1 Load R Packages**
+
+```{r}
+pacman::p_load(tidymodels, tidyverse)
+```
+
+# **3. DATA**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set available in ggplot2.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  x
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Read Data into R**
+
+data() is used to load diamonds data set from ggplot2 package.
+
+```{r}
+#| code-fold: false
+data(diamonds)
+```
+
+#### **3.2.1.2 inspect data**
+
+```{r}
+glimpse(diamonds,70)
+```
+
+## **3.3 Data Sampling**
+
+create different types of resamples and corresponding classes for their analysis.
+
+initial_split( ) creates single binary split of the data into a training set and testing set.
+
+prop .6 means 60% for training( ) and remaining for testing( )
+
+!!!!! strata's value is the variable that applicable to most variables?
+
+```{r}
+set.seed(1243)
+diamonds_split <- diamonds %>%
+  select(c(1:7)) %>%
+  initial_split(prop = .6,
+                strata = price)
+
+training_data <- training(diamonds_split)
+testing_data <- testing(diamonds_split)
+```
+
+create cross-validation data sets : rsample method
+
+to prepare the training data set into for 3-fold cross-validation.
+
+```{r}
+vfold_data <- vfold_cv(training_data,
+                       v = 3,
+                       repeats = 1,
+                       strata = price)
+```
+
+```{r}
+vfold_data %>% 
+  mutate(df_ana = map(splits, analysis),
+         df_ass = map(splits, assessment))
+  
+```
+
+data pre-processing and feature engineering : recipes method
+
+working with recipe
+
+!!!!! step_log(all_outcomes) = log transform on prices = all values for strata?
+
+step_poly(degree = ) depends on the curve?
+
+```{r}
+processed_data <- recipe(
+  price ~ .,
+  data = training_data) %>%
+  step_log(all_outcomes()) %>%
+  step_normalize(all_predictors(),
+                 -all_nominal()) %>%
+  step_dummy(all_nominal()) %>%
+  step_poly(carat, degree = 2)
+```
+
+```{r}
+prep(processed_data)
+```
+
+Remarks :
+
+Changes only made to the training data.
+
+```{r}
+juiced_data <- juice(prep(processed_data))
+names(juiced_data)
+```
+
+parsnip package - regression model
+
+-   ranger()
+
+-   ml_random_forest()
+
+-   etc.
+
+lm model using Basse R lm
+
+linear_reg()
+
+```{r}
+lm_model <-
+  linear_reg() %>%
+  set_mode("regression") %>%
+  set_engine("lm")
+```
+
+fitting the lm model
+
+```{r}
+lm_fit <- fit(lm_model,
+              price ~.,
+              juiced_data)
+
+lm_fit
+```
+
+calibrating random forest model
+
+```{r}
+rf_fit <- rand_forest(
+  mode = "regression",
+  engine = "ranger",
+  mtry = .preds(),
+  trees = 100) %>%
+  fit(price ~.,
+      data = juiced_data)
+
+rf_fit
+```
+
+```{r}
+rf2_fit <- rand_forest(
+  mode = "regression",
+  engine = "randomForest",
+  mtry = .preds(),
+  trees = 100) %>%
+  fit(price ~.,
+      data = juiced_data)
+
+rf2_fit
+```
+
+viewing model report
+
+```{r}
+glance(lm_fit$fit)
+```
+
+glance(rf_fit\$fit)
+
+```{r}
+tidy(lm_fit) %>%
+  arrange(desc(abs(statistic)))
+```
+
+```{r}
+lm_predicted <- augment(lm_fit$fit,
+  data = juiced_data) %>%
+  rowid_to_column()
+  select(lm_predicted,
+  rowid,
+  price,
+  .fitted :.std.resid)
+```
+
+```{r}
+price_recipe <- recipe(
+  price ~ ., data = training_data) %>%
+  step_log(all_outcomes()) %>%
+  step_normalize(all_predictors(),
+  -all_nominal()) %>%
+  step_dummy(all_nominal()) %>%
+  step_poly(carat, degree = 2) %>%
+  prep()
+
+```
+
+```{r}
+test_data <- bake(price_recipe,
+                  new_data = testing_data,
+                  all_predictors())
+```
+
+```{r}
+lm_pred <- predict(
+  lm_fit,
+  new_data = test_data) %>%
+  rename(lm = .pred)
+```
+
+```{r}
+rf_pred <- predict(
+  rf_fit,
+  new_data = test_data) %>%
+  rename(rf = .pred)
+```
+
+```{r}
+test_results <- testing_data %>%
+  select(price) %>%
+  mutate(log_price = log(price)) %>%
+  bind_cols(rf_pred) %>%
+  bind_cols(lm_pred)
+  
+```
+
+```{r}
+test_results %>% metrics(
+  truth = log_price,
+  estimate = lm)
+```
+
+```{r}
+test_results %>% metrics(
+  truth = log_price,
+  estimate = rf)
+```
+
+```{r}
+metric_set(rmse, rsq, mase)
+```
+
+```{r}
+#| eval: false
+test_results %>%
+  select(c(2:4)) %>%
+  pivot_longer(
+    !log_price,
+    names_to = "mode",
+    values_to = "prediction") %>%
+  group_by(model) %>%
+  metrics(truth = log_price,
+          estimate = prediction)
+```
+
+```{r}
+#| eval: false
+test_results %>%
+  select(c(2:4)) %>%
+  pivot_longer(
+    !log_price,
+    names_to = "mode",
+    values_to = "prediction") %>%
+  ggplot(aes(x = prediction,
+             y = log_price)) +
+  geom_abline(col = "green",
+              lty = 2) +
+  geom_point(alpha = .4) +
+  facet_wrap(~model) +
+  coord_fixed() +
+  labs (title = "RF model predicts the diaomond prices more accurate than LM MOdel", 
+        subtitle = "The diamond prices are log transformed")
+```
