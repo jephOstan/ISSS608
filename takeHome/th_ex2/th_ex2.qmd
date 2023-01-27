@@ -129,7 +129,7 @@ Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.
 Data
 
 | Source(s) | Urban Redevelopment Authority                                        |
-|:----------------------|-------------------------------------------------|
+|:--------------|---------------------------------------------------------|
 | Licence   | [Singapore Open Data Licence](https://data.gov.sg/open-data-licence) |
 
 https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web
@@ -316,6 +316,10 @@ pop_pa <- pop_attribute %>%
   mutate(ag = factor(ag, levels = ag_sequence)) %>%
   arrange(ag) %>%
   ungroup()
+
+pop_pa <- pop_pa %>%
+  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
+         res = str_c(count_pop, ", ", pct))
 ```
 
 remarks :
@@ -343,7 +347,19 @@ t9_paPop <- pop_attribute %>%
   summarise(`count_pop` = sum(`pop`)) %>%
   ungroup()
 
+t3 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+  slice(1:3) %>%
+  select(pa)
+  
+t6 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+  slice(4:6) %>%
+  select(pa)
+  
 t9 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+  slice(7:9) %>%
+  select(pa)
+
+t19 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
   slice(1:9) %>%
   select(pa)
 ```
@@ -355,8 +371,18 @@ Remarks :
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
+#| code-fold: false
+t3_filtered <- pop_pa %>% 
+  filter(pop_pa$pa %in% t3$pa)
+
+t6_filtered <- pop_pa %>% 
+  filter(pop_pa$pa %in% t6$pa)
+
 t9_filtered <- pop_pa %>% 
   filter(pop_pa$pa %in% t9$pa)
+
+t19_filtered <- pop_pa %>% 
+  filter(pop_pa$pa %in% t19$pa)
 ```
 :::
 
@@ -364,6 +390,7 @@ t9_filtered <- pop_pa %>%
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
+#| code-fold: false
 pop_males <- t9_filtered %>%
   filter(sex %in%
            c("Males")) %>%
@@ -372,6 +399,7 @@ pop_males <- t9_filtered %>%
 ```
 
 ```{r}
+#| code-fold: false
 pop_females <- t9_filtered %>%
   filter(sex %in%
            c("Females")) %>%
@@ -425,29 +453,40 @@ popPyr_sgp <- ggplot(pop_sgp,
                            y = ag,
                            fill = sex)) + 
   geom_col() +
-  scale_x_continuous(breaks = seq(-200000, 200000, 50000), 
+  scale_x_continuous(limits = c(-170000, 170000),
+    breaks = seq(-200000, 200000, 50000), 
                      labels = paste0(
                        as.character(
                          c(seq(200, 0, -50), 
                            seq(50, 200, 50))),
                        "k")) +
+  scale_y_discrete(expand = expansion(mult = c(0, .04))) +
   labs (x = "Count of Population", 
-        y = "Age\nGroup",
+        y = "Age Group",
         fill = "Gender",
         title = "Singapore Population Pyramid 2022",
-        subtitle = "Distribution of gender and age groups") +
+        subtitle = "Distribution of gender and age groups",
+        caption = "Data Source : Singstat.gov.sg, June 2022") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, 
                                   colour = "#302f2f",
-                                  face = "bold"),
+                                  face = "bold",
+                                  hjust = 0.5),
         plot.subtitle = element_text(size = 8,
                                      colour = "#424242",
-                                     face = "italic"),
+                                     face = "italic",
+                                     hjust = 0.5),
+        plot.caption = element_text(size = 8,
+                                    colour = "#424242",
+                                    hjust = 0),
         axis.ticks = element_line(colour = "#969595",
-                                  size = 0.3),
+                                  linewidth = 0.3),
         axis.title.y = element_text(angle = 0, 
                                     size = 8, 
-                                    colour = "#302f2f"),
+                                    colour = "#302f2f",
+                                    vjust = 1.07,
+                                    hjust = 1,
+                                    margin = margin(r = -50, l = 10)),
         axis.title.x = element_text(size = 8, 
                                     colour = "#302f2f"),
         axis.text.x = element_text(size = 7,
@@ -455,41 +494,29 @@ popPyr_sgp <- ggplot(pop_sgp,
         axis.text.y = element_text(size = 7,
                                    colour = "#424242"),
         legend.position = "bottom",
+        legend.justification = "left",
         legend.text = element_text(size = 7,
                                    colour = "#424242"),
         legend.title = element_text(size = 8, 
                                     colour = "#302f2f"),
-        panel.grid.major = element_line(size = rel(0.5)),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
         panel.grid.minor = element_blank(),
-        plot.background = element_rect(fill = "#fcfbf5"),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),
         panel.border = element_rect(colour = "#969595",
-                                    size = 0.3)) +
+                                    linewidth = 0.3)) +
   geom_text(aes(label = pct),
             hjust = ifelse(pop_sgp$sex == "Males",
-                           yes = 1.1, 
-                           no = -0.1),
-            size = 1.6,
+                           yes = 1.2, 
+                           no = -0.2),
+            size = 2,
             check_overlap = FALSE,
-            colour = "#5e5c5c") +
-  scale_fill_manual(values = c("Males" = "lightblue", 
-                               "Females" = "lightpink"))
+            colour = "#424242") +
+  scale_fill_manual(values = c("Males" = "#FFA319FF", 
+                               "Females" = "#302f2f"))
 
 popPyr_sgp
-```
-
-```{r}
-  labs(x = "Race",
-       y = "No. of\nPupils",
-       title = "Primary 3 Students By Race",
-       subtitle = "Students from a local school") +
-  theme(axis.title.y = element_text(angle = 0, 
-                                    size = 10),
-        axis.title.x = element_text(size = 10),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10)) +
-  geom_text(aes(label = res),
-            vjust = -0.9) + 
-  scale_y_continuous(limits = c(0,210))
 ```
 
 #### **4.1.2 Plot A Single Population Pyramid (Interactive)**
@@ -512,50 +539,363 @@ popPyr_sgp
 
 [^3]: [Ministry of Manpower. (2020). Report: Singapore's Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx]{style="color:#d69c3c"}
 
-```{r}
-ggplotly(popPyr_sgp, 
-         session = "knitr")
-```
-
-4.1.3 **Plot A Single Population Pyramid (Static)**
+4.1.3 **Plot Trall Population Pyramid (Static)**
 
 ```{r}
+#| code-fold: false
 popPyr_t9 <- ggplot() +
   geom_bar(data = subset(t9_filtered, 
                          sex == "Males"), 
            aes(x = ag, 
                y = -count_pop, 
-               fill = pa), 
+               fill = pa),
            stat = "identity", 
-           fill = "orange") +
+           fill = "#FFA319FF") +
   geom_bar(data = subset(t9_filtered, 
                          sex == "Females"), 
            aes(x = ag, 
                y = count_pop, 
                fill = pa), 
            stat = "identity", 
-           fill = "steelblue") +
-  
-  scale_y_continuous(breaks = seq(-150000, 150000, 50000), 
-                     labels = paste0(
-                       as.character(
-                         c(seq(150, 0, -50), 
-                           seq(50, 150, 50))),
-                       "k")) +
+           fill = "#302f2f") +
   coord_flip() +
-  facet_wrap(~pa, drop = FALSE, ncol = 3) +
-  labs (x = "Population", 
-        y = "Age", 
-        title = 'Singapore Age-Sex Population Pyramid 2022') +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f"),
+    breaks = c("Males", "Females")) +
+  facet_wrap(.~ pa,
+             drop = FALSE, 
+             ncol = 3,
+             scales = "fixed") +
+  scale_y_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
+  labs (y = "Count of Population", 
+        x = "Age Group",
+        fill = "Gender",
+        title = "Singapore Population Pyramid 2022",
+        subtitle = "Distribution of gender and age groups",
+        caption = "Data Source : Singstat.gov.sg, June 2022") +
   theme_bw() +
-  theme(axis.ticks.y = element_blank()) +
-  scale_fill_manual(values = c("Males" = "lightblue", 
-                               "Females" = "lightpink")) 
+  theme(plot.title = element_text(size = 14, 
+                                  colour = "#302f2f",
+                                  face = "bold",
+                                  hjust = 0.5),
+        plot.subtitle = element_text(size = 8,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     hjust = 0.5),
+        plot.caption = element_text(size = 8,
+                                    colour = "#424242",
+                                    hjust = 0),
+        strip.text = element_text(size = 7,
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 8, 
+                                    colour = "#302f2f",
+                                    vjust = 1.07,
+                                    hjust = 0.8,
+                                    margin = margin(r = -40, l = 20)),
+        axis.title.x = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.position = "bottom",
+        legend.justification = "left",
+        legend.text = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.title = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3)) 
 
 popPyr_t9
 ```
 
 ```{r}
-ggplotly(popPyr_t9, 
-         session = "knitr")
+#| code-fold: false
+popPyr_t9.fg <- ggplot() +
+  geom_bar(data = subset(t19_filtered, 
+                         sex == "Males"), 
+           aes(x = ag, 
+               y = -count_pop, 
+               fill = pa),
+           stat = "identity", 
+           fill = "#FFA319FF") +
+  geom_bar(data = subset(t9_filtered, 
+                         sex == "Females"), 
+           aes(x = ag, 
+               y = count_pop, 
+               fill = pa), 
+           stat = "identity", 
+           fill = "#302f2f") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f"),
+    breaks = c("Males", "Females")) +
+  facet_grid(cols = vars(pa)) +
+  scale_y_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
+  labs (y = "Count of Population", 
+        x = "Age Group",
+        fill = "Gender",
+        title = "Singapore Population Pyramid 2022",
+        subtitle = "Distribution of gender and age groups",
+        caption = "Data Source : Singstat.gov.sg, June 2022") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, 
+                                  colour = "#302f2f",
+                                  face = "bold",
+                                  hjust = 0.5),
+        plot.subtitle = element_text(size = 8,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     hjust = 0.5),
+        plot.caption = element_text(size = 8,
+                                    colour = "#424242",
+                                    hjust = 0),
+        strip.text = element_text(size = 7,
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 8, 
+                                    colour = "#302f2f",
+                                    vjust = 1.07,
+                                    hjust = 0.8,
+                                    margin = margin(r = -40, l = 20)),
+        axis.title.x = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.position = "bottom",
+        legend.justification = "left",
+        legend.text = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.title = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3)) 
+
+popPyr_t9.fg
+```
+
+```{r}
+#| code-fold: false
+popPyr_t3 <- ggplot() +
+  geom_bar(data = subset(t3_filtered, 
+                         sex == "Males"), 
+           aes(x = ag, 
+               y = -count_pop, 
+               fill = pa),
+           stat = "identity", 
+           fill = "#FFA319FF") +
+  geom_bar(data = subset(t3_filtered, 
+                         sex == "Females"), 
+           aes(x = ag, 
+               y = count_pop, 
+               fill = pa), 
+           stat = "identity", 
+           fill = "#302f2f") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f"),
+    breaks = c("Males", "Females")) +
+  facet_grid(cols = vars(pa)) +
+  scale_y_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
+  labs (y = "", 
+        x = "Age Group",
+        fill = "Gender",
+        title = "Singapore Population Pyramid 2022",
+        subtitle = "Distribution of gender and age groups") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, 
+                                  colour = "#302f2f",
+                                  face = "bold",
+                                  hjust = 0.5),
+        plot.subtitle = element_text(size = 8,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     hjust = 0.5),
+        plot.caption = element_text(size = 8,
+                                    colour = "#424242",
+                                    hjust = 0),
+        strip.text = element_text(size = 7,
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 8, 
+                                    colour = "#302f2f",
+                                    vjust = 1.07,
+                                    hjust = 0.8,
+                                    margin = margin(r = -40, l = 20)),
+        axis.title.x = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.position = "bottom",
+        legend.justification = "left",
+        legend.text = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.title = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3)) 
+
+popPyr_t3
+```
+
+```{r}
+#| code-fold: false
+popPyr_t6 <- ggplot() +
+  geom_bar(data = subset(t6_filtered, 
+                         sex == "Males"), 
+           aes(x = ag, 
+               y = -count_pop, 
+               fill = pa),
+           stat = "identity", 
+           fill = "#FFA319FF") +
+  geom_bar(data = subset(t6_filtered, 
+                         sex == "Females"), 
+           aes(x = ag, 
+               y = count_pop, 
+               fill = pa), 
+           stat = "identity", 
+           fill = "#302f2f") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f"),
+    breaks = c("Males", "Females")) +
+  facet_grid(cols = vars(pa)) +
+  scale_y_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
+  labs (y = "", 
+        x = "") +
+  theme_bw() +
+  theme(strip.text = element_text(size = 7,
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3)) 
+
+popPyr_t6
+```
+
+```{r}
+#| code-fold: false
+popPyr_t9 <- ggplot() +
+  geom_bar(data = subset(t9_filtered, 
+                         sex == "Males"), 
+           aes(x = ag, 
+               y = -count_pop, 
+               fill = pa),
+           stat = "identity", 
+           fill = "#FFA319FF") +
+  geom_bar(data = subset(t9_filtered, 
+                         sex == "Females"), 
+           aes(x = ag, 
+               y = count_pop, 
+               fill = pa), 
+           stat = "identity", 
+           fill = "#302f2f") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f"),
+    breaks = c("Males", "Females")) +
+  facet_grid(cols = vars(pa)) +
+  scale_y_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
+  labs (y = "Count of Population", 
+        x = "",
+        fill = "Gender") +
+  theme_bw() +
+  theme(plot.caption = element_text(size = 8,
+                                    colour = "#424242",
+                                    hjust = 0),
+        strip.text = element_text(size = 7,
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.position = "bottom",
+        legend.justification = "left",
+        legend.text = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.title = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3)) 
+
+popPyr_t9
+```
+
+```{r}
+ggpubr::ggarrange(
+  popPyr_t3,
+  popPyr_t6,
+  popPyr_t9,
+  align = "v",
+  ncol = 1) +
+  labs(caption = "Data Source : Singstat.gov.sg, June 2022")
+
 ```
