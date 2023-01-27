@@ -391,7 +391,7 @@ t19_filtered <- pop_pa %>%
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
 #| code-fold: false
-pop_males <- t9_filtered %>%
+pop_males <- t19_filtered %>%
   filter(sex %in%
            c("Males")) %>%
   mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
@@ -400,7 +400,7 @@ pop_males <- t9_filtered %>%
 
 ```{r}
 #| code-fold: false
-pop_females <- t9_filtered %>%
+pop_females <- t19_filtered %>%
   filter(sex %in%
            c("Females")) %>%
   mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
@@ -543,15 +543,15 @@ popPyr_sgp
 
 ```{r}
 #| code-fold: false
-popPyr_t9 <- ggplot() +
-  geom_bar(data = subset(t9_filtered, 
+popPyr_t19 <- ggplot() +
+  geom_bar(data = subset(t19_filtered, 
                          sex == "Males"), 
            aes(x = ag, 
                y = -count_pop, 
                fill = pa),
            stat = "identity", 
            fill = "#FFA319FF") +
-  geom_bar(data = subset(t9_filtered, 
+  geom_bar(data = subset(t19_filtered, 
                          sex == "Females"), 
            aes(x = ag, 
                y = count_pop, 
@@ -620,12 +620,12 @@ popPyr_t9 <- ggplot() +
         panel.border = element_rect(colour = "#969595",
                                     linewidth = 0.3)) 
 
-popPyr_t9
+popPyr_t19
 ```
 
 ```{r}
 #| code-fold: false
-popPyr_t9.fg <- ggplot() +
+popPyr_t19.fg <- ggplot() +
   geom_bar(data = subset(t19_filtered, 
                          sex == "Males"), 
            aes(x = ag, 
@@ -633,7 +633,7 @@ popPyr_t9.fg <- ggplot() +
                fill = pa),
            stat = "identity", 
            fill = "#FFA319FF") +
-  geom_bar(data = subset(t9_filtered, 
+  geom_bar(data = subset(t19_filtered, 
                          sex == "Females"), 
            aes(x = ag, 
                y = count_pop, 
@@ -699,7 +699,7 @@ popPyr_t9.fg <- ggplot() +
         panel.border = element_rect(colour = "#969595",
                                     linewidth = 0.3)) 
 
-popPyr_t9.fg
+popPyr_t19.fg
 ```
 
 ```{r}
