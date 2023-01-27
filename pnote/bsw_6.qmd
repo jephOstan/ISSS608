@@ -1,0 +1,276 @@
+---
+title: "BSW : Financial Data Analysis"
+editor: visual
+date:  26 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+An overview of financial data analysis.
+
+Tidyquant -collect and analyse financial data, Zoo, quandmod, TTR, xts, performanceAnalytics.
+
+# 2. R PACKAGE REQUIRED
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**key functions of Tidyquant :**]{style="color:#3a9c88"}
+
+-   quantitative transformations
+
+-   portfolio aggregation
+
+-   performance analytics
+
+-   charting with ggplot2
+
+-   pivot table, vlookup and sum-ifs
+
+-   summary functions
+
+-   mutation functions
+:::
+
+## 2.1 Load R Packages
+
+```{r}
+pacman::p_load(tidyverse, tidyquant, timetk)
+```
+
+<br>
+
+# **3. DATA**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  x
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Read Data into R**
+
+```{r}
+#| code-fold: false
+company <- read_csv("data/SGCompany.csv")
+company
+```
+
+### importing singapore company
+
+```{r}
+Stock_daily <- company %>%
+  select(Symbol) %>%
+  tq_get(get = "stock.prices",
+  from = "2022-01-01",
+  to = "2022-12-31")
+```
+
+Remarks :
+
+By default, it will source data from Yahoo Finance.
+
+Wrangling stock data
+
+```{r}
+Stock_data <- Stock_daily %>%
+  left_join(company)
+```
+
+Technical Analysis - tidyquant methods
+
+plotting stock price line graph : ggplot method
+
+```{r}
+Stock_data %>%
+ filter(Name == "DBS Group") %>%
+ ggplot(aes(x = date, y = close)) +
+ geom_line() +
+ labs(title = "DBS Group Holdings Ltd (DBSDF) Daily Stock Price",
+ y = "Closing Price", x = "") +
+ theme_tq()
+```
+
+visualise stock price with timetk
+
+```{r}
+Stock_data %>%
+  group_by(Name) %>%
+  plot_time_series(date, 
+                   close,
+                   .facet_ncol = 2,
+                   .facet_scales = "free",
+                   .interactive = FALSE)
+```
+
+```{r}
+Stock_data %>%
+  group_by(Name) %>%
+  plot_time_series(date, 
+                   close,
+                   .facet_ncol = 3,
+                   .facet_scales = "free",
+                   .interactive = TRUE)
+```
+
+```{r}
+end <- as_date("2022-06-30")
+start <- end - weeks(2)
+
+Stock_data %>%
+  filter(Name == "DBS Group") %>%
+  filter(date >= start - days(2 * 15)) %>%
+ggplot(aes
+       (x = date,
+         y = close)) +
+  geom_candlestick(aes(open = open,
+                       high = high,
+                       low = low,
+                       close = close)) +
+  labs(title = "Daily stock prices of DBS Group") +
+  coord_x_date(xlim = c(start,end)) +
+  theme_tq()
+```
+
+```{r}
+Stock_data %>%
+  filter(Symbol == "D05.SI") %>%
+  filter(date >= start - days(2 * 15)) %>%
+  ggplot(aes(x = date, y = close)) +
+  geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
+  geom_ma(ma_fun = SMA, 
+          n = 5, 
+          linetype = 5, 
+          size = 1.25) +
+  geom_ma(ma_fun = SMA, 
+          n = 15, 
+          color = "red", 
+          size = 1.25) +
+  labs(title = "DBS Group Holdings Ltd Daily Stock Price"
+,
+  subtitle = "5 and 15-Day SMA"
+,
+  y = "Closing Price"
+, x = "") +
+  coord_x_date(xlim = c(end - weeks(5), end)) +
+  theme_tq()
+
+```
+
+```{r}
+Stock_data %>%
+  filter(Name == "DBS Group") %>%
+  ggplot(aes(x = date, 
+             y = close))+
+  geom_line(size = 0.5)+
+  geom_bbands(aes(high = high, low = low, close = close),
+  ma_fun = SMA, sd = 2, n = 5,
+  size = 0.75, 
+  color_ma = "royalblue4",
+  color_bands = "red1") +
+  coord_x_date(xlim = c("2022-01-01",
+                        "2022-06-30"),
+               expand = TRUE) +
+               labs(title = "DBS Group Holdings Ltd ",
+               subtitle = "dotted red lines = bollinger bands",
+               x = "Date", 
+               y = "Close Price") +
+    theme(legend.position = "none")
+```
+
+```{r}
+stock_monthly_returns <- Stock_data %>%
+  group_by(Name) %>%
+  tq_transmute(select = adjusted,
+               mutate_fun = periodReturn,
+               period = "monthly",
+               type = "arithmetic")
+
+stock_monthly_returns
+```
+
+```{r}
+stock_monthly_returns %>%
+  ggplot(aes(x = date,
+             y = monthly.returns,
+             fill = Name)) +
+  geom_col() +
+  geom_hline(yintercept = 0,
+             color = palette_light()[[1]]) +
+  labs(title = "Monthly returns of the six selected stocks",
+       subtitle = "",
+       y = "Monthly Returns", x = "") +
+  facet_wrap(~Name,
+            ncol = 2,
+            scales = "free_y") +
+  theme_tq() +
+  scale_fill_tq()
+```
+
+Portfolio Analysis
+
+```{r}
+SGBank <- read_csv("data/SGBank.csv")
+```
+
+```{r}
+SGBank_daily <- SGBank %>%
+  select(Symbol) %>%
+  tq_get(get = "stock.prices",
+         from = "2020-04-01",
+         to = "2022-06-30")
+```
+
+```{r}
+SGBank_returns_monthly <- SGBank_daily %>%
+  group_by(Symbol) %>%
+  tq_transmute(select = adjusted,
+  mutate_fun = periodReturn,
+  period = "monthly",
+  col_rename = "Ra")
+```
+
+```{r}
+SGBank_returns_monthly
+```
+
+```{r}
+wts <- c(0.4, 0.3, 0.3)
+
+porfolio_returns_monthly <- SGBank_returns_monthly %>%
+  tq_portfolio(assets_col = Symbol,
+               returns_col = Ra,
+               weights = wts,
+               col_rename = "Ra")
+```
+
+```{r}
+ggplot(data = porfolio_returns_monthly,
+       aes(x = date,
+           y = Ra)) +
+  geom_bar(stat = "identity",
+           fill = palette_light()[[1]]) +
+  labs(title = "Porfoli Returns",
+       subtitle = "40% DBS, 30% OCBC and 30% UOB",
+       caption = "Shows an above zero trend meaning positive returns",
+       x = "", 
+       y = "Monthly Returns") +
+  geom_smooth(method = "lm") +
+  theme_tq() +
+  scale_color_tq() +
+  scale_y_continuous(labels = scales::percent)
+```

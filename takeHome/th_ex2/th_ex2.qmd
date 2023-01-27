@@ -129,7 +129,7 @@ Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.
 Data
 
 | Source(s) | Urban Redevelopment Authority                                        |
-|:-------------------|----------------------------------------------------|
+|:----------------------|-------------------------------------------------|
 | Licence   | [Singapore Open Data Licence](https://data.gov.sg/open-data-licence) |
 
 https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web
@@ -160,7 +160,7 @@ problems(pop_attribute)
 #### 3.2.1.2 inspect missing value
 
 ```{r}
-skim(pop_attribute)
+skimr::skim(pop_attribute)
 ```
 
 [Remarks :]{style="color:#d69c3c"}
@@ -170,66 +170,16 @@ skim(pop_attribute)
 #### 3.2.1.3 inspect values
 
 ```{r}
-unique(pop_attribute$AG)
-```
-:::
-
-### 3.2.2 Import Boundary Data
-
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-```{r}
-bdy_web <- st_read(dsn = "data/geospatial/web_shp", 
-                layer = "MP14_PLNG_AREA_WEB_PL")
-```
-:::
-
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-```{r}
-bdy_noSea <- st_read(dsn = "data/geospatial/noSea_shp", 
-                layer = "MP14_PLNG_AREA_NO_SEA_PL")
-```
-
-```{r}
-glimpse(bdy_web,70)
-```
-
-```{r}
-glimpse(bdy_noSea,70)
-```
-
-inspect
-
-```{r}
-plot(st_geometry(bdy_web))
-```
-
-```{r}
-plot(st_geometry(bdy_noSea))
+#| code-fold: false
+unique(pop_attribute$Time)
 ```
 
 Remarks :
 
-file size and plotted shape are the same for both.
-
-The only differences is the last update date.
-
-With No Sea version last updated on May 23, 2016.
-
-Web version to be used as the last updated date was 4 Nov 2016.
-
-Save Simple Feature Data Frame into RDS Format
+Can remove "SZ", "Time" and "TOD" fields as they are not needed for age-sex population pyramids.
 
 ```{r}
-write_rds(bdy_web,
-          "data/rds/bdy_web.rds",
-          compress = "xz")
-```
-
-Read RDS File
-
-```{r}
-#| code-fold: false
-bdy_web <- read_rds("data/rds/bdy_web.rds")
+unique(pop_attribute$TOD)
 ```
 :::
 
@@ -237,6 +187,7 @@ bdy_web <- read_rds("data/rds/bdy_web.rds")
 
 ### **3.3.1 Change Field Names to Lowercase**
 
+::: {.callout-warning appearance="simple" icon="false"}
 To avoid confusion between field names used in data and discussions, change all fields' name to lowercase.
 
 ::: {.callout-alert appearance="simple" icon="false"}
@@ -248,35 +199,10 @@ To avoid confusion between field names used in data and discussions, change all 
 ```{r}
 #| code-fold: false
 names(pop_attribute) <- tolower(names(pop_attribute))
-names(bdy_web) <- tolower(names(bdy_web))
 ```
-
-### **3.3.2 Convert Case for Planning Area Values**
-
-The Planning Areas' values in the boundary data-set are strings of entirely upper case.
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***str_to_title( )*** - stringr -]{style="color:#d46e15"} to set the initial of the string to upper case.
 :::
 
-```{r}
-#| code-fold: false
-bdy_web$pln_area_n <- str_to_title(bdy_web$pln_area_n)
-```
-
-### **3.3.3 Rename Planning Area for Boundary Dataset**
-
-Setting same name for Planning Area fields to facilitate left join between two datasets at section 3.xxx.
-
-```{r}
-#| code-fold: false
-bdy_pa <- bdy_web %>% 
-  rename(`pa` = `pln_area_n`) 
-```
-
-### **3.3.4 Remove Non-Alphameric Character**
+### **3.3.2 Remove Non-Alphameric Character**
 
 There are special character such as "\_" among Age Groups' value.
 
@@ -296,6 +222,12 @@ pop_attribute$ag <- gsub("_",
                          fixed = TRUE)
 ```
 
+3.3.3
+
+```{r}
+questionr::freq(pop_attribute$pa[(pop_attribute$pop >= 0)])
+```
+
 ## 3.4 Create Data Frame for Population Pyramids Plot
 
 ### 3.4.1 Explore with Single Planning Area
@@ -313,7 +245,7 @@ pop_attribute$ag <- gsub("_",
 ```{r}
 #| code-fold: false
 test0 <- pop_attribute %>% 
-  filter(pa == "Ang Mo Kio") %>%
+  filter(pa == "Bedok") %>%
   group_by(ag, sex) %>%
   summarise(`count_pop` = sum(`pop`)) %>%
   ungroup()
@@ -322,7 +254,7 @@ test0 <- pop_attribute %>%
 #### 3.4.1.1 visualise data
 
 ::: panel-tabset
-## Visualise Data
+## Visualise Bedok Data
 
 ```{r}
 ggplot(data = test0,
@@ -357,7 +289,7 @@ for entire singapore
 :::
 
 ```{r}
-ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to89", "90 and over")
+ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to 89", "90 and over")
 
 pop_sgp <- pop_attribute %>%
   group_by(ag, sex) %>%
@@ -365,13 +297,18 @@ pop_sgp <- pop_attribute %>%
   mutate(ag = factor(ag, levels = ag_sequence)) %>%
   arrange(ag) %>%
   ungroup()
+
+pop_sgp <- pop_sgp %>%
+  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
+         res = str_c(count_pop, ", ", pct))
+
 ```
 
 at Planning Area level
 
 ```{r}
 #| code-fold: false
-ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to89", "90 and over")
+ag_sequence <- c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24", "25 to 29", "30 to 34", "35 to 39", "40 to 44", "45 to 49", "50 to 54", "55 to 59", "60 to 64", "65 to 69", "70 to 74", "75 to 79", "80 to 84", "85 to 89", "90 and over")
 
 pop_pa <- pop_attribute %>%
   group_by(pa, ag, sex) %>%
@@ -388,6 +325,7 @@ remarks :
 
 ### **3.5.1 Identify Top 9 Planning Areas**
 
+::: {.callout-warning appearance="simple" icon="false"}
 Based on top 9 highest population
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
@@ -410,120 +348,54 @@ t9 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
   select(pa)
 ```
 
-### **3.5.2 Filter Top 9 Filter** 
+Remarks :
+:::
 
+### **3.5.2 Filter Top 9 Filter**
+
+::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
 t9_filtered <- pop_pa %>% 
   filter(pop_pa$pa %in% t9$pa)
 ```
+:::
 
-## 3.6 Create 
+## 3.6 Create
 
+::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
 pop_males <- t9_filtered %>%
   filter(sex %in%
-           c("Males"))
+           c("Males")) %>%
+  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
+         res = str_c(count_pop, ", ", pct))
 ```
 
 ```{r}
 pop_females <- t9_filtered %>%
   filter(sex %in%
-           c("Females"))
+           c("Females")) %>%
+  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
+         res = str_c(count_pop, ", ", pct))
 ```
+:::
 
 ```{r}
 #| eval: false
-t9_map <- bdy_pa %>%
-  mutate(`total_pop` = lengths(
-    st_intersects(bdy_pa, pop_pa))) %>%
-  mutate(`males` = lengths(
-    st_intersects(bdy_pa, pop_males))) %>%
-  mutate(`females` = lengths(
-    st_intersects(bdy_pa, pop_females)))
-```
-
-```{r}
 test3 <- pop_attribute %>%
   group_by(pa, ag) %>%
   summarise(`count_pop` = sum(`pop`)) %>%
   ungroup() %>%
   pivot_wider(names_from = ag, 
-              values_from = count_pop) 
-```
-
-#\| eval: false
-
-mutate(YOUNG = rowSums(.\[3:6\])
-
-+rowSums(.\[12\])) %\>%
-
-mutate(\`ECONOMY ACTIVE\` = rowSums(.\[7:11\])+
-
-rowSums(.\[13:15\]))%\>%
-
-mutate(\`AGED\`=rowSums(.\[16:21\])) %\>%
-
-mutate(\`TOTAL\`=rowSums(.\[3:21\])) %\>%
-
-mutate(\`DEPENDENCY\` = (\`YOUNG\` + \`AGED\`)
-
-/\`ECONOMY ACTIVE\`) %\>%
-
-select(\`PA\`, \`SZ\`, \`YOUNG\`,
-
-\`ECONOMY ACTIVE\`, \`AGED\`,
-
-\`TOTAL\`, \`DEPENDENCY\`)
-
-## 3.6 Transform Data
-
-## 3.6.1 Transform CRS
-
-::: {.callout-warning appearance="simple" icon="false"}
-Ensure all dataframes are in the same projected CRS.
-
-#### 3.6.1.1 transform with st_set_crs( ) function
-
-Generally, there are two main steps involved.
-
-#### -- retrieve CRS information
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***st_crs( )*** - sf -]{style="color:#d46e15"} to retrieve coordinate reference system for mpsz.
-:::
-
-```{r}
-#| code-fold: false
-st_crs(bdy_pa)
-```
-
-#### -- transform CRS
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***st_transform( )*** - sf -]{style="color:#d46e15"} to reproject x from one coordinate system wgs84 to svy21 mathematically, which is not capable by *st_set_crs()*.
-:::
-
-```{r}
-#| code-fold: false
-bdy_trans <- st_transform(bdy_pa,
-                          crs = 3414)
-```
-
-#### -- verify CRS
-
-```{r}
-st_crs(bdy_trans)
-```
-:::
-
-## 3.7 Combine Data Sets
-
-```{r}
-pop_pa <- left_join(pop_attribute, bdy_trans)
+              values_from = count_pop) %>%
+  mutate(YOUNG = rowSums(.[3:6]) + 
+           rowSums(.[12])) %>%
+  mutate(`ECONOMY ACTIVE` = rowSums(.[7:11]) +
+           rowSums(.[13:15])) %>%
+  mutate(`AGED`=rowSums(.[16:21])) %>%
+  mutate(`TOTAL`=rowSums(.[3:21])) %>%
+  mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)/`ECONOMY ACTIVE`) %>%
+  select(`PA`, `SZ`, `YOUNG`, `ECONOMY ACTIVE`, `AGED`, `TOTAL`, `DEPENDENCY`)
 ```
 
 # 4 EXPLORATORY DATA ANALYSIS (EDA)
@@ -553,21 +425,71 @@ popPyr_sgp <- ggplot(pop_sgp,
                            y = ag,
                            fill = sex)) + 
   geom_col() +
-  scale_x_continuous(breaks = seq(-150000, 150000, 50000), 
+  scale_x_continuous(breaks = seq(-200000, 200000, 50000), 
                      labels = paste0(
                        as.character(
-                         c(seq(150, 0, -50), 
-                           seq(50, 150, 50))),
+                         c(seq(200, 0, -50), 
+                           seq(50, 200, 50))),
                        "k")) +
-  labs (x = "Population", 
-        y = "Age", 
-        title = 'Singapore Age-Sex Population Pyramid 2022') +
+  labs (x = "Count of Population", 
+        y = "Age\nGroup",
+        fill = "Gender",
+        title = "Singapore Population Pyramid 2022",
+        subtitle = "Distribution of gender and age groups") +
   theme_bw() +
-  theme(axis.ticks.y = element_blank()) +
+  theme(plot.title = element_text(size = 14, 
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 8,
+                                     colour = "#424242",
+                                     face = "italic"),
+        axis.ticks = element_line(colour = "#969595",
+                                  size = 0.3),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 8, 
+                                    colour = "#302f2f"),
+        axis.title.x = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        axis.text.x = element_text(size = 7,
+                                   colour = "#424242"),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.position = "bottom",
+        legend.text = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.title = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        panel.grid.major = element_line(size = rel(0.5)),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#fcfbf5"),
+        panel.border = element_rect(colour = "#969595",
+                                    size = 0.3)) +
+  geom_text(aes(label = pct),
+            hjust = ifelse(pop_sgp$sex == "Males",
+                           yes = 1.1, 
+                           no = -0.1),
+            size = 1.6,
+            check_overlap = FALSE,
+            colour = "#5e5c5c") +
   scale_fill_manual(values = c("Males" = "lightblue", 
-                               "Females" = "lightpink")) 
+                               "Females" = "lightpink"))
 
 popPyr_sgp
+```
+
+```{r}
+  labs(x = "Race",
+       y = "No. of\nPupils",
+       title = "Primary 3 Students By Race",
+       subtitle = "Students from a local school") +
+  theme(axis.title.y = element_text(angle = 0, 
+                                    size = 10),
+        axis.title.x = element_text(size = 10),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10)) +
+  geom_text(aes(label = res),
+            vjust = -0.9) + 
+  scale_y_continuous(limits = c(0,210))
 ```
 
 #### **4.1.2 Plot A Single Population Pyramid (Interactive)**

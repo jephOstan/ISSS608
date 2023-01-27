@@ -33,6 +33,10 @@ website:
             href: pnote/bsw_3.qmd
           - text: BSWorkshop - Build Statistical Model
             href: pnote/bsw_4.qmd
+          - text: BSWorkshop - Build Predictive Model
+            href: pnote/bsw_5.qmd
+          - text: BSWorkshop - Finance Data Analysis
+            href: pnote/bsw_6.qmd            
           - text: Shiny Workshop - Prof's Prototype
             href: https://tskam.shinyapps.io/prototype-ShinyIDEA/
           - text: Exploration 0 - Explore with Geospatial Data
