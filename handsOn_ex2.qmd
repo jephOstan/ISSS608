@@ -4,6 +4,10 @@ editor: visual
 date:  20 Jan 2023
 date-modified: "`r Sys.Date()`"
 code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
 website: 
     google-analytics: "G-PKMQ2W4ZRC"
 format:

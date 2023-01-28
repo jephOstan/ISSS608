@@ -9,23 +9,25 @@ website:
       - text: Hands-on Exercises
         menu: 
           - text: Ex[1] DataVis with ggplot2
-            href: handsOn_ex1.qmd
+            href: handsOn_ex1.html
           - text: Ex[2] DataVis with Advanced ggplot2
-            href: handsOn_ex2.qmd
+            href: handsOn_ex2.html
+          - text: Ex[3] Programming Interactive Data Visualisation
+            href: handsOn_ex3.html
             
       - text: In-class Exercises
         menu: 
           - text: Ex[1] S & P Summary with Tableau
             href: https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&:origin=viz_share_link
-          - text: Ex[2] Design Enlightening Graphs with R
-            href: inClass/inClass_ex02/inClass_ex2.qmd
+          - text: Ex[3] Programming Interactive Data Visualisation
+            href: inClass/inClass_ex03/inClass_ex3.html
             
       - text: Take-home Exercises
         menu: 
           - text: Ex[1] Trellis Population Pyramids
-            href: takeHome/th_ex1/th_ex1.qmd
+            href: takeHome/th_ex1/th_ex1.html
           - text: Ex[1] DataViz Makeover for Trellis Population Pyramids
-            href: takeHome/th_ex2/th_ex2.qmd
+            href: takeHome/th_ex2/th_ex2.html
      
       - text: Workshop & Notes
         menu:

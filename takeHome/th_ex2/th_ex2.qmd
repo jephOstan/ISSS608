@@ -4,6 +4,10 @@ editor: visual
 date:  23 Jan 2023
 date-modified: "`r Sys.Date()`"
 code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
 website: 
     google-analytics: "G-PKMQ2W4ZRC"
 format:
@@ -34,37 +38,59 @@ Because of that, the order in the chart will be incorrect.
 
 ## 1.1 Task Instruction
 
-I am curious to see the different approaches you all take.The purpose of the makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation. However, if supplementing the data helps you tell a better story, go for it!
+critic the submission in terms of clarity and aesthetics,
 
-==========
+prepare a sketch for the alternative design by using the data visualisation design principles and
 
-In this take-home exercise, you are required to:
+best practices you had learned in Lesson 1 and 2
 
--   select one of the Take-home Exercise 1 prepared by your classmate,
+remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.
 
--   critic the submission in terms of clarity and aesthetics,
+The purpose of DataVis Makeover is to improve on the original visualisation.
 
--   prepare a sketch for the alternative design by using the data visualisation design principles and best practices you had learned in Lesson 1 and 2, and
+Focus on what works,
 
--   remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.
+what doesn't work,
 
-The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.
+why those things don't work, and how you made it better.
 
-submission instructions
+With consent given by fellow coursemate, [Chen Yi Man](https://public.tableau.com/app/profile/yiman.chen/viz/takehome_ex01/Story1), below is my draft to refine her works with R Studio and mainly ggplot2, ggplot2 extensions and tidyverse packages.
 
-This is an individual assignment. You are required to work on the take-home exercises and prepare submission individually.
+## 1.2 Literature Review
 
-The specific submission instructions are as follows:
+The review will be mainly focus on the clarity and aesthetics based on the requirements for Take Home Exercise 1.
 
--   The analytical visualisation must be prepared by using **R and appropriate R packages**.
+### 1.2.1 Overview
 
--   The write-up of the take-home exercise must be in **Quarto html document** format. You are required to publish the write-up on [**Netlify**](https://www.netlify.com/).
+Within short amount of times, she was able to deliver an inspiring piece of works in the following aspects :
 
--   Provide the links to the Take-home Exercise write-up and github repository onto eLearn (i.e. Take-home Exercise section)
+-   three (3) different depths, namely, overview for Singapore at the nation level, follow by Singapore Planning Areas (PAs) and Sub Zones for each PA.
 
-## 1.2 Scope of Reworks
+-   compliment the story telling with a degree of geospatial visual analysis.
 
-With consent given by fellow coursemate, [Chen Yi Man](https://public.tableau.com/app/profile/yiman.chen/viz/takehome_ex01/Story1), below is my draft to refine her works with R Studio and Tidyverse, sf and tmap packages.
+-   provide interactive features that facilitate viewers certain level of visual analysis with regards to the topic.
+
+However, there are some aspects can help to strengthen the visual analysis.
+
+The evaluation will be focussed on the following four (4) aspects :
+
+-   Level of clarity for the objectives and subject matters for the chart.
+
+-   References for visual analysis :
+
+    -   Trellis layout.
+
+    -   Visual references.
+
+    -   Domain knowledge.
+
+[![Figure 1.1 Overview of Singapore Population Pyramid](images/image-30154142.png){fig-alt="This image illustrate an overview of Singapore Population Pyramid that produced by Tableau Desktop." fig-align="left" width="800"}](https://public.tableau.com/shared/FRQBJR92T?:display_count=n&:origin=viz_share_link)
+
+[![Figure 1.2 Singapore Population Pyramids by 55 Planning Areas with trellis wrap layout.](images/image-1612659243.png){fig-alt="This image illustrate the population pyramid for 55 Planning Area." fig-align="left" width="800"}](https://public.tableau.com/shared/FRQBJR92T?:display_count=n&:origin=viz_share_link)
+
+[![Figure 1.3 Singapore Population Pyramids by 55 Planning Areas with trellis wrap layout.](images/image-101707983.png){fig-alt="This image illustrate the population pyramid for all sub-zones within each 55 Singapore Planning Areas." fig-align="left" width="800"}](https://public.tableau.com/shared/HG56JW8NK?:display_count=n&:origin=viz_share_link)
+
+1.2.2
 
 # 2. R PACKAGE REQUIRED
 
@@ -129,7 +155,7 @@ Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.
 Data
 
 | Source(s) | Urban Redevelopment Authority                                        |
-|:--------------|---------------------------------------------------------|
+|:----------|----------------------------------------------------------------------|
 | Licence   | [Singapore Open Data Licence](https://data.gov.sg/open-data-licence) |
 
 https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web

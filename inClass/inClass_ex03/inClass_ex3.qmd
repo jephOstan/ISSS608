@@ -1,0 +1,130 @@
+---
+title: "Ex[3] - Programming Interactive Data Visualisation with R"
+editor: visual
+date:  28 Jan 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+In this exercise, learn how to create :
+
+-   interactive data visualisation by using ggiraph and plotlyr packages,
+
+-   animated data visualisation by using gganimate and plotlyr packages.
+
+-   Visualising univariate data with large number of categories by using rPackedBar package.
+
+-   reshape data by using tidyr package.
+
+-   process, wrangle and transform data by using dplyr package.
+:::
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
+:::
+
+```{r}
+#| code-fold: false
+pacman::p_load(ggiraph, plotly, gganimate, DT, tidyverse, patchwork, gapminder, rPackedBar) 
+```
+:::
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Usage of R Packages :**]{style="color:#3a9c88"}
+
+-   [**ggiraph**](https://davidgohel.github.io/ggiraph/) for making 'ggplot' graphics interactive.
+
+-   [**plotly**](https://plotly.com/r/), R library for plotting interactive statistical graphs.
+
+-   [**gganimate**](https://gganimate.com/), an ggplot extension for creating animated statistical graphs.
+
+-   [**DT**](https://rstudio.github.io/DT/) provides an R interface to the JavaScript library [DataTables](https://datatables.net/) that create interactive table on html page.
+
+-   [**tidyverse**](https://www.tidyverse.org/), a family of modern R packages specially designed to support data science, analysis and communication task including creating static statistical graphs.
+
+-   [**patchwork**](https://patchwork.data-imaginist.com/) for compising multiple plots.
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Data**
+
+::: {.callout-warning appearance="simple" icon="false"}
+Involved two (2) steps : import and inspect imported data set.
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+#| code-fold: false
+exam_data <- read_csv("data/Exam_data.csv")
+
+problems(exam_data)
+```
+:::
+
+# 4 METHOD :: **ggiraph** package
+
+## 4.1 Tooltip
+
+::: {.callout-warning appearance="simple" icon="false"}
+#### 4.1.1 Create ggplot Object
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***geom_dotplot_interactive( )*** - ggplot2 -]{style="color:#d46e15"} to plot interactive dot chart.
+:::
+
+```{r}
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(aes(tooltip = ID),
+                           stackgroups = TRUE,
+                           binwidth = 1,
+                           method = "histodot") +
+  scale_y_continuous(NULL,
+                     breaks = NULL)
+```
+
+#### 4.1.2 create interactive svg Object
+
+```{r}
+girafe(ggobj = p,
+       width_svg = 6,
+       height_svg = 6*0.618)
+```
+:::
