@@ -126,7 +126,21 @@ head(pop_agSx)
 ```
 :::
 
-### 
+```{#| code-fold: false}
+pop_males <- t19_filtered %>%
+  filter(sex %in%
+           c("Males")) %>%
+  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
+         res = str_c(count_pop, ", ", pct))
+
+{r}
+#| code-fold: false
+pop_females <- t19_filtered %>%
+  filter(sex %in%
+           c("Females")) %>%
+  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
+         res = str_c(count_pop, ", ", pct))
+```
 
 ### 3.3.2 Create Smaller Data Frame
 

@@ -18,85 +18,139 @@ format:
     css: styles.css
 ---
 
-# 1. OVERVIEW
+# **1. OVERVIEW**
 
-This study focus on make over a trellis plot of 9 population pyramids by
+There are two main focuses for this makeover assignment, that is :
 
-explores the **Pyramid chart** using **ggplot2** and supporting R packages.
+1.  Critic or feedback on the trellis plot of 9 population pyramids created by a fellow coursemate, [Chen Yi Man](https://public.tableau.com/app/profile/yiman.chen/viz/takehome_ex01/Story1), with consent.
+2.  Remake and refine the trellis plot with an alternative design based on the principles and best practices learned in Lessons 1 and 2, using R packages, specifically ggplot2, ggplot2 extensions and tidyverse packages.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Challenges in wrangling the raw data :**]{style="color:#3a9c88"}
+## [**Requirement Details for this Individual Assignment**]{style="color:#3a9c88"}
 
-The age group variable, "AG", is a character data type.
+-   select one of the Take-home Exercise 1 prepared by your classmate,
 
-If it is used to plot the population pyramid, "10_to_14" will be parsed first instead of "5_to_9" after "0_to_4 is parsed.
+-   critic the submission in terms of clarity and aesthetics,
 
-Because of that, the order in the chart will be incorrect.
+-   prepare a sketch for the alternative design by using the data visualisation design principles and best practices you had learned in Lesson 1 and 2, and remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.
 
-[Resolve manually with these functions - *mutate( )* and *arrange( )*.]{style="color:#d69c3c"}
+[The purpose of DataVis Makeover is to improve on the original visualisation. Focus on what works, what doesn't work, why those things don't work, and how you made it better. You should try stick to the fields in the data set provided and improve upon the original visualisation.]{style="color:#d69c3c"}
 :::
 
-## 1.1 Task Instruction
+## **1.1 Review Original Chart**
 
-critic the submission in terms of clarity and aesthetics,
+::: {.callout-warning appearance="simple" icon="false"}
+There are two main instructions for the first take-home exercise, which are to reveal the demographic structure of Singapore at the planning area level by using the age-sex pyramid method and displaying 9 selected planning areas on a single view.
 
-prepare a sketch for the alternative design by using the data visualisation design principles and
+For this section, the review will be based on clarity and aesthetics.
 
-best practices you had learned in Lesson 1 and 2
+### Highlights of Exceptional Elements
 
-remake the original design by using ggplot2, ggplot2 extensions and tidyverse packages.
+Within a short amount of time (less than a week), for a person totally new to Tableau, she was able to deliver an inspiring piece of work in the following aspects :
 
-The purpose of DataVis Makeover is to improve on the original visualisation.
+-   Three (3) different depths - an overview of Singapore at a national level, followed by Singapore Planning Areas (PAs) and Sub Zones for each PA.
 
-Focus on what works,
+-   Compliment the storytelling with a degree of geospatial visual analysis.
 
-what doesn't work,
+-   Provide interactive features that facilitate visual analysis of the topic.
 
-why those things don't work, and how you made it better.
+[![Figure 1.1 Landing view with an overview of Singapore Population Pyramid.](images/image-30154142.png){fig-alt="This image illustrate an overview of Singapore Population Pyramid that produced by Tableau Desktop." fig-align="left" width="400"}](https://public.tableau.com/shared/FRQBJR92T?:display_count=n&:origin=viz_share_link)
 
-With consent given by fellow coursemate, [Chen Yi Man](https://public.tableau.com/app/profile/yiman.chen/viz/takehome_ex01/Story1), below is my draft to refine her works with R Studio and mainly ggplot2, ggplot2 extensions and tidyverse packages.
+[![Figure 1.2 Display trellis plot of Singapore Population Pyramids by 55 Planning Area.](images/image-1612659243.png){fig-alt="This image illustrate the population pyramid for 55 Planning Area." fig-align="left" width="400"}](https://public.tableau.com/shared/FRQBJR92T?:display_count=n&:origin=viz_share_link)
 
-## 1.2 Literature Review
+[![Figure 1.3 Display trellis plot of Singapore Population Pyramids by subzone.](images/image-101707983.png){fig-alt="This image illustrate the population pyramid for all sub-zones within each 55 Singapore Planning Areas." fig-align="left" width="400"}](https://public.tableau.com/shared/HG56JW8NK?:display_count=n&:origin=viz_share_link)
 
-The review will be mainly focus on the clarity and aesthetics based on the requirements for Take Home Exercise 1.
+### **Rooms for Improvement**
 
-### 1.2.1 Overview
+However, in terms of clarity and aesthetic aspects, there are four (4) main rooms for improvement :
 
-Within short amount of times, she was able to deliver an inspiring piece of works in the following aspects :
+#### **a. Lack of clarity**
 
--   three (3) different depths, namely, overview for Singapore at the nation level, follow by Singapore Planning Areas (PAs) and Sub Zones for each PA.
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| what doesn't work                                                                                                                                                                   | feedback                                                                                                                                   | suggestion                                                                                                                         |
++=====================================================================================================================================================================================+============================================================================================================================================+====================================================================================================================================+
+| Choice of words for the title.                                                                                                                                                      | The title is not conveying clear context.                                                                                                  | Suggest stating the key focus upfront.                                                                                             |
+|                                                                                                                                                                                     |                                                                                                                                            |                                                                                                                                    |
+| "Discovering Singapore Age Pyramid: Sex Pattern in Jun 2022"                                                                                                                        | -   Readers may be mislead into the notion of this chart is based on age-related variable with sex-related value as the response variable. | -   In this study, the key focus is the pattern, then followed by the supporting details such as the variables, location and time. |
+|                                                                                                                                                                                     | -   The confusion is further enhanced by the colon character " : ".                                                                        | -   For example, "Discover Patterns of Age and Gender distribution in Singapore as of June 2022".                                  |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| The sequence of additional storyboards (landing storyboard consists of a Singapore map and a population pyramid, while the last storyboard consists of a trellis plot by sub-zones. | The entire approach may distract readers from the trellis plot of 9 selected PAs, which should be the main focus.                          | Perhaps can reduce the storyboards to two, meaning :                                                                               |
+|                                                                                                                                                                                     |                                                                                                                                            |                                                                                                                                    |
+|                                                                                                                                                                                     |                                                                                                                                            | -   Combine both overview and the trellis plot of 9 selected PAs into a storyboard                                                 |
+|                                                                                                                                                                                     |                                                                                                                                            |                                                                                                                                    |
+|                                                                                                                                                                                     |                                                                                                                                            | -   The storyboard of the trellis for subzones can remains the same.                                                               |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
 
--   compliment the story telling with a degree of geospatial visual analysis.
+#### **b. Trellis layout of 55 PAs**
 
--   provide interactive features that facilitate viewers certain level of visual analysis with regards to the topic.
++--------------------------------------+-----------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+
+| what doesn't work                    | feedback                                                                                                              | suggestion                                                                          |
++======================================+=======================================================================================================================+=====================================================================================+
+| Display 55 PAs' population pyramids. | For a static plot, readers won't be able to view 55 PA's population pyramids plotted diagonally within a single view. | First, filter 9 PAs by context before plotting them into a single view.             |
+|                                      |                                                                                                                       |                                                                                     |
+|                                      | Even if it's an interactive plot, a filter of 9 PAs should have been provided to the readers.                         | -   For example, the top 9 highest population count or the gender-population count. |
++--------------------------------------+-----------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+
 
-However, there are some aspects can help to strengthen the visual analysis.
+#### **c. Lack of Visual Cues or Display by Context**
 
-The evaluation will be focussed on the following four (4) aspects :
++-----------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| what doesn't work                                                           | feedback                                                                                                                                                                      | suggestion                                                                                                                                                             |
++=============================================================================+===============================================================================================================================================================================+========================================================================================================================================================================+
+| Single colour for 2 different values, "Males" and "Females".                | Unless viewed from 15-inch laptops or a bigger monitor screen, a reader can only identify which side of the bars represents males or females after scrolling down the screen. | Assign 2 different colours for the gender variable.                                                                                                                    |
++-----------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Age group is showing "Null" value, and grouped age into 10 years intervals. | No caption or note to clarify "Null" value.                                                                                                                                   | For demographic structure, should use quinquennial age groups (grouped age in 5 years intervals).                                                                      |
+|                                                                             |                                                                                                                                                                               |                                                                                                                                                                        |
+|                                                                             | Context is not clear why the age is grouped into 10 years.                                                                                                                    | -   Click [here](https://visual-analytics-jephostan.netlify.app/takehome/th_ex1/th_ex1#bins-of-age-group) to find out more about ages grouping for different contexts. |
++-----------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+:::
 
--   Level of clarity for the objectives and subject matters for the chart.
+## **1.2 Proposal for Alternative Design**
 
--   References for visual analysis :
+### **1.2.1 Sketch for Alternate Design**
 
-    -   Trellis layout.
+::: {.callout-warning appearance="simple" icon="false"}
+![Figure 1.4 Proposal for Alternative Design](images/image-1080407652.png){fig-alt="This image illustrate a sketch that consists of trellis plot with wrap facet and a data table placed below." fig-align="left" width="800"}
 
-    -   Visual references.
+Remarks :
 
-    -   Domain knowledge.
+This proposal sketch is done with **Figma** web-tool.
+:::
 
-[![Figure 1.1 Overview of Singapore Population Pyramid](images/image-30154142.png){fig-alt="This image illustrate an overview of Singapore Population Pyramid that produced by Tableau Desktop." fig-align="left" width="800"}](https://public.tableau.com/shared/FRQBJR92T?:display_count=n&:origin=viz_share_link)
+### **1.2.1 Clarity Enhancement**
 
-[![Figure 1.2 Singapore Population Pyramids by 55 Planning Areas with trellis wrap layout.](images/image-1612659243.png){fig-alt="This image illustrate the population pyramid for 55 Planning Area." fig-align="left" width="800"}](https://public.tableau.com/shared/FRQBJR92T?:display_count=n&:origin=viz_share_link)
+::: {.callout-warning appearance="simple" icon="false"}
+***a. Context*** **:** The proposed design will inherit the context requirement from the first Take-home assignment, which is to reveal Singapore's demographic structure with two key variables : age-groups and gender as of June 2022. It will be a trellis plot of population pyramids with wrap facet 3 by 3. The top 9 Singapore Planning Areas with the highest population counts.
 
-[![Figure 1.3 Singapore Population Pyramids by 55 Planning Areas with trellis wrap layout.](images/image-101707983.png){fig-alt="This image illustrate the population pyramid for all sub-zones within each 55 Singapore Planning Areas." fig-align="left" width="800"}](https://public.tableau.com/shared/HG56JW8NK?:display_count=n&:origin=viz_share_link)
+***b. Title & Subtitle*** **:** The proposed design has a title consisting of the main subject, supporting details and location, while the variables and time will be under the subtitle.
 
-1.2.2
+***c.X-axis Label*** **:** Only show the x-axis title below the chart. The population count value will be hidden as the proportion of values to bars are too huge to be meaningful. Should the readers interested to learn more about the figures, they can refer to the data table that presenting below the plot.
 
-# 2. R PACKAGE REQUIRED
+***d. Y-axis Title & Text*** **:** Y-axis title will be displayed above the axis instead of next to the value. The age-group values will need to be sorted with the oldest at the top.
+
+***e. Legend*** **:** Only the genders' values will be displayed, which are "Males" and "Females".
+
+***f. Caption*** **:** It will state the data source and the year of data obtained.
+:::
+
+### **1.2.2 Aesthetic Enhancement**
+
+::: {.callout-warning appearance="simple" icon="false"}
+***a. X-axis labels*** **:** Only the x-axis title is shown to minimise clustering the chart with figures.
+
+***b. Tick marks & background border lines*** **:** The colours thereof will be "mid-grey" to focus readers more on the bars.
+
+***c. Gridlines*** : Only display horizontal grid lines since identifying the bars' length from a static plot is not practical.
+
+***(d) Colour*** : A pair of high-contrast colours will be assigned to the gender values. Titles and subtitles will be in various shades of grey.
+
+***(e) Font size:*** The font size of the main title will be more prominent than the sub-title. This will help to set the reader's focus on the right context when analysing the chart.
+:::
+
+# **2. R PACKAGE REQUIRED**
 
 The following are the packages required for this exercise :
 
-## 2.1 Load R Packages
+## **2.1 Load R Packages**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -104,15 +158,13 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP)
+pacman::p_load(tidyverse, ggpubr, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP, patchwork)
 ```
-
-[Remarks :]{style="color:#d69c3c"}
 :::
 
-# 3. DATA
+# **3. DATA**
 
-## 3.1 Acquire Data Source
+## **3.1 Acquire Data Source**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 This study will be based on demographic data set downloadable from [Singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data).
@@ -146,28 +198,14 @@ This study will be based on demographic data set downloadable from [Singstat.gov
 :::
 :::
 
--   Singstat Dataset for Population
+## **3.2 Import Data**
 
-    1.  Download "Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022" [dataset](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data) in csv format from Singstat.gov.sg.
-
-Master Plan 2014 Planning Area Boundary. Web version instead of Sea version.
-
-Data
-
-| Source(s) | Urban Redevelopment Authority                                        |
-|:----------|----------------------------------------------------------------------|
-| Licence   | [Singapore Open Data Licence](https://data.gov.sg/open-data-licence) |
-
-https://data.gov.sg/dataset/master-plan-2014-planning-area-boundary-web
-
-## 3.2 Import Data
-
-### 3.2.1 Import Population Attributes Data
+### **3.2.1 Import Attributes Data**
 
 ::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-Two (2) steps : import and inspect imported data set.
+There are two (2) steps involve, which are import and inspect imported data set.
 
-#### 3.2.1.1 import data
+#### **3.2.1.1 import data**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -183,30 +221,26 @@ pop_attribute <- read_csv("data/aspatial/respopagesextod2022.csv")
 problems(pop_attribute)
 ```
 
-#### 3.2.1.2 inspect missing value
+#### **3.2.1.2 inspect missing value**
 
 ```{r}
 skimr::skim(pop_attribute)
 ```
 
-[Remarks :]{style="color:#d69c3c"}
-
-[Preliminary data interpretation - based on 2022 consensus data, .]{style="color:#d69c3c"}
-
-#### 3.2.1.3 inspect values
+#### **3.2.1.3 inspect values**
 
 ```{r}
 #| code-fold: false
 unique(pop_attribute$Time)
 ```
 
-Remarks :
-
-Can remove "SZ", "Time" and "TOD" fields as they are not needed for age-sex population pyramids.
-
 ```{r}
 unique(pop_attribute$TOD)
 ```
+
+Remarks :
+
+Can remove "SZ", "Time" and "TOD" fields as they are not needed for age-sex population pyramids.
 :::
 
 ## **3.3 Data Wrangling**
@@ -230,14 +264,15 @@ names(pop_attribute) <- tolower(names(pop_attribute))
 
 ### **3.3.2 Remove Non-Alphameric Character**
 
-There are special character such as "\_" among Age Groups' value.
+::: {.callout-warning appearance="simple" icon="false"}
+There are special character such as "\_" among the Age Groups' values.
 
 Unable to use str_sub( ) function from stringr package as the position of "\_" is varied among values.
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
-[***gsub( )*** - base -]{style="color:#d46e15"} to replace "\_" with space.
+[***gsub( )*** - base -]{style="color:#d46e15"} to replace "\_" with space " ".
 :::
 
 ```{r}
@@ -247,25 +282,21 @@ pop_attribute$ag <- gsub("_",
                          pop_attribute$ag, 
                          fixed = TRUE)
 ```
+:::
 
-3.3.3
+## **3.4 Group Variables**
 
-```{r}
-questionr::freq(pop_attribute$pa[(pop_attribute$pop >= 0)])
-```
+Before grouping the entire data frame, first tested with a single Planning Area.
 
-## 3.4 Create Data Frame for Population Pyramids Plot
+### **3.4.1 Explore with a Planning Area :: Bedok**
 
-### 3.4.1 Explore with Single Planning Area
-
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
+::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
 [***group_by( )*** - dplyr -]{style="color:#d46e15"} to group Singapore population by age and gender.
 
 [***summarise( )*** - dplyr -]{style="color:#d46e15"} to count the number of residents for each group.
-:::
 :::
 
 ```{r}
@@ -276,9 +307,11 @@ test0 <- pop_attribute %>%
   summarise(`count_pop` = sum(`pop`)) %>%
   ungroup()
 ```
+:::
 
-#### 3.4.1.1 visualise data
+### **3.4.2 Visualise Data**
 
+::: {.callout-warning appearance="simple" icon="false"}
 ::: panel-tabset
 ## Visualise Bedok Data
 
@@ -300,13 +333,16 @@ unique(pop_attribute$ag)
 ::: panel-tabset
 Remarks :
 
-Notice the age group "5 to 9" is placed after "45 to 49" instead of placed at 2nd value as shown under the "Inspect Data" tab.
+Notice the age group "5 to 9" is placed after "45 to 49" instead of placed at the 2nd value as shown under the "Inspect Data" tab.
+:::
 :::
 
-#### 3.4.1.2 update age groups display sequence
+### **3.4.3 Update Sequence of Age Groups Display**
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
-for entire singapore
+::: {.callout-warning appearance="simple" icon="false"}
+The update will be applied to 2 datasets, at national level and Planning Areas level.
+
+#### **3.4.3.1 For Population Pyramid at National Level**
 
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
@@ -330,7 +366,7 @@ pop_sgp <- pop_sgp %>%
 
 ```
 
-at Planning Area level
+#### **3.4.3.2** **For Population Pyramid at Planning Area level**
 
 ```{r}
 #| code-fold: false
@@ -347,55 +383,57 @@ pop_pa <- pop_pa %>%
   mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
          res = str_c(count_pop, ", ", pct))
 ```
-
-remarks :
 :::
 
 ## **3.5 Create 9 Planning Areas Data Set**
 
-### **3.5.1 Identify Top 9 Planning Areas**
+### **3.5.1 Create List of Planning Areas by Population**
 
 ::: {.callout-warning appearance="simple" icon="false"}
-Based on top 9 highest population
+Filter top 9 Planning Areas based on the highest population.
 
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
 [***slice( )*** - dplyr -]{style="color:#d46e15"} to filter based on the first 9 rows.
 :::
-:::
 
 ```{r}
 #| code-fold: false
-t9_paPop <- pop_attribute %>%
+pop_paList <- pop_attribute %>%
   group_by(pa) %>%
   summarise(`count_pop` = sum(`pop`)) %>%
   ungroup()
 
-t3 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+t3 <- arrange(pop_paList, desc(pop_paList$count_pop)) %>%
   slice(1:3) %>%
   select(pa)
   
-t6 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+t6 <- arrange(pop_paList, desc(pop_paList$count_pop)) %>%
   slice(4:6) %>%
   select(pa)
   
-t9 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+t9 <- arrange(pop_paList, desc(pop_paList$count_pop)) %>%
   slice(7:9) %>%
   select(pa)
 
-t19 <- arrange(t9_paPop, desc(t9_paPop$count_pop)) %>%
+t19 <- arrange(pop_paList, desc(pop_paList$count_pop)) %>%
   slice(1:9) %>%
   select(pa)
 ```
 
-Remarks :
+[Remarks :]{style="color:#d69c3c"}
+
+-   [t19 will be used to plot 9 population pyramids.]{style="color:#d69c3c"}
+
+-   [Once t3, t6 and t9 are plotted, they will be stacked together to compare the differences with the t19 plot.]{style="color:#d69c3c"}
 :::
 
-### **3.5.2 Filter Top 9 Filter**
+### **3.5.2 Filter Planning Areas**
 
 ::: {.callout-warning appearance="simple" icon="false"}
+Filter data frame based on the list of Planning Areas created in section **3.5.1**.
+
 ```{r}
 #| code-fold: false
 t3_filtered <- pop_pa %>% 
@@ -412,53 +450,13 @@ t19_filtered <- pop_pa %>%
 ```
 :::
 
-## 3.6 Create
+# 4. DATA VISUALISATION
+
+## 4.1 Plot Pyramid Chart (Static Plot)
+
+### 4.1.1 Plot Population Pyramid for National Level
 
 ::: {.callout-warning appearance="simple" icon="false"}
-```{r}
-#| code-fold: false
-pop_males <- t19_filtered %>%
-  filter(sex %in%
-           c("Males")) %>%
-  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
-         res = str_c(count_pop, ", ", pct))
-```
-
-```{r}
-#| code-fold: false
-pop_females <- t19_filtered %>%
-  filter(sex %in%
-           c("Females")) %>%
-  mutate(pct = scales::percent((count_pop/sum(count_pop)), accuracy = 0.01),
-         res = str_c(count_pop, ", ", pct))
-```
-:::
-
-```{r}
-#| eval: false
-test3 <- pop_attribute %>%
-  group_by(pa, ag) %>%
-  summarise(`count_pop` = sum(`pop`)) %>%
-  ungroup() %>%
-  pivot_wider(names_from = ag, 
-              values_from = count_pop) %>%
-  mutate(YOUNG = rowSums(.[3:6]) + 
-           rowSums(.[12])) %>%
-  mutate(`ECONOMY ACTIVE` = rowSums(.[7:11]) +
-           rowSums(.[13:15])) %>%
-  mutate(`AGED`=rowSums(.[16:21])) %>%
-  mutate(`TOTAL`=rowSums(.[3:21])) %>%
-  mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)/`ECONOMY ACTIVE`) %>%
-  select(`PA`, `SZ`, `YOUNG`, `ECONOMY ACTIVE`, `AGED`, `TOTAL`, `DEPENDENCY`)
-```
-
-# 4 EXPLORATORY DATA ANALYSIS (EDA)
-
-## 4.1 Plot Pyramid Chart
-
-#### **4.1.1 Plot A Single Population Pyramid (Static)**
-
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
 [Usage of the code chunk below :]{style="color:#a39f9d"}
 
@@ -468,10 +466,8 @@ test3 <- pop_attribute %>%
 
 [***ifelse( )*** - base -]{style="color:#d46e15"} to convert population count of Male residents to be negative, so that their data will be plotted on the left side of the pyramid.
 :::
-:::
 
 ```{r}
-#| code-fold: false
 popPyr_sgp <- ggplot(pop_sgp, 
                        aes(x = ifelse(sex == "Males",
                                       yes = -count_pop,
@@ -490,8 +486,8 @@ popPyr_sgp <- ggplot(pop_sgp,
   labs (x = "Count of Population", 
         y = "Age Group",
         fill = "Gender",
-        title = "Singapore Population Pyramid 2022",
-        subtitle = "Distribution of gender and age groups",
+        title = "Demographic Structure of Singapore",
+        subtitle = "the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
         caption = "Data Source : Singstat.gov.sg, June 2022") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, 
@@ -523,9 +519,10 @@ popPyr_sgp <- ggplot(pop_sgp,
         legend.justification = "left",
         legend.text = element_text(size = 7,
                                    colour = "#424242"),
-        legend.title = element_text(size = 8, 
+        legend.title = element_text(size = 8,
                                     colour = "#302f2f"),
-        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.y = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
         panel.grid.minor = element_blank(),
         plot.background = element_rect(fill = "#f7e9cd"),
         legend.background = element_rect(fill = "#f7e9cd"),
@@ -545,18 +542,15 @@ popPyr_sgp <- ggplot(pop_sgp,
 popPyr_sgp
 ```
 
-#### **4.1.2 Plot A Single Population Pyramid (Interactive)**
-
-::: {.callout-warning .column-page-right appearance="simple" icon="false"}
 [Remark :]{style="color:#d69c3c"}
 
 [The pyramid above shows the younger generation's lower percentage, making Singapore's population structure a constrictive type. That means an ageing population.]{style="color:#d69c3c"}
 
 [By June 2022, 4.07 million residents population with a median age of 42.1,]{style="color:#d69c3c"}[^1] [which is approximately a 19% increase from the median age of 35.3 back in the year 2002]{style="color:#d69c3c"}[^2].
 
-[Also, another observation is from 25 age onward, the female population is higher than the male population. As of 2020, Singapore's adjusted gender pay gap (GPG) is at 6%]{style="color:#d69c3c"}[^3].
+[Also, another observation is from 25 age onward, the female population is higher than the male population.]{style="color:#d69c3c"}
 
-[Measures and new schemes may be required to further narrow the gender pay gap and encourage the birth rate or may have long-lasting socio-economic repercussions.]{style="color:#d69c3c"}
+[As of 2020, Singapore's adjusted gender pay gap (GPG) is at 6%]{style="color:#d69c3c"}[^3]. [Measures and new schemes may be required to further narrow the gender pay gap and encourage the birth rate or may have long-lasting socio-economic repercussions.]{style="color:#d69c3c"}
 :::
 
 [^1]: [Singstat. (2022). Population Dashboard. https://www.singstat.gov.sg/find-data/search-by-theme/population/population-and-population-structure/visualising-data/population-dashboard]{style="color:#d69c3c"}
@@ -565,41 +559,29 @@ popPyr_sgp
 
 [^3]: [Ministry of Manpower. (2020). Report: Singapore's Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx]{style="color:#d69c3c"}
 
-4.1.3 **Plot Trall Population Pyramid (Static)**
+### **4.1.2** **Plot Trellis Population Pyramid with Wrap Facet**
 
+::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
-#| code-fold: false
-popPyr_t19 <- ggplot() +
-  geom_bar(data = subset(t19_filtered, 
-                         sex == "Males"), 
-           aes(x = ag, 
-               y = -count_pop, 
-               fill = pa),
-           stat = "identity", 
-           fill = "#FFA319FF") +
-  geom_bar(data = subset(t19_filtered, 
-                         sex == "Females"), 
-           aes(x = ag, 
-               y = count_pop, 
-               fill = pa), 
-           stat = "identity", 
-           fill = "#302f2f") +
-  coord_flip() +
-  scale_fill_manual(
-    values = c("Males" = "#FFA319FF",
-               "Females" = "#302f2f"),
-    breaks = c("Males", "Females")) +
+popPyr_t19.fw <- ggplot(t19_filtered, 
+                       aes(x = ifelse(sex == "Males",
+                                      yes = -count_pop,
+                                      no = count_pop),
+                           y = ag,
+                           fill = sex),
+                     width = 0.9,
+                     position = position_dodge(width = 0.9 )) + 
+  geom_col() +
+  scale_y_discrete(expand = expansion(mult = c(0, .05))) +
   facet_wrap(.~ pa,
              drop = FALSE, 
              ncol = 3,
              scales = "fixed") +
-  scale_y_continuous(limits = c(-13000, 13000),
-                     expand = expansion(mult = c(0, .04))) +
-  labs (y = "Count of Population", 
-        x = "Age Group",
+  labs (x = "Count of Population", 
+        y = "Age Group",
         fill = "Gender",
-        title = "Singapore Population Pyramid 2022",
-        subtitle = "Distribution of gender and age groups",
+        title = "Demographic Structure of Singapore Top 9 Planning Areas",
+        subtitle = "Compare the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
         caption = "Data Source : Singstat.gov.sg, June 2022") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, 
@@ -616,7 +598,6 @@ popPyr_t19 <- ggplot() +
         strip.text = element_text(size = 7,
                                   colour = "#424242"),
         strip.background = element_blank(),
-
         axis.ticks = element_line(colour = "#969595",
                                   linewidth = 0.3),
         axis.ticks.x = element_blank(),
@@ -643,42 +624,40 @@ popPyr_t19 <- ggplot() +
         plot.background = element_rect(fill = "#f7e9cd"),
         legend.background = element_rect(fill = "#f7e9cd"),
         legend.margin = margin(t = -10),
+        plot.margin = margin(0.5,0.5,0.5,-0.2,"cm"),
         panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) 
+                                    linewidth = 0.3)) +
+  scale_fill_manual(values = c("Males" = "#FFA319FF",
+                               "Females" = "#302f2f"))
 
-popPyr_t19
+popPyr_t19.fw
 ```
+:::
 
+### **4.1.3** **Plot Trellis Population Pyramid with Grid Facet**
+
+::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
-#| code-fold: false
-popPyr_t19.fg <- ggplot() +
-  geom_bar(data = subset(t19_filtered, 
-                         sex == "Males"), 
-           aes(x = ag, 
-               y = -count_pop, 
-               fill = pa),
-           stat = "identity", 
-           fill = "#FFA319FF") +
-  geom_bar(data = subset(t19_filtered, 
-                         sex == "Females"), 
-           aes(x = ag, 
-               y = count_pop, 
-               fill = pa), 
-           stat = "identity", 
-           fill = "#302f2f") +
-  coord_flip() +
+popPyr_t19.fg <- ggplot(t19_filtered, 
+                       aes(x = ifelse(sex == "Males",
+                                      yes = -count_pop,
+                                      no = count_pop),
+                           y = ag,
+                           fill = sex),
+                     width = 0.9,
+                     position = position_dodge(width = 0.9 )) + 
+  geom_col() +
+  scale_y_discrete(expand = expansion(mult = c(0, .05))) +
   scale_fill_manual(
     values = c("Males" = "#FFA319FF",
                "Females" = "#302f2f"),
     breaks = c("Males", "Females")) +
   facet_grid(cols = vars(pa)) +
-  scale_y_continuous(limits = c(-13000, 13000),
-                     expand = expansion(mult = c(0, .04))) +
-  labs (y = "Count of Population", 
-        x = "Age Group",
+  labs (x = "Count of Population", 
+        y = "Age Group",
         fill = "Gender",
-        title = "Singapore Population Pyramid 2022",
-        subtitle = "Distribution of gender and age groups",
+        title = "Demographic Structure of Singapore Top 9 Planning Areas",
+        subtitle = "Compare the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
         caption = "Data Source : Singstat.gov.sg, June 2022") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, 
@@ -722,12 +701,17 @@ popPyr_t19.fg <- ggplot() +
         plot.background = element_rect(fill = "#f7e9cd"),
         legend.background = element_rect(fill = "#f7e9cd"),
         legend.margin = margin(t = -10),
+        plot.margin = margin(0.5,0.2,0.5,-0.5,"cm"),
         panel.border = element_rect(colour = "#969595",
                                     linewidth = 0.3)) 
 
 popPyr_t19.fg
 ```
+:::
 
+### **4.1.4** **Plot Trellis Population Pyramid with 3 Grid Facets**
+
+::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
 #| code-fold: false
 popPyr_t3 <- ggplot() +
@@ -807,7 +791,6 @@ popPyr_t3
 ```
 
 ```{r}
-#| code-fold: false
 popPyr_t6 <- ggplot() +
   geom_bar(data = subset(t6_filtered, 
                          sex == "Males"), 
@@ -854,7 +837,6 @@ popPyr_t6
 ```
 
 ```{r}
-#| code-fold: false
 popPyr_t9 <- ggplot() +
   geom_bar(data = subset(t9_filtered, 
                          sex == "Males"), 
@@ -916,6 +898,7 @@ popPyr_t9
 ```
 
 ```{r}
+#| code-fold: false
 ggpubr::ggarrange(
   popPyr_t3,
   popPyr_t6,
@@ -923,5 +906,16 @@ ggpubr::ggarrange(
   align = "v",
   ncol = 1) +
   labs(caption = "Data Source : Singstat.gov.sg, June 2022")
-
 ```
+:::
+
+# 5. MAKEOVER OUTPUT
+
+::: {.callout-warning appearance="simple" icon="false"}
+Below is the makeover output for this assignment submission.
+
+```{r}
+popPyr_t19.fw
+t19_filtered %>% tbl_df %>% print(n = 342)
+```
+:::
