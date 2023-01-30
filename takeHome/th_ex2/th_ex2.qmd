@@ -909,6 +909,89 @@ ggpubr::ggarrange(
 ```
 :::
 
+```{r}
+popPyr_t19.fw /
+gridExtra::tableGrob(t19_filtered[1:342, c("pa", "ag", "sex", "count_pop")])
+```
+
+```{r}
+table_ref <- t19_filtered %>%
+  select(c("pa", "ag", "sex", "count_pop"))
+```
+
+```{r}
+#| fig-height: 18
+#| fig-width: 12
+test_height <- ggplot(t19_filtered, 
+                       aes(x = ifelse(sex == "Males",
+                                      yes = -count_pop,
+                                      no = count_pop),
+                           y = ag,
+                           fill = sex),
+                     width = 0.9,
+                     position = position_dodge(width = 0.9 )) + 
+  geom_col() +
+  scale_y_discrete(expand = expansion(mult = c(0, .05))) +
+  facet_wrap(.~ pa,
+             drop = FALSE, 
+             ncol = 3,
+             scales = "fixed") +
+  labs (x = "Count of Population", 
+        y = "Age Group",
+        fill = "Gender",
+        title = "Demographic Structure of Singapore Top 9 Planning Areas",
+        subtitle = "Compare the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
+        caption = "Data Source : Singstat.gov.sg, June 2022") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, 
+                                  colour = "#302f2f",
+                                  face = "bold",
+                                  hjust = 0.5),
+        plot.subtitle = element_text(size = 8,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     hjust = 0.5),
+        plot.caption = element_text(size = 8,
+                                    colour = "#424242",
+                                    hjust = 0),
+        strip.text = element_text(size = 7,
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 8, 
+                                    colour = "#302f2f",
+                                    vjust = 1.07,
+                                    hjust = 0.8,
+                                    margin = margin(r = -40, l = 20)),
+        axis.title.x = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.position = "bottom",
+        legend.justification = "left",
+        legend.text = element_text(size = 7,
+                                   colour = "#424242"),
+        legend.title = element_text(size = 8, 
+                                    colour = "#302f2f"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),
+        plot.margin = margin(0.5,0.5,0.5,-0.2,"cm"),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3)) +
+  scale_fill_manual(values = c("Males" = "#FFA319FF",
+                               "Females" = "#302f2f"))
+
+test_height
+```
+
 # 5. MAKEOVER OUTPUT
 
 ::: {.callout-warning appearance="simple" icon="false"}
