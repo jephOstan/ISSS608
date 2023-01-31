@@ -158,7 +158,7 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 
 ```{r}
-pacman::p_load(tidyverse, ggpubr, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP, patchwork)
+pacman::p_load(tidyverse, ggpubr, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP, patchwork, ggpmisc, gridExtra, kableExtra)
 ```
 :::
 
@@ -437,7 +437,9 @@ Filter data frame based on the list of Planning Areas created in section **3.5.1
 ```{r}
 #| code-fold: false
 t3_filtered <- pop_pa %>% 
-  filter(pop_pa$pa %in% t3$pa)
+  filter(pop_pa$pa %in% t3$pa) %>%
+  arrange(factor(pa, 
+                 levels = c("Bedok", "Tampines", "Jurong West")))
 
 t6_filtered <- pop_pa %>% 
   filter(pop_pa$pa %in% t6$pa)
@@ -446,15 +448,16 @@ t9_filtered <- pop_pa %>%
   filter(pop_pa$pa %in% t9$pa)
 
 t19_filtered <- pop_pa %>% 
-  filter(pop_pa$pa %in% t19$pa)
+  filter(pop_pa$pa %in% t19$pa) 
+
 ```
 :::
 
-# 4. DATA VISUALISATION
+# **4. DATA VISUALISATION**
 
-## 4.1 Plot Pyramid Chart (Static Plot)
+## **4.1 Plot Pyramid Chart (Static Plot)**
 
-### 4.1.1 Plot Population Pyramid for National Level
+### **4.1.1 Plot Population Pyramid for National Level**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ::: {.callout-alert appearance="simple" icon="false"}
@@ -559,10 +562,12 @@ popPyr_sgp
 
 [^3]: [Ministry of Manpower. (2020). Report: Singapore's Adjusted Gender Pay Gap. https://stats.mom.gov.sg/Pages/Singapores-Adjusted-Gender-Pay-Gap.aspx]{style="color:#d69c3c"}
 
-### **4.1.2** **Plot Trellis Population Pyramid with Wrap Facet**
+### **4.1.2 Plot Trellis Population Pyramid with Wrap Facet**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
+#| fig-height: 12
+#| fig-width: 12
 popPyr_t19.fw <- ggplot(t19_filtered, 
                        aes(x = ifelse(sex == "Males",
                                       yes = -count_pop,
@@ -572,61 +577,65 @@ popPyr_t19.fw <- ggplot(t19_filtered,
                      width = 0.9,
                      position = position_dodge(width = 0.9 )) + 
   geom_col() +
-  scale_y_discrete(expand = expansion(mult = c(0, .05))) +
-  facet_wrap(.~ pa,
+  scale_y_discrete(expand = expansion(mult = c(0.04, .04))) +
+  facet_wrap(~factor(pa, levels = c("Bedok", "Tampines", "Jurong West",
+                                    "Sengkang", "Woodlands", "Hougang",
+                                    "Yishun", "Choa Chu Kang", "Punggol")),
              drop = FALSE, 
              ncol = 3,
              scales = "fixed") +
   labs (x = "Count of Population", 
         y = "Age Group",
         fill = "Gender",
-        title = "Demographic Structure of Singapore Top 9 Planning Areas",
-        subtitle = "Compare the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
-        caption = "Data Source : Singstat.gov.sg, June 2022") +
+        title = "Singapore Demographic Structure - Top 9 Planning Areas by Population",
+        subtitle = "Compare the population pyramids' shapes that shows the distribution of age groups & genders based on dataset dated June 2022",
+        caption = "Data Source : Singstat.gov.sg, June 2022\nThe details of the population count for each age-groups and gender are tabulated below.") +
   theme_bw() +
-  theme(plot.title = element_text(size = 14, 
+  theme(plot.title = element_text(size = 22, 
                                   colour = "#302f2f",
-                                  face = "bold",
-                                  hjust = 0.5),
-        plot.subtitle = element_text(size = 8,
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
                                      colour = "#424242",
                                      face = "italic",
-                                     hjust = 0.5),
-        plot.caption = element_text(size = 8,
+                                     margin = margin(0,0,10,0)),
+        plot.caption = element_text(size = 10,
                                     colour = "#424242",
                                     hjust = 0),
-        strip.text = element_text(size = 7,
+        strip.text = element_text(size = 12,
+                                  face = "bold",
                                   colour = "#424242"),
         strip.background = element_blank(),
         axis.ticks = element_line(colour = "#969595",
                                   linewidth = 0.3),
         axis.ticks.x = element_blank(),
         axis.title.y = element_text(angle = 0, 
-                                    size = 8, 
+                                    size = 10,
                                     colour = "#302f2f",
-                                    vjust = 1.07,
-                                    hjust = 0.8,
-                                    margin = margin(r = -40, l = 20)),
-        axis.title.x = element_text(size = 8, 
-                                    colour = "#302f2f"),
+                                    vjust = 1.02,
+                                    margin = margin(r = -50, l = 20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(5,0,0,0)),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.position = "bottom",
-        legend.justification = "left",
-        legend.text = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.title = element_text(size = 8, 
-                                    colour = "#302f2f"),
+        axis.text.y = element_text(size = 10,
+                                   colour = "#424242",
+                                   margin = margin(r = 8)),
         panel.grid.major = element_line(linewidth = rel(0.5)),
         panel.grid.major.x = element_blank(),
         panel.grid.minor = element_blank(),
         plot.background = element_rect(fill = "#f7e9cd"),
-        legend.background = element_rect(fill = "#f7e9cd"),
-        legend.margin = margin(t = -10),
-        plot.margin = margin(0.5,0.5,0.5,-0.2,"cm"),
+        plot.margin = margin(1,0.8,1,0,"cm"),
         panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) +
+                                    linewidth = 0.3),
+        legend.title = element_text(size = 10,
+                                    colour = "#302f2f"),
+        legend.text = element_text(size = 10,
+                                   face = "bold",
+                                   colour = "#424242"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -8),
+        legend.position = "bottom",
+        legend.justification = "left") +
   scale_fill_manual(values = c("Males" = "#FFA319FF",
                                "Females" = "#302f2f"))
 
@@ -638,6 +647,8 @@ popPyr_t19.fw
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
+#| fig-height: 8
+#| fig-width: 20
 popPyr_t19.fg <- ggplot(t19_filtered, 
                        aes(x = ifelse(sex == "Males",
                                       yes = -count_pop,
@@ -652,109 +663,122 @@ popPyr_t19.fg <- ggplot(t19_filtered,
     values = c("Males" = "#FFA319FF",
                "Females" = "#302f2f"),
     breaks = c("Males", "Females")) +
-  facet_grid(cols = vars(pa)) +
+  facet_grid(~factor(pa, levels = c("Bedok", "Tampines", "Jurong West",
+                                    "Sengkang", "Woodlands", "Hougang",
+                                    "Yishun", "Choa Chu Kang", "Punggol"))) +
   labs (x = "Count of Population", 
         y = "Age Group",
         fill = "Gender",
-        title = "Demographic Structure of Singapore Top 9 Planning Areas",
-        subtitle = "Compare the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
-        caption = "Data Source : Singstat.gov.sg, June 2022") +
+        title = "Singapore Demographic Structure - Top 9 Planning Areas by Population",
+        subtitle = "Compare the population pyramids' shapes that shows the distribution of age groups & genders based on dataset dated June 2022",
+        caption = "Data Source : Singstat.gov.sg, June 2022\nThe details of the population count for each age-groups and gender are tabulated below.") +
   theme_bw() +
-  theme(plot.title = element_text(size = 14, 
+  theme(plot.title = element_text(size = 22, 
                                   colour = "#302f2f",
-                                  face = "bold",
-                                  hjust = 0.5),
-        plot.subtitle = element_text(size = 8,
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
                                      colour = "#424242",
                                      face = "italic",
-                                     hjust = 0.5),
-        plot.caption = element_text(size = 8,
+                                     margin = margin(0,0,10,0)),
+        plot.caption = element_text(size = 10,
                                     colour = "#424242",
                                     hjust = 0),
-        strip.text = element_text(size = 7,
+        strip.text = element_text(size = 12,
+                                  face = "bold",
                                   colour = "#424242"),
         strip.background = element_blank(),
-
         axis.ticks = element_line(colour = "#969595",
                                   linewidth = 0.3),
         axis.ticks.x = element_blank(),
         axis.title.y = element_text(angle = 0, 
-                                    size = 8, 
+                                    size = 10,
                                     colour = "#302f2f",
-                                    vjust = 1.07,
-                                    hjust = 0.8,
-                                    margin = margin(r = -40, l = 20)),
-        axis.title.x = element_text(size = 8, 
-                                    colour = "#302f2f"),
+                                    vjust = 1.02,
+                                    margin = margin(r = -50, l = 20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(5,0,0,0)),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.position = "bottom",
-        legend.justification = "left",
-        legend.text = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.title = element_text(size = 8, 
-                                    colour = "#302f2f"),
+        axis.text.y = element_text(size = 10,
+                                   colour = "#424242",
+                                   margin = margin(r = 8)),
         panel.grid.major = element_line(linewidth = rel(0.5)),
         panel.grid.major.x = element_blank(),
         panel.grid.minor = element_blank(),
         plot.background = element_rect(fill = "#f7e9cd"),
-        legend.background = element_rect(fill = "#f7e9cd"),
-        legend.margin = margin(t = -10),
-        plot.margin = margin(0.5,0.2,0.5,-0.5,"cm"),
+        plot.margin = margin(1,0.8,1,0,"cm"),
         panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) 
-
+                                    linewidth = 0.3),
+        legend.title = element_text(size = 10,
+                                    colour = "#302f2f"),
+        legend.text = element_text(size = 10,
+                                   face = "bold",
+                                   colour = "#424242"),
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -8),
+        legend.position = "bottom",
+        legend.justification = "left") +
+  scale_fill_manual(values = c("Males" = "#FFA319FF",
+                               "Females" = "#302f2f"))
+  
 popPyr_t19.fg
 ```
+
+[Remark :]{style="color:#d69c3c"}
+
+[Using the same font size as the **4.1.2** plot, the text for this grid facet chart became smaller, which made it difficult to view. Hence, this chart will not be considered for the final submission.]{style="color:#d69c3c"}
 :::
 
-### **4.1.4** **Plot Trellis Population Pyramid with 3 Grid Facets**
+## **4.2 Explore Other Approach**
+
+### **4.2.1 Approach #1 - Stack Multiple Grid Facets**
 
 ::: {.callout-warning appearance="simple" icon="false"}
+There are 2 parts to this approach :
+
+-   1st part - plot 3 grid facets of population pyramids
+
+-   2nd part - stack the 3 grid facets with ggarrange( ) function from ggpubr package.
+
+#### **4.2.1.1 plot 3 facet grids**
+
+::: panel-tabset
+## **Top 3 PAs**
+
 ```{r}
-#| code-fold: false
-popPyr_t3 <- ggplot() +
-  geom_bar(data = subset(t3_filtered, 
-                         sex == "Males"), 
-           aes(x = ag, 
-               y = -count_pop, 
-               fill = pa),
-           stat = "identity", 
-           fill = "#FFA319FF") +
-  geom_bar(data = subset(t3_filtered, 
-                         sex == "Females"), 
-           aes(x = ag, 
-               y = count_pop, 
-               fill = pa), 
-           stat = "identity", 
-           fill = "#302f2f") +
-  coord_flip() +
-  scale_fill_manual(
-    values = c("Males" = "#FFA319FF",
-               "Females" = "#302f2f"),
-    breaks = c("Males", "Females")) +
-  facet_grid(cols = vars(pa)) +
-  scale_y_continuous(limits = c(-13000, 13000),
+#| fig-height: 5
+#| fig-width: 12
+popPyr_t3 <- ggplot(t3_filtered,
+                    aes(x = ifelse(sex == "Males",
+                                   yes = -count_pop,
+                                   no = count_pop),
+                        y = ag,
+                        fill = sex),
+                    width = 0.9,
+                    position = position_dodge(width = 0.9 )) + 
+  geom_col() +
+  scale_y_discrete(expand = expansion(mult = c(0, .05))) +
+  scale_fill_manual(values = c("Males" = "#FFA319FF",
+                               "Females" = "#302f2f")) +
+  facet_grid(~factor(pa, levels = c("Bedok", "Tampines", "Jurong West"))) +
+  scale_x_continuous(limits = c(-13000, 13000),
                      expand = expansion(mult = c(0, .04))) +
-  labs (y = "", 
-        x = "Age Group",
-        fill = "Gender",
-        title = "Singapore Population Pyramid 2022",
-        subtitle = "Distribution of gender and age groups") +
+  labs (x = "", 
+        y = "Age Group",
+        title = "Singapore Demographic Structure - Top 9 Planning Areas by Population",
+        subtitle = "Compare the population pyramids' shapes that shows the distribution of age groups & genders based on dataset dated June 2022") +
   theme_bw() +
-  theme(plot.title = element_text(size = 14, 
+  theme(plot.title = element_text(size = 20, 
                                   colour = "#302f2f",
-                                  face = "bold",
-                                  hjust = 0.5),
-        plot.subtitle = element_text(size = 8,
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
                                      colour = "#424242",
-                                     face = "italic",
-                                     hjust = 0.5),
-        plot.caption = element_text(size = 8,
+                                     face = "italic"),
+        plot.caption = element_text(size = 10,
                                     colour = "#424242",
                                     hjust = 0),
-        strip.text = element_text(size = 7,
+        strip.text = element_text(size = 12,
+                                  face = "bold",
                                   colour = "#424242"),
         strip.background = element_blank(),
 
@@ -762,167 +786,35 @@ popPyr_t3 <- ggplot() +
                                   linewidth = 0.3),
         axis.ticks.x = element_blank(),
         axis.title.y = element_text(angle = 0, 
-                                    size = 8, 
+                                    size = 10,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    vjust = 1.07,
-                                    hjust = 0.8,
+                                    vjust = 1.04,
+                                    hjust = 0.9,
                                     margin = margin(r = -40, l = 20)),
-        axis.title.x = element_text(size = 8, 
+        axis.title.x = element_text(size = 10, 
                                     colour = "#302f2f"),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 7,
+        axis.text.y = element_text(size = 9,
                                    colour = "#424242"),
-        legend.position = "bottom",
-        legend.justification = "left",
-        legend.text = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.title = element_text(size = 8, 
-                                    colour = "#302f2f"),
         panel.grid.major = element_line(linewidth = rel(0.5)),
         panel.grid.major.x = element_blank(),
         panel.grid.minor = element_blank(),
         plot.background = element_rect(fill = "#f7e9cd"),
-        legend.background = element_rect(fill = "#f7e9cd"),
-        legend.margin = margin(t = -10),
         panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) 
+                                    linewidth = 0.3),
+        plot.margin = margin(0.5,0.5,0.1,-0.2,"cm"),
+        legend.position = "none")
 
 popPyr_t3
 ```
 
-```{r}
-popPyr_t6 <- ggplot() +
-  geom_bar(data = subset(t6_filtered, 
-                         sex == "Males"), 
-           aes(x = ag, 
-               y = -count_pop, 
-               fill = pa),
-           stat = "identity", 
-           fill = "#FFA319FF") +
-  geom_bar(data = subset(t6_filtered, 
-                         sex == "Females"), 
-           aes(x = ag, 
-               y = count_pop, 
-               fill = pa), 
-           stat = "identity", 
-           fill = "#302f2f") +
-  coord_flip() +
-  scale_fill_manual(
-    values = c("Males" = "#FFA319FF",
-               "Females" = "#302f2f"),
-    breaks = c("Males", "Females")) +
-  facet_grid(cols = vars(pa)) +
-  scale_y_continuous(limits = c(-13000, 13000),
-                     expand = expansion(mult = c(0, .04))) +
-  labs (y = "", 
-        x = "") +
-  theme_bw() +
-  theme(strip.text = element_text(size = 7,
-                                  colour = "#424242"),
-        strip.background = element_blank(),
-        axis.ticks = element_line(colour = "#969595",
-                                  linewidth = 0.3),
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 7,
-                                   colour = "#424242"),
-        panel.grid.major = element_line(linewidth = rel(0.5)),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_rect(fill = "#f7e9cd"),
-        panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) 
-
-popPyr_t6
-```
+## **Between Top 4 to 6 PAs**
 
 ```{r}
-popPyr_t9 <- ggplot() +
-  geom_bar(data = subset(t9_filtered, 
-                         sex == "Males"), 
-           aes(x = ag, 
-               y = -count_pop, 
-               fill = pa),
-           stat = "identity", 
-           fill = "#FFA319FF") +
-  geom_bar(data = subset(t9_filtered, 
-                         sex == "Females"), 
-           aes(x = ag, 
-               y = count_pop, 
-               fill = pa), 
-           stat = "identity", 
-           fill = "#302f2f") +
-  coord_flip() +
-  scale_fill_manual(
-    values = c("Males" = "#FFA319FF",
-               "Females" = "#302f2f"),
-    breaks = c("Males", "Females")) +
-  facet_grid(cols = vars(pa)) +
-  scale_y_continuous(limits = c(-13000, 13000),
-                     expand = expansion(mult = c(0, .04))) +
-  labs (y = "Count of Population", 
-        x = "",
-        fill = "Gender") +
-  theme_bw() +
-  theme(plot.caption = element_text(size = 8,
-                                    colour = "#424242",
-                                    hjust = 0),
-        strip.text = element_text(size = 7,
-                                  colour = "#424242"),
-        strip.background = element_blank(),
-
-        axis.ticks = element_line(colour = "#969595",
-                                  linewidth = 0.3),
-        axis.ticks.x = element_blank(),
-        axis.title.x = element_text(size = 8, 
-                                    colour = "#302f2f"),
-        axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.position = "bottom",
-        legend.justification = "left",
-        legend.text = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.title = element_text(size = 8, 
-                                    colour = "#302f2f"),
-        panel.grid.major = element_line(linewidth = rel(0.5)),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor = element_blank(),
-        plot.background = element_rect(fill = "#f7e9cd"),
-        legend.background = element_rect(fill = "#f7e9cd"),
-        legend.margin = margin(t = -10),
-        panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) 
-
-popPyr_t9
-```
-
-```{r}
-#| code-fold: false
-ggpubr::ggarrange(
-  popPyr_t3,
-  popPyr_t6,
-  popPyr_t9,
-  align = "v",
-  ncol = 1) +
-  labs(caption = "Data Source : Singstat.gov.sg, June 2022")
-```
-:::
-
-```{r}
-popPyr_t19.fw /
-gridExtra::tableGrob(t19_filtered[1:342, c("pa", "ag", "sex", "count_pop")])
-```
-
-```{r}
-table_ref <- t19_filtered %>%
-  select(c("pa", "ag", "sex", "count_pop"))
-```
-
-```{r}
-#| fig-height: 18
+#| fig-height: 5
 #| fig-width: 12
-test_height <- ggplot(t19_filtered, 
+popPyr_t6 <- ggplot(t6_filtered, 
                        aes(x = ifelse(sex == "Males",
                                       yes = -count_pop,
                                       no = count_pop),
@@ -932,73 +824,282 @@ test_height <- ggplot(t19_filtered,
                      position = position_dodge(width = 0.9 )) + 
   geom_col() +
   scale_y_discrete(expand = expansion(mult = c(0, .05))) +
-  facet_wrap(.~ pa,
-             drop = FALSE, 
-             ncol = 3,
-             scales = "fixed") +
-  labs (x = "Count of Population", 
-        y = "Age Group",
-        fill = "Gender",
-        title = "Demographic Structure of Singapore Top 9 Planning Areas",
-        subtitle = "Compare the shape of population pyramid reflects the distribution of\npopulation by age groups and genders based on dataset dated June 2022",
-        caption = "Data Source : Singstat.gov.sg, June 2022") +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f")) +
+  facet_grid(~factor(pa, levels = c("Sengkang", "Woodlands", "Hougang"))) +
+  scale_x_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
   theme_bw() +
-  theme(plot.title = element_text(size = 14, 
-                                  colour = "#302f2f",
+  theme(strip.text = element_text(size = 12,
                                   face = "bold",
-                                  hjust = 0.5),
-        plot.subtitle = element_text(size = 8,
-                                     colour = "#424242",
-                                     face = "italic",
-                                     hjust = 0.5),
-        plot.caption = element_text(size = 8,
-                                    colour = "#424242",
-                                    hjust = 0),
-        strip.text = element_text(size = 7,
                                   colour = "#424242"),
         strip.background = element_blank(),
         axis.ticks = element_line(colour = "#969595",
                                   linewidth = 0.3),
         axis.ticks.x = element_blank(),
-        axis.title.y = element_text(angle = 0, 
-                                    size = 8, 
-                                    colour = "#302f2f",
-                                    vjust = 1.07,
-                                    hjust = 0.8,
-                                    margin = margin(r = -40, l = 20)),
-        axis.title.x = element_text(size = 8, 
-                                    colour = "#302f2f"),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 7,
+        axis.text.y = element_text(size = 9,
                                    colour = "#424242"),
-        legend.position = "bottom",
-        legend.justification = "left",
-        legend.text = element_text(size = 7,
-                                   colour = "#424242"),
-        legend.title = element_text(size = 8, 
-                                    colour = "#302f2f"),
         panel.grid.major = element_line(linewidth = rel(0.5)),
         panel.grid.major.x = element_blank(),
         panel.grid.minor = element_blank(),
         plot.background = element_rect(fill = "#f7e9cd"),
-        legend.background = element_rect(fill = "#f7e9cd"),
-        legend.margin = margin(t = -10),
-        plot.margin = margin(0.5,0.5,0.5,-0.2,"cm"),
         panel.border = element_rect(colour = "#969595",
-                                    linewidth = 0.3)) +
-  scale_fill_manual(values = c("Males" = "#FFA319FF",
-                               "Females" = "#302f2f"))
+                                    linewidth = 0.3),
+        plot.margin = margin(0.1,0.5,0.5,0.5,"cm"),
+        legend.position = "none")
 
-test_height
+popPyr_t6
 ```
 
-# 5. MAKEOVER OUTPUT
+## **Between Top 7 to 9 PAs**
+
+```{r}
+#| fig-height: 5
+#| fig-width: 12
+popPyr_t9 <- ggplot(t9_filtered, 
+                       aes(x = ifelse(sex == "Males",
+                                      yes = -count_pop,
+                                      no = count_pop),
+                           y = ag,
+                           fill = sex),
+                     width = 0.9,
+                     position = position_dodge(width = 0.9 )) + 
+  geom_col() +
+  scale_y_discrete(expand = expansion(mult = c(0, .05))) +
+  scale_fill_manual(
+    values = c("Males" = "#FFA319FF",
+               "Females" = "#302f2f")) +
+  facet_grid(~factor(pa, levels = c("Yishun", "Choa Chu Kang", "Punggol")))+
+  scale_x_continuous(limits = c(-13000, 13000),
+                     expand = expansion(mult = c(0, .04))) +
+  labs (x = "Count of Population",
+        fill = "Gender",
+        caption = "Data Source : Singstat.gov.sg, June 2022") +
+  theme_bw() +
+  theme(plot.caption = element_text(size = 10,
+                                    colour = "#424242",
+                                    hjust = 0),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        axis.ticks = element_line(colour = "#969595",
+                                  linewidth = 0.3),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_text(size = 10, 
+                                    face = "bold",
+                                    colour = "#302f2f"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 9,
+                                   colour = "#424242"),
+        panel.grid.major = element_line(linewidth = rel(0.5)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(fill = "#f7e9cd"),
+        panel.border = element_rect(colour = "#969595",
+                                    linewidth = 0.3),
+        plot.margin = margin(0.1,0.5,0.5,0.5,"cm"),
+        legend.position = "bottom",
+        legend.justification = "left",
+        legend.title = element_text(size = 12,
+                                    face = "bold",
+                                    colour = "#302f2f"),
+        legend.text = element_text(size = 10,
+                                   colour = "#424242"),        
+        legend.background = element_rect(fill = "#f7e9cd"),
+        legend.margin = margin(t = -10),)
+
+popPyr_t9
+```
+:::
+
+#### **4.2.1.2 stack 3 grid facets into 1 column**
+
+```{r}
+#| fig-height: 12
+#| fig-width: 12
+#| code-fold: false
+ggpubr::ggarrange(
+  popPyr_t3,
+  popPyr_t6,
+  popPyr_t9,
+  align = "v",
+  ncol = 1)
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[The end result of this approach is as good as the wrap facet approach in **4.1.2**, except there are 2 lines of gap that are unable to get rid of within the due time. When extra free time is available, will attempt to overlap them by changing the margin value.]{style="color:#d69c3c"}
+:::
+
+### **4.2.2 Approach #2 - Patch 1 chart with 1 data table**
+
+::: {.callout-warning appearance="simple" icon="false"}
+This approach explores using patchwork function to combine chart and table.
+
+```{r}
+#| code-fold: false
+#| eval: false
+#| fig-height: 100
+#| fig-width: 12
+popPyr_t3 / (gridExtra::tableGrob(t19_filtered[1:342, 
+                                               c("pa", "ag", "sex", "count_pop")]))
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+::: {.callout-warning collapse="true" appearance="simple" icon="false"}
+## [**Issues with this approach** ]{style="color:#d69c3c"}
+
+[Figure height was set to 100 via #\| fig-height: 100, but :]{style="color:#d69c3c"}
+
+-   [the displays are overlapping.]{style="color:#d69c3c"}
+
+-   [the chart is elongated out of proportion.]{style="color:#d69c3c"}
+
+![](images/image-329313405.png)
+:::
+:::
+
+### **4.2.3 Approach #3 - Split data table to smaller tables before patch with 1 chart**
+
+::: {.callout-warning appearance="simple" icon="false"}
+Based on **4.2.2** approach, this attempt is to break down the table so that the layouts are more manageable.
+
+```{r}
+group_paAg <- t19_filtered %>%
+  group_by(pa, ag) %>%
+  pivot_wider(id_cols = c(pa, ag),
+              names_from = sex,
+              values_from = count_pop)
+
+table_top3 <- group_paAg %>%
+  filter(pa == "Bedok" | pa == "Tampines" | pa == "Jurong West") %>%
+  arrange(factor(pa, levels = c("Bedok", "Tampines", "Jurong West")))
+
+table_top6 <- group_paAg %>%
+  filter(pa == "Sengkang" | pa == "Woodlands" | pa == "Hougang") %>%
+  arrange(factor(pa, levels = c("Sengkang", "Woodlands", "Hougang")))
+
+table_top9 <- group_paAg %>%
+  filter(pa == "Yishun" | pa == "Choa Chu Kang" | pa == "Punggol") %>%
+  arrange(factor(pa, levels = c("Yishun", "Choa Chu Kang", "Punggol")))
+```
+
+```{r}
+#| eval: false
+#| code-fold: false
+#| fig-height: 100
+#| fig-width: 12
+
+popPyr_t3 / (table1_1 | table1_2 | table1_3)
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[Below is the error message when using patchwork function to place the tables below the chart.]{style="color:#d69c3c"}
+
+" [Error in FUN(left, right) : operations are possible only for numeric, logical or complex types]{style="color:#d69c3c"} "
+:::
+
+### **4.2.4 Approach #4 - Same as Approach #3 but with kableExtra package**
+
+::: {.callout-warning appearance="simple" icon="false"}
+```{r}
+#| code-fold: false
+#| fig-height: 30
+#| fig-width: 20
+table_display <- kable(list(table_top3, table_top6, table_top9), "html") %>%
+  kable_styling(font_size = 10, 
+                full_width = F) %>%
+  column_spec(1, border_right = T, background = "#e8e3e3") %>%
+  column_spec(2, border_right = T, background  = "#e8e3e3") %>%
+  column_spec(3, background  = "#e8e3e3") %>%
+  scroll_box(width = "700px", height = "200px")
+
+table_display
+```
+
+```{r}
+#| eval: false
+#| code-fold: false
+popPyr_t3 / table_display
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[Below is the error message when using patchwork function to place the kable tables below the chart.]{style="color:#d69c3c"}
+
+" [Error in \`ggplot_add()\`:]{style="color:#d69c3c"}
+
+[! Can't add \`e2\` to a \<ggplot\> object.]{style="color:#d69c3c"} "
+:::
+
+### **4.2.5 Approach #5** Combine chart with ggpubr tables
+
+::: {.callout-warning appearance="simple" icon="false"}
+There are 3 parts to this approach :
+
+-   1st part - create tables with ggtexttable( ) function from the ggpubr package.
+
+-   2nd part - align the 3 tables horizontally with ggarrange( ).
+
+-   3rd part - place the 2nd part below the trellis plot of **4.1.2**.
+
+#### **4.2.5.1 create gg tables**
+
+```{r}
+#| code-fold: false
+table_t3 <- ggtexttable(table_top3, rows = NULL, theme = ttheme("mOrange"))
+table_t6 <- ggtexttable(table_top6, rows = NULL, theme = ttheme("mOrange"))
+table_t9 <- ggtexttable(table_top9, rows = NULL, theme = ttheme("mOrange"))
+```
+
+#### **4.2.5.2 align gg tables horizontally**
+
+```{r}
+#| code-fold: false
+#| fig-height: 30
+#| fig-width: 12
+tables <- ggarrange(table_t3, table_t6, table_t9,
+                    nrow = 1, ncol = 3, align = "h")
+```
+
+#### **4.2.5.3 align trellis plot with the tables vertically**
+
+```{r}
+#| code-fold: false
+#| fig-height: 32
+#| fig-width: 12
+ggarrange(popPyr_t19.fw, 
+          tables, 
+          ncol = 1, 
+          nrow = 3, 
+          align = "v")
+```
+
+[Remark :]{style="color:#d69c3c"}
+
+[To keep the readers' focus on the chart's context, all the x-axis values and other information details displayed in **4.1.1** are removed from the trellis plot. Those removed information can be referred to in the chart below.]{style="color:#d69c3c"}
+:::
+
+# **5. MAKEOVER SUBMISSION**
 
 ::: {.callout-warning appearance="simple" icon="false"}
 Below is the makeover output for this assignment submission.
 
 ```{r}
-popPyr_t19.fw
-t19_filtered %>% tbl_df %>% print(n = 342)
+#| fig-height: 32
+#| fig-width: 12
+ggarrange(popPyr_t19.fw, 
+          tables, 
+          ncol = 1, 
+          nrow = 3, 
+          align = "v")
 ```
 :::
