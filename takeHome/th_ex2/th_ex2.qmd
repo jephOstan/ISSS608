@@ -954,7 +954,7 @@ popPyr_t3 / (gridExtra::tableGrob(t19_filtered[1:342,
 [Remark :]{style="color:#d69c3c"}
 
 ::: {.callout-warning collapse="true" appearance="simple" icon="false"}
-## [**Issues with this approach** ]{style="color:#d69c3c"}
+## [**Issues with this approach**]{style="color:#d69c3c"}
 
 [Figure height was set to 100 via #\| fig-height: 100, but :]{style="color:#d69c3c"}
 
@@ -1064,10 +1064,12 @@ table_t9 <- ggtexttable(table_top9, rows = NULL, theme = ttheme("mOrange"))
 
 ```{r}
 #| code-fold: false
-#| fig-height: 30
+#| fig-height: 16
 #| fig-width: 12
 tables <- ggarrange(table_t3, table_t6, table_t9,
                     nrow = 1, ncol = 3, align = "h")
+
+tables
 ```
 
 #### **4.2.5.3 align trellis plot with the tables vertically**
@@ -1076,11 +1078,14 @@ tables <- ggarrange(table_t3, table_t6, table_t9,
 #| code-fold: false
 #| fig-height: 32
 #| fig-width: 12
-ggarrange(popPyr_t19.fw, 
+ggarrange(popPyr_t19.fw,
+          NULL,
           tables, 
           ncol = 1, 
           nrow = 3, 
-          align = "v")
+          align = "v",
+          heights = c(1, 0, 1)) +
+  theme(plot.margin = margin(0.5,0,0.5,0, "cm"))
 ```
 
 [Remark :]{style="color:#d69c3c"}
@@ -1096,10 +1101,13 @@ Below is the makeover output for this assignment submission.
 ```{r}
 #| fig-height: 32
 #| fig-width: 12
-ggarrange(popPyr_t19.fw, 
+ggarrange(popPyr_t19.fw,
+          NULL,
           tables, 
           ncol = 1, 
           nrow = 3, 
-          align = "v")
+          align = "v",
+          heights = c(1, 0.02, 1)) +
+  theme(plot.margin = margin(0.5,0,0.5,0, "cm"))
 ```
 :::
