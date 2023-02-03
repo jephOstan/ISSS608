@@ -1,0 +1,188 @@
+---
+title: "Ex[4.1] Fundamentals of Visual Analytics - Visual Statistical Analysis"
+editor: visual
+date:  3 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
+
+five methods for INTERACTIVE DATA VISUALISATION
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Scope of this study :**]{style="color:#3a9c88"}
+
+In this exercise, learn how to create :
+
+-   ggstatsplot package to create visual graphics with rich statistical information,
+
+-   performance package to visualise model diagnostics, and
+
+-   parameters package to visualise model parameters
+:::
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(ggstatsplot, tidyverse) 
+```
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Usage of R Packages :**]{style="color:#3a9c88"}
+
+-   [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
+
+    -   To provide alternative statistical inference methods by default.
+
+    -   To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard for statistical reporting. For example, here are results from a robust t-test.
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  x
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+```{r}
+#| code-fold: false
+exam_data <- read_csv("data/Exam_data.csv")
+
+problems(exam_data)
+```
+
+# 4.
+
+## 4.1 One-sample test: *gghistostats()* method
+
+```{r}
+set.seed(1234)
+
+gghistostats(data = exam_data,
+             x = ENGLISH,
+             type = "bayes",
+             test.value = 60,
+             xlab = "English scores")
+```
+
+Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
+
+### Unpacking the Bayes Factor
+
+-   A Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories.
+
+-   That's because the Bayes factor gives us a way to evaluate the data in favor of a null hypothesis, and to use external information to do so. It tells us what the weight of the evidence is in favor of a given hypothesis.
+
+-   When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as
+
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image5.jpg)
+
+-   The [**Schwarz criterion**](https://www.statisticshowto.com/bayesian-information-criterion/) is one of the easiest ways to calculate rough approximation of the Bayes Factor.
+
+### How to interpret Bayes Factor
+
+A **Bayes Factor** can be any positive number. One of the most common interpretations is this one---first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
+
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image6.jpg)
+
+### Two-sample mean test: *ggbetweenstats()*
+
+In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for two-sample mean test of Maths scores by gender.
+
+```{r}
+ggbetweenstats(data = exam_data,
+               x = GENDER, 
+               y = MATHS,
+               type = "np",
+               messages = FALSE)
+```
+
+Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
+
+### Oneway ANOVA Test: *ggbetweenstats()* method
+
+In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English score by race.
+
+```{r}
+ggbetweenstats(data = exam_data,
+               x = RACE, 
+               y = ENGLISH,
+               type = "p",
+               mean.ci = TRUE, 
+               pairwise.comparisons = TRUE, 
+               pairwise.display = "s",
+               p.adjust.method = "fdr",
+               messages = FALSE)
+```
+
+-   "ns" → only non-significant
+
+-   "s" → only significant
+
+-   "all" → everything
+
+#### ggbetweenstats - Summary of tests
+
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image7.jpg)
+
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image8.jpg)
+
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image9.jpg)
+
+### Significant Test of Correlation: *ggscatterstats()*
+
+In the code chunk below, [*ggscatterstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html) is used to build a visual for Significant Test of Correlation between Maths scores and English scores.
+
+```{r}
+ggscatterstats(data = exam_data,
+               x = MATHS,
+               y = ENGLISH,
+               marginal = FALSE)
+```
+
+### Significant Test of Association (Depedence) : *ggbarstats()* methods
+
+In the code chunk below, the Maths scores is binned into a 4-class variable by using [*cut()*](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut).
+
+```{r}
+exam1 <- exam_data %>% 
+  mutate(MATHS_bins = cut(MATHS,
+                          breaks = c(0,60,75,85,100)))
+```
+
+In this code chunk below [*ggbarstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbarstats.html) is used to build a visual for Significant Test of Association
+
+```{r}
+ggbarstats(exam1, 
+           x = MATHS_bins, 
+           y = GENDER)
+```
