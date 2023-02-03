@@ -1,5 +1,6 @@
 ---
-title: "Ex[4.1] Fundamentals of Visual Analytics - Visual Statistical Analysis"
+title: "Visual Statistical Analysis"
+subtitle: "Hands-on Exercise 4.1 : Fundamentals of Visual Analytics"
 editor: visual
 date:  3 Feb 2023
 date-modified: "`r Sys.Date()`"
@@ -20,21 +21,13 @@ format:
 
 # **1. OVERVIEW**
 
-This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
+This study explores visual statistical analysis with :
 
-five methods for INTERACTIVE DATA VISUALISATION
+-   ggstatsplot package to create visual graphics with rich statistical information.
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Scope of this study :**]{style="color:#3a9c88"}
+-   performance package to visualise model diagnostics.
 
-In this exercise, learn how to create :
-
--   ggstatsplot package to create visual graphics with rich statistical information,
-
--   performance package to visualise model diagnostics, and
-
--   parameters package to visualise model parameters
-:::
+-   parameters package to visualise model parameters.
 
 # **2. R PACKAGE REQUIRED**
 
@@ -46,13 +39,17 @@ pacman::p_load(ggstatsplot, tidyverse)
 ```
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Usage of R Packages :**]{style="color:#3a9c88"}
+## [**Highlights of the R Packages  :**]{style="color:#3a9c88"}
 
--   [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
+[**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package.
 
-    -   To provide alternative statistical inference methods by default.
+This package will create a plot filled with statistical test details.
 
-    -   To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard for statistical reporting. For example, here are results from a robust t-test.
+-   To provide alternative statistical inference methods by default.
+
+-   To follow best practices for statistical reporting.
+
+    -   The default statistical reporting in the plots follows the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard.
 :::
 
 # **3. DATA PREPARATION**
@@ -61,15 +58,9 @@ pacman::p_load(ggstatsplot, tidyverse)
 
 This study will be based on fictitious data set provided with this lesson.
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Highlights of the data set**]{style="color:#3a9c88"}
-
-1.  x
-:::
-
 ## **3.2 Import Data**
 
-### **3.2.1 Import Data**
+### **3.2.1 Import Attribute Data**
 
 Involved two (2) steps : import and inspect imported data set.
 
@@ -80,9 +71,15 @@ exam_data <- read_csv("data/Exam_data.csv")
 problems(exam_data)
 ```
 
-# 4.
+# 4. VISUAL STATISTICAL ANALYSIS
 
-## 4.1 One-sample test: *gghistostats()* method
+## **4.1 One-sample test with** *gghistostats( )* method
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***gghistostats( )*** - ggstatsplot -]{style="color:#d46e15"} to plot histogram with statistical details included as a subtitle for this one-sample test.
+:::
 
 ```{r}
 set.seed(1234)

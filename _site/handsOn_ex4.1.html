@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-02-03">
 
-<title>ISSS608 - Ex[4.1] Fundamentals of Visual Analytics - Visual Statistical Analysis</title>
+<title>ISSS608 - Visual Statistical Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -94,6 +94,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -124,13 +126,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PKMQ2W4ZRC"></script>
 
-<script type="text/javascript">
+<script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
 
 
 <link rel="stylesheet" href="styles.css">
@@ -304,12 +322,12 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
   <li><a href="#acquire-data-source" id="toc-acquire-data-source" class="nav-link" data-scroll-target="#acquire-data-source"><strong>3.1 Acquire Data Source</strong></a></li>
   <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><strong>3.2 Import Data</strong></a>
   <ul class="collapse">
-  <li><a href="#import-data-1" id="toc-import-data-1" class="nav-link" data-scroll-target="#import-data-1"><strong>3.2.1 Import Data</strong></a></li>
+  <li><a href="#import-attribute-data" id="toc-import-attribute-data" class="nav-link" data-scroll-target="#import-attribute-data"><strong>3.2.1 Import Attribute Data</strong></a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">4.</a>
+  <li><a href="#visual-statistical-analysis" id="toc-visual-statistical-analysis" class="nav-link" data-scroll-target="#visual-statistical-analysis">4. VISUAL STATISTICAL ANALYSIS</a>
   <ul class="collapse">
-  <li><a href="#one-sample-test-gghistostats-method" id="toc-one-sample-test-gghistostats-method" class="nav-link" data-scroll-target="#one-sample-test-gghistostats-method">4.1 One-sample test: <em>gghistostats()</em> method</a>
+  <li><a href="#one-sample-test-with-gghistostats-method" id="toc-one-sample-test-with-gghistostats-method" class="nav-link" data-scroll-target="#one-sample-test-with-gghistostats-method"><strong>4.1 One-sample test with</strong> <em>gghistostats( )</em> method</a>
   <ul class="collapse">
   <li><a href="#unpacking-the-bayes-factor" id="toc-unpacking-the-bayes-factor" class="nav-link" data-scroll-target="#unpacking-the-bayes-factor">Unpacking the Bayes Factor</a></li>
   <li><a href="#how-to-interpret-bayes-factor" id="toc-how-to-interpret-bayes-factor" class="nav-link" data-scroll-target="#how-to-interpret-bayes-factor">How to interpret Bayes Factor</a></li>
@@ -327,7 +345,8 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Ex[4.1] Fundamentals of Visual Analytics - Visual Statistical Analysis</h1>
+<h1 class="title">Visual Statistical Analysis</h1>
+<p class="subtitle lead">Hands-on Exercise 4.1 : Fundamentals of Visual Analytics</p>
 </div>
 
 
@@ -345,7 +364,7 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 3, 2023</p>
+      <p class="date-modified">February 4, 2023</p>
     </div>
   </div>
     
@@ -356,29 +375,12 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 
 <section id="overview" class="level1">
 <h1><strong>1. OVERVIEW</strong></h1>
-<p>This study explores data visualisation using <a href="https://www.tidyverse.org/"><strong><em>Tidyverse</em></strong></a> package.</p>
-<p>five methods for INTERACTIVE DATA VISUALISATION</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Scope of this study :</strong></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>In this exercise, learn how to create :</p>
+<p>This study explores visual statistical analysis with :</p>
 <ul>
-<li><p>ggstatsplot package to create visual graphics with rich statistical information,</p></li>
-<li><p>performance package to visualise model diagnostics, and</p></li>
-<li><p>parameters package to visualise model parameters</p></li>
+<li><p>ggstatsplot package to create visual graphics with rich statistical information.</p></li>
+<li><p>performance package to visualise model diagnostics.</p></li>
+<li><p>parameters package to visualise model parameters.</p></li>
 </ul>
-</div>
-</div>
-</div>
 </section>
 <section id="r-package-required" class="level1">
 <h1><strong>2. R PACKAGE REQUIRED</strong></h1>
@@ -388,22 +390,24 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggstatsplot, tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Usage of R Packages :</strong></span>
+<span style="color:#3a9c88"><strong>Highlights of the R Packages :</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ul>
-<li><p><a href="https://indrajeetpatil.github.io/ggstatsplot/"><strong>ggstatsplot</strong></a> is an extension of <a href="https://ggplot2.tidyverse.org/"><strong>ggplot2</strong></a> package for creating graphics with details from statistical tests included in the information-rich plots themselves.</p>
+<p><a href="https://indrajeetpatil.github.io/ggstatsplot/"><strong>ggstatsplot</strong></a> is an extension of <a href="https://ggplot2.tidyverse.org/"><strong>ggplot2</strong></a> package.</p>
+<p>This package will create a plot filled with statistical test details.</p>
 <ul>
 <li><p>To provide alternative statistical inference methods by default.</p></li>
-<li><p>To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the <a href="https://my.ilstu.edu/~jhkahn/apastats.html">APA</a> gold standard for statistical reporting. For example, here are results from a robust t-test.</p></li>
+<li><p>To follow best practices for statistical reporting.</p>
+<ul>
+<li>The default statistical reporting in the plots follows the <a href="https://my.ilstu.edu/~jhkahn/apastats.html">APA</a> gold standard.</li>
 </ul></li>
 </ul>
 </div>
@@ -416,29 +420,11 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 <section id="acquire-data-source" class="level2">
 <h2 class="anchored" data-anchor-id="acquire-data-source"><strong>3.1 Acquire Data Source</strong></h2>
 <p>This study will be based on fictitious data set provided with this lesson.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Highlights of the data set</strong></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>x</li>
-</ol>
-</div>
-</div>
-</div>
 </section>
 <section id="import-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-data"><strong>3.2 Import Data</strong></h2>
-<section id="import-data-1" class="level3">
-<h3 class="anchored" data-anchor-id="import-data-1"><strong>3.2.1 Import Data</strong></h3>
+<section id="import-attribute-data" class="level3">
+<h3 class="anchored" data-anchor-id="import-attribute-data"><strong>3.2.1 Import Attribute Data</strong></h3>
 <p>Involved two (2) steps : import and inspect imported data set.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exam_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Exam_data.csv"</span>)</span>
@@ -453,10 +439,26 @@ gtag('config', 'G-PKMQ2W4ZRC', { 'anonymize_ip': true});
 </section>
 </section>
 </section>
-<section id="section" class="level1">
-<h1>4.</h1>
-<section id="one-sample-test-gghistostats-method" class="level2">
-<h2 class="anchored" data-anchor-id="one-sample-test-gghistostats-method">4.1 One-sample test: <em>gghistostats()</em> method</h2>
+<section id="visual-statistical-analysis" class="level1">
+<h1>4. VISUAL STATISTICAL ANALYSIS</h1>
+<section id="one-sample-test-with-gghistostats-method" class="level2">
+<h2 class="anchored" data-anchor-id="one-sample-test-with-gghistostats-method"><strong>4.1 One-sample test with</strong> <em>gghistostats( )</em> method</h2>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>gghistostats( )</em></strong> - ggstatsplot -</span> to plot histogram with statistical details included as a subtitle for this one-sample test.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -720,6 +722,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+  </div>
+</footer>
 
 
 
