@@ -39,7 +39,6 @@ There are two main focuses for this makeover assignment, that is :
 
 ## **1.1 Review Original Chart**
 
-::: {.callout-warning appearance="simple" icon="false"}
 There are two main instructions for the first take-home exercise, which are to reveal the demographic structure of Singapore at the planning area level by using the age-sex pyramid method and displaying 9 selected planning areas on a single view.
 
 For this section, the review will be based on clarity and aesthetics.
@@ -102,23 +101,19 @@ However, in terms of clarity and aesthetic aspects, there are four (4) main room
 |                                                                             |                                                                                                                                                                               |                                                                                                                                                                        |
 |                                                                             | Context is not clear why the age is grouped into 10 years.                                                                                                                    | -   Click [here](https://visual-analytics-jephostan.netlify.app/takehome/th_ex1/th_ex1#bins-of-age-group) to find out more about ages grouping for different contexts. |
 +-----------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-:::
 
 ## **1.2 Proposal for Alternative Design**
 
 ### **1.2.1 Sketch for Alternate Design**
 
-::: {.callout-warning appearance="simple" icon="false"}
 ![Figure 1.4 Proposal for Alternative Design](images/image-1080407652.png){fig-alt="This image illustrate a sketch that consists of trellis plot with wrap facet and a data table placed below." fig-align="left" width="800"}
 
-Remarks :
+[Remarks :]{style="color:#d69c3c"}
 
-This proposal sketch is done with **Figma** web-tool.
-:::
+[This proposal sketch is done with [**Figma**](https://www.figma.com/file/f2sIb99gIjNPsJdP03MtTM/VAA?node-id=12%3A4&t=rorQN1Tz7kW3P5Xi-1) web-tool.]{style="color:#d69c3c"}
 
-### **1.2.1 Clarity Enhancement**
+### **1.2.2 Clarity Enhancement**
 
-::: {.callout-warning appearance="simple" icon="false"}
 ***a. Context*** **:** The proposed design will inherit the context requirement from the first Take-home assignment, which is to reveal Singapore's demographic structure with two key variables : age-groups and gender as of June 2022. It will be a trellis plot of population pyramids with wrap facet 3 by 3. The top 9 Singapore Planning Areas with the highest population counts.
 
 ***b. Title & Subtitle*** **:** The proposed design has a title consisting of the main subject, supporting details and location, while the variables and time will be under the subtitle.
@@ -130,21 +125,18 @@ This proposal sketch is done with **Figma** web-tool.
 ***e. Legend*** **:** Only the genders' values will be displayed, which are "Males" and "Females".
 
 ***f. Caption*** **:** It will state the data source and the year of data obtained.
-:::
 
-### **1.2.2 Aesthetic Enhancement**
+### **1.2.3 Aesthetic Enhancement**
 
-::: {.callout-warning appearance="simple" icon="false"}
-***a. X-axis labels*** **:** Only the x-axis title is shown to minimise clustering the chart with figures.
+***a. X-axis labels*** **:** Only the x-axis title is shown to minimise clustering the chart with figures.
 
-***b. Tick marks & background border lines*** **:** The colours thereof will be "mid-grey" to focus readers more on the bars.
+***b. Tick marks & background border lines*** **:** The colours thereof will be "mid-grey" to focus readers more on the bars.
 
-***c. Gridlines*** : Only display horizontal grid lines since identifying the bars' length from a static plot is not practical.
+***c. Gridlines*** : Only display horizontal grid lines since identifying the bars' length from a static plot is not practical.
 
-***(d) Colour*** : A pair of high-contrast colours will be assigned to the gender values. Titles and subtitles will be in various shades of grey.
+***(d) Colour*** : A pair of high-contrast colours will be assigned to the gender values. Titles and subtitles will be in various shades of grey.
 
-***(e) Font size:*** The font size of the main title will be more prominent than the sub-title. This will help to set the reader's focus on the right context when analysing the chart.
-:::
+***(e) Font size:*** The font size of the main title will be more prominent than the sub-title. This will help to set the reader's focus on the right context when analysing the chart.
 
 # **2. R PACKAGE REQUIRED**
 
@@ -152,21 +144,14 @@ The following are the packages required for this exercise :
 
 ## **2.1 Load R Packages**
 
-::: {.callout-warning appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
-
 ```{r}
 pacman::p_load(tidyverse, ggpubr, readxl, knitr, plotly, skimr, questionr, funModeling, ggplot2, sf, tmap, quanteda, NLP, patchwork, ggpmisc, gridExtra, kableExtra)
 ```
-:::
 
 # **3. DATA**
 
 ## **3.1 Acquire Data Source**
 
-::: {.callout-warning appearance="simple" icon="false"}
 This study will be based on demographic data set downloadable from [Singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data).
 
 -   Download "Singapore Residents by Planning Area Subzone, Age Group, Sex and Type of Dwelling, June 2022" in CSV format.
@@ -195,7 +180,6 @@ This study will be based on demographic data set downloadable from [Singstat.gov
     -   Pop = Resident Count
 
     -   Time - Time / Period
-:::
 :::
 
 ## **3.2 Import Data**
@@ -1095,7 +1079,6 @@ ggarrange(popPyr_t19.fw,
 
 # **5. MAKEOVER SUBMISSION**
 
-::: {.callout-warning appearance="simple" icon="false"}
 Below is the makeover output for this assignment submission.
 
 ```{r}
@@ -1110,4 +1093,3 @@ ggarrange(popPyr_t19.fw,
           heights = c(1, 0.02, 1)) +
   theme(plot.margin = margin(0.5,0,0.5,0, "cm"))
 ```
-:::
