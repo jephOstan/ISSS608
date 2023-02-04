@@ -39,6 +39,16 @@ format:
 7.  **AESTHETIC** check
 :::
 
+4 key aspects :
+
+-   model visualisation
+
+-   parameter refinement
+
+-   model building
+
+-   data mining
+
 2 types of visual analysis :
 
 -   **Formative visual analysis** - during the course of the study to make data-based decisions, such as when to change conditions or make modifications to the intervention.

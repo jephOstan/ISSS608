@@ -39,7 +39,7 @@ pacman::p_load(ggstatsplot, tidyverse)
 ```
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Highlights of the R Packages  :**]{style="color:#3a9c88"}
+## [**⇳ Highlights of the R Packages :**]{style="color:#3a9c88"}
 
 [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package.
 
@@ -71,17 +71,18 @@ exam_data <- read_csv("data/Exam_data.csv")
 problems(exam_data)
 ```
 
-# 4. VISUAL STATISTICAL ANALYSIS
+# **4. VISUAL STATISTICAL ANALYSIS**
 
-## **4.1 One-sample test with** *gghistostats( )* method
+## 4.1 One-sample test with ***gghistostats( )*** **method**
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Usage of the code chunk below :**]{style="color:#3a9c88"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***gghistostats( )*** - ggstatsplot -]{style="color:#d46e15"} to plot histogram with statistical details included as a subtitle for this one-sample test.
 :::
 
 ```{r}
+#| code-fold: false
 set.seed(1234)
 
 gghistostats(data = exam_data,
@@ -91,45 +92,127 @@ gghistostats(data = exam_data,
              xlab = "English scores")
 ```
 
-Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
+Remarks :
 
-### Unpacking the Bayes Factor
+The default information consists :
 
--   A Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories.
+-   **Bayes Factor**
 
--   That's because the Bayes factor gives us a way to evaluate the data in favor of a null hypothesis, and to use external information to do so. It tells us what the weight of the evidence is in favor of a given hypothesis.
+    $
+    loge~e~(BF~01~) = -31.45
+    $
 
--   When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as
+    -   Bayes factvor is the [**ratio of the likelihood of one hypothesis to the likelihood of another**]{.underline}.
 
-![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image5.jpg)
+        -   or interpreted as an evidence weight/strength measurement among two competing theories.
 
--   The [**Schwarz criterion**](https://www.statisticshowto.com/bayesian-information-criterion/) is one of the easiest ways to calculate rough approximation of the Bayes Factor.
+        ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+        ## [**⇳ more about Bayes Factor**]{style="color:#3a9c88"}
 
-### How to interpret Bayes Factor
+        -   **BF10** is the factor's notation indicate H1 favour over H0, **BF01** indicates otherwise.
 
-A **Bayes Factor** can be any positive number. One of the most common interpretations is this one---first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
+            -   Large value of BF10 means higher likelihood of H1.
 
-![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image6.jpg)
+            -   For BF10, define the factor mathematically as
 
-### Two-sample mean test: *ggbetweenstats()*
+                $$
+                Likelihood of Data given H1, P (D | H1) / Likelihood of Data given H0, P (D | H0)
+                $$
 
-In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for two-sample mean test of Maths scores by gender.
+        -   The **Schwarz criterion**, an index used in Bayesian statistics, is one of the easiest ways to compute the approximation of the Bayes Factor.
+
+            -   The lowest BIC is the best model.
+
+            -   When Δ BIC, a notation for the difference between models, is less than 1, the argument can be insignificant to none for the best model.[^1]
+
+            -   When Δ BIC is between 1 and 3, anecdotal evidence for the best model.
+
+            -   When Δ BIC is between 3 and 10, there is moderate to strong evidence against the weaker model.
+
+            -   When Δ BIC is between 6 and 10, the evidence against the weaker model is strong.
+
+            -   When Δ BIC is greater than 10, the evidence favouring the best model against the other model is very strong.
+
+        Example to calculate Δ BIC[^2] :
+
+        -   Given a 50 observation points data set.
+
+        -   Model 1 estimates 3 parameters.
+
+        -   Model 2 estimates 4 parameters.
+
+        -   Log of maximum likelihood for model 1 is *a,* and for model 2 it is 2*a*.
+
+            Using the formula k log(n)- 2log(L(θ)):
+
+            Model 1 : 3log(50) -- 2a = 5.1 -- 2a
+
+            Model 2 : 4log(50) -- 4a = 6.8 -- 4a
+
+            Thus, ΔBIC is 1.7 -- 2a.
+
+            Hence, it will only be \'worth mentioning\' if 1.7 -- 2a \> 2, and only can claim conclusive results if a \< -0.15.
+        :::
+
+-   **Posterior Probability** is the probability of an event occurring after taking into consideration another occurred event.
+
+    $δ{posterior \choose difference} = 7.16$
+
+-   **Confidence Equal-Tailed Interval (ETI)**'s probability that displayed below this interval is equal to the probability displayed above.
+
+[^1]: [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) (2013). https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true
+
+[^2]: Stephanie Glen. "Bayesian Information Criterion (BIC) / Schwarz Criterion" From [**StatisticsHowTo.com**](https://www.statisticshowto.com/): Elementary Statistics for the rest of us! <https://www.statisticshowto.com/bayesian-information-criterion/>
+
+$$
+CI{ETI \choose 95%}[5.54, 8.75]
+$$
+
+-   **Jeffreys-Zellener-Siow Cauchy** distribution summary.
+
+    $$
+    r{JZS \choose Cauchy} = 0.71
+    $$
+
+-   **Sample sizes**
+
+## 4.2 Two-sample mean test with ***ggbetweenstats( )*** **method**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***ggbetweenstats( )*** - ggstatsplot -]{style="color:#d46e15"} to build a visual for 2-sample mean test of `MATHS` scores by `GENDER`.
+
+-   type = "np" == "nonparametric". Other values "parametric", "robust", "bayes".
+
+-   pairwise.display = "s" == "significant. Other values "non-significant" / "ns", "all".
+
+-   the default arguments == TRUE are :
+
+    -   **results.subtitle**. To show plot subtitle, need to set this value to "FALSE".
+
+    -   centrality.type == type == for median. Else, parametric for mean, robus for trimmed mean and bayes for MAP estimator.
+:::
 
 ```{r}
+#| code-fold: false
 ggbetweenstats(data = exam_data,
                x = GENDER, 
                y = MATHS,
                type = "np",
-               messages = FALSE)
+               messages = FALSE,
+               pairwise.display = "s",
+               outlier.tagging = TRUE)
 ```
 
 Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
 
-### Oneway ANOVA Test: *ggbetweenstats()* method
+### Oneway ANOVA Test: *ggbetweenstats()* method method
 
 In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English score by race.
 
 ```{r}
+#| code-fold: false
 ggbetweenstats(data = exam_data,
                x = RACE, 
                y = ENGLISH,
@@ -160,6 +243,7 @@ ggbetweenstats(data = exam_data,
 In the code chunk below, [*ggscatterstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html) is used to build a visual for Significant Test of Correlation between Maths scores and English scores.
 
 ```{r}
+#| code-fold: false
 ggscatterstats(data = exam_data,
                x = MATHS,
                y = ENGLISH,

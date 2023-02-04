@@ -150,6 +150,7 @@ cookieconsent.run({
 </script> 
   
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -325,14 +326,12 @@ cookieconsent.run({
   <li><a href="#import-attribute-data" id="toc-import-attribute-data" class="nav-link" data-scroll-target="#import-attribute-data"><strong>3.2.1 Import Attribute Data</strong></a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#visual-statistical-analysis" id="toc-visual-statistical-analysis" class="nav-link" data-scroll-target="#visual-statistical-analysis">4. VISUAL STATISTICAL ANALYSIS</a>
+  <li><a href="#visual-statistical-analysis" id="toc-visual-statistical-analysis" class="nav-link" data-scroll-target="#visual-statistical-analysis"><strong>4. VISUAL STATISTICAL ANALYSIS</strong></a>
   <ul class="collapse">
-  <li><a href="#one-sample-test-with-gghistostats-method" id="toc-one-sample-test-with-gghistostats-method" class="nav-link" data-scroll-target="#one-sample-test-with-gghistostats-method"><strong>4.1 One-sample test with</strong> <em>gghistostats( )</em> method</a>
+  <li><a href="#one-sample-test-with-gghistostats-method" id="toc-one-sample-test-with-gghistostats-method" class="nav-link" data-scroll-target="#one-sample-test-with-gghistostats-method">4.1 One-sample test with <strong><em>gghistostats( )</em></strong> <strong>method</strong></a></li>
+  <li><a href="#two-sample-mean-test-with-ggbetweenstats-method" id="toc-two-sample-mean-test-with-ggbetweenstats-method" class="nav-link" data-scroll-target="#two-sample-mean-test-with-ggbetweenstats-method">4.2 Two-sample mean test with <strong><em>ggbetweenstats( )</em></strong> <strong>method</strong></a>
   <ul class="collapse">
-  <li><a href="#unpacking-the-bayes-factor" id="toc-unpacking-the-bayes-factor" class="nav-link" data-scroll-target="#unpacking-the-bayes-factor">Unpacking the Bayes Factor</a></li>
-  <li><a href="#how-to-interpret-bayes-factor" id="toc-how-to-interpret-bayes-factor" class="nav-link" data-scroll-target="#how-to-interpret-bayes-factor">How to interpret Bayes Factor</a></li>
-  <li><a href="#two-sample-mean-test-ggbetweenstats" id="toc-two-sample-mean-test-ggbetweenstats" class="nav-link" data-scroll-target="#two-sample-mean-test-ggbetweenstats">Two-sample mean test: <em>ggbetweenstats()</em></a></li>
-  <li><a href="#oneway-anova-test-ggbetweenstats-method" id="toc-oneway-anova-test-ggbetweenstats-method" class="nav-link" data-scroll-target="#oneway-anova-test-ggbetweenstats-method">Oneway ANOVA Test: <em>ggbetweenstats()</em> method</a></li>
+  <li><a href="#oneway-anova-test-ggbetweenstats-method-method" id="toc-oneway-anova-test-ggbetweenstats-method-method" class="nav-link" data-scroll-target="#oneway-anova-test-ggbetweenstats-method-method">Oneway ANOVA Test: <em>ggbetweenstats()</em> method method</a></li>
   <li><a href="#significant-test-of-correlation-ggscatterstats" id="toc-significant-test-of-correlation-ggscatterstats" class="nav-link" data-scroll-target="#significant-test-of-correlation-ggscatterstats">Significant Test of Correlation: <em>ggscatterstats()</em></a></li>
   <li><a href="#significant-test-of-association-depedence-ggbarstats-methods" id="toc-significant-test-of-association-depedence-ggbarstats-methods" class="nav-link" data-scroll-target="#significant-test-of-association-depedence-ggbarstats-methods">Significant Test of Association (Depedence) : <em>ggbarstats()</em> methods</a></li>
   </ul></li>
@@ -395,7 +394,7 @@ cookieconsent.run({
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Highlights of the R Packages :</strong></span>
+<span style="color:#3a9c88"><strong>⇳ Highlights of the R Packages :</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -440,16 +439,16 @@ cookieconsent.run({
 </section>
 </section>
 <section id="visual-statistical-analysis" class="level1">
-<h1>4. VISUAL STATISTICAL ANALYSIS</h1>
+<h1><strong>4. VISUAL STATISTICAL ANALYSIS</strong></h1>
 <section id="one-sample-test-with-gghistostats-method" class="level2">
-<h2 class="anchored" data-anchor-id="one-sample-test-with-gghistostats-method"><strong>4.1 One-sample test with</strong> <em>gghistostats( )</em> method</h2>
+<h2 class="anchored" data-anchor-id="one-sample-test-with-gghistostats-method">4.1 One-sample test with <strong><em>gghistostats( )</em></strong> <strong>method</strong></h2>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Usage of the code chunk below :</strong></span>
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -460,8 +459,6 @@ cookieconsent.run({
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gghistostats</span>(<span class="at">data =</span> exam_data,</span>
@@ -469,53 +466,126 @@ cookieconsent.run({
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"bayes"</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">test.value =</span> <span class="dv">60</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">"English scores"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex4.1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Default information: - statistical details - Bayes Factor - sample sizes - distribution summary</p>
-<section id="unpacking-the-bayes-factor" class="level3">
-<h3 class="anchored" data-anchor-id="unpacking-the-bayes-factor">Unpacking the Bayes Factor</h3>
+<p>Remarks :</p>
+<p>The default information consists :</p>
 <ul>
-<li><p>A Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories.</p></li>
-<li><p>That’s because the Bayes factor gives us a way to evaluate the data in favor of a null hypothesis, and to use external information to do so. It tells us what the weight of the evidence is in favor of a given hypothesis.</p></li>
-<li><p>When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as</p></li>
+<li><p><strong>Bayes Factor</strong></p>
+<p>$ loge<sub>e</sub>(BF<sub>01</sub>) = -31.45 $</p>
+<ul>
+<li><p>Bayes factvor is the <u><strong>ratio of the likelihood of one hypothesis to the likelihood of another</strong></u>.</p>
+<ul>
+<li>or interpreted as an evidence weight/strength measurement among two competing theories.</li>
 </ul>
-<p><img src="https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image5.jpg" class="img-fluid"></p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ more about Bayes Factor</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
-<li>The <a href="https://www.statisticshowto.com/bayesian-information-criterion/"><strong>Schwarz criterion</strong></a> is one of the easiest ways to calculate rough approximation of the Bayes Factor.</li>
+<li><p><strong>BF10</strong> is the factor’s notation indicate H1 favour over H0, <strong>BF01</strong> indicates otherwise.</p>
+<ul>
+<li><p>Large value of BF10 means higher likelihood of H1.</p></li>
+<li><p>For BF10, define the factor mathematically as</p>
+<p><span class="math display">\[
+Likelihood of Data given H1, P (D | H1) / Likelihood of Data given H0, P (D | H0)
+\]</span></p></li>
+</ul></li>
+<li><p>The <strong>Schwarz criterion</strong>, an index used in Bayesian statistics, is one of the easiest ways to compute the approximation of the Bayes Factor.</p>
+<ul>
+<li><p>The lowest BIC is the best model.</p></li>
+<li><p>When Δ BIC, a notation for the difference between models, is less than 1, the argument can be insignificant to none for the best model.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>When Δ BIC is between 1 and 3, anecdotal evidence for the best model.</p></li>
+<li><p>When Δ BIC is between 3 and 10, there is moderate to strong evidence against the weaker model.</p></li>
+<li><p>When Δ BIC is between 6 and 10, the evidence against the weaker model is strong.</p></li>
+<li><p>When Δ BIC is greater than 10, the evidence favouring the best model against the other model is very strong.</p></li>
+</ul></li>
+</ul>
+<p>Example to calculate Δ BIC<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> :</p>
+<ul>
+<li><p>Given a 50 observation points data set.</p></li>
+<li><p>Model 1 estimates 3 parameters.</p></li>
+<li><p>Model 2 estimates 4 parameters.</p></li>
+<li><p>Log of maximum likelihood for model 1 is <em>a,</em> and for model 2 it is 2<em>a</em>.</p>
+<p>Using the formula k log(n)- 2log(L(θ)):</p>
+<p>Model 1 : 3log(50) – 2a = 5.1 – 2a</p>
+<p>Model 2 : 4log(50) – 4a = 6.8 – 4a</p>
+<p>Thus, ΔBIC is 1.7 – 2a.</p>
+<p>Hence, it will only be 'worth mentioning' if 1.7 – 2a &gt; 2, and only can claim conclusive results if a &lt; -0.15.</p></li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul></li>
+<li><p><strong>Posterior Probability</strong> is the probability of an event occurring after taking into consideration another occurred event.</p>
+<p><span class="math inline">\(δ{posterior \choose difference} = 7.16\)</span></p></li>
+<li><p><strong>Confidence Equal-Tailed Interval (ETI)</strong>’s probability that displayed below this interval is equal to the probability displayed above.</p></li>
+</ul>
+<p><span class="math display">\[
+CI{ETI \choose 95%}[5.54, 8.75]
+\]</span></p>
+<ul>
+<li><p><strong>Jeffreys-Zellener-Siow Cauchy</strong> distribution summary.</p>
+<p><span class="math display">\[
+r{JZS \choose Cauchy} = 0.71
+\]</span></p></li>
+<li><p><strong>Sample sizes</strong></p></li>
 </ul>
 </section>
-<section id="how-to-interpret-bayes-factor" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-interpret-bayes-factor">How to interpret Bayes Factor</h3>
-<p>A <strong>Bayes Factor</strong> can be any positive number. One of the most common interpretations is this one—first proposed by Harold Jeffereys (1961) and slightly modified by <a href="https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true">Lee and Wagenmakers</a> in 2013:</p>
-<p><img src="https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image6.jpg" class="img-fluid"></p>
-</section>
-<section id="two-sample-mean-test-ggbetweenstats" class="level3">
-<h3 class="anchored" data-anchor-id="two-sample-mean-test-ggbetweenstats">Two-sample mean test: <em>ggbetweenstats()</em></h3>
-<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html"><em>ggbetweenstats()</em></a> is used to build a visual for two-sample mean test of Maths scores by gender.</p>
+<section id="two-sample-mean-test-with-ggbetweenstats-method" class="level2">
+<h2 class="anchored" data-anchor-id="two-sample-mean-test-with-ggbetweenstats-method">4.2 Two-sample mean test with <strong><em>ggbetweenstats( )</em></strong> <strong>method</strong></h2>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>ggbetweenstats( )</em></strong> - ggstatsplot -</span> to build a visual for 2-sample mean test of <code>MATHS</code> scores by <code>GENDER</code>.</p>
+<ul>
+<li><p>type = “np” == “nonparametric”. Other values “parametric”, “robust”, “bayes”.</p></li>
+<li><p>pairwise.display = “s” == “significant. Other values”non-significant” / “ns”, “all”.</p></li>
+<li><p>the default arguments == TRUE are :</p>
+<ul>
+<li><p><strong>results.subtitle</strong>. To show plot subtitle, need to set this value to “FALSE”.</p></li>
+<li><p>centrality.type == type == for median. Else, parametric for mean, robus for trimmed mean and bayes for MAP estimator.</p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(<span class="at">data =</span> exam_data,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> GENDER, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> MATHS,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">type =</span> <span class="st">"np"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">messages =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">messages =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.tagging =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="handsOn_ex4.1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Default information: - statistical details - Bayes Factor - sample sizes - distribution summary</p>
-</section>
-<section id="oneway-anova-test-ggbetweenstats-method" class="level3">
-<h3 class="anchored" data-anchor-id="oneway-anova-test-ggbetweenstats-method">Oneway ANOVA Test: <em>ggbetweenstats()</em> method</h3>
+<section id="oneway-anova-test-ggbetweenstats-method-method" class="level3">
+<h3 class="anchored" data-anchor-id="oneway-anova-test-ggbetweenstats-method-method">Oneway ANOVA Test: <em>ggbetweenstats()</em> method method</h3>
 <p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html"><em>ggbetweenstats()</em></a> is used to build a visual for One-way ANOVA test on English score by race.</p>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(<span class="at">data =</span> exam_data,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> RACE, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> ENGLISH,</span>
@@ -525,7 +595,6 @@ cookieconsent.run({
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">p.adjust.method =</span> <span class="st">"fdr"</span>,</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">messages =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex4.1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -546,13 +615,10 @@ cookieconsent.run({
 <h3 class="anchored" data-anchor-id="significant-test-of-correlation-ggscatterstats">Significant Test of Correlation: <em>ggscatterstats()</em></h3>
 <p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html"><em>ggscatterstats()</em></a> is used to build a visual for Significant Test of Correlation between Maths scores and English scores.</p>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatterstats</span>(<span class="at">data =</span> exam_data,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">x =</span> MATHS,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> ENGLISH,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">marginal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <p><img src="handsOn_ex4.1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -587,7 +653,14 @@ cookieconsent.run({
 </section>
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true">Lee and Wagenmakers</a> (2013). https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Stephanie Glen. “Bayesian Information Criterion (BIC) / Schwarz Criterion” From <a href="https://www.statisticshowto.com/"><strong>StatisticsHowTo.com</strong></a>: Elementary Statistics for the rest of us! <a href="https://www.statisticshowto.com/bayesian-information-criterion/" class="uri">https://www.statisticshowto.com/bayesian-information-criterion/</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
