@@ -188,11 +188,21 @@ $$
 
 -   pairwise.display = "s" == "significant. Other values "non-significant" / "ns", "all".
 
--   the default arguments == TRUE are :
+-   the default [arguments](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) are :
+
+    == TRUE
 
     -   **results.subtitle**. To show plot subtitle, need to set this value to "FALSE".
 
     -   centrality.type == type == for median. Else, parametric for mean, robus for trimmed mean and bayes for MAP estimator.
+
+    == FALSE
+
+    -   outlier.tagging.
+
+    others
+
+    -   outlier.color = "black"
 :::
 
 ```{r}

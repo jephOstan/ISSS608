@@ -10,11 +10,11 @@ website:
       - text: Hands-on Exercises
         menu: 
           - text: Ex[1] DataVis with ggplot2
-            href: handsOn_ex1.html
+            href: handsOn_ex1.qmd
           - text: Ex[2] DataVis with Advanced ggplot2
-            href: handsOn_ex2.html
+            href: handsOn_ex2.qmd
           - text: Ex[3] Programming Interactive Data Visualisation
-            href: handsOn_ex3.html
+            href: handsOn_ex3.qmd
           - text: Ex[4.1] Fundamentals of Visual Statistical Analysis
             href: handsOn_ex4.1.qmd
           - text: Ex[4.2] Fundamentals to Visualise Models
@@ -25,7 +25,7 @@ website:
           - text: Ex[1] S & P Summary with Tableau
             href: https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&:origin=viz_share_link
           - text: Ex[3] Programming Interactive Data Visualisation
-            href: inClass/inClass_ex03/inClass_ex3.html
+            href: inClass/inClass_ex03/inClass_ex3.qmd
           - text: Ex[4] Programming Interactive Data Visualisation 2
             href: inClass/inClass_ex04/inClass_ex4.qmd
 
@@ -33,9 +33,9 @@ website:
       - text: Take-home Exercises
         menu: 
           - text: Ex[1] Trellis Population Pyramids
-            href: takeHome/th_ex1/th_ex1.html
+            href: takeHome/th_ex1/th_ex1.qmd
           - text: Ex[1] DataViz Makeover for Trellis Population Pyramids
-            href: takeHome/th_ex2/th_ex2.html
+            href: takeHome/th_ex2/th_ex2.qmd
      
       - text: Workshop & Notes
         menu:

@@ -1,5 +1,5 @@
 ---
-title: "Programming Interactive Data Visualisation 2"
+title: "Programming Interactive & Visual Statistical Analysis"
 subtitle: "In-Class Exercise 4"
 editor: visual
 date:  4 Feb 2023
@@ -20,34 +20,28 @@ format:
     css: styles.css
 ---
 
-# **1. OVERVIEW**
+# FIRST MODEL - Exam Data
 
-This in-class exercise focus on
+# **1.1 OVERVIEW**
 
-# **2. R PACKAGE REQUIRED**
+This in-class exercise focus on using plotly( ) function and include visual statistical analysis.
 
-## **2.1 Load R Packages**
+# **1.2 R PACKAGE REQUIRED**
+
+## **1.2.1 Load R Packages**
 
 ```{r}
 #| code-fold: false
-pacman::p_load(plotly, crosstalk, DT, patchwork, tidyverse) 
+pacman::p_load(plotly, crosstalk, DT, patchwork, tidyverse, ggstatsplot, ggdist) 
 ```
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Highlights of the R Packages :**]{style="color:#3a9c88"}
+# **1.3 DATA PREPARATION**
 
-**x**
-:::
-
-# **3. DATA PREPARATION**
-
-## **3.1 Acquire Data Source**
+## **1.3.1 Acquire Data Source**
 
 This study will be based on fictitious data set provided with this lesson.
 
-## **3.2 Import Data**
-
-### **3.2.1 Import Attribute Data**
+## **1.3.2 Import Data**
 
 Involved two (2) steps : import and inspect imported data set.
 
@@ -58,12 +52,187 @@ exam_data <- read_csv("data/Exam_data.csv")
 problems(exam_data)
 ```
 
-# **4. VISUAL STATISTICAL ANALYSIS**
+# **1.4 VISUAL INTERACTIVE**
+
+## 1.4.1 Create with plotly( ) function
 
 ```{r}
 #| code-fold: false
 plot_ly(data = exam_data,
         x = ~ENGLISH,
         y = ~MATHS,
-        color = ~RACE)
+        color = ~RACE) %>%
+  layout(title = "Exam result for English and Maths", 
+         plot_bgcolor = "#e5ecf6",
+         xaxis = list(title = "English Exam Result"),
+         yaxis = list(title = "Maths Exam Result"),
+         legend = list(title = list(text = "<b>Students' Race </b>")))
+```
+
+## 1.4.2 Create with ggplot( ) function
+
+```{r}
+p <- ggplot(exam_data, 
+            aes(ENGLISH, 
+                MATHS)) + 
+  geom_point(size = 1) +
+  coord_cartesian(xlim = c(0,100),
+                  ylim = c(0,100))
+
+ggplotly(p)
+```
+
+Remarks :
+
+To have more control of aesthetic interactive aspects, plot in plotly , compare to using ggplotly as the wrapper.
+
+```{r}
+ggplot(exam_data, 
+            aes(ENGLISH, 
+                MATHS)) + 
+  geom_point(size=1) +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+```
+
+# 1.5 VISUAL STATISTICAL ANALYSIS
+
+## 1.5.1 Include Stats into Violins Chart
+
+```{r}
+#| code-fold: false
+ggbetweenstats(data = exam_data,
+               x = GENDER, 
+               y = MATHS,
+               type = "p",
+               messages = FALSE,
+               pairwise.display = "s",
+               outlier.tagging = TRUE)
+```
+
+Remarks :
+
+p = Welsch Test, include Bayesian stats
+
+np = WMann-Whitney Test, does not include Bayesian stats.
+
+```{r}
+#| code-fold: false
+ggscatterstats(data = exam_data,
+               x = MATHS,
+               y = ENGLISH,
+               marginal = TRUE)
+```
+
+# 1.6 UNCERTAINTY CHECK
+
+Before plot for uncertainty of point estimates.
+
+```{r}
+my_sum <- exam_data %>%
+  group_by(RACE) %>%
+  summarise(
+    n = n(),
+    mean = mean(MATHS),
+    sd = sd(MATHS)) %>%
+  mutate(se=sd/sqrt(n-1))
+```
+
+```{r}
+ggplot(my_sum) +
+  geom_errorbar(aes(x = RACE,
+                    ymin = mean - se, 
+                    ymax = mean + se),
+                width = 0.2, 
+                colour = "black", 
+                alpha = 0.9, 
+                size = 0.5) +
+  geom_point(aes(x = RACE,
+                 y = mean),
+             stat = "identity", 
+             color = "red",
+             size = 1.5,
+             alpha = 1) +
+  ggtitle("Standard error of mean maths score by race")
+```
+
+# SECOND MODEL - Toyota Corolla
+
+# 2.1 OVERVIEW
+
+This second models focus on using easystats package.
+
+# **2.2 R PACKAGE REQUIRED**
+
+## **2.2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(readxl, performance, parameters, see, readr, ggstatsplot) 
+```
+
+# **2.3 DATA PREPARATION**
+
+## **2.3.1 Acquire Data Source**
+
+This study will be based on ToyotaCorlla data set provided with this lesson.
+
+## **2.3.2 Import Data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+```{r}
+#| code-fold: false
+car_resale <- read_xls("data/ToyotaCorolla.xls",
+                      "data")
+
+problems(car_resale)
+```
+
+# **2.4 VISUAL** 
+
+## 2.4.1 Create with plotly( ) function
+
+```{r}
+model <- lm(Price ~ Age_08_04 + Mfg_Year + KM + 
+              Weight + Guarantee_Period, data = car_resale)
+
+model
+```
+
+## 2.4.2 Check multicollinearity
+
+```{r}
+check_c <- check_collinearity(model)
+
+plot(check_c)
+```
+
+## 2.4.3 Trim Away High Correlation Variable
+
+```{r}
+model1 <- lm(Price ~ 
+               Age_08_04 + 
+               KM + 
+               Weight + 
+               Guarantee_Period, 
+            data = car_resale)
+```
+
+```{r}
+gtsummary::tbl_regression(model1, 
+               intercept = TRUE)
+```
+
+## 2.4.4 Check Normality Assumption
+
+```{r}
+check_n <- check_normality(model1)
+
+plot(check_n)
+```
+
+```{r}
+check_h <- check_heteroscedasticity(model1)
+plot(check_h)
 ```

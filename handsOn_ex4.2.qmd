@@ -89,8 +89,12 @@ Notice that the output object `car_resale` is a tibble data frame.
 The code chunk below is used to calibrate a multiple linear regression model by using *lm()* of Base Stats of R.
 
 ```{r}
-model <- lm(Price ~ Age_08_04 + Mfg_Year + KM + 
-              Weight + Guarantee_Period, data = car_resale)
+model <- lm(Price ~ Age_08_04 + 
+              Mfg_Year + 
+              KM + 
+              Weight + 
+              Guarantee_Period, 
+            data = car_resale)
 model
 ```
 
@@ -104,6 +108,7 @@ check_collinearity(model)
 
 ```{r}
 check_c <- check_collinearity(model)
+
 plot(check_c)
 ```
 
