@@ -9,6 +9,7 @@ execute:
   echo: true
   eval: true
   warning: false
+  error: false
 website: 
     google-analytics: "G-PKMQ2W4ZRC"
 format:

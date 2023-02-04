@@ -1,0 +1,69 @@
+---
+title: "Programming Interactive Data Visualisation 2"
+subtitle: "In-Class Exercise 4"
+editor: visual
+date:  4 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This in-class exercise focus on
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(plotly, crosstalk, DT, patchwork, tidyverse) 
+```
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Highlights of the R Packages :**]{style="color:#3a9c88"}
+
+**x**
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on fictitious data set provided with this lesson.
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Attribute Data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+```{r}
+#| code-fold: false
+exam_data <- read_csv("data/Exam_data.csv")
+
+problems(exam_data)
+```
+
+# **4. VISUAL STATISTICAL ANALYSIS**
+
+```{r}
+#| code-fold: false
+plot_ly(data = exam_data,
+        x = ~ENGLISH,
+        y = ~MATHS,
+        color = ~RACE)
+```

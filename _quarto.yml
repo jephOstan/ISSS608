@@ -26,6 +26,9 @@ website:
             href: https://public.tableau.com/shared/5GXCKXPQD?:display_count=n&:origin=viz_share_link
           - text: Ex[3] Programming Interactive Data Visualisation
             href: inClass/inClass_ex03/inClass_ex3.html
+          - text: Ex[4] Programming Interactive Data Visualisation 2
+            href: inClass/inClass_ex04/inClass_ex4.qmd
+
             
       - text: Take-home Exercises
         menu: 
