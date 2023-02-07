@@ -99,9 +99,7 @@ The default information consists :
 
 -   **Bayes Factor**
 
-    $
-    loge~e~(BF~01~) = -31.45
-    $
+    \$ loge~e~(BF~01~) = -31.45 \$
 
     -   Bayes factvor is the [**ratio of the likelihood of one hypothesis to the likelihood of another**]{.underline}.
 
@@ -152,7 +150,7 @@ The default information consists :
 
             Thus, ΔBIC is 1.7 -- 2a.
 
-            Hence, it will only be \'worth mentioning\' if 1.7 -- 2a \> 2, and only can claim conclusive results if a \< -0.15.
+            Hence, it will only be 'worth mentioning' if 1.7 -- 2a \> 2, and only can claim conclusive results if a \< -0.15.
         :::
 
 -   **Posterior Probability** is the probability of an event occurring after taking into consideration another occurred event.
@@ -186,7 +184,7 @@ $$
 
 -   type = "np" == "nonparametric". Other values "parametric", "robust", "bayes".
 
--   pairwise.display = "s" == "significant. Other values "non-significant" / "ns", "all".
+-   pairwise.display = "s" == "significant. Other values"non-significant" / "ns", "all".
 
 -   the default [arguments](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) are :
 

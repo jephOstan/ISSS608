@@ -34,8 +34,10 @@ website:
         menu: 
           - text: Ex[1] Trellis Population Pyramids
             href: takeHome/th_ex1/th_ex1.qmd
-          - text: Ex[1] DataViz Makeover for Trellis Population Pyramids
+          - text: Ex[2] DataViz Makeover for Trellis Population Pyramids
             href: takeHome/th_ex2/th_ex2.qmd
+          - text: Ex[3] Resale Prices for Singapore Public Housing Property
+            href: takeHome/th_ex3/th_ex3.qmd
      
       - text: Workshop & Notes
         menu:

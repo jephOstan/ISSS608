@@ -189,7 +189,7 @@ car_resale <- read_xls("data/ToyotaCorolla.xls",
 problems(car_resale)
 ```
 
-# **2.4 VISUAL** 
+# **2.4 VISUAL**
 
 ## 2.4.1 Create with plotly( ) function
 
