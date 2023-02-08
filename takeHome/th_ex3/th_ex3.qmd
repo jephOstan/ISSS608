@@ -179,7 +179,7 @@ ggplot(data = resale_prices,
   ggtitle("Test Month Sequence") 
 ```
 
-#### 3.2.5.2 Variable :: "month"
+#### 3.2.5.2 Variable :: "storey_range"
 
 ```{r}
 #| code-fold: false

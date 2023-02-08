@@ -53,6 +53,8 @@ This package will create a plot filled with statistical test details.
     -   The default statistical reporting in the plots follows the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard.
 :::
 
+<br>
+
 # **3. DATA PREPARATION**
 
 ## **3.1 Acquire Data Source**
@@ -61,7 +63,7 @@ This study will be based on fictitious data set provided with this lesson.
 
 ## **3.2 Import Data**
 
-### **3.2.1 Import Attribute Data**
+### **3.2.1 Import attribute data**
 
 Involved two (2) steps : import and inspect imported data set.
 
@@ -72,9 +74,34 @@ exam_data <- read_csv("data/Exam_data.csv")
 problems(exam_data)
 ```
 
+### **3.2.2 Identify variables' type**
+
+```{r}
+glimpse(exam_data, 70)
+```
+
+Remarks :
+
+Those dbl type variables remain status-quo instead of converting to an integer type.
+
+## 3.3 Explore Data
+
+### 3.3.1 Identify distribution by "GENDER"
+
+```{r}
+funModeling::freq(exam_data$GENDER)
+```
+
+<br>
+
 # **4. VISUAL STATISTICAL ANALYSIS**
 
-## 4.1 One-sample test with ***gghistostats( )*** **method**
+## 4.1 One-sample test with ***gghistostats( )*** function
+
+The context of this histogram plot with a dual y-axis is to : !!!!!
+
+1.  To find out how many students for each "ENGLISH" score?
+2.  To get the proportion of students for particular score range?
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -101,7 +128,7 @@ The default information consists :
 
     \$ loge~e~(BF~01~) = -31.45 \$
 
-    -   Bayes factvor is the [**ratio of the likelihood of one hypothesis to the likelihood of another**]{.underline}.
+    -   Bayes factor is the [**ratio of the likelihood of one hypothesis to the likelihood of another**]{.underline}.
 
         -   or interpreted as an evidence weight/strength measurement among two competing theories.
 
@@ -175,7 +202,18 @@ $$
 
 -   **Sample sizes**
 
-## 4.2 Two-sample mean test with ***ggbetweenstats( )*** **method**
+## 4.2 Samples' Mean Test
+
+A one sample test of means **compares the mean of a sample to a pre-specified value and tests for a deviation from that value**. For example we might know that the average birth weight for white babies in the US is 3,410 grams and wish to compare the average birth weight of a sample of black babies to this value.[^3]
+
+[^3]: One-Sample Test of Means - SPH : Hypothesis testing sample mean. Boston University. https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/sas/sas4-onesamplettest/SAS4-OneSampleTtest6.html#:\~:text=A%20one%20sample%20test%20of,black%20babies%20to%20this%20value.
+
+### 4.2.1 Two-sample mean test with ***ggbetweenstats( )*** function
+
+The context of the violin plot below is to : !!!!!
+
+1.  To learn "MATHS" performance between ALL males and females students.
+    -   require continuous variable for y-axis, and character variable for x-axis.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -205,6 +243,8 @@ $$
 
 ```{r}
 #| code-fold: false
+#| fig-height: 12
+#| fig-width: 12
 ggbetweenstats(data = exam_data,
                x = GENDER, 
                y = MATHS,
@@ -214,42 +254,63 @@ ggbetweenstats(data = exam_data,
                outlier.tagging = TRUE)
 ```
 
-Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
+Remarks :
 
-### Oneway ANOVA Test: *ggbetweenstats()* method method
+The display info is subject to the "type" argument.
 
-In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English score by race.
+"Default information: - statistical details - Bayes Factor - sample sizes - distribution summary"
+
+!!!!! to clarify the lecture note above with details when time permits.
+
+### 4.2.2 One-way ANOVA Test with ***ggbetweenstats( )*** function
+
+**One-way ANalysis Of VAriance** (ANOVA) is used to find the statistical differences among the means of 2 or more variables that consists at least [**1 independent variable**]{.underline} and [**1 dependent variable**]{.underline}.
+
+Context for the plot below is to visualise One-way ANOVA test on "MATHS" score by race.
 
 ```{r}
 #| code-fold: false
+#| fig-height: 24
+#| fig-width: 12
 ggbetweenstats(data = exam_data,
                x = RACE, 
-               y = ENGLISH,
+               y = MATHS,
                type = "p",
                mean.ci = TRUE, 
                pairwise.comparisons = TRUE, 
                pairwise.display = "s",
                p.adjust.method = "fdr",
-               messages = FALSE)
+               messages = FALSE,
+               outlier.tagging = TRUE)
 ```
 
--   "ns" → only non-significant
+Remarks :
 
--   "s" → only significant
+The input value for "pairwise.display" argument are :
 
--   "all" → everything
+-   "ns" = only non-significant
 
-#### ggbetweenstats - Summary of tests
+-   "s" = only significant
 
-![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image7.jpg)
+-   "all" = everything
 
-![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image8.jpg)
+#### 4.2.3 [Summary of Statistical Tests for *ggbetweenstats ( )* function](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/hands-on_ex04-visual%20statistical%20analysis#ggbetweenstats---summary-of-tests)
 
-![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image9.jpg)
+Tables below summarised the type of test carried out based on the "type" argument and variables.
 
-### Significant Test of Correlation: *ggscatterstats()*
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image7.jpg){fig-align="left" width="400"}
 
-In the code chunk below, [*ggscatterstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html) is used to build a visual for Significant Test of Correlation between Maths scores and English scores.
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image8.jpg){fig-align="left" width="400"}
+
+![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex04/img/image9.jpg){fig-align="left" width="400"}
+
+## 4.3 Correlation Test
+
+### 4.3.1 Significant Test of Correlation with *ggscatterstats( )* function
+
+Context for the plot below is to visualise the Significant Test of Correlation between "MATHS" scores and "ENGLISH" scores.
+
+-   2 continuous variables.
 
 ```{r}
 #| code-fold: false
@@ -259,9 +320,19 @@ ggscatterstats(data = exam_data,
                marginal = FALSE)
 ```
 
-### Significant Test of Association (Depedence) : *ggbarstats()* methods
+## 4.4 Association Test
 
-In the code chunk below, the Maths scores is binned into a 4-class variable by using [*cut()*](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut).
+### 4.4.1 Significant Test of Association (Dependence) with *ggbarstats( )* function
+
+There are 2 steps involved to visualise the Significant Test of Association for "MATHS" scores by "GENDER".
+
+#### 4.4.1.1 Bin "MATHS" value
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***cut( )*** - base -]{style="color:#d46e15"} to divides "MATHS" value into 4 intervals and assigned them into 60, 75, 85, 100.
+:::
 
 ```{r}
 exam1 <- exam_data %>% 
@@ -269,7 +340,13 @@ exam1 <- exam_data %>%
                           breaks = c(0,60,75,85,100)))
 ```
 
-In this code chunk below [*ggbarstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbarstats.html) is used to build a visual for Significant Test of Association
+#### 4.4.1.2 Visualise Association Strength
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***ggbarstats( )*** - ggstatsplot -]{style="color:#d46e15"} to plot a categorical type ("GENDER") bar chart with statistical details for "MATHS" value.
+:::
 
 ```{r}
 ggbarstats(exam1, 

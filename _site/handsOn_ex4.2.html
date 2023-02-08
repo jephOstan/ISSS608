@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-02-03">
 
-<title>ISSS608 - Ex[4.2] Fundamentals of Visual Analytics - Visualising Models</title>
+<title>ISSS608 - Visualising Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -190,11 +190,19 @@ cookieconsent.run({
   </li>  
         <li>
     <a class="dropdown-item" href="./handsOn_ex4.1.html">
- <span class="dropdown-text">Ex[4.1] Fundamentals of Visual Statistical Analysis</span></a>
+ <span class="dropdown-text">Ex[4.1] Visual Statistical Analysis</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./handsOn_ex4.2.html">
- <span class="dropdown-text">Ex[4.2] Fundamentals to Visualise Models</span></a>
+ <span class="dropdown-text">Ex[4.2] Visualise Models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./handsOn_ex4.3.html">
+ <span class="dropdown-text">Ex[4.3] Visualising Uncertainty</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./handsOn_ex4.4.html">
+ <span class="dropdown-text">Ex[4.4] Build Funnel Plot</span></a>
   </li>  
     </ul>
   </li>
@@ -228,7 +236,11 @@ cookieconsent.run({
   </li>  
         <li>
     <a class="dropdown-item" href="./takeHome/th_ex2/th_ex2.html">
- <span class="dropdown-text">Ex[1] DataViz Makeover for Trellis Population Pyramids</span></a>
+ <span class="dropdown-text">Ex[2] DataViz Makeover for Trellis Population Pyramids</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./takeHome/th_ex3/th_ex3.html">
+ <span class="dropdown-text">Ex[3] Resale Prices for Singapore Public Housing Property</span></a>
   </li>  
     </ul>
   </li>
@@ -326,16 +338,26 @@ cookieconsent.run({
   <li><a href="#acquire-data-source" id="toc-acquire-data-source" class="nav-link" data-scroll-target="#acquire-data-source"><strong>3.1 Acquire Data Source</strong></a></li>
   <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><strong>3.2 Import Data</strong></a>
   <ul class="collapse">
-  <li><a href="#import-data-1" id="toc-import-data-1" class="nav-link" data-scroll-target="#import-data-1"><strong>3.2.1 Import Data</strong></a></li>
-  <li><a href="#importing-excel-file-readxl-methods" id="toc-importing-excel-file-readxl-methods" class="nav-link" data-scroll-target="#importing-excel-file-readxl-methods">Importing Excel file: readxl methods</a></li>
-  <li><a href="#multiple-regression-model-using-lm" id="toc-multiple-regression-model-using-lm" class="nav-link" data-scroll-target="#multiple-regression-model-using-lm">Multiple Regression Model using lm()</a></li>
-  <li><a href="#model-diagnostic-checking-for-multicolinearity" id="toc-model-diagnostic-checking-for-multicolinearity" class="nav-link" data-scroll-target="#model-diagnostic-checking-for-multicolinearity">Model Diagnostic: checking for multicolinearity:</a></li>
-  <li><a href="#model-diagnostic-checking-normality-assumption" id="toc-model-diagnostic-checking-normality-assumption" class="nav-link" data-scroll-target="#model-diagnostic-checking-normality-assumption">Model Diagnostic: checking normality assumption</a></li>
-  <li><a href="#model-diagnostic-check-model-for-homogeneity-of-variances" id="toc-model-diagnostic-check-model-for-homogeneity-of-variances" class="nav-link" data-scroll-target="#model-diagnostic-check-model-for-homogeneity-of-variances">Model Diagnostic: Check model for homogeneity of variances</a></li>
-  <li><a href="#model-diagnostic-complete-check" id="toc-model-diagnostic-complete-check" class="nav-link" data-scroll-target="#model-diagnostic-complete-check">Model Diagnostic: Complete check</a></li>
-  <li><a href="#visualising-regression-parameters-see-methods" id="toc-visualising-regression-parameters-see-methods" class="nav-link" data-scroll-target="#visualising-regression-parameters-see-methods">Visualising Regression Parameters: see methods</a></li>
-  <li><a href="#visualising-regression-parameters-ggcoefstats-methods" id="toc-visualising-regression-parameters-ggcoefstats-methods" class="nav-link" data-scroll-target="#visualising-regression-parameters-ggcoefstats-methods">Visualising Regression Parameters: <em>ggcoefstats()</em> methods</a></li>
+  <li><a href="#import-attribute-data" id="toc-import-attribute-data" class="nav-link" data-scroll-target="#import-attribute-data"><strong>3.2.1 Import attribute data</strong></a></li>
+  <li><a href="#identify-variables-type" id="toc-identify-variables-type" class="nav-link" data-scroll-target="#identify-variables-type"><strong>3.2.2 Identify variables’ type</strong></a></li>
   </ul></li>
+  </ul></li>
+  <li><a href="#model-visualisation" id="toc-model-visualisation" class="nav-link" data-scroll-target="#model-visualisation"><strong>4. MODEL VISUALISATION</strong></a>
+  <ul class="collapse">
+  <li><a href="#calibrate-multiple-regression-model-with-lm-function" id="toc-calibrate-multiple-regression-model-with-lm-function" class="nav-link" data-scroll-target="#calibrate-multiple-regression-model-with-lm-function">4.1 Calibrate Multiple Regression Model with <em>lm( )</em> function</a></li>
+  <li><a href="#model-diagnostic" id="toc-model-diagnostic" class="nav-link" data-scroll-target="#model-diagnostic">4.2 Model Diagnostic</a>
+  <ul class="collapse">
+  <li><a href="#check-multicollinearity" id="toc-check-multicollinearity" class="nav-link" data-scroll-target="#check-multicollinearity">4.2.1 Check Multicollinearity</a></li>
+  <li><a href="#visualise-vif-distribution" id="toc-visualise-vif-distribution" class="nav-link" data-scroll-target="#visualise-vif-distribution">4.2.2 Visualise VIF Distribution</a></li>
+  <li><a href="#check-normality-assumption" id="toc-check-normality-assumption" class="nav-link" data-scroll-target="#check-normality-assumption">4.2.3 Check Normality Assumption</a></li>
+  <li><a href="#check-homogeneity-of-variances" id="toc-check-homogeneity-of-variances" class="nav-link" data-scroll-target="#check-homogeneity-of-variances">4.2.4 Check Homogeneity of Variances</a></li>
+  <li><a href="#model-diagnostic-at-one-go" id="toc-model-diagnostic-at-one-go" class="nav-link" data-scroll-target="#model-diagnostic-at-one-go">4.2.5 Model Diagnostic at One Go</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#visualise-regression-parameters" id="toc-visualise-regression-parameters" class="nav-link" data-scroll-target="#visualise-regression-parameters">5. VISUALISE REGRESSION PARAMETERS</a>
+  <ul class="collapse">
+  <li><a href="#visualise-with-see-parameters-packages" id="toc-visualise-with-see-parameters-packages" class="nav-link" data-scroll-target="#visualise-with-see-parameters-packages">5.1 Visualise with <em>see</em> &amp; <strong><em>parameters</em></strong> packages</a></li>
+  <li><a href="#visualise-with-ggcoefstats-function" id="toc-visualise-with-ggcoefstats-function" class="nav-link" data-scroll-target="#visualise-with-ggcoefstats-function">5.2 Visualise with <em>ggcoefstats( )</em> function</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -345,7 +367,8 @@ cookieconsent.run({
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Ex[4.2] Fundamentals of Visual Analytics - Visualising Models</h1>
+<h1 class="title">Visualising Models</h1>
+<p class="subtitle lead">Hands-on Exercise 4.2 : Fundamentals of Visual Analytics</p>
 </div>
 
 
@@ -363,7 +386,7 @@ cookieconsent.run({
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 4, 2023</p>
+      <p class="date-modified">February 9, 2023</p>
     </div>
   </div>
     
@@ -374,56 +397,42 @@ cookieconsent.run({
 
 <section id="overview" class="level1">
 <h1><strong>1. OVERVIEW</strong></h1>
-<p>This study explores data visualisation using <a href="https://www.tidyverse.org/"><strong><em>Tidyverse</em></strong></a> package.</p>
-<p>In this section, you will learn how to visualise model diagnostic and model parameters by using parameters package.</p>
+<p>This study explores approaches to visualise model diagnostic and model parameters by using <em>parameters</em> package to :</p>
 <ul>
-<li>Toyota Corolla case study will be used. The purpose of study is to build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.</li>
+<li>Build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.</li>
 </ul>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Scope of this study :</strong></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>In this exercise, learn how to create :</p>
-<ul>
-<li>ggstatsplot package</li>
-</ul>
-</div>
-</div>
-</div>
 </section>
 <section id="r-package-required" class="level1">
 <h1><strong>2. R PACKAGE REQUIRED</strong></h1>
 <section id="load-r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="load-r-packages"><strong>2.1 Load R Packages</strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, performance, parameters, see, readr, ggstatsplot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, performance, parameters, see, readr, ggstatsplot, tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Usage of R Packages :</strong></span>
+<span style="color:#3a9c88"><strong>⇳ Highlights of the R Packages :</strong></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p>There are 6 packages involved :</p>
 <ul>
-<li><p><a href="https://indrajeetpatil.github.io/ggstatsplot/"><strong>ggstatsplot</strong></a> is an extension of <a href="https://ggplot2.tidyverse.org/"><strong>ggplot2</strong></a> package for creating graphics with details from statistical tests included in the information-rich plots themselves.</p>
+<li><p>base</p></li>
+<li><p>stats</p></li>
+<li><p>performance</p></li>
+<li><p>parameters</p></li>
+<li><p>see</p>
 <ul>
-<li><p>To provide alternative statistical inference methods by default.</p></li>
-<li><p>To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the <a href="https://my.ilstu.edu/~jhkahn/apastats.html">APA</a> gold standard for statistical reporting. For example, here are results from a robust t-test.</p></li>
+<li><p>see<a href="https://easystats.github.io/see/">package</a> is one of the collection of packages under <a href="https://easystats.github.io/easystats/"><strong><em>easystats</em></strong></a> (an R framework for easy statistical modeling, visualisation and reporting) which is an extension of <a href="https://ggplot2.tidyverse.org/"><strong><em>ggplot2</em></strong></a> package.</p>
+<p>For more see’s arguments and functions, click <a href="https://easystats.github.io/see/articles/">here</a>.</p></li>
 </ul></li>
+<li><p>ggstatsplot</p></li>
 </ul>
 </div>
 </div>
@@ -434,56 +443,111 @@ cookieconsent.run({
 <h1><strong>3. DATA PREPARATION</strong></h1>
 <section id="acquire-data-source" class="level2">
 <h2 class="anchored" data-anchor-id="acquire-data-source"><strong>3.1 Acquire Data Source</strong></h2>
-<p>This study will be based on fictitious data set provided with this lesson.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>Highlights of the data set</strong></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>x</li>
-</ol>
-</div>
-</div>
-</div>
+<p>This study will be based on Toyota Corolla dataset.</p>
 </section>
 <section id="import-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-data"><strong>3.2 Import Data</strong></h2>
-<section id="import-data-1" class="level3">
-<h3 class="anchored" data-anchor-id="import-data-1"><strong>3.2.1 Import Data</strong></h3>
-</section>
-<section id="importing-excel-file-readxl-methods" class="level3">
-<h3 class="anchored" data-anchor-id="importing-excel-file-readxl-methods">Importing Excel file: readxl methods</h3>
-<p>In the code chunk below, <a href="https://readxl.tidyverse.org/reference/read_excel.html"><em>read_xls()</em></a> of <a href="https://readxl.tidyverse.org/"><strong>readxl</strong></a> package is used to import the data worksheet of <code>ToyotaCorolla.xls</code> workbook into R.</p>
+<section id="import-attribute-data" class="level3">
+<h3 class="anchored" data-anchor-id="import-attribute-data"><strong>3.2.1 Import attribute data</strong></h3>
 <div class="cell">
+<details>
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>car_resale <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"data/ToyotaCorolla.xls"</span>,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"data"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Notice that the output object <code>car_resale</code> is a tibble data frame.</p>
 </section>
-<section id="multiple-regression-model-using-lm" class="level3">
-<h3 class="anchored" data-anchor-id="multiple-regression-model-using-lm">Multiple Regression Model using lm()</h3>
-<p>The code chunk below is used to calibrate a multiple linear regression model by using <em>lm()</em> of Base Stats of R.</p>
+<section id="identify-variables-type" class="level3">
+<h3 class="anchored" data-anchor-id="identify-variables-type"><strong>3.2.2 Identify variables’ type</strong></h3>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>              Mfg_Year <span class="sc">+</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              KM <span class="sc">+</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>              Weight <span class="sc">+</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              Guarantee_Period, </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> car_resale)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(car_resale, <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,436
+Columns: 38
+$ Id               &lt;dbl&gt; 81, 1, 2, 3, 4, 5, 6, 7, 8, 44, 45, 46, 47,…
+$ Model            &lt;chr&gt; "TOYOTA Corolla 1.6 5drs 1 4/5-Doors", "TOY…
+$ Price            &lt;dbl&gt; 18950, 13500, 13750, 13950, 14950, 13750, 1…
+$ Age_08_04        &lt;dbl&gt; 25, 23, 23, 24, 26, 30, 32, 27, 30, 27, 22,…
+$ Mfg_Month        &lt;dbl&gt; 8, 10, 10, 9, 7, 3, 1, 6, 3, 6, 11, 10, 6, …
+$ Mfg_Year         &lt;dbl&gt; 2002, 2002, 2002, 2002, 2002, 2002, 2002, 2…
+$ KM               &lt;dbl&gt; 20019, 46986, 72937, 41711, 48000, 38500, 6…
+$ Quarterly_Tax    &lt;dbl&gt; 100, 210, 210, 210, 210, 210, 210, 210, 210…
+$ Weight           &lt;dbl&gt; 1180, 1165, 1165, 1165, 1165, 1170, 1170, 1…
+$ Guarantee_Period &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3…
+$ HP_Bin           &lt;chr&gt; "100-120", "&lt; 100", "&lt; 100", "&lt; 100", "&lt; 10…
+$ CC_bin           &lt;chr&gt; "1600", "&gt;1600", "&gt;1600", "&gt;1600", "&gt;1600",…
+$ Doors            &lt;dbl&gt; 5, 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 5, 5, 5, 5…
+$ Gears            &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5…
+$ Cylinders        &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4…
+$ Fuel_Type        &lt;chr&gt; "Petrol", "Diesel", "Diesel", "Diesel", "Di…
+$ Color            &lt;chr&gt; "Blue", "Blue", "Silver", "Blue", "Black", …
+$ Met_Color        &lt;dbl&gt; 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1…
+$ Automatic        &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Mfr_Guarantee    &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1…
+$ BOVAG_Guarantee  &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ ABS              &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Airbag_1         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Airbag_2         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Airco            &lt;dbl&gt; 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Automatic_airco  &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0…
+$ Boardcomputer    &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ CD_Player        &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1…
+$ Central_Lock     &lt;dbl&gt; 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Powered_Windows  &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Power_Steering   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Radio            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Mistlamps        &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Sport_Model      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1…
+$ Backseat_Divider &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ Metallic_Rim     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Radio_cassette   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Tow_Bar          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
+</div>
+</div>
+<p>Remarks :</p>
+<p>The type of key variables ( Price, Age_08_04, Mfg_Year, KM, Weight, Guarantee_Period ) are dbl type.</p>
+</section>
+</section>
+</section>
+<section id="model-visualisation" class="level1">
+<h1><strong>4. MODEL VISUALISATION</strong></h1>
+<section id="calibrate-multiple-regression-model-with-lm-function" class="level2">
+<h2 class="anchored" data-anchor-id="calibrate-multiple-regression-model-with-lm-function">4.1 Calibrate Multiple Regression Model with <em>lm( )</em> function</h2>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>lm( )</em></strong> - stats -</span> to calibrate a multiple linear regression model.</p>
+<ul>
+<li><p>Response variable, i.e.&nbsp;“Price” as the value for “formula” argument.</p></li>
+<li><p>Predictor variables consists of Age_08_04, Mfg_Year, KM, Weight, Guarantee_Period.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>              Mfg_Year <span class="sc">+</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              KM <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              Weight <span class="sc">+</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              Guarantee_Period, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> car_resale)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -497,15 +561,74 @@ Coefficients:
        1.903e+01         2.770e+01  </code></pre>
 </div>
 </div>
-</section>
-<section id="model-diagnostic-checking-for-multicolinearity" class="level3">
-<h3 class="anchored" data-anchor-id="model-diagnostic-checking-for-multicolinearity">Model Diagnostic: checking for multicolinearity:</h3>
-<p>In the code chunk, <a href="https://easystats.github.io/performance/reference/check_collinearity.html"><em>check_collinearity()</em></a> of <a href="https://easystats.github.io/performance/"><strong>performance</strong></a> package.</p>
+<p>Remarks :</p>
+<p>From the output below, noticed the amount of details revealed with the summary() function is more comprehensible than the output above.</p>
+<p><strong>Residuals</strong> are the difference between the actual observed prices and the prices the model predicted. Based on the 5 summary points, the distribution of residuals is not strongly symmetrical. This can be interpreted as certain points predicted by this model being off from the actual observed points.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Further visual plots will be required to verify the normal distribution.</p>
+<p><strong>Coefficient</strong> represents the <strong>intercept</strong> and <strong>slope</strong> for a linear model.</p>
+<p>The <strong>Estimate</strong> column consists of intercept (first row) and the rest as the factors. The intercept value -$2.637e<sup>+06</sup> is the expected price considering the average of each predictor. For example, <strong>for every KM increase, the price will drop further at the rate of -</strong>$2.323e-02. However, the Standard Error indicates that the price reduction rate can vary up to $1.163e<sup>-03</sup>. This Standard Error value can also use to compute the <strong>Confidence Intervals</strong> and <strong>Statistical Test</strong> when hypotheses the relationship between “KM” and “Price”.</p>
+<p>The <strong>T value</strong>, a measurement of how many standard deviations away from 0, suggests whether the null hypothesis should be rejected. KM with T value of -$19.969, which is greater than the standard error, and 0 means a relationship exists between KM and Price, and the null hypothesis can be rejected. This rejection can be further justified by the small Pr(&gt;|t|) value and the 3 asterisks next to the p-value.</p>
+<p><strong>Residual Standard Error</strong> measures the quality of a linear regression fit. It is an average value that the price can deviate from the true regression line. For example, given the mean price based on the predictors involved is -$2.637e<sup>+06</sup> and the <strong>Residual Standard Error</strong> is $1,366, the percentage error based on 1,430 degrees of freedom is -0.0518%.</p>
+<p>1,430 degrees of freedom refers to 1430 data points that went into estimating the parameters used. Meaning removed 6 parameters (5 variables and an intercept) from the 1436 observation points.</p>
+<p>R-squared statistic measures how well the model fits with actual data. Given the <strong>Multiple R-squared</strong> is 0.8586, that means 85.86% of the price variance can be explained by the predictor variables. However, this value will increase when more predictor variables are added to the model. Hence, the <strong>adjusted R-squared</strong> value will be considered instead.</p>
+<p>F-statistic, an indicator of the relationship between predictors and response variables, is 1,737 on 5, which is greater than 1,430 degrees of freedom. Hence, this is sufficient to reject the null hypothesis (H0 : There is no relationship between price and predictor).</p>
+<ul>
+<li><p>F-statistic should ideally befurther from 1.</p></li>
+<li><p>How much larger F-statistics depend on the number of data points and predictors. Generally, for large datasets, it is sufficient to reject so long the F-statistics &gt; 1.</p></li>
+</ul>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_collinearity</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Age_08_04 + Mfg_Year + KM + Weight + Guarantee_Period, 
+    data = car_resale)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10426.3   -737.3     -6.4    739.1   6591.4 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      -2.637e+06  2.618e+05 -10.072   &lt;2e-16 ***
+Age_08_04        -1.409e+01  1.081e+01  -1.304   0.1924    
+Mfg_Year          1.315e+03  1.307e+02  10.064   &lt;2e-16 ***
+KM               -2.323e-02  1.163e-03 -19.969   &lt;2e-16 ***
+Weight            1.903e+01  8.129e-01  23.405   &lt;2e-16 ***
+Guarantee_Period  2.770e+01  1.219e+01   2.272   0.0232 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1366 on 1430 degrees of freedom
+Multiple R-squared:  0.8586,    Adjusted R-squared:  0.8581 
+F-statistic:  1737 on 5 and 1430 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Remarks :</p>
+<p>To optimise a model, can try with the following code chunk -</p>
+<p>model2 &lt;- lm( log(price) ~ c(predictors), data = car_resale)</p>
+</section>
+<section id="model-diagnostic" class="level2">
+<h2 class="anchored" data-anchor-id="model-diagnostic">4.2 Model Diagnostic</h2>
+<section id="check-multicollinearity" class="level3">
+<h3 class="anchored" data-anchor-id="check-multicollinearity">4.2.1 Check Multicollinearity</h3>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>check_collinearity( )</em></strong> - performance -</span> to checks regression model for multicollinearity based on the <strong>variance inflation factor (VIF)</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_collinearity</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Check for Multicollinearity
 
@@ -523,111 +646,189 @@ High Correlation
  Weight 1.41 [1.32, 1.51]         1.19      0.71     [0.66, 0.76]</code></pre>
 </div>
 </div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>check_c <span class="ot">&lt;-</span> <span class="fu">check_collinearity</span>(model)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><br>
-</p>
 </section>
-<section id="model-diagnostic-checking-normality-assumption" class="level3">
-<h3 class="anchored" data-anchor-id="model-diagnostic-checking-normality-assumption">Model Diagnostic: checking normality assumption</h3>
-<p>In the code chunk, <a href="https://easystats.github.io/performance/reference/check_normality.html"><em>check_normality()</em></a> of <a href="https://easystats.github.io/performance/"><strong>performance</strong></a> package.</p>
+<section id="visualise-vif-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="visualise-vif-distribution">4.2.2 Visualise VIF Distribution</h3>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> KM <span class="sc">+</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>              Weight <span class="sc">+</span> Guarantee_Period, <span class="at">data =</span> car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>check_n <span class="ot">&lt;-</span> <span class="fu">check_normality</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>check_c <span class="ot">&lt;-</span> <span class="fu">check_collinearity</span>(model)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="model-diagnostic-check-model-for-homogeneity-of-variances" class="level3">
-<h3 class="anchored" data-anchor-id="model-diagnostic-check-model-for-homogeneity-of-variances">Model Diagnostic: Check model for homogeneity of variances</h3>
-<p>In the code chunk, <a href="https://easystats.github.io/performance/reference/check_heteroscedasticity.html"><em>check_heteroscedasticity()</em></a> of <a href="https://easystats.github.io/performance/"><strong>performance</strong></a> package.</p>
+<section id="check-normality-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="check-normality-assumption">4.2.3 Check Normality Assumption</h3>
+<p>There are 3 steps involved to visualise the normality assumption check.</p>
+<section id="trim-model" class="level4">
+<h4 class="anchored" data-anchor-id="trim-model">4.2.3.1 Trim model</h4>
+<p>“Mfg_Year” variable is removed from this new model due to its high VIF value.</p>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>check_h <span class="ot">&lt;-</span> <span class="fu">check_heteroscedasticity</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> KM <span class="sc">+</span> Weight <span class="sc">+</span> Guarantee_Period, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="check-normality-assumption-1" class="level4">
+<h4 class="anchored" data-anchor-id="check-normality-assumption-1">4.2.3.2 Check Normality Assumption</h4>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>check_normality( )</em></strong> - performance -</span> to checks regression model for normality of residuals.</p>
+</div>
+</div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>check_n <span class="ot">&lt;-</span> <span class="fu">check_normality</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualise-the-assumption-check" class="level4">
+<h4 class="anchored" data-anchor-id="visualise-the-assumption-check">4.2.3.3 Visualise the Assumption Check</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="model-diagnostic-complete-check" class="level3">
-<h3 class="anchored" data-anchor-id="model-diagnostic-complete-check">Model Diagnostic: Complete check</h3>
-<p>We can also perform the complete by using <a href="https://easystats.github.io/performance/reference/check_model.html"><em>check_model()</em></a>.</p>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
-<section id="visualising-regression-parameters-see-methods" class="level3">
-<h3 class="anchored" data-anchor-id="visualising-regression-parameters-see-methods">Visualising Regression Parameters: see methods</h3>
-<p>In the code below, plot() of see package and parameters() of parameters package is used to visualise the parameters of a regression model.</p>
+<section id="check-homogeneity-of-variances" class="level3">
+<h3 class="anchored" data-anchor-id="check-homogeneity-of-variances">4.2.4 Check Homogeneity of Variances</h3>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>check_heteroscedasticity( )</em></strong> - performance -</span> to check for the residual constant variance of the regression model.</p>
+</div>
+</div>
+</div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">parameters</span>(model1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>check_h <span class="ot">&lt;-</span> <span class="fu">check_heteroscedasticity</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="visualising-regression-parameters-ggcoefstats-methods" class="level3">
-<h3 class="anchored" data-anchor-id="visualising-regression-parameters-ggcoefstats-methods">Visualising Regression Parameters: <em>ggcoefstats()</em> methods</h3>
-<p>In the code below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggcoefstats.html"><em>ggcoefstats()</em></a> of ggstatsplot package to visualise the parameters of a regression model.</p>
+<section id="model-diagnostic-at-one-go" class="level3">
+<h3 class="anchored" data-anchor-id="model-diagnostic-at-one-go">4.2.5 Model Diagnostic at One Go</h3>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>check_model( )</em></strong> - performance -</span> to visual check of model various assumptions (normality of residuals, multicollinearity, normality of random effects, heteroscedasticity, homogeneity of variance).</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(model1, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">check =</span> <span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="visualise-regression-parameters" class="level1">
+<h1>5. VISUALISE REGRESSION PARAMETERS</h1>
+<section id="visualise-with-see-parameters-packages" class="level2">
+<h2 class="anchored" data-anchor-id="visualise-with-see-parameters-packages">5.1 Visualise with <em>see</em> &amp; <strong><em>parameters</em></strong> packages</h2>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>parameters( )</em></strong> - parameters -</span> to converts summaries of regression model object into data frames.</p>
+<p><span style="color:#d46e15"><strong><em>plot( )</em></strong> - see -</span> to create dot-and-whisker plot when passed with parameters class object, model1.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcoefstats</span>(model1, </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">output =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">parameters</span>(model1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="visualise-with-ggcoefstats-function" class="level2">
+<h2 class="anchored" data-anchor-id="visualise-with-ggcoefstats-function">5.2 Visualise with <em>ggcoefstats( )</em> function</h2>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>ggcoefstats( )</em></strong> - ggstatsplot -</span> to visualise the parameters coefficient of the regression model with model summary as a caption.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcoefstats</span>(model1, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">output =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="handsOn_ex4.2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
 
 </section>
 </section>
-</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Felip R. (2015). <strong>QUICK GUIDE: INTERPRETING SIMPLE LINEAR MODEL OUTPUT IN R.</strong> https://feliperego.github.io/blog/2015/10/23/Interpreting-Model-Output-In-R<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

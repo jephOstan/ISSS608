@@ -1,5 +1,6 @@
 ---
-title: "Ex[4.2] Fundamentals of Visual Analytics - Visualising Models"
+title: "Visualising Models"
+subtitle: "Hands-on Exercise 4.2 : Fundamentals of Visual Analytics"
 editor: visual
 date:  3 Feb 2023
 date-modified: "`r Sys.Date()`"
@@ -21,19 +22,9 @@ format:
 
 # **1. OVERVIEW**
 
-This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
+This study explores approaches to visualise model diagnostic and model parameters by using *parameters* package to :
 
-In this section, you will learn how to visualise model diagnostic and model parameters by using parameters package.
-
--   Toyota Corolla case study will be used. The purpose of study is to build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.
-
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Scope of this study :**]{style="color:#3a9c88"}
-
-In this exercise, learn how to create :
-
--   ggstatsplot package
-:::
+-   Build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.
 
 # **2. R PACKAGE REQUIRED**
 
@@ -41,41 +32,42 @@ In this exercise, learn how to create :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(readxl, performance, parameters, see, readr, ggstatsplot) 
+pacman::p_load(readxl, performance, parameters, see, readr, ggstatsplot, tidyverse) 
 ```
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Usage of R Packages :**]{style="color:#3a9c88"}
+## [**⇳ Highlights of the R Packages :**]{style="color:#3a9c88"}
 
--   [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
+There are 6 packages involved :
 
-    -   To provide alternative statistical inference methods by default.
+-   base
 
-    -   To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard for statistical reporting. For example, here are results from a robust t-test.
+-   stats
+
+-   performance
+
+-   parameters
+
+-   see
+
+    -   see[ package](https://easystats.github.io/see/) is one of the collection of packages under [***easystats***](https://easystats.github.io/easystats/) (an R framework for easy statistical modeling, visualisation and reporting) which is an extension of [***ggplot2***](https://ggplot2.tidyverse.org/) package.
+
+        For more see's arguments and functions, click [here](https://easystats.github.io/see/articles/).
+
+-   ggstatsplot
 :::
 
 # **3. DATA PREPARATION**
 
 ## **3.1 Acquire Data Source**
 
-This study will be based on fictitious data set provided with this lesson.
-
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Highlights of the data set**]{style="color:#3a9c88"}
-
-1.  x
-:::
+This study will be based on Toyota Corolla dataset.
 
 ## **3.2 Import Data**
 
-### **3.2.1 Import Data**
-
-### Importing Excel file: readxl methods
-
-In the code chunk below, [*read_xls()*](https://readxl.tidyverse.org/reference/read_excel.html) of [**readxl**](https://readxl.tidyverse.org/) package is used to import the data worksheet of `ToyotaCorolla.xls` workbook into R.
+### **3.2.1 Import attribute data**
 
 ```{r}
-#| code-fold: false
 car_resale <- read_xls("data/ToyotaCorolla.xls",
                       "data")
 
@@ -84,84 +76,195 @@ problems(car_resale)
 
 Notice that the output object `car_resale` is a tibble data frame.
 
-### Multiple Regression Model using lm()
-
-The code chunk below is used to calibrate a multiple linear regression model by using *lm()* of Base Stats of R.
+### **3.2.2 Identify variables' type**
 
 ```{r}
+glimpse(car_resale, 70)
+```
+
+Remarks :
+
+The type of key variables ( Price, Age_08_04, Mfg_Year, KM, Weight, Guarantee_Period ) are dbl type.
+
+# **4. MODEL VISUALISATION**
+
+## 4.1 Calibrate Multiple Regression Model with *lm( )* function
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***lm( )*** - stats -]{style="color:#d46e15"} to calibrate a multiple linear regression model.
+
+-   Response variable, i.e. "Price" as the value for "formula" argument.
+
+-   Predictor variables consists of Age_08_04, Mfg_Year, KM, Weight, Guarantee_Period.
+:::
+
+```{r}
+#| code-fold: false
 model <- lm(Price ~ Age_08_04 + 
               Mfg_Year + 
               KM + 
               Weight + 
               Guarantee_Period, 
             data = car_resale)
+
 model
 ```
 
-### Model Diagnostic: checking for multicolinearity:
+Remarks :
 
-In the code chunk, [*check_collinearity()*](https://easystats.github.io/performance/reference/check_collinearity.html) of [**performance**](https://easystats.github.io/performance/) package.
+From the output below, noticed the amount of details revealed with the summary() function is more comprehensible than the output above.
+
+**Residuals** are the difference between the actual observed prices and the prices the model predicted. Based on the 5 summary points, the distribution of residuals is not strongly symmetrical. This can be interpreted as certain points predicted by this model being off from the actual observed points.[^1] Further visual plots will be required to verify the normal distribution.
+
+[^1]: Felip R. (2015). **QUICK GUIDE: INTERPRETING SIMPLE LINEAR MODEL OUTPUT IN R.** https://feliperego.github.io/blog/2015/10/23/Interpreting-Model-Output-In-R
+
+**Coefficient** represents the **intercept** and **slope** for a linear model.
+
+The **Estimate** column consists of intercept (first row) and the rest as the factors. The intercept value -\$2.637e^+06^ is the expected price considering the average of each predictor. For example, **for every KM increase, the price will drop further at the rate of -**\$2.323e-02. However, the Standard Error indicates that the price reduction rate can vary up to \$1.163e^-03^. This Standard Error value can also use to compute the **Confidence Intervals** and **Statistical Test** when hypotheses the relationship between "KM" and "Price".
+
+The **T value**, a measurement of how many standard deviations away from 0, suggests whether the null hypothesis should be rejected. KM with T value of -\$19.969, which is greater than the standard error, and 0 means a relationship exists between KM and Price, and the null hypothesis can be rejected. This rejection can be further justified by the small Pr(\>\|t\|) value and the 3 asterisks next to the p-value.
+
+**Residual Standard Error** measures the quality of a linear regression fit. It is an average value that the price can deviate from the true regression line. For example, given the mean price based on the predictors involved is -\$2.637e^+06^ and the **Residual Standard Error** is \$1,366, the percentage error based on 1,430 degrees of freedom is -0.0518%.
+
+1,430 degrees of freedom refers to 1430 data points that went into estimating the parameters used. Meaning removed 6 parameters (5 variables and an intercept) from the 1436 observation points.
+
+R-squared statistic measures how well the model fits with actual data. Given the **Multiple R-squared** is 0.8586, that means 85.86% of the price variance can be explained by the predictor variables. However, this value will increase when more predictor variables are added to the model. Hence, the **adjusted R-squared** value will be considered instead.
+
+F-statistic, an indicator of the relationship between predictors and response variables, is 1,737 on 5, which is greater than 1,430 degrees of freedom. Hence, this is sufficient to reject the null hypothesis (H0 : There is no relationship between price and predictor).
+
+-   F-statistic should ideally befurther from 1.
+
+-   How much larger F-statistics depend on the number of data points and predictors. Generally, for large datasets, it is sufficient to reject so long the F-statistics \> 1.
 
 ```{r}
+#| code-fold: false
+summary(model)
+```
+
+Remarks :
+
+To optimise a model, can try with the following code chunk -
+
+model2 \<- lm( log(price) \~ c(predictors), data = car_resale)
+
+## 4.2 Model Diagnostic
+
+### 4.2.1 Check Multicollinearity
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***check_collinearity( )*** - performance -]{style="color:#d46e15"} to checks regression model for multicollinearity based on the **variance inflation factor (VIF)**.
+:::
+
+```{r}
+#| code-fold: false
 check_collinearity(model)
 ```
 
+### 4.2.2 Visualise VIF Distribution
+
 ```{r}
+#| code-fold: false
 check_c <- check_collinearity(model)
 
 plot(check_c)
 ```
 
-\
+### 4.2.3 Check Normality Assumption
 
-### Model Diagnostic: checking normality assumption
+There are 3 steps involved to visualise the normality assumption check.
 
-In the code chunk, [*check_normality()*](https://easystats.github.io/performance/reference/check_normality.html) of [**performance**](https://easystats.github.io/performance/) package.
+#### 4.2.3.1 Trim model
+
+"Mfg_Year" variable is removed from this new model due to its high VIF value.
 
 ```{r}
-model1 <- lm(Price ~ Age_08_04 + KM + 
-              Weight + Guarantee_Period, data = car_resale)
+#| code-fold: false
+model1 <- lm(Price ~ Age_08_04 + KM + Weight + Guarantee_Period, 
+             data = car_resale)
 ```
 
+#### 4.2.3.2 Check Normality Assumption
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***check_normality( )*** - performance -]{style="color:#d46e15"} to checks regression model for normality of residuals.
+:::
+
 ```{r}
+#| code-fold: false
 check_n <- check_normality(model1)
 ```
 
+#### 4.2.3.3 Visualise the Assumption Check
+
 ```{r}
+#| code-fold: false
 plot(check_n)
 ```
 
-### Model Diagnostic: Check model for homogeneity of variances
+### 4.2.4 Check Homogeneity of Variances
 
-In the code chunk, [*check_heteroscedasticity()*](https://easystats.github.io/performance/reference/check_heteroscedasticity.html) of [**performance**](https://easystats.github.io/performance/) package.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***check_heteroscedasticity( )*** - performance -]{style="color:#d46e15"} to check for the residual constant variance of the regression model.
+:::
 
 ```{r}
+#| code-fold: false
 check_h <- check_heteroscedasticity(model1)
 ```
 
 ```{r}
+#| code-fold: false
 plot(check_h)
 ```
 
-### Model Diagnostic: Complete check
+### 4.2.5 Model Diagnostic at One Go 
 
-We can also perform the complete by using [*check_model()*](https://easystats.github.io/performance/reference/check_model.html).
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***check_model( )*** - performance -]{style="color:#d46e15"} to visual check of model various assumptions (normality of residuals, multicollinearity, normality of random effects, heteroscedasticity, homogeneity of variance).
+:::
 
 ```{r}
-check_model(model1)
+#| code-fold: false
+#| fig-height: 24
+#| fig-width: 12
+check_model(model1, 
+            panel = TRUE,
+            check = "all")
 ```
 
-### Visualising Regression Parameters: see methods
+# 5. VISUALISE REGRESSION PARAMETERS
 
-In the code below, plot() of see package and parameters() of parameters package is used to visualise the parameters of a regression model.
+## 5.1 Visualise with *see* & ***parameters*** packages
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***parameters( )*** - parameters -]{style="color:#d46e15"} to converts summaries of regression model object into data frames.
+
+[***plot( )*** - see -]{style="color:#d46e15"} to create dot-and-whisker plot when passed with parameters class object, model1.
+:::
 
 ```{r}
 plot(parameters(model1))
 ```
 
-### Visualising Regression Parameters: *ggcoefstats()* methods
+## 5.2 Visualise with *ggcoefstats( )* function
 
-In the code below, [*ggcoefstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggcoefstats.html) of ggstatsplot package to visualise the parameters of a regression model.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***ggcoefstats( )*** - ggstatsplot -]{style="color:#d46e15"} to visualise the parameters coefficient of the regression model with model summary as a caption.
+:::
 
 ```{r}
 ggcoefstats(model1, 

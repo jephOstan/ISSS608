@@ -15,10 +15,15 @@ website:
             href: handsOn_ex2.qmd
           - text: Ex[3] Programming Interactive Data Visualisation
             href: handsOn_ex3.qmd
-          - text: Ex[4.1] Fundamentals of Visual Statistical Analysis
+          - text: Ex[4.1] Visual Statistical Analysis
             href: handsOn_ex4.1.qmd
-          - text: Ex[4.2] Fundamentals to Visualise Models
+          - text: Ex[4.2] Visualise Models
             href: handsOn_ex4.2.qmd
+          - text: Ex[4.3] Visualising Uncertainty
+            href: handsOn_ex4.3.qmd
+          - text: Ex[4.4] Build Funnel Plot
+            href: handsOn_ex4.4.qmd
+            
             
       - text: In-class Exercises
         menu: 
