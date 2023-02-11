@@ -1,5 +1,6 @@
 ---
-title: "Ex[3] - Programming Interactive Data Visualisation with R"
+title: "Programming Interactive Data Visualisation"
+subtitle: "Hands-on Exercise 3 : Interactive Data Visualisation"
 editor: visual
 date:  28 Jan 2023
 date-modified: "`r Sys.Date()`"
@@ -21,47 +22,41 @@ format:
 
 # **1. OVERVIEW**
 
-This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
-
-five methods for INTERACTIVE DATA VISUALISATION
+This study explores various approaches to make data visualisation interactive.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Scope of this study :**]{style="color:#3a9c88"}
+## [**⇳ Scope of this study :**]{style="color:#3a9c88"}
 
-In this exercise, learn how to create :
+Following are the 3 main focuses :
 
--   interactive data visualisation by using ggiraph and plotlyr packages,
+-   **Interactive visualisation** by using ggiraph and plotlyr packages,
 
--   animated data visualisation by using gganimate and plotlyr packages.
+-   **Animation** by using gganimate and plotlyr packages.
 
--   Visualising univariate data with large number of categories by using rPackedBar package.
+-   **Visualising univariate data** with large number of categories by using rPackedBar package.
 
--   reshape data by using tidyr package.
+Additional learning points are :
 
--   process, wrangle and transform data by using dplyr package.
+-   **Reshape data** by using tidyr package.
+
+-   **Process, wrangle and transform data** by using dplyr package.
 :::
 
 # **2. R PACKAGE REQUIRED**
 
 ## **2.1 Load R Packages**
 
-::: {.callout-warning appearance="simple" icon="false"}
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
-:::
-
 ```{r}
 #| code-fold: false
 pacman::p_load(ggiraph, plotly, gganimate, DT, tidyverse, patchwork, gapminder, rPackedBar) 
 ```
-:::
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Usage of R Packages :**]{style="color:#3a9c88"}
 
 -   [**ggiraph**](https://davidgohel.github.io/ggiraph/) for making 'ggplot' graphics interactive.
+
+    -   [ggiraph](https://davidgohel.github.io/ggiraph/) is an html widget and ggplot2 extension to make the plot interactive.
 
 -   [**plotly**](https://plotly.com/r/), R library for plotting interactive statistical graphs.
 
@@ -80,21 +75,14 @@ pacman::p_load(ggiraph, plotly, gganimate, DT, tidyverse, patchwork, gapminder, 
 
 This study will be based on fictitious data set provided with this lesson.
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Highlights of the data set**]{style="color:#3a9c88"}
-
-1.  x
-:::
-
 ## **3.2 Import Data**
 
-### **3.2.1 Import Data**
+### **3.2.1 Import Attribute Data**
 
-::: {.callout-warning appearance="simple" icon="false"}
 Involved two (2) steps : import and inspect imported data set.
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
 
@@ -107,57 +95,77 @@ exam_data <- read_csv("data/Exam_data.csv")
 
 problems(exam_data)
 ```
+
+# 4. INTERACTIVE DATA VISUALISATION
+
+## 4.1 Tooltip with ***ggiraph*** package
+
+With reference to the arguments listed in [**ggplot geometries**](https://davidgohel.github.io/ggiraph/reference/#section-interactive-geometries), display a specified set of information when a reader interact with the charts via :
+
+-   **Tooltip** : display details when the cursor hovers above the element.
+
+-   **Onclick** : display details when the element is clicked.
+
+-   **Data_id** : a column of data sets containing an id associated with the element.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Note for Shiny Application**]{style="color:#3a9c88"}
+
+For **shiny application**, elements associated with an id (data_id) can be selected and manipulated on tne client and server sides.
+
+Refer to this [article](https://davidgohel.github.io/ggiraph/articles/offcran/shiny.html) for a more detailed explanation.
 :::
 
-# 4. METHOD #1 :: **ggiraph** package
+### 4.1.1 Create Dot Chart with Tooltip
 
-[ggiraph](https://davidgohel.github.io/ggiraph/) is an html widget and ggplot2 extension to make the plot interactive.
+There are 2 main steps involved :
 
-The interactive functions are made with [**ggplot geometries**](https://davidgohel.github.io/ggiraph/reference/#section-interactive-geometries) based on 3 arguments:
+-   Initiate object.
 
--   **Tooltip** : a column of data-sets that contain tooltips to be displayed when hover above the elements..
+-   Save the object as an interactive **Scalable Vector Graphics (SVG)** file.
 
--   **Onclick** : a column of data-sets that contain a JavaScript function to be executed when elements are clicked.
-
--   **Data_id** : a column of data-sets that contain an id to be associated with elements.
-
-::: {.callout-note appearance="simple" icon="false"}
-\[For **shiny application**, elements associated with an id (data_id) can be selected and manipulated on client and server sides. \]{style="color:#3a9c88"}
-
-\[Refer to this [article](https://davidgohel.github.io/ggiraph/articles/offcran/shiny.html) for more detail explanation.\]{style="color:#3a9c88"}
-:::
-
-## 4.1 Tooltip
-
-### 4.1.1 Create Tooltip
-
-::: {.callout-warning appearance="simple" icon="false"}
-There are 2 parts to plot an interactive dot plot with tooltip effect.
-
--   initiate object.
-
--   save object as an interactive Scalable Vector Graphics (SVG) file.
-
-#### **4.1.1.1 comparing ggplot2 and ggiraph code chunk**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***geom_dotplot_interactive( )*** - ggplot2 -]{style="color:#d46e15"} to plot interactive dot chart.
+
+Arguments :
+
+-   **tooltip** - display the student ID that associated with the dot.
+
+```{=html}
+<!-- -->
+```
+-   **method** - "histodot" to fix bin widths. Else, dot-density binning. "dotdensity" will be the default.
+
+    -   **dot-density binning** : bin positions subject to the data and binwidth (max width of each bin).
+
+    -   **histodot binning** : fixed positions and fixed widths.
+
+        -   Bin width defaults to 1/30 of the range of the data.
+
+-   **dotsize** - diameter of the dots relative to binwidth, 1 (default).
+
+[***girafe( )*** - ggiraph -]{style="color:#d46e15"} to create an interactive girafe object for web browser display.
 :::
 
-::: panel-tabset
-## **ggiraph** code chunk
+#### 
 
-##### step 1 - create ggplot Object
+::: panel-tabset
+## Code chunk
+
+##### step 1 - Create *ggplot* object
 
 ```{r}
+#| code-fold: false
 p <- ggplot(data = exam_data,
             aes(x = MATHS)) +
-  geom_dotplot_interactive(aes(tooltip = ID),
-                           stackgroups = TRUE,
-                           binwidth = 1,
-                           method = "histodot") +
+  geom_dotplot_interactive(aes
+                           (tooltip = ID),
+                             stackgroups = TRUE,
+                             binwidth = 1,
+                             dotsize = 1,
+                             method = "histodot") +
   scale_y_continuous(NULL,
                      breaks = NULL)
 
@@ -166,18 +174,38 @@ p <- ggplot(data = exam_data,
 #### step 2 - create interactive SVG Object
 
 ```{r}
+#| code-fold: false
 girafe(ggobj = p,
        width_svg = 6,
        height_svg = 6*0.618)
 ```
 
-## ggplot2 code chunk
+## No Tooltip :: **histodot**
 
 ```{r}
+#| code-fold: false
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
-  geom_dotplot(binwidth = 2.5, 
-               dotsize = 0.5) +
+  geom_dotplot(aes
+               (stackgroups = TRUE,
+                 binwidth = 1,
+                 dotsize = 1,
+                 method = "histodot")) +
+  scale_y_continuous(NULL, 
+                     breaks = NULL)
+```
+
+## No Tooltip :: **dotdensity**
+
+```{r}
+#| code-fold: false
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_dotplot(aes
+               (stackgroups = TRUE,
+                 binwidth = 2,
+                 dotsize = 1,
+                 method = "dotdensity")) +
   scale_y_continuous(NULL, 
                      breaks = NULL)
 ```
@@ -185,21 +213,28 @@ ggplot(data = exam_data,
 
 ::: panel-tabset
 Remarks :
-:::
+
+The first 2 tabs share similar code chunks except for the interactive function, while 3rd tab, with a different method, regardless of which methods are applied, noticed the one with the tooltip is more informative and friendly to interpret the chart.
+
+Y-axis is hidden. It became meaningless when binning along X-axis and stacking by Y-axis.
 :::
 
-### 4.1.2 Tooltip with Multiple Fields
+### 4.1.2 Customise tooltip
+
+#### 4.1.2.1 Tooltip with multiple fields
 
 ```{r}
 exam_data$tooltip <- c(paste0("Name = ", exam_data$ID,
-                              "\n Class = ", exam_data$CLASS))
+                              "\n Class = ", exam_data$CLASS)
+                       )
 
 p <- ggplot(data = exam_data, 
             aes(x = MATHS)) +
-  geom_dotplot_interactive(aes(tooltip = exam_data$tooltip),
-                           stackgroups = TRUE,
-                           binwidth = 1,
-                           method = "histodot") +
+  geom_dotplot_interactive(aes
+                           (tooltip = tooltip),
+                            stackgroups = TRUE,
+                            binwidth = 1,
+                            method = "histodot") +
   scale_y_continuous(NULL,               
                      breaks = NULL)
 
@@ -209,86 +244,115 @@ girafe(ggobj = p,
        )
 ```
 
-### 4.1.3 Customise Tooltip Style
+#### 4.1.2.2 Display statistics on tooltip
+
+There are 2 parts to this approach :
+
+1.  First part is to set a function to compute a 90% Confidence Interval of the mean.
+
+2.  Second part is to include the derived statistics in the tooltip.
 
 ```{r}
-tooltip_css <- "background-color:white; #<<
-font-style:bold; color:black;" #<<
+tooltip <- function(y, 
+                    ymax, 
+                    accuracy = .01) {
+  mean <- scales::number(y, accuracy = accuracy)
+  sem <- scales::number(ymax - y, accuracy = accuracy)
+  paste("Mean maths scores:", mean, "+/-", sem)
+  }
 
-p <- ggplot(data=exam_data, 
-       aes(x = MATHS)) +
-  geom_dotplot_interactive(              
-    aes(tooltip = ID),                   
-    stackgroups = TRUE,                  
-    binwidth = 1,                        
-    method = "histodot") +               
-  scale_y_continuous(NULL,               
-                     breaks = NULL)
-girafe(                                  
-  ggobj = p,                             
-  width_svg = 6,                         
-  height_svg = 6*0.618,
-  options = list(    #<<
-    opts_tooltip(    #<<
-      css = tooltip_css)) #<<
-)                                        
-```
-
-### Displaying statistics on tooltip
-
-```{r}
-tooltip <- function(y, ymax, accuracy = .01) {   #<<
-  mean <- scales::number(y, accuracy = accuracy) #<<
-  sem <- scales::number(ymax - y, accuracy = accuracy) #<<
-  paste("Mean maths scores:", mean, "+/-", sem) #<<
-} #<<
-
-gg_point <- ggplot(data=exam_data, 
-                   aes(x = RACE),
-) +
+gg_point <- ggplot(data = exam_data, 
+                   aes(x = RACE)) +
   stat_summary(aes(y = MATHS, 
-                   tooltip = after_stat(  #<<
-                     tooltip(y, ymax))),  #<<
-    fun.data = "mean_se", 
-    geom = GeomInteractiveCol,  #<<
-    fill = "light blue"
-  ) +
-  stat_summary(aes(y = MATHS),
-    fun.data = mean_se,
-    geom = "errorbar", width = 0.2, size = 0.2
-  )
+                   tooltip = after_stat(
+                     tooltip(y, ymax)
+                     )
+                   ),
+               fun.data = "mean_se",
+               geom = GeomInteractiveCol,
+               fill = "light blue") +
+  stat_summary(aes
+               (y = MATHS),
+                fun.data = mean_se,
+                geom = "errorbar",
+                width = 0.2,
+                size = 0.2
+               )
 
 girafe(ggobj = gg_point,
        width_svg = 8,
        height_svg = 8*0.618)
 ```
 
-### Hover effect with *data_id* aesthetic
+#### 4.1.2.3 Customise tooltip appearance
 
 ```{r}
-p <- ggplot(data=exam_data, 
-       aes(x = MATHS)) +
-  geom_dotplot_interactive(           
-    aes(data_id = CLASS),             #<<
-    stackgroups = TRUE,               
-    binwidth = 1,                        
-    method = "histodot") +               
+tooltip_css <- "background-color: white; 
+                font-style: bold; 
+                color: black;"
+
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(aes
+                           (tooltip = ID),
+                            stackgroups = TRUE,                  
+                            binwidth = 1,                        
+                            method = "histodot") +               
+  scale_y_continuous(NULL,               
+                     breaks = NULL)
+
+girafe(                                  
+  ggobj = p,                             
+  width_svg = 6,                         
+  height_svg = 6*0.618,
+  options = list(
+    opts_tooltip(
+      css = tooltip_css))
+  )        
+```
+
+Remarks :
+
+The tooltip's background colour changed from black to white colour, and the text colour is now white and bold.
+
+### 4.1.3 Highlight associated data
+
+#### 4.1.3.1 Highlight with *data_id* aesthetic
+
+Highlight other elements that share the same data_id value for "CLASS".
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***data_id( )*** - ggiraph -]{style="color:#d46e15"} to highlight other elements that share the same data_id value for "CLASS".
+
+-   Default value for hover_css is " fill:orange;"
+:::
+
+```{r}
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(aes
+                           (data_id = CLASS),
+                           stackgroups = TRUE,
+                           binwidth = 1,
+                           method = "histodot") +
   scale_y_continuous(NULL,               
                      breaks = NULL)
 girafe(                                  
   ggobj = p,                             
   width_svg = 6,                         
-  height_svg = 6*0.618                      
-)                                        
+  height_svg = 6*0.618)                                        
 ```
 
-### Styling hover effect
+#### 4.1.3.2 Styling hover effect
 
 ```{r}
-p <- ggplot(data=exam_data, 
-       aes(x = MATHS)) +
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
   geom_dotplot_interactive(              
-    aes(data_id = CLASS),              
+    aes(
+      data_id = CLASS),
     stackgroups = TRUE,                  
     binwidth = 1,                        
     method = "histodot") +               
@@ -298,12 +362,15 @@ girafe(
   ggobj = p,                             
   width_svg = 6,                         
   height_svg = 6*0.618,
-  options = list(                        #<<
-    opts_hover(css = "fill: #202020;"),  #<<
-    opts_hover_inv(css = "opacity:0.2;") #<<
-  )                                      #<<  
-)                                        
+  options = list(
+    opts_hover(css = "fill: #202020;"),
+    opts_hover_inv(css = "opacity:0.2;"))
+  )                                        
 ```
+
+<br>
+
+<br>
 
 ### Combining tooltip and hover effect
 

@@ -21,8 +21,16 @@ website:
             href: handsOn_ex4.2.qmd
           - text: Ex[4.3] Visualising Uncertainty
             href: handsOn_ex4.3.qmd
-          - text: Ex[4.4] Build Funnel Plot
+          - text: Ex[4.4] Create Funnel Plot
             href: handsOn_ex4.4.qmd
+          - text: Ex[5.1] Create Ternary Plot
+            href: handsOn_ex5.1.qmd
+          - text: Ex[5.2] Visualise Correlation Matrices
+            href: handsOn_ex5.2.qmd
+          - text: Ex[5.3] Create Heatmap
+            href: handsOn_ex5.3.qmd
+          - text: Ex[5.4] Create Parallel Coordinates Plot
+            href: handsOn_ex5.4.qm
             
             
       - text: In-class Exercises
