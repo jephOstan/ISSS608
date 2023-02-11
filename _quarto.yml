@@ -41,6 +41,8 @@ website:
             href: inClass/inClass_ex03/inClass_ex3.qmd
           - text: Ex[4] Programming Interactive Data Visualisation 2
             href: inClass/inClass_ex04/inClass_ex4.qmd
+          - text: Ex[5] Visualise Correlation Matrices
+            href: inClass/inClass_ex05/inClass_ex5.qmd
 
             
       - text: Take-home Exercises

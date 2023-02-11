@@ -24,7 +24,7 @@ format:
 
 This study explores various approaches to make data visualisation interactive.
 
-Ternary plots are a way of displaying the distribution and variability of three-part compositional data. (For example, the proportion of aged, economy active and young population or sand, silt, and clay in soil.) It\'s display is a triangle with sides scaled from 0 to 1. Each side represents one of the three components. A point is plotted so that a line drawn perpendicular from the point to each leg of the triangle intersect at the component values of the point.
+Ternary plots are a way of displaying the distribution and variability of three-part compositional data. (For example, the proportion of aged, economy active and young population or sand, silt, and clay in soil.) It's display is a triangle with sides scaled from 0 to 1. Each side represents one of the three components. A point is plotted so that a line drawn perpendicular from the point to each leg of the triangle intersect at the component values of the point.
 
 In this hands-on, you will learn how to build ternary plot programmatically using R for visualising and analysing population structure of Singapore.
 
@@ -80,6 +80,8 @@ Involved two (2) steps : import and inspect imported data set.
 ```{r}
 #| code-fold: false
 pop_data <- read_csv("data/respopagsex2000to2018_tidy.csv") 
+
+problems(pop_data)
 ```
 
 **Preparing the Data**
@@ -88,24 +90,27 @@ Next, use the ***mutate()*** function of **dplyr** package to derive three new m
 
 ```{r}
 agpop_mutated <- pop_data %>%
-  mutate(`Year` = as.character(Year))%>%
+  mutate(`Year` = as.character(Year)) %>%
   spread(AG, Population) %>%
-  mutate(YOUNG = rowSums(.[4:8]))%>%
-  mutate(ACTIVE = rowSums(.[9:16]))  %>%
+  mutate(YOUNG = rowSums(.[4:8])) %>%
+  mutate(ACTIVE = rowSums(.[9:16])) %>%
   mutate(OLD = rowSums(.[17:21])) %>%
   mutate(TOTAL = rowSums(.[22:24])) %>%
-  filter(Year == 2018)%>%
+  filter(Year == 2018) %>%
   filter(TOTAL > 0)
 ```
 
-# **Plotting Ternary Diagram with R**
+# **4. CREATE TERNARY DIAGRAM** 
 
-## **Plotting a static ternary diagram**
+## **4.1 Create static ternary diagram**
 
 Use ***ggtern()*** function of **ggtern** package to create a simple ternary plot.
 
 ```{r}
-ggtern(data=agpop_mutated,aes(x=YOUNG,y=ACTIVE, z=OLD)) +
+ggtern(data = agpop_mutated,
+       aes(x = YOUNG,
+           y = ACTIVE, 
+           z = OLD)) +
   geom_point()
 ```
 
@@ -114,8 +119,13 @@ ggtern(data=agpop_mutated, aes(x=YOUNG,y=ACTIVE, z=OLD)) +
   geom_point() +
   labs(title="Population structure, 2015") +
   theme_rgbw()
-
 ```
+
+Remarks :
+
+ggtern is an extension.
+
+plot_ly( ) is not able to port ggtern chart into ggplot2. A native function will be required to do so.
 
 ## **Plotting an interative ternary diagram**
 

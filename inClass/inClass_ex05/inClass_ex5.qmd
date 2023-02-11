@@ -1,0 +1,166 @@
+---
+title: "Visualise Correlation Matrices"
+subtitle: "In-Class Exercise 5"
+editor: visual
+date:  11 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores visual statistical analysis with :
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(corrplot, ggstatsplot, seriation, dendextend, heatmaply, tidyverse) 
+```
+
+<br>
+
+# **3. DATA PREPARATION**
+
+## **3.2 Import Data**
+
+### **3.2.1 Import attribute data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+```{r}
+#| code-fold: false
+wine <- read_csv("data/wine_quality.csv")
+
+problems(wine)
+```
+
+### **3.2.2 Identify variables' type**
+
+```{r}
+glimpse(wine, 70)
+```
+
+<br>
+
+# **4. CREAT CORRELATION MATRICES** 
+
+## **4.1 With *pairs( )* method**
+
+```{r}
+#| fig-width: 12
+#| fig-height: 12
+pairs(wine[,1:11])
+```
+
+Should not put categorical data into the correlation matrix.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 7
+ggcorrmat(data = wine,
+          cor.vars = 1:11,
+  ggcorrplot.args = list(outline.color = "black", 
+                         hc.order = TRUE,
+                         tl.cex = 10),
+  title    = "Correlogram for wine dataset",
+  subtitle = "Four pairs are no significant at p < 0.05"
+)
+```
+
+```{r}
+#| fig-width: 7
+#| fig-height: 7
+wine.cor <- cor(wine[, 1:11])
+
+corrplot(wine.cor, 
+         method = "ellipse",
+         order = "hclust",
+         type = "upper")
+```
+
+# 5. CREATE TERNARY PLOT
+
+## 5.1 Import Data
+
+```{r}
+#| code-fold: false
+pop_data <- read_csv("data/respopagsex2000to2018_tidy.csv") 
+
+problems(pop_data)
+```
+
+## 5.2 Wrangle Data 
+
+```{r}
+agpop_mutated <- pop_data %>%
+  mutate(`Year` = as.character(Year)) %>%
+  spread(AG, Population) %>%
+  mutate(YOUNG = rowSums(.[4:8])) %>%
+  mutate(ACTIVE = rowSums(.[9:16])) %>%
+  mutate(OLD = rowSums(.[17:21])) %>%
+  mutate(TOTAL = rowSums(.[22:24])) %>%
+  filter(Year == 2018) %>%
+  filter(TOTAL > 0) 
+```
+
+## 5.3 Plot Ternary Chart
+
+```{r}
+ggtern::ggtern(data = agpop_mutated,
+       aes(x = YOUNG,
+           y = ACTIVE, 
+           z = OLD)) +
+  geom_point()
+```
+
+# 6. HEATMAP
+
+## 6.1 Upload data
+
+```{r}
+#| code-fold: false
+wh <- read_csv("data/WHData-2018.csv")
+```
+
+## 6.2 Wrangle Data
+
+```{r}
+row.names(wh) <- wh$Country
+```
+
+```{r}
+wh1 <- select(wh, c(3, 7:12))
+wh_matrix <- data.matrix(wh)
+```
+
+## 6.3 Create Heatmap
+
+### 6.3.1 Plot with heatmap( )
+
+```{r}
+wh_heatmap <- heatmap(wh_matrix,
+                      Rowv = NA, 
+                      Colv = NA)
+```
+
+### 6.3.2 Plot with heatmaply( )
+
+```{r}
+heatmaply(wh_matrix[, -c(1, 2, 4, 5)])
+```
