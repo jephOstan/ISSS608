@@ -58,7 +58,7 @@ glimpse(wine, 70)
 
 <br>
 
-# **4. CREAT CORRELATION MATRICES** 
+# **4. CREAT CORRELATION MATRICES**
 
 ## **4.1 With *pairs( )* method**
 
@@ -105,7 +105,7 @@ pop_data <- read_csv("data/respopagsex2000to2018_tidy.csv")
 problems(pop_data)
 ```
 
-## 5.2 Wrangle Data 
+## 5.2 Wrangle Data
 
 ```{r}
 agpop_mutated <- pop_data %>%

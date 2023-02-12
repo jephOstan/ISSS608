@@ -100,7 +100,7 @@ agpop_mutated <- pop_data %>%
   filter(TOTAL > 0)
 ```
 
-# **4. CREATE TERNARY DIAGRAM** 
+# **4. CREATE TERNARY DIAGRAM**
 
 ## **4.1 Create static ternary diagram**
 

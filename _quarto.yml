@@ -13,8 +13,12 @@ website:
             href: handsOn_ex1.qmd
           - text: Ex[2] DataVis with Advanced ggplot2
             href: handsOn_ex2.qmd
-          - text: Ex[3] Programming Interactive Data Visualisation
-            href: handsOn_ex3.qmd
+          - text: Ex[3.1] Programming Interactive Visualisation
+            href: handsOn_ex3.1.qmd
+          - text: Ex[3.2] Programming Animation
+            href: handsOn_ex3.2.qmd
+          - text: Ex[3.3] Visualise Large Data Interactively
+            href: handsOn_ex3.3.qmd          
           - text: Ex[4.1] Visual Statistical Analysis
             href: handsOn_ex4.1.qmd
           - text: Ex[4.2] Visualise Models

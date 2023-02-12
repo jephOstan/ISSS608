@@ -1,0 +1,182 @@
+---
+title: "Visualise Large Data Interactively"
+subtitle: "Hands-on Exercise 3.3 : Interactive Data Visualisation"
+editor: visual
+date:  12 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores various approaches to make data visualisation interactive.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Scope of this study :**]{style="color:#3a9c88"}
+
+Following are the 2 main focuses :
+
+-   **Animation** by using gganimate and plotlyr packages.
+
+-   **Visualising univariate data** with large number of categories by using rPackedBar package.
+
+Additional learning points are :
+
+-   **Reshape data** by using tidyr package.
+
+-   **Process, wrangle and transform data** by using dplyr package.
+
+Introducing packed bar method
+
+-   **packed bar** is a relatively new data visualisation method introduced by Xan Gregg from JMP.
+
+-   It aims to support the need of visualising skewed data over hundreds of categories.
+
+-   The idea is to support the [Focus+Context](https://infovis-wiki.net/wiki/Focus-plus-Context) data visualization principle.
+
+-   Visit this [JMP Blog](https://community.jmp.com/t5/JMP-Blog/Introducing-packed-bars-a-new-chart-form/ba-p/39972) to learn more about the design principles of packed bar.
+:::
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(ggiraph, plotly, gganimate, gifski, gapminder, DT, patchwork, rPackedBar, tidyverse) 
+```
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Usage of R Packages :**]{style="color:#3a9c88"}
+
+-   [rPackedBar](https://cran.r-project.org/web/packages/rPackedBar/): Packed Bar Charts with \'plotly\'
+
+    -   [Visualizing Twitter Data with a Packed Barchart](https://cran.r-project.org/web/packages/rPackedBar/vignettes/Visualizing_Twitter_Data_with_a_Packed_Barchart.html)
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on :
+
+-   *GDP.csv* provides GDP, GDP per capita and GDP PPP data for world countries from 2000 to 2020. The data was extracted from [World Development Indicators Database](https://databank.worldbank.org/source/world-development-indicators) of World Bank.
+
+-   *WorldCountry.csv* provides a list of country names and the continent they belong to extracted from [Statistics Times](https://statisticstimes.com/geography/countries-by-continents.php).
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Attribute Data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+```{r}
+GDP <- read_csv("data/GDP.csv")
+
+problems(GDP)
+```
+
+```{r}
+WorldCountry <- read_csv("data/WorldCountry.csv")
+
+problems(WorldCountry)
+```
+
+## **3.3 Wrangle Data**
+
+### 3.3.1 Reshape data frame
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+
+[***mutate( )*** - dplyr -]{style="color:#d46e15"} to convert all values in the 202 field into numeric data type.
+
+[***select( )*** - dplyr -]{style="color:#d46e15"} to extract column 1 to 3 and Values field.
+
+[***pivot_wider( )*** - tidyr -]{style="color:#d46e15"} to split the values in Series Name field into columns.
+
+[***left_join( )*** - dplyr -]{style="color:#d46e15"} to perform a left-join by using Country Code of GDP_selected and ISO-alpha3 Code of WorldCountry tibble data tables as unique identifier.
+:::
+
+```{r}
+#| code-fold: false
+GDP_selected <- GDP %>%
+  mutate(Values = as.numeric(`2020`)) %>%
+  select(1:3, 
+         Values) %>%
+  pivot_wider(names_from = `Series Name`,
+              values_from = `Values`) %>%
+  left_join(y = WorldCountry, 
+            by = c("Country Code" = "ISO-alpha3 Code"))
+```
+
+### 3.3.2 Filter data
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+
+[***na.omit( )*** - dplyr -]{style="color:#d46e15"} to exclude rows with missing values as the rPackedBar package does not support missing values.
+:::
+
+```{r}
+#| code-fold: false
+GDP_selected <- GDP %>%
+  mutate(GDP = as.numeric(`2020`)) %>%
+  filter(`Series Name` == "GDP (current US$)") %>%
+  select(1:2, GDP) %>%
+  na.omit()
+```
+
+# 4. VISUALISE LARGE DATA INTERACTIVELY
+
+## 4.1 Create Packed Bars Chart
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+
+[***plotly_packed_bar( )*** - rPackedBar -]{style="color:#d46e15"} to create an interactive "plotly" packed bar chart.
+
+[***config( )*** - plotly -]{style="color:#d46e15"} to set the default configuration for plotly. The modebar in a **plotly** graph can lead to poor user-experience on small displays.
+
+-   displayModeBar when FALSE will remove the entire modebar.
+:::
+
+```{r}
+#| code-fold: false
+#| fig-height: 10
+#| fig-width: 12
+p = plotly_packed_bar(input_data = GDP_selected,
+  label_column = "Country Name",
+  value_column = "GDP",
+  number_rows = 10,
+  plot_title = "Top 10 countries by GDP, 2020",
+  xaxis_label = "GDP (US$)",
+  hover_label = "GDP",
+  min_label_width = 0.018,
+  color_bar_color = "#00aced",
+  label_color = "white")
+plotly::config(p, displayModeBar = FALSE)
+```
+
+# 5. REFERENCES
+
+1.  Kam T.S. (2023). Animated Data Visualisation:: gganimate methods. https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex03/hands-on_ex03-programming%20interactive%20visualisation#animated-data-visualisation-gganimate-methods
+
+### Packed Bar
+
+[rPackedBar](https://cran.r-project.org/web/packages/rPackedBar/): Packed Bar Charts with 'plotly'
+
+-   [Visualizing Twitter Data with a Packed Barchart](https://cran.r-project.org/web/packages/rPackedBar/vignettes/Visualizing_Twitter_Data_with_a_Packed_Barchart.html)

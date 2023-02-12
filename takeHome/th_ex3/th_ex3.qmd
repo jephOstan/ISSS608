@@ -459,10 +459,25 @@ rooms3 <- rooms3 %>% group_by(storey_range) %>% arrange(storey_range)
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-## 
-
-[***pivot_wider( )*** - tidyr -]{style="color:#d46e15"} to convert "TO" to "to".
+[***pivot_wider( )*** - tidyr -]{style="color:#d46e15"} to expand the data frame with values from specified variable.
 :::
+
+,
+
+\`storey_range\` = factor(storey_range, levels = storey_sequence),
+
+\`month\` = as.integer(month),
+
+\`remaining_lease_months\` = as.integer(remaining_lease_months),
+
+\`resale_price\` = as.integer(resale_price))
+
+```{r}
+test4 <- prices_lease2022 %>%
+  mutate(`price_psqm` = as.integer(round(resale_price/floor_area_sqm, 2)),
+         `price_prlm` = as.integer(round(resale_price/remaining_lease_months, 2))) %>%
+  select(town, month, flat_type, storey_range, flat_model, remaining_lease_months, price_prlm, price_psqm, resale_price)
+```
 
 ```{r}
 #| code-fold: false
