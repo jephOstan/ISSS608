@@ -577,13 +577,9 @@ ggplotly((ggplot(price3R_fp,
 
 Remarks :
 
-For 3-rooms "Premium Apartment" type that have 80 years or 960 remaining leasing months or more, can fetch up to almost \$12,000 per sqm. However, those that are lesser, can only fetched up to \$7,625 per sqm.
+Among 82 units of 3-room "Premium Apartment" transacted, only approximately 11% below 1,097 months (3rd quartile of the remaining lease months). If all of them are 99 years leasehold, more than 89% of the transacted units are less than 10 years old.
 
-Also, noticed most transacted units are either having the remaining leasing months above 1000 (83 years or more) or less than 800 months (approximately 67 months).
-
-```{r}
-price3R_fp$flat_model[price3R_fp$remaining_lease_months <= 700]
-```
+Out of 2,121 units of 3-room flat type transacted in year 2022, more than 76% of the transacted units are 19 years or older. Among these units, 40% of them are "New Generation" model, while the second predominant unit is the "Improved" model, which is approximately 31.7%.
 
 ## 4.3 One Sample Test
 
