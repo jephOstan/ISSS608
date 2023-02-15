@@ -1,0 +1,676 @@
+---
+title: "Resale Prices for 3 Types of Public Housing Properties"
+subtitle: "The dataset is based on Singapore Residential Towns and Estates in year 2022"
+editor: visual
+date:  6 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+There are x main focuses for this visual analytics assignment, that is :
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Requirement Details for this Individual Assignment**]{style="color:#3a9c88"}
+
+-   
+:::
+
+## **1.1 Target Area**
+
+\<text\>
+
+# **2. R PACKAGE REQUIRED**
+
+The following are the packages required for this exercise :
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(ggstatsplot, tidyverse, gganimate, gifski, ggiraph, performance)
+```
+
+# **3. DATA**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on demographic data set downloadable from [Data.gov.sg](https://data.gov.sg/dataset/resale-flat-prices?resource_id=f1765b54-a209-4718-8d38-a39237f502b3).
+
+-   Download "Resale flat prices based on registration 2017 onwards" in CSV format.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  The data used in this study is based on the date of registration instead of the date of approval for the resale transactions.
+
+2.  Data last updated on 6 February 2023.
+
+3.  The data sourced from SIngapore Housing and Development Board.
+
+4.  Metadata :
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Import attributes data**
+
+There are two (2) steps involve, which are import and inspect imported data set.
+
+::: {.callout-alert appearance="simple" icon="false"}
+[Usage of the code chunk below :]{style="color:#a39f9d"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+#| code-fold: false
+resale_prices <- read_csv("data/resaleFlatPrices2017.csv")
+
+problems(resale_prices)
+```
+
+### **3.2.2 Inspect missing values**
+
+```{r}
+skimr::skim(resale_prices)
+```
+
+### 3.2.3 Explore variable types
+
+```{r}
+glimpse(resale_prices, 60)
+```
+
+Remarks :
+
+No missing values.
+
+May need to wrangle values for -
+
+-   remove year for "month" after filtered.
+
+-   convert values for "remaining_lease" to entirely months value.
+
+### **3.2.4 Explore unique values for**
+
+#### **3.2.4.1 Variable :: "flat_type"**
+
+```{r}
+#| code-fold: false
+unique(resale_prices$flat_type)
+```
+
+#### **3.2.4.2 Variable :: "town"**
+
+```{r}
+unique(resale_prices$town)
+```
+
+#### 3.2.4.3 Variable :: "resale_price"
+
+Identify the maximum and minimum values for this continuous variable.
+
+```{r}
+summary(resale_prices$resale_price)
+```
+
+#### 3.2.4.4 Variable :: "storey_range"
+
+```{r}
+unique(resale_prices$storey_range)
+min(unique(resale_prices$storey_range))
+max(unique(resale_prices$storey_range))
+```
+
+Remarks :
+
+"10 TO 12" listed as first value instead of "01 TO 03". Need to visualise the displayed sequence.
+
+#### 3.2.4.5 Variable :: "floor_area_sqm"
+
+```{r}
+unique(resale_prices$floor_area_sqm)
+```
+
+#### 3.2.4.6 Variable :: "flat_model"
+
+```{r}
+unique(resale_prices$flat_model)
+```
+
+#### 3.2.4.7 Variable :: "remaining_lease"
+
+```{r}
+min(unique(resale_prices$remaining_lease))
+max(unique(resale_prices$remaining_lease))
+```
+
+Remarks :
+
+The years value consists of 2 characters - wrangling direction.
+
+### 3.2.5 Reveal sequence displayed in chart
+
+#### 3.2.5.1 Variable :: "month"
+
+```{r}
+#| code-fold: false
+ggplot(data = resale_prices,
+       aes(y = month)) +
+  geom_bar() +
+  theme_bw() +  
+  ggtitle("Test Month Sequence") 
+```
+
+#### 3.2.5.2 Variable :: "storey_range"
+
+```{r}
+#| code-fold: false
+ggplot(data = resale_prices,
+       aes(y = storey_range)) +
+  geom_bar() +
+  theme_bw() +  
+  ggtitle("Test storey Range Sequence")
+```
+
+## **3.3 Data Wrangling**
+
+### 3.3.1 Split "month" variable
+
+Instead of removing "year" or trimming it for the "month" value, split and retain the "year" info as a separate variable.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***separate_wider_delim( )*** - tidyr -]{style="color:#d46e15"} to separate a column into multiple columns with a regular expression.
+:::
+
+```{r}
+#| code-fold: false
+resale_prices <- resale_prices %>%
+  separate_wider_delim(month, 
+                       delim = "-", 
+                       names = c("year", "month"))
+```
+
+### 3.3.2 Filter data
+
+#### 3.3.2.1 Filter for 2022 & 3 types of flat data
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***filter( )*** - dplyr -]{style="color:#d46e15"} to filter for data falls within year 2022 and 3 types of flat with the usage of "&".
+:::
+
+```{r}
+#| code-fold: false
+prices2022 <- resale_prices %>%
+  filter(`year` == 2022 & `flat_type` == c("3 ROOM", "4 ROOM", "5 ROOM"))
+```
+
+#### 3.3.2.2 Inspect output
+
+```{r}
+unique(prices2022$flat_type)
+```
+
+### 3.3.3 Convert values for "Remaining Lease"
+
+#### 3.3.3.1 Attempts to convert the values to months
+
+#### Attempt#1
+
+```{r}
+#| code-fold: false
+test <- prices2022 %>% 
+  separate(remaining_lease, into = c("a","b","c","d"), sep = " ")
+```
+
+Remarks :
+
+Warning message -
+
+    Warning: Expected 4 pieces. Missing pieces filled with `NA` in 2247 rows [4, 22, 23, 35, 39, 40, 46, 59, 76, 90, 101, 102, 124, 133, 146, 149, 150, 151, 162, 164, ...].
+
+#### Attempt#2
+
+```{r}
+#| code-fold: false
+test1 <- prices2022 %>%
+  mutate(year_lease = str_extract(`remaining_lease`, "[0-9]{1,2}"),
+         month_lease  = str_extract(`remaining_lease`, "[0-9]{10,11}"))
+
+glimpse(test1[13:14], 50)
+```
+
+Remarks :
+
+This approach returned "NA" for entire "month_lease" column.
+
+#### Attempt#3
+
+```{r}
+#| code-fold: false
+test2 <- prices2022 %>%
+  mutate(yearlease = str_extract_all(prices2022$remaining_lease, "([0-9][0-9]{2})"))
+
+glimpse(test2[,13], 50)
+```
+
+Remarks :
+
+This is the dead end approach.
+
+Took a break and then chance upon this Tidy's approach below from [Robert L. 2022](https://stackoverflow.com/a/71101770) via Stackoverflow.
+
+#### Attempt#4
+
+```{r}
+#| code-fold: false
+test3 <- str_split_fixed(prices2022$remaining_lease, " ", 4) %>% 
+  data.frame() %>% 
+  rename(v1 = X1, v2 = X2, v3 = X3, v4 = X4) %>%
+  select (-c(v2, v4)) %>%
+  mutate(v3 = ifelse(v3 == "", 0, v3))
+
+glimpse(test3, 50)
+```
+
+#### Attempt #4.1 with unTidy's method
+
+```{r}
+#| code-fold: false
+test3.1 <- as.data.frame(apply(test3, 2, as.numeric))
+
+glimpse(test3.1, 50)
+```
+
+Remarks :
+
+Found this method without using Tidyverse function. Code chunk credit to Joachim S. 2022[^1].
+
+[^1]: Joachim S. (2020). How to Convert a Character to Numeric in R. Statistics Globe - https://statisticsglobe.com/convert-character-to-numeric-in-r/
+
+#### Attempt #4.2 with Tidy's method
+
+```{r}
+#| code-fold: false
+test3.2 <- test3 %>% mutate_if(is.character, as.numeric)
+
+glimpse(test3.2, 50)
+```
+
+Remarks :
+
+Found this code chunk recommended by Zach, 2022[^2].
+
+[^2]: Zach. (2022). How to Convert Multiple Columns to Numeric Using dplyr. Statology. https://www.statology.org/convert-multiple-columns-to-numeric-dplyr/
+
+After 2/3 of a day in searching for a clean Tidy's function, can have a peace in mind!!
+
+#### 3.3.3.2 Convert "remaining_lease" variable
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***bind_cols( )*** - dplyr -]{style="color:#d46e15"} to bind prices2022 with new columns.
+
+[***str_split_fixed( )*** - stringr -]{style="color:#d46e15"} to split up "remaining_lease" into 4 new columns.
+
+[***str_split_fixed( )*** - stringr -]{style="color:#d46e15"} to split up "remaining_lease" into 4 new columns.
+:::
+
+```{r}
+#| code-fold: false
+prices_lease2022 <- bind_cols(prices2022, 
+                          (str_split_fixed(prices2022$remaining_lease, 
+                                           " ", 
+                                           4) %>% 
+                             data.frame() %>% 
+                             rename(year_lease = X1, 
+                                    omit1 = X2, 
+                                    month_lease = X3, 
+                                    omit2 = X4) %>%
+                             select (-c(omit1, omit2)) %>%
+                             mutate(month_lease = 
+                                      ifelse(month_lease == "", 0, 
+                                             month_lease)) %>% 
+                             mutate_if(is.character, as.numeric))
+                          ) %>%
+  mutate (remaining_lease_months = year_lease*12 + month_lease)
+```
+
+#### 3.3.3.3 Inspect output
+
+```{r}
+summary(prices_lease2022$remaining_lease_months)
+```
+
+### 3.3.4 Convert Upper Case
+
+#### 3.3.4.1 Variable :: town
+
+Convert all upper case to only the initial.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***str_to_sentence( )*** - stringr -]{style="color:#d46e15"} to convert "TOWN" to "Town".
+:::
+
+```{r}
+prices_lease2022$town <- str_to_title(prices_lease2022$town)
+```
+
+#### 3.3.4.2 Variable :: flat_type
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***str_to_sentence( )*** - stringr -]{style="color:#d46e15"} to convert "ROOM" to "room".
+:::
+
+```{r}
+prices_lease2022$flat_type <- str_to_sentence(prices_lease2022$flat_type)
+```
+
+Remarks :
+
+Alternately, can use str_to_lower( ) function to deliver the same output. But, for future references, decided to use str_to_sentence( ) function instead.
+
+#### 3.3.4.3 Variable :: storey_range
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***str_to_lower( )*** - stringr -]{style="color:#d46e15"} to convert "TO" to "to".
+:::
+
+```{r}
+prices_lease2022$storey_range <- str_to_lower(prices_lease2022$storey_range)
+```
+
+Remarks :
+
+Can avoid this step if upper case of insignificant text is acceptable or tolerable among the values.
+
+### 3.3.5 Set Display
+
+```{r}
+#| code-fold: false
+
+storey_sequence <- c("01 to 03", "04 to 06", "07 to 09", "10 to 12", "13 to 15", "16 to 18", "19 to 21", "22 to 24", "25 to 27", "28 to 30", "31 to 33", "34 to 36", "37 to 39", "40 to 42", "43 to 45", "46 to 48", "49 to 51")
+```
+
+### 3.3.6 Derive New Variable
+
+Derive 2 variables to capture the price per square meter and price per remaining lease months.
+
+```{r}
+#| code-fold: false
+
+price_trim <- prices_lease2022 %>%
+  mutate(`price_psqm` = as.numeric(round(resale_price/floor_area_sqm, 2)),
+         `price_prlm` = as.integer(round(resale_price/remaining_lease_months, 2)),
+         `storey_range` = factor(storey_range, levels = storey_sequence),
+         `month` = as.integer(month),
+         `remaining_lease_months` = as.integer(remaining_lease_months),
+         `resale_price` = as.integer(resale_price)) %>%
+  select(month, town, flat_type, storey_range, flat_model, remaining_lease_months, price_prlm, price_psqm, resale_price)
+
+glimpse(price_trim, 70)
+```
+
+```{r}
+#| code-fold: false
+
+rooms3 <- price_trim %>%
+  filter(flat_type %in% "3 room") %>%
+  select(-flat_type) %>%
+  group_by(storey_range, flat_model, month, town)
+```
+
+```{r}
+#| code-fold: false
+
+rooms3 <- rooms3 %>% group_by(storey_range) %>% arrange(storey_range)
+```
+
+### 3.3.6 Group & Pivot data
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***pivot_wider( )*** - tidyr -]{style="color:#d46e15"} to expand the data frame with values from specified variable.
+:::
+
+
+```{r}
+test5 <- price_trim %>%
+  filter(flat_type %in% "3 room")
+```
+
+\`storey_range\` = factor(storey_range, levels = storey_sequence),
+
+\`month\` = as.integer(month),
+
+\`remaining_lease_months\` = as.integer(remaining_lease_months),
+
+\`resale_price\` = as.integer(resale_price))
+
+```{r}
+test4 <- prices_lease2022 %>%
+  mutate(`price_psqm` = as.integer(round(resale_price/floor_area_sqm, 2)),
+         `price_prlm` = as.integer(round(resale_price/remaining_lease_months, 2))) %>%
+  select(town, month, flat_type, storey_range, flat_model, remaining_lease_months, price_prlm, price_psqm, resale_price)
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+test5 <- prices_lease2022 %>%
+  pivot_wider(id_cols = town,
+              names_from = c(flat_type, floor_area_sqm),
+              values_from = resale_price,
+              values_fill = 0,
+              values_fn = mean)
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+test_type_sqm <- prices_lease2022 %>%
+  pivot_wider(id_cols = town,
+              names_from = c(flat_type, floor_area_sqm),
+              values_from = resale_price,
+              values_fill = 0,
+              values_fn = mean)
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+test_per_sqm <- prices_lease2022 %>%
+  pivot_wider(id_cols = town,
+              names_from = c(flat_type, floor_area_sqm),
+              values_from = resale_price,
+              values_fill = 0,
+              values_fn = mean,
+              names_vary = "slowest")
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+group_town <- prices_lease2022 %>% 
+  group_by(town, flat_type) %>%
+  summarise(`average_price` = mean(`resale_price`),
+            `average_fasqm` = mean(`floor_area_sqm`),
+            `mode_fasqm` = mode(`floor_area_sqm`),
+            `price_psqm` = `average_price`/`average_fasqm`) %>%
+  ungroup()
+```
+
+    mlv(net_paid, method='mfv')
+
+```{r}
+#| code-fold: false
+#| eval: false
+amk_3rooms <- prices_lease2022 %>%
+  filter(town == "Ang Mo Kio" & flat_type == "3 room")
+```
+
+# 4. EXPLORATORY DATA ANALYSIS (EDA)
+
+## 4.1 Visualise data with lines plot
+
+```{r}
+#| code-fold: false
+#| eval: false
+lines_group <- ggplot(rooms3, 
+                aes(x = price_psqm,
+                    y = storey_range,
+                    group = flat_model)) + 
+  geom_line(aes(color = flat_model)) +
+  geom_point(aes(color = flat_model))
+
+lines_group
+```
+
+## 4.2 Trellis plot
+
+```{r}
+#| code-fold: false
+#| fig-height: 24
+#| fig-width: 12
+point_lines <- ggplot(rooms3, 
+                aes(x = price_psqm,
+                    y = storey_range,
+                    group = flat_model)) + 
+  geom_line(aes(color = flat_model)) +
+  geom_point(aes(color = flat_model)) +
+  ylim("01 to 03", "04 to 06", "07 to 09", "10 to 12", "13 to 15", "16 to 18", "19 to 21", "22 to 24", "25 to 27", "28 to 30", "31 to 33", "34 to 36", "37 to 39", "40 to 42", "43 to 45", "46 to 48", "49 to 51") + 
+  facet_wrap(~factor(town, levels = c("Bedok", "Tampines", "Jurong West",
+                                    "Sengkang", "Woodlands", "Hougang",
+                                    "Yishun", "Choa Chu Kang", "Punggol", "Geylang")),
+             drop = FALSE, 
+             ncol = 3,
+             scales = "fixed") +
+  theme_bw() + 
+  scale_x_continuous(breaks = seq(2500, 15000, 2500)) +
+  theme(legend.position = "bottom",
+        legend.justification = "left")
+
+point_lines
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+point_lines + 
+  transition_time(month) +
+  ease_aes('linear') +
+  labs (subtitle = 'Month: {frame_time}')
+```
+
+# 5. VISUAL ANALYTICS
+
+```{r}
+#| code-fold: false
+set.seed(1234)
+
+gghistostats(
+  data = rooms3,
+  x = price_psqm,
+  type = "bayes",
+  test.value = 60,
+  xlab = "Price"
+)
+```
+
+```{r}
+#| code-fold: false
+
+ggbetweenstats(data = rooms3,
+               x = flat_model,
+               y = price_psqm,
+               type = "p",
+               mean.ci = TRUE,
+               pairwise.comparisons = TRUE,
+               pairwise.display = "s",
+               p.adjust.method = "fdr",
+               messages = FALSE)
+```
+
+```{r}
+#| code-fold: false
+
+ggscatterstats(
+  data = rooms3,
+  x = price_psqm,
+  y = price_prlm,
+  marginal = FALSE)
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+room3 <- rooms3 %>%
+  mutate(price_bins = cut(price_psqm, 
+                          breaks = c(0, 60, 75, 85, 100))
+  )
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+ggbarstats(room3,
+           x = price_bins,
+           y = flat_model)
+```
+
+Multiple Regression Model
+
+Using lm( ) function stats package to fit linear model.
+
+```{r}
+#| code-fold: false
+
+model <- lm(formula = resale_price ~ price_psqm, remaining_lease_months, month, 
+            data = rooms3)
+
+model
+```
+
+```{r}
+check_collinearity(model)
+```
+
+```{r}
+#| code-fold: false
+#| eval: false
+check_c <- check_collinearity(model)
+plot(check_c)
+```
+
+```{r}
+check_model(model)
+```

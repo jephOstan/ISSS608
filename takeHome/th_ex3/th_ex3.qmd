@@ -22,17 +22,13 @@ format:
 
 # **1. OVERVIEW**
 
-There are x main focuses for this visual analytics assignment, that is :
+The main focus of this visual analytics assignment is to uncover salient patterns of the resale prices of public housing property by residential towns and estates in Singapore by using appropriate analytical visualisation techniques learned in **Lesson 4: Fundamentals of Visual Analytics**. Students are encouraged to apply appropriate interactive techniques to enhance user and data discovery experiences.
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Requirement Details for this Individual Assignment**]{style="color:#3a9c88"}
-
--   
-:::
+The focus should be on **3-ROOM, 4-ROOM and 5-ROOM types and** either focus on one housing type or multiple housing types. The study period should be in the year **2022**.
 
 ## **1.1 Target Area**
 
-\<text\>
+Residential towns and estates in Singapore.
 
 # **2. R PACKAGE REQUIRED**
 
@@ -42,7 +38,7 @@ The following are the packages required for this exercise :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(ggstatsplot, tidyverse, gganimate, gifski, ggiraph, performance)
+pacman::p_load(ggstatsplot, tidyverse, gganimate, gifski, ggiraph, performance, lmtest, car, FunnelPlotR, plotly)
 ```
 
 # **3. DATA**
@@ -61,8 +57,6 @@ This study will be based on demographic data set downloadable from [Data.gov.sg]
 2.  Data last updated on 6 February 2023.
 
 3.  The data sourced from SIngapore Housing and Development Board.
-
-4.  Metadata :
 :::
 
 ## **3.2 Import Data**
@@ -98,17 +92,7 @@ skimr::skim(resale_prices)
 glimpse(resale_prices, 60)
 ```
 
-Remarks :
-
-No missing values.
-
-May need to wrangle values for -
-
--   remove year for "month" after filtered.
-
--   convert values for "remaining_lease" to entirely months value.
-
-### **3.2.4 Explore unique values for**
+### **3.2.4 Identify unique values for key variables**
 
 #### **3.2.4.1 Variable :: "flat_type"**
 
@@ -133,6 +117,8 @@ summary(resale_prices$resale_price)
 
 #### 3.2.4.4 Variable :: "storey_range"
 
+Identify the highest floor and the lowest floor.
+
 ```{r}
 unique(resale_prices$storey_range)
 min(unique(resale_prices$storey_range))
@@ -141,12 +127,12 @@ max(unique(resale_prices$storey_range))
 
 Remarks :
 
-"10 TO 12" listed as first value instead of "01 TO 03". Need to visualise the displayed sequence.
+"10 TO 12" is listed as the first value instead of "01 TO 03" and "49 TO 51" listed before 5 ranges of storeys. Need to plot a chart to visualise the displayed sequence.
 
 #### 3.2.4.5 Variable :: "floor_area_sqm"
 
 ```{r}
-unique(resale_prices$floor_area_sqm)
+summary(resale_prices$floor_area_sqm)
 ```
 
 #### 3.2.4.6 Variable :: "flat_model"
@@ -164,19 +150,21 @@ max(unique(resale_prices$remaining_lease))
 
 Remarks :
 
-The years value consists of 2 characters - wrangling direction.
+The values are inconsistent. For further analysis, the values will need to be converted into entirely monthly values.
 
-### 3.2.5 Reveal sequence displayed in chart
+### 3.2.5 Inspect plotted sequence
 
 #### 3.2.5.1 Variable :: "month"
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 8
 #| code-fold: false
 ggplot(data = resale_prices,
        aes(y = month)) +
   geom_bar() +
   theme_bw() +  
-  ggtitle("Test Month Sequence") 
+  ggtitle("Test Month Displayed Sequence") 
 ```
 
 #### 3.2.5.2 Variable :: "storey_range"
@@ -190,16 +178,18 @@ ggplot(data = resale_prices,
   ggtitle("Test storey Range Sequence")
 ```
 
+Remarks :
+
+Both sequences were plotted continuously.
+
 ## **3.3 Data Wrangling**
 
 ### 3.3.1 Split "month" variable
 
-Instead of removing "year" or trimming it for the "month" value, split and retain the "year" info as a separate variable.
-
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-[***separate_wider_delim( )*** - tidyr -]{style="color:#d46e15"} to separate a column into multiple columns with a regular expression.
+[***separate_wider_delim( )*** - tidyr -]{style="color:#d46e15"} to separate a column into "year" and "month" columns with a regular expression.
 :::
 
 ```{r}
@@ -212,7 +202,7 @@ resale_prices <- resale_prices %>%
 
 ### 3.3.2 Filter data
 
-#### 3.3.2.1 Filter for 2022 & 3 types of flat data
+#### 3.3.2.1 Filter data based on year 2022 & 3 flat types 
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -230,16 +220,18 @@ prices2022 <- resale_prices %>%
 
 ```{r}
 unique(prices2022$flat_type)
+unique(prices2022$year)
 ```
 
 ### 3.3.3 Convert values for "Remaining Lease"
 
-#### 3.3.3.1 Attempts to convert the values to months
+#### 3.3.3.1 Attempts to convert all values to months
 
 #### Attempt#1
 
 ```{r}
 #| code-fold: false
+#| eval: false
 test <- prices2022 %>% 
   separate(remaining_lease, into = c("a","b","c","d"), sep = " ")
 ```
@@ -253,6 +245,7 @@ Warning message -
 #### Attempt#2
 
 ```{r}
+#| eval: false
 #| code-fold: false
 test1 <- prices2022 %>%
   mutate(year_lease = str_extract(`remaining_lease`, "[0-9]{1,2}"),
@@ -268,6 +261,7 @@ This approach returned "NA" for entire "month_lease" column.
 #### Attempt#3
 
 ```{r}
+#| eval: false
 #| code-fold: false
 test2 <- prices2022 %>%
   mutate(yearlease = str_extract_all(prices2022$remaining_lease, "([0-9][0-9]{2})"))
@@ -277,13 +271,14 @@ glimpse(test2[,13], 50)
 
 Remarks :
 
-This is the dead end approach.
+The approach above is a dead end approach.
 
-Took a break and then chance upon this Tidy's approach below from [Robert L. 2022](https://stackoverflow.com/a/71101770) via Stackoverflow.
+Took a break and then chance upon this Tidy's approach below from Stackoverflow ([Robert L. 2022](https://stackoverflow.com/a/71101770)).
 
 #### Attempt#4
 
 ```{r}
+#| eval: false
 #| code-fold: false
 test3 <- str_split_fixed(prices2022$remaining_lease, " ", 4) %>% 
   data.frame() %>% 
@@ -294,9 +289,14 @@ test3 <- str_split_fixed(prices2022$remaining_lease, " ", 4) %>%
 glimpse(test3, 50)
 ```
 
+Remarks :
+
+Further exploration needed based on the attempt#4's approach.
+
 #### Attempt #4.1 with unTidy's method
 
 ```{r}
+#| eval: false
 #| code-fold: false
 test3.1 <- as.data.frame(apply(test3, 2, as.numeric))
 
@@ -312,6 +312,7 @@ Found this method without using Tidyverse function. Code chunk credit to Joachim
 #### Attempt #4.2 with Tidy's method
 
 ```{r}
+#| eval: false
 #| code-fold: false
 test3.2 <- test3 %>% mutate_if(is.character, as.numeric)
 
@@ -324,9 +325,7 @@ Found this code chunk recommended by Zach, 2022[^2].
 
 [^2]: Zach. (2022). How to Convert Multiple Columns to Numeric Using dplyr. Statology. https://www.statology.org/convert-multiple-columns-to-numeric-dplyr/
 
-After 2/3 of a day in searching for a clean Tidy's function, can have a peace in mind!!
-
-#### 3.3.3.2 Convert "remaining_lease" variable
+#### 3.3.3.2 Convert values
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -340,8 +339,8 @@ After 2/3 of a day in searching for a clean Tidy's function, can have a peace in
 
 ```{r}
 #| code-fold: false
-prices_lease2022 <- bind_cols(prices2022, 
-                          (str_split_fixed(prices2022$remaining_lease, 
+prices_lease2022 <- bind_cols(prices2022,
+                              (str_split_fixed(prices2022$remaining_lease, 
                                            " ", 
                                            4) %>% 
                              data.frame() %>% 
@@ -364,7 +363,7 @@ prices_lease2022 <- bind_cols(prices2022,
 summary(prices_lease2022$remaining_lease_months)
 ```
 
-### 3.3.4 Convert Upper Case
+### 3.3.4 Convert Case
 
 #### 3.3.4.1 Variable :: town
 
@@ -381,12 +380,6 @@ prices_lease2022$town <- str_to_title(prices_lease2022$town)
 ```
 
 #### 3.3.4.2 Variable :: flat_type
-
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
-
-[***str_to_sentence( )*** - stringr -]{style="color:#d46e15"} to convert "ROOM" to "room".
-:::
 
 ```{r}
 prices_lease2022$flat_type <- str_to_sentence(prices_lease2022$flat_type)
@@ -412,49 +405,79 @@ Remarks :
 
 Can avoid this step if upper case of insignificant text is acceptable or tolerable among the values.
 
-### 3.3.5 Set Display
+### 3.3.5 Derive new variable and update variable type
 
-```{r}
-#| code-fold: false
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-storey_sequence <- c("01 to 03", "04 to 06", "07 to 09", "10 to 12", "13 to 15", "16 to 18", "19 to 21", "22 to 24", "25 to 27", "28 to 30", "31 to 33", "34 to 36", "37 to 39", "40 to 42", "43 to 45", "46 to 48", "49 to 51")
-```
+[***str_sub( )*** - stringr -]{style="color:#d46e15"} to extract last 2 characters of the string ([Xu, 2011](https://stackoverflow.com/a/7964027))[^3].
+:::
 
-### 3.3.6 Derive New Variable
+[^3]: Xu, W. (2011, November 1). Extracting the last n characters from a string in R. Stackoverflow. https://stackoverflow.com/a/7964027
 
 Derive 2 variables to capture the price per square meter and price per remaining lease months.
 
 ```{r}
 #| code-fold: false
-
 price_trim <- prices_lease2022 %>%
-  mutate(`price_psqm` = as.integer(round(resale_price/floor_area_sqm, 2)),
-         `price_prlm` = as.integer(round(resale_price/remaining_lease_months, 2)),
-         `storey_range` = factor(storey_range, levels = storey_sequence),
-         `month` = as.integer(month),
-         `remaining_lease_months` = as.integer(remaining_lease_months),
-         `resale_price` = as.integer(resale_price)) %>%
-  select(month, town, flat_type, storey_range, flat_model, remaining_lease_months, price_prlm, price_psqm, resale_price)
+  mutate(`price_psqm` = as.numeric(round(resale_price/floor_area_sqm, 2)),
+         `price_prlm` = as.numeric(round(resale_price/remaining_lease_months, 2)),
+         `storey_range` = as.numeric(str_sub(storey_range, -2,-1)),
+         `month` = as.numeric(month),
+         `remaining_lease_months` = as.numeric(remaining_lease_months),
+         `resale_price` = as.numeric(resale_price)) %>%
+  select(month, town, flat_type, storey_range, flat_model, floor_area_sqm, remaining_lease_months, price_prlm, price_psqm, resale_price)
 
 glimpse(price_trim, 70)
 ```
 
+#### 3.3.5.2 Update variable type for funnel plot
+
+Convert all the character variables to a factor type.
+
+```{r}
+price3R_fp <- price_trim %>%
+  filter(flat_type %in% "3 room") %>%
+  select(-flat_type) %>%
+  mutate_if(is.character, 
+            as.factor)
+
+glimpse(price3R_fp, 60)
+```
+
+#### 3.3.5.3 Compute statistical variables
+
+```{r}
+price3R_stats <- price_trim %>%
+  filter(flat_type %in% "3 room") %>%
+  select(-flat_type) %>%
+  group_by(flat_model) %>%
+  summarise(n = n(),
+            mean = mean(price_psqm),
+            sd = sd(price_psqm)) %>%
+  mutate(se = sd/sqrt(n-1),
+         low_ci = mean - qt(1 - (0.05 / 2), n-1)*se,
+         upp_ci = mean + qt(1 - (0.05 / 2), n-1)*se)
+
+glimpse(price3R_stats, 70)
+min(price3R_stats$low_ci)
+max(price3R_stats$upp_ci)
+```
+
+### 3.3.6 Pivot data
+
+#### 3.3.6.1 Filter for "3 room"
+
 ```{r}
 #| code-fold: false
-
 rooms3 <- price_trim %>%
   filter(flat_type %in% "3 room") %>%
   select(-flat_type) %>%
-  group_by(storey_range, flat_model, month, town)
+  group_by(town, flat_model) %>%
+  arrange(storey_range)
 ```
 
-```{r}
-#| code-fold: false
-
-rooms3 <- rooms3 %>% group_by(storey_range) %>% arrange(storey_range)
-```
-
-### 3.3.6 Group & Pivot data
+#### 3.3.6.2 Pivot data
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -462,211 +485,267 @@ rooms3 <- rooms3 %>% group_by(storey_range) %>% arrange(storey_range)
 [***pivot_wider( )*** - tidyr -]{style="color:#d46e15"} to expand the data frame with values from specified variable.
 :::
 
-,
-
-\`storey_range\` = factor(storey_range, levels = storey_sequence),
-
-\`month\` = as.integer(month),
-
-\`remaining_lease_months\` = as.integer(remaining_lease_months),
-
-\`resale_price\` = as.integer(resale_price))
-
 ```{r}
-test4 <- prices_lease2022 %>%
-  mutate(`price_psqm` = as.integer(round(resale_price/floor_area_sqm, 2)),
-         `price_prlm` = as.integer(round(resale_price/remaining_lease_months, 2))) %>%
-  select(town, month, flat_type, storey_range, flat_model, remaining_lease_months, price_prlm, price_psqm, resale_price)
-```
-
-```{r}
-#| code-fold: false
-#| eval: false
-test5 <- prices_lease2022 %>%
+rooms3_pw <- rooms3 %>%
   pivot_wider(id_cols = town,
-              names_from = c(flat_type, floor_area_sqm),
+              names_from = c(flat_model, storey_range),
               values_from = resale_price,
               values_fill = 0,
               values_fn = mean)
 ```
 
-```{r}
-#| code-fold: false
-#| eval: false
-test_type_sqm <- prices_lease2022 %>%
-  pivot_wider(id_cols = town,
-              names_from = c(flat_type, floor_area_sqm),
-              values_from = resale_price,
-              values_fill = 0,
-              values_fn = mean)
-```
+# 4. VISUAL ANALYTICS
+
+## 4.1 Visualise Standard Errors with Confidence Intervals
+
+Distribution of price per square metre for 3-rooms flat models.
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 12
 #| code-fold: false
-#| eval: false
-test_per_sqm <- prices_lease2022 %>%
-  pivot_wider(id_cols = town,
-              names_from = c(flat_type, floor_area_sqm),
-              values_from = resale_price,
-              values_fill = 0,
-              values_fn = mean,
-              names_vary = "slowest")
+price3R_stats$flat_model_seq = with(price3R_stats, reorder(flat_model, desc(mean))) 
+
+ggplot(price3R_stats) +
+  geom_errorbar(aes(x = flat_model_seq,
+                    ymin = low_ci, 
+                    ymax = upp_ci),
+                width = 0.2, 
+                colour = "black", 
+                alpha = 0.9, 
+                size = 0.5) +
+  geom_point(aes(x = flat_model_seq,
+                 y = mean),
+             stat = "identity", 
+             color = "red",
+             size = 1.5,
+             alpha = 1) +
+  labs (x = "3-rooms Flat Models",
+        y = "Mean Price per Square Metre($)") +
+  ggtitle("Standard error of mean price psqm by 3-rooms flat model") + 
+  ylim (5000, 12000)
 ```
 
-```{r}
-#| code-fold: false
-#| eval: false
-group_town <- prices_lease2022 %>% 
-  group_by(town, flat_type) %>%
-  summarise(`average_price` = mean(`resale_price`),
-            `average_fasqm` = mean(`floor_area_sqm`),
-            `mode_fasqm` = mode(`floor_area_sqm`),
-            `price_psqm` = `average_price`/`average_fasqm`) %>%
-  ungroup()
-```
-
-    mlv(net_paid, method='mfv')
+## 4.2 Visualise with Funnel Plot
 
 ```{r}
 #| code-fold: false
-#| eval: false
-amk_3rooms <- prices_lease2022 %>%
-  filter(town == "Ang Mo Kio" & flat_type == "3 room")
+#| fig-height: 8
+#| fig-width: 12
+funnel_plot(numerator = price3R_fp$price_psqm,
+            denominator = price3R_fp$remaining_lease_months,
+            group = price3R_fp$flat_model,
+            data_type = "RC",
+            title = "Price pSQM Funnel Plot")
 ```
 
-# 4. EXPLORATORY DATA ANALYSIS (EDA)
+Remarks :
 
-## 4.1 Visualise data with lines plot
+Not much info can be derived apart from knowing "Terrace" as the outlier.
+
+Hence, different approaches with ggplot functions explore and reveal more patterns and insights.
+
+```{r}
+#| fig-height: 16
+#| fig-width: 12
+ggplotly((ggplot(price3R_fp,
+                 aes(x = remaining_lease_months,
+                     y = price_psqm)) +
+            geom_point(aes(fill = flat_model,
+                           label = flat_model),
+                       alpha = 0.4) +
+            theme_light() +
+            labs (x = "Remaining Lease Months",
+                  y = "Price per square metre (SGD$)",
+                  fill = "Flat Model",
+                  title = "Does remaining lease months affect the price per square metre?",
+                  caption = "Date Source : Singstat.gov.sg") +
+            theme(plot.title = element_text(size = 12,
+                                            face = "bold"),
+                  plot.caption = element_text(size = 8,
+                                              hjust = 0),
+                  legend.title = element_text(size = 7),
+                  legend.text = element_text(size = 7),
+                  legend.background = element_rect(colour = "grey60", 
+                                                   linetype = "dotted"))),
+         tooltip = c("x","y","label")) %>%
+  layout(legend = list(orientation = "h", 
+                       x = 0.5, 
+                       y = -0.15, 
+                       xanchor = "center"))
+```
+
+Remarks :
+
+For 3-rooms "Premium Apartment" type that have 80 years or 960 remaining leasing months or more, can fetch up to almost \$12,000 per sqm. However, those that are lesser, can only fetched up to \$7,625 per sqm.
+
+Also, noticed most transacted units are either having the remaining leasing months above 1000 (83 years or more) or less than 800 months (approximately 67 months).
+
+```{r}
+price3R_fp$flat_model[price3R_fp$remaining_lease_months <= 700]
+```
+
+## 4.3 One Sample Test
+
+Distribution of price per square metre for 3 rooms type.
+
+```{r}
+#| fig-height: 8
+#| fig-width: 12
+#| code-fold: false
+set.seed(1234)
+
+gghistostats(data = rooms3,
+             x = price_psqm,
+             type = "bayes",
+             test.value = 60,
+             xlab = "Price")
+```
+
+## 4.4 Two Samples Mean Test
+
+### 4.4.1 Compute Bartlett Test
+
+As shown in 4.1 plot, the data is normally distributed. Hence, Bartlett test is performed to determine homogeneity of variance. The output will help to determine the ANOVA test proceed with parametric (p) or non-parametric (np).
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***bartlett.test( )*** - stats -]{style="color:#d46e15"} to reveal the homogeneity of variances.
+:::
+
+```{r}
+bartlett.test(price_psqm ~ flat_model, 
+              data = rooms3)
+```
+
+Remarks :
+
+The p-value is smaller than the significance level of 0.05, which means the assumption for homogeneity of variance is violated.[^4] This can be interpreted as statistically proven significant differences between price per square metre for different types of 3-room flat models in Singapore.
+
+[^4]: Compare Multiple Sample Variances in R. Statistical tools for high-throughput data analysis. http://www.sthda.com/english/wiki/compare-multiple-sample-variances-in-r
+
+### 4.4.2 One-way ANOVA Test
+
+Since the p-value for Barlett test is less than 0.05, non-parametric (Kruskal-Wallis) test [^5] will be used to conduct further analysis.
+
+[^5]: Heidel E. (2022). Homogeneity of variance and ANOVA - Assess homogeneity of variance when comparing three independent groups on a continuous outcome. scalestatistics.com. https://www.scalestatistics.com/homogeneity-of-variance-and-anova.html#:\~:text=If%20the%20p%2Dvalue%20is,test%20to%20conduct%20the%20analysis.
+
+```{r}
+#| fig-height: 12
+#| fig-width: 12
+#| code-fold: false
+ggbetweenstats(data = rooms3,
+               x = flat_model,
+               y = price_psqm,
+               type = "np",
+               mean.ci = TRUE,
+               pairwise.comparisons = TRUE,
+               pairwise.display = "s",
+               p.adjust.method = "fdr",
+               messages = FALSE,
+               outlier.tagging = TRUE)
+```
+
+## 4.5 Correlation and Multicolinearity Check
+
+### 4.5.1 Price per square metre by flat model
+
+```{r}
+#| fig-height: 8
+#| fig-width: 12
+#| code-fold: false
+ggscatterstats(data = rooms3,
+               x = flat_model,
+               y = price_psqm,
+               marginal = FALSE)
+```
+
+### 4.5.2 Price per square metre by storey range
+
+```{r}
+#| fig-height: 8
+#| fig-width: 12
+#| code-fold: false
+ggscatterstats(data = rooms3,
+               x = storey_range,
+               y = price_psqm,
+               marginal = FALSE)
+```
+
+### 4.5.3 Price per square metre by town
+
+```{r}
+#| fig-height: 8
+#| fig-width: 12
+#| code-fold: false
+ggscatterstats(data = rooms3,
+               x = town,
+               y = price_psqm,
+               marginal = FALSE)
+```
+
+### 4.5.4 Price per square metre by month
+
+```{r}
+#| fig-height: 8
+#| fig-width: 12
+#| code-fold: false
+ggscatterstats(data = rooms3,
+               x = month,
+               y = price_psqm,
+               marginal = FALSE)
+```
+
+### 4.5.5 Check multicolinearity
 
 ```{r}
 #| code-fold: false
-#| eval: false
-lines_group <- ggplot(rooms3, 
-                aes(x = price_psqm,
-                    y = storey_range,
-                    group = flat_model)) + 
-  geom_line(aes(color = flat_model)) +
-  geom_point(aes(color = flat_model))
+model <- lm(formula = resale_price ~ remaining_lease_months + storey_range + month + price_psqm + price_prlm, 
+            data = rooms3)
 
-lines_group
+summary(model)
 ```
 
-## 4.2 Trellis plot
+Remarks :
+
+"month" is not statistically significant to the test. It will be removed.
+
+### 4.5.6 Trim model
+
+```{r}
+#| code-fold: false
+model1 <- lm(formula = resale_price ~ remaining_lease_months + storey_range + price_psqm + price_prlm, 
+            data = rooms3)
+
+summary(model1)
+```
+
+### 4.5.7 Visualise model diagnostic output
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***check_model( )*** - performance -]{style="color:#d46e15"} to visual check of model various assumptions (normality of residuals, multicollinearity, normality of random effects, heteroscedasticity, homogeneity of variance).
+:::
 
 ```{r}
 #| code-fold: false
 #| fig-height: 24
 #| fig-width: 12
-point_lines <- ggplot(rooms3, 
-                aes(x = price_psqm,
-                    y = storey_range,
-                    group = flat_model)) + 
-  geom_line(aes(color = flat_model)) +
-  geom_point(aes(color = flat_model)) +
-  ylim("01 to 03", "04 to 06", "07 to 09", "10 to 12", "13 to 15", "16 to 18", "19 to 21", "22 to 24", "25 to 27", "28 to 30", "31 to 33", "34 to 36", "37 to 39", "40 to 42", "43 to 45", "46 to 48", "49 to 51") + 
-  facet_wrap(~factor(town, levels = c("Bedok", "Tampines", "Jurong West",
-                                    "Sengkang", "Woodlands", "Hougang",
-                                    "Yishun", "Choa Chu Kang", "Punggol", "Geylang")),
-             drop = FALSE, 
-             ncol = 3,
-             scales = "fixed") +
-  theme_bw() + 
-  scale_x_continuous(breaks = seq(2500, 15000, 2500)) +
-  theme(legend.position = "bottom",
-        legend.justification = "left")
-
-point_lines
+check_model(model1)
 ```
+
+Remarks :
+
+Based on the VIF results, none of the variables is above 10, which means there is no high correlation between the variables.
+
+#### 4.5.7.1 Check with Breush Pagan test
 
 ```{r}
-#| code-fold: false
-#| eval: false
-point_lines + 
-  transition_time(month) +
-  ease_aes('linear') +
-  labs (subtitle = 'Month: {frame_time}')
+bptest(model1)
 ```
 
-# 5. VISUAL ANALYTICS
+Remarks :
 
-```{r}
-#| code-fold: false
-set.seed(1234)
-
-gghistostats(
-  data = rooms3,
-  x = price_psqm,
-  type = "bayes",
-  test.value = 60,
-  xlab = "Price"
-)
-```
-
-```{r}
-#| code-fold: false
-
-ggbetweenstats(data = rooms3,
-               x = flat_model,
-               y = price_psqm,
-               type = "p",
-               mean.ci = TRUE,
-               pairwise.comparisons = TRUE,
-               pairwise.display = "s",
-               p.adjust.method = "fdr",
-               messages = FALSE)
-```
-
-```{r}
-#| code-fold: false
-
-ggscatterstats(
-  data = rooms3,
-  x = price_psqm,
-  y = price_prlm,
-  marginal = FALSE)
-```
-
-```{r}
-#| code-fold: false
-#| eval: false
-room3 <- rooms3 %>%
-  mutate(price_bins = cut(price_psqm, 
-                          breaks = c(0, 60, 75, 85, 100))
-  )
-```
-
-```{r}
-#| code-fold: false
-#| eval: false
-ggbarstats(room3,
-           x = price_bins,
-           y = flat_model)
-```
-
-Multiple Regression Model
-
-Using lm( ) function stats package to fit linear model.
-
-```{r}
-#| code-fold: false
-
-model <- lm(formula = resale_price ~ price_psqm, remaining_lease_months, month, 
-            data = rooms3)
-
-model
-```
-
-```{r}
-check_collinearity(model)
-```
-
-```{r}
-#| code-fold: false
-#| eval: false
-check_c <- check_collinearity(model)
-plot(check_c)
-```
-
-```{r}
-check_model(model)
-```
+The p-value is smaller than 0.05. Hence, the null hypothesis is rejected, meaning there is heteroscedasticity present in this model1. The output for this model will need to further verify for its validity.

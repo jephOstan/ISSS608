@@ -62,7 +62,7 @@ pacman::p_load(ggiraph, plotly, gganimate, gifski, gapminder, DT, patchwork, rPa
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Usage of R Packages :**]{style="color:#3a9c88"}
 
--   [rPackedBar](https://cran.r-project.org/web/packages/rPackedBar/): Packed Bar Charts with \'plotly\'
+-   [rPackedBar](https://cran.r-project.org/web/packages/rPackedBar/): Packed Bar Charts with 'plotly'
 
     -   [Visualizing Twitter Data with a Packed Barchart](https://cran.r-project.org/web/packages/rPackedBar/vignettes/Visualizing_Twitter_Data_with_a_Packed_Barchart.html)
 :::
@@ -100,7 +100,7 @@ problems(WorldCountry)
 ### 3.3.1 Reshape data frame
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***mutate( )*** - dplyr -]{style="color:#d46e15"} to convert all values in the 202 field into numeric data type.
 
@@ -126,7 +126,7 @@ GDP_selected <- GDP %>%
 ### 3.3.2 Filter data
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***na.omit( )*** - dplyr -]{style="color:#d46e15"} to exclude rows with missing values as the rPackedBar package does not support missing values.
 :::
@@ -145,7 +145,7 @@ GDP_selected <- GDP %>%
 ## 4.1 Create Packed Bars Chart
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***plotly_packed_bar( )*** - rPackedBar -]{style="color:#d46e15"} to create an interactive "plotly" packed bar chart.
 

@@ -58,7 +58,7 @@ Following are the 4 main focuses :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(corrplot, ggstatsplot, tidyverse)
+pacman::p_load(corrplot, tidyverse, ggstatsplot)
 ```
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
@@ -102,7 +102,7 @@ glimpse(wine, 70)
 
 Remarks :
 
-The type of "quality" is dbl. It will need to be converted into a factor if it is needed for analysis.
+Notice that beside quality and type, the rest of the variables are numerical and continuous data type.
 
 # **4. CREATE CORRELATION MATRIX**
 
@@ -123,16 +123,12 @@ Before you continue to the next step, you should read the syntax description of 
 Figure below shows the scatter plot matrix of Wine Quality Data. It is a 11 by 11 matrix.
 
 ```{r}
-#| fig-width: 12
-#| fig-height: 12
 pairs(wine[,1:11])
 ```
 
 The required input of *pairs()* can be a matrix or data frame. The code chunk used to create the scatterplot matrix is relatively simple. It uses the default *pairs* function. Columns 2 to 12 of wine dataframe is used to build the scatterplot matrix. The variables are: fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates and alcohol.
 
 ```{r}
-#| fig-width: 12
-#| fig-height: 12
 pairs(wine[,2:12])
 ```
 
@@ -143,16 +139,12 @@ pairs(wine[,2:12])
 To show the lower half of the correlation matrix, the upper.panel argument will be used as shown in the code chunk below.
 
 ```{r}
-#| fig-width: 12
-#| fig-height: 12
 pairs(wine[,2:12], upper.panel = NULL)
 ```
 
 Similarly, you can display the upper half of the correlation matrix by using the code chun below.
 
 ```{r}
-#| fig-width: 12
-#| fig-height: 12
 pairs(wine[,2:12], lower.panel = NULL)
 ```
 
@@ -163,24 +155,16 @@ To show the correlation coefficient of each pair of variables instead of a scatt
 Don't worry about the details for now-just type this code into your R session or script. Let's have more fun way to display the correlation matrix.
 
 ```{r}
-#| fig-width: 12
-#| fig-height: 12
 panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...) {
-  usr <- par("usr")
-  on.exit(par(usr))
-  par(usr = c(0, 1, 0, 1))
-  r <- abs(cor(x,
-               y,
-               use = "complete.obs"))
-  txt <- format(c
-                (r, 0.123456789),
-                digits=digits)[1]
-  txt <- paste(prefix, txt, sep="") 
-  if(missing(cex.cor)) 
-    cex.cor <- 0.8/strwidth(txt)
-  text(0.5, 0.5, txt, 
-       cex = cex.cor * (1 + r) / 2)
-  }
+usr <- par("usr")
+on.exit(par(usr))
+par(usr = c(0, 1, 0, 1))
+r <- abs(cor(x, y, use="complete.obs"))
+txt <- format(c(r, 0.123456789), digits=digits)[1]
+txt <- paste(prefix, txt, sep="")
+if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+text(0.5, 0.5, txt, cex = cex.cor * (1 + r) / 2)
+}
 
 pairs(wine[,2:12], 
       upper.panel = panel.cor)
@@ -207,23 +191,20 @@ In this section, you will learn how to visualising correlation matrix by using [
 On of the advantage of using *ggcorrmat()* over many other methods to visualise a correlation matrix is it's ability to provide a comprehensive and yet professional statistical report as shown in the figure below.
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 7
 ggcorrmat(data = wine,
           cor.vars = 1:11)
 ```
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 7
-ggcorrmat(data = wine,
-          cor.vars = 1:11,
-          ggcorrplot.args = list(outline.color = "black",
-                                 hc.order = TRUE,
-                                 tl.cex = 10),
-          title    = "Correlogram for wine dataset",
-          subtitle = "Four pairs are no significant at p < 0.05"
-          )
+ggstatsplot::ggcorrmat(
+  data = wine, 
+  cor.vars = 1:11,
+  ggcorrplot.args = list(outline.color = "black", 
+                         hc.order = TRUE,
+                         tl.cex = 10),
+  title    = "Correlogram for wine dataset",
+  subtitle = "Four pairs are no significant at p < 0.05"
+)
 ```
 
 Things to learn from the code chunk above:
@@ -235,8 +216,6 @@ Things to learn from the code chunk above:
 The sample sub-code chunk can be used to control specific component of the plot such as the font size of the x-axis, y-axis, and the statistical report.
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 7
 ggplot.component = list(
     theme(text=element_text(size=5),
       axis.text.x = element_text(size = 8),
@@ -248,8 +227,6 @@ ggplot.component = list(
 Since ggstasplot is an extension of ggplot2, it also supports faceting. However the feature is not available in *ggcorrmat()* but in the [*grouped_ggcorrmat()*](https://indrajeetpatil.github.io/ggstatsplot/reference/grouped_ggcorrmat.html) of **ggstatsplot**.
 
 ```{r}
-#| fig-width: 14
-#| fig-height: 7
 grouped_ggcorrmat(
   data = wine,
   cor.vars = 1:11,
@@ -374,12 +351,6 @@ wine.sig = cor.mtest(wine.cor, conf.level= .95)
 
 We can then use the *p.mat* argument of *corrplot* function as shown in the code chunk below.
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
-
-[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
-:::
-
 ```{r}
 corrplot(wine.cor,
          method = "number",
@@ -390,8 +361,6 @@ corrplot(wine.cor,
          p.mat = wine.sig$p,
          sig.level = .05)
 ```
-
-Remarks :
 
 ## **Reorder a corrgram**
 
@@ -432,14 +401,6 @@ corrplot(wine.cor,
          hclust.method = "ward.D",
          addrect = 3)
 ```
-
-Correlogram with GGally package
-
-Generalised Pairs Plot
-
-ggpairs( )
-
-Refers to lecture note : https://isss608-ay2022-23jan.netlify.app/lesson/lesson05/lesson05-vma#/12
 
 # **Reference**
 
