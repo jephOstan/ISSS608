@@ -1,5 +1,5 @@
 ---
-title: "Resale Prices for 3 Types of Public Housing Properties"
+title: "Resale Prices for 3-Room Flat Type of Public Housing Properties"
 subtitle: "The dataset is based on Singapore Residential Towns and Estates in year 2022"
 editor: visual
 date:  6 Feb 2023
@@ -202,7 +202,7 @@ resale_prices <- resale_prices %>%
 
 ### 3.3.2 Filter data
 
-#### 3.3.2.1 Filter data based on year 2022 & 3 flat types 
+#### 3.3.2.1 Filter data based on year 2022 & 3 flat types
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
