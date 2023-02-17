@@ -35,7 +35,11 @@ website:
             href: handsOn_ex5.3.qmd
           - text: Ex[5.4] Create Parallel Coordinates Plot
             href: handsOn_ex5.4.qm
-            
+          - text: Ex[6.1] Create Calendar Heatmap
+            href: handsOn_ex6.1.qmd
+          - text: Ex[6.2] Create Cycle Plot
+            href: handsOn_ex6.2.qm
+                        
             
       - text: In-class Exercises
         menu: 

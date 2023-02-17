@@ -1,0 +1,150 @@
+---
+title: "Create Cycle Plot"
+subtitle: "Hands-on Exercise 6.2 - Visual Analysis for Time-Oriented Data"
+editor: visual
+date:  17 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores steps to create a cycle plot with tidyverse functions.
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(lubridate, scales, viridis, ggthemes, gridExtra, tidyverse, readxl, knitr, data.table)
+```
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**R packages highlights :**]{style="color:#3a9c88"}
+
+-   
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on *arrivals_by_air.xlsx* data.
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Attribute Data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***read_excel( )*** - readr -]{style="color:#d46e15"} to read Excel file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+air <- read_excel("data/arrivals_by_air.xlsx")
+
+problems(air)
+```
+
+### **3.2.2 Examine data**
+
+```{r}
+glimpse(air, 70)
+```
+
+## 3.3. Wrangle data
+
+### 3.3.1 Derive new fields
+
+Derive "month" and "year" from the "Month-Year" field.
+
+```{r}
+air$month <- factor(month
+                    (air$`Month-Year`), 
+                     levels = 1:12, 
+                     labels = month.abb, 
+                     ordered = TRUE) 
+air$year <- year(ymd(air$`Month-Year`))
+```
+
+#### 3.3.1.1 Verify output
+
+```{r}
+ls(air)
+```
+
+### **3.3.2 Filter data**
+
+Select "Vietnam" data for year 2010 onward.
+
+```{r}
+#| code-fold: false
+Vietnam <- air %>% 
+  select(`Vietnam`, 
+         month, 
+         year) %>%
+  filter(year >= 2010)
+```
+
+### **3.3.3 Compute data for geom_hline**
+
+Derive new field name "avgvalue" to reflect the average arrivals for each month.
+
+```{r}
+#| code-fold: false
+hline.data <- Vietnam %>% 
+  group_by(month) %>%
+  summarise(avgvalue = mean(Vietnam))
+```
+
+#### 3.3.3.1 Inspect output
+
+```{r}
+glimpse(hline.data, 70)
+```
+
+# 4. CYCLE PLOT
+
+## **4.1 Plot Cycle Plot**
+
+```{r}
+#| code-fold: false
+#| fig-height: 16
+#| fig-width: 12
+ggplot() + 
+  geom_line(data = Vietnam,
+            aes(x = year, 
+                y = Vietnam, 
+                group = month), 
+            colour = "black") +
+  geom_hline(aes
+             (yintercept = avgvalue), 
+             data = hline.data, 
+             linetype = 6, 
+             colour = "red", 
+             size = 0.5) + 
+  facet_grid(~month) +
+  labs(axis.text.x = element_blank(),
+       title = "Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019") +
+  xlab("") +
+  ylab("No. of Visitors")
+```

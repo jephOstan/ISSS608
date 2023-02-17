@@ -1,0 +1,261 @@
+---
+title: "Create Calendar Heatmaps"
+subtitle: "Hands-on Exercise 6.1 - Visual Analysis for Time-Oriented Data"
+editor: visual
+date:  17 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores various approaches to set up visual analytics for time-oriented data.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Scope of this study :**]{style="color:#3a9c88"}
+
+The main focuses is to create calendar heatmap with tidyverse functions.
+:::
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(lubridate, scales, viridis, ggthemes, gridExtra, tidyverse, readxl, knitr, data.table)
+```
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**R packages highlights :**]{style="color:#3a9c88"}
+
+-   Lubridate package makes it easier to work with dates and times. It is part of the tidyverse core.
+:::
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on *eventlog.csv* file will be used. This data file consists of 199,999 rows of time-series cyber attack records by country.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  *timestamp* field stores date-time values in POSIXct format.
+
+2.  *source_country* field stores the source of the attack. It is in *ISO 3166-1 alpha-2* country code.
+
+3.  *tz* field stores time zone of the source IP address.
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Import Attribute Data**
+
+Involved two (2) steps : import and inspect imported data set.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the CSV file.
+:::
+
+```{r}
+attacks <- read_csv("data/eventlog.csv") 
+
+problems(attacks)
+```
+
+## **3.3 Examine Data**
+
+```{r}
+kable(head(attacks))
+```
+
+## **3.4 Wrangle Data**
+
+### 3.4.1 Derive new fields with function
+
+#### 3.4.1.1 Create function
+
+To derive new fields "wkday" and "hour".
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***ymd_hms( )*** - lubridate -]{style="color:#d46e15"} to parse dates that have hours, minutes, or seconds stored as character or numeric vectors to POSIXct objects.
+
+[***hour( )*** - lubridate -]{style="color:#d46e15"} to get hours component of a date-time.
+
+[***weekdays( )*** - base -]{style="color:#d46e15"} to extract date object.
+:::
+
+```{r}
+#| code-fold: false
+make_hr_wkday <- function(ts, sc, tz) {
+  real_times <- ymd_hms(ts, 
+                        tz = tz[1], 
+                        quiet = TRUE)
+  dt <- data.table(source_country = sc,
+                   wkday = weekdays(real_times),
+                   hour = hour(real_times))
+  return(dt)
+  }
+```
+
+#### 3.4.1.2 Derive new fields
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***mutate( )*** - dplyr -]{style="color:#d46e15"} to convert "wkday" and "hour" fields into a factor to display them in correct order when plotting.
+:::
+
+```{r}
+#| code-fold: false
+wkday_levels <- c('Saturday', 'Friday', 'Thursday', 'Wednesday', 'Tuesday', 'Monday', 'Sunday')
+
+attacks <- attacks %>%
+  group_by(tz) %>%
+  do(make_hr_wkday
+     (.$timestamp,
+       .$source_country, 
+       .$tz)) %>%
+  ungroup() %>% 
+  mutate(wkday = factor(wkday, 
+                        levels = wkday_levels),
+         hour  = factor(hour,
+                        levels = 0:23))
+```
+
+#### 3.4.1.3 Inspect output
+
+```{r}
+#| code-fold: false
+kable(head(attacks))
+```
+
+# 4. CALENDAR HEATMAPS
+
+## 4.1 Single Calendar Heatmap
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***count( )*** - dplyr -]{style="color:#d46e15"} to count the attack by "wkday" and "hour" fields.
+
+[***theme_tufte( )*** - ggthemes -]{style="color:#d46e15"} to remove unnecessary chart junk by set the Tufte maximal data, minimal ink theme.
+
+[***coord_equal( )*** - ggplot2 -]{style="color:#d46e15"} to ensure the plot's aspect ratio to 1:1.
+
+[***scale_fill_gradient( )*** - ggplot2 -]{style="color:#d46e15"} to set two colour gradients (low - high).
+:::
+
+```{r}
+#| code-fold: false
+#| fig-height: 16
+#| fig-width: 12
+grouped <- attacks %>% 
+  count(wkday, hour) %>% 
+  ungroup() %>%
+  na.omit()
+
+ggplot(grouped, 
+       aes(hour, 
+           wkday, 
+           fill = n)) + 
+  geom_tile(color = "white", 
+            size = 0.1) + 
+  theme_tufte(base_family = "Helvetica") + 
+  coord_equal() +
+  scale_fill_gradient(name = "# of attacks",
+                      low = "sky blue", 
+                      high = "dark blue") +
+  labs(x = NULL, 
+       y = NULL, 
+       title = "Attacks by weekday and time of day") +
+  theme(axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 6))
+```
+
+```{r}
+glimpse(grouped, 70)
+```
+
+## 4.2 Build Multiple Calendar Heatmaps
+
+There are 3 steps involved to identify the top 4 countries with the highest number of attacks :
+
+-   count the number of attacks by country,
+
+-   calculate the percent of attackes by country, and
+
+-   save the results in a tibble data frame.
+
+### 4.2.1 Count events of attacks
+
+```{r}
+attacks_by_country <- count(attacks, 
+                            source_country) %>%
+  mutate(percent = percent(n/sum(n))) %>%
+  arrange(desc(n))
+```
+
+### 4.2.2 Prepare data frame
+
+Extract the attack records of the top 4 countries from *attacks* data frame and save the data in a new tibble data frame (i.e. *top4_attacks*).
+
+```{r}
+top4 <- attacks_by_country$source_country[1:4]
+top4_attacks <- attacks %>%
+  filter(source_country %in% top4) %>%
+  count(source_country, wkday, hour) %>%
+  ungroup() %>%
+  mutate(source_country = factor(
+    source_country, 
+    levels = top4)) %>%
+  na.omit()
+```
+
+### 4.2.3 Plot multiple calendar heatmaps
+
+```{r}
+ggplot(top4_attacks, 
+       aes(hour, 
+           wkday, 
+           fill = n)) + 
+  geom_tile(color = "white", 
+            size = 0.1) + 
+  theme_tufte(base_family = "Helvetica") + 
+  coord_equal() +
+  scale_fill_gradient(name = "# of attacks",
+                      low = "sky blue", 
+                      high = "dark blue") +
+  facet_wrap(~source_country, 
+             ncol = 2) +
+  labs(x = NULL, 
+       y = NULL,
+       title = "Attacks on top 4 countries by weekday and time of day") +
+  theme(axis.ticks = element_blank(),
+        axis.text.x = element_text(size = 7),
+        plot.title = element_text(hjust = 0.5),
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 6) )
+```
