@@ -38,7 +38,7 @@ website:
           - text: Ex[6.1] Create Calendar Heatmap
             href: handsOn_ex6.1.qmd
           - text: Ex[6.2] Create Cycle Plot
-            href: handsOn_ex6.2.qm
+            href: handsOn_ex6.2.qmd
                         
             
       - text: In-class Exercises
