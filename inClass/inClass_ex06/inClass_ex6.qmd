@@ -1,0 +1,41 @@
+---
+title: "Visual Analysing Time-series Data"
+subtitle: "In-Class Exercise 6"
+editor: visual
+date:  18 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study focuses on visualise time-sequence data with cycle plot, calendar heatmap and slope plot with Tableau.
+
+[**Cycle Plot for Arrived Tourists by Country**](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/TouristsArrival/Dashboard1?publish=yes)
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/TouristsArrival/Dashboard1?publish=yes
+
+[**Calendar Heatmaps**](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/CalendarHeatmaps/Sheet1)
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/CalendarHeatmaps/Sheet1
+
+[**Slope Plot to Illustrate the Changes of Rice Productions by Country**](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SloptPlotforAsiaCountriesRiceProduction/Sheet1)
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/SloptPlotforAsiaCountriesRiceProduction/Sheet1
+
+[**Old vs Young Population**](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/OldvsYoungPopulation/Sheet1)
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/OldvsYoungPopulation/Sheet1

@@ -51,6 +51,8 @@ website:
             href: inClass/inClass_ex04/inClass_ex4.qmd
           - text: Ex[5] Visualise Correlation Matrices
             href: inClass/inClass_ex05/inClass_ex5.qmd
+          - text: Ex[6] Visualise Time-series Data
+            href: inClass/inClass_ex06/inClass_ex6.qmd
 
             
       - text: Take-home Exercises
