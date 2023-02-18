@@ -63,6 +63,8 @@ website:
             href: takeHome/th_ex2/th_ex2.qmd
           - text: Ex[3] Resale Prices for Singapore Public Housing Property
             href: takeHome/th_ex3/th_ex3.qmd
+          - text: Ex[4] Singapore Merchandise Trade from 2020 to 2022
+            href: takeHome/th_ex4/th_ex4.qmd
      
       - text: Workshop & Notes
         menu:

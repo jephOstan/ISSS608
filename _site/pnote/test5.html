@@ -283,6 +283,10 @@ cookieconsent.run({
     <a class="dropdown-item" href="../takeHome/th_ex3/th_ex3.html">
  <span class="dropdown-text">Ex[3] Resale Prices for Singapore Public Housing Property</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../takeHome/th_ex4/th_ex4.html">
+ <span class="dropdown-text">Ex[4] Singapore Merchandise Trade from 2020 to 2022</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -479,10 +483,7 @@ cookieconsent.run({
 <p><span style="color:#a39f9d">Usage of the code chunk below :</span></p>
 <p><span style="color:#d46e15"><strong><em>p_load( )</em></strong> - pacman -</span> to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.</p>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, knitr, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p><span style="color:#d69c3c">Remarks :</span></p>
 <p><span style="color:#d69c3c">Packages to consider -</span></p>
@@ -606,10 +607,7 @@ dbl (3): Rank, marketcap, price (USD)
 </div>
 <div class="callout-body-container">
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sgp_marketCap,<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 53
 Columns: 6
@@ -622,10 +620,7 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgp_marketCap,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
@@ -707,13 +702,10 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>top40 <span class="ot">&lt;-</span> <span class="fu">head</span>(sgp_marketCap, <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">symbol =</span> Symbol) <span class="sc">%&gt;%</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">name =</span> Name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </div>
 </div>
@@ -742,11 +734,8 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>vector_name.list <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(top40<span class="sc">$</span>name)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>vector_symbol.list <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(top40<span class="sc">$</span>symbol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </div>
 </div>
@@ -776,8 +765,6 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>test0 <span class="ot">=</span> <span class="fu">tq_get</span>(vector_symbol.list,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">get =</span> <span class="st">"stock.prices"</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">from =</span> <span class="st">"2022-12-01"</span>,</span>
@@ -788,7 +775,6 @@ $ country       &lt;chr&gt; …</code></pre>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">period  =</span> <span class="st">"weeks"</span>)</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(test0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
@@ -886,8 +872,6 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">=</span> <span class="fu">tq_get</span>(vector_symbol.list,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">get =</span> <span class="st">"stock.prices"</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">from =</span> <span class="st">"2020-01-01"</span>,</span>
@@ -898,7 +882,6 @@ $ country       &lt;chr&gt; …</code></pre>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">period  =</span> <span class="st">"weeks"</span>)</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
@@ -972,7 +955,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">25.21</td>
 <td style="text-align: right;">25.31</td>
 <td style="text-align: right;">5097800</td>
-<td style="text-align: right;">21.92995</td>
+<td style="text-align: right;">21.92996</td>
 </tr>
 </tbody>
 </table>
@@ -989,19 +972,13 @@ $ country       &lt;chr&gt; …</code></pre>
 <section id="save-rds-file" class="level4">
 <h4 class="anchored" data-anchor-id="save-rds-file">3.3.2.3 save RDS file</h4>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(stock_week, <span class="st">"data/stock_week.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="read-rds-file" class="level4">
 <h4 class="anchored" data-anchor-id="read-rds-file">3.3.2.4 read RDS file</h4>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/stock_week.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 </div>
@@ -1019,10 +996,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <p>The <a href="https://www.investopedia.com/terms/r/rateofchange.asp">Rate of Change (ROC)</a> represents the momentum of a variable over a defined period. A positive ROC typically means the stock outperforms the market within the past 2 weeks.</p>
 <p>“roc” will be derived by dividing the current “adjusted” price by the previous “adjusted price”. Next, deduct 1 before multiplying the final value by 100.</p>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stock_week<span class="sc">$</span>roc <span class="ot">&lt;-</span> ((stock_week<span class="sc">$</span>adjusted<span class="sc">/</span><span class="fu">shift</span>(stock_week<span class="sc">$</span>adjusted))<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </div>
 </div>
@@ -1049,26 +1023,23 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">&lt;-</span> <span class="fu">merge</span>(stock_week,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                    top40,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">by =</span> <span class="st">'symbol'</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(stock_week))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <colgroup>
 <col style="width: 9%">
-<col style="width: 12%">
+<col style="width: 13%">
 <col style="width: 7%">
 <col style="width: 7%">
 <col style="width: 7%">
 <col style="width: 7%">
 <col style="width: 9%">
 <col style="width: 10%">
-<col style="width: 14%">
+<col style="width: 13%">
 <col style="width: 15%">
 </colgroup>
 <thead>
@@ -1094,8 +1065,8 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">77.90</td>
 <td style="text-align: right;">78.20</td>
 <td style="text-align: right;">517909</td>
-<td style="text-align: right;">69.56584</td>
-<td style="text-align: right;">255.2765345</td>
+<td style="text-align: right;">69.56586</td>
+<td style="text-align: right;">255.276647</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="even">
@@ -1106,8 +1077,8 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">72.35</td>
 <td style="text-align: right;">74.35</td>
 <td style="text-align: right;">2092454</td>
-<td style="text-align: right;">66.14093</td>
-<td style="text-align: right;">-4.9232668</td>
+<td style="text-align: right;">66.14092</td>
+<td style="text-align: right;">-4.923297</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="odd">
@@ -1119,7 +1090,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">74.70</td>
 <td style="text-align: right;">482330</td>
 <td style="text-align: right;">66.45229</td>
-<td style="text-align: right;">0.4707463</td>
+<td style="text-align: right;">0.470757</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="even">
@@ -1131,7 +1102,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">72.55</td>
 <td style="text-align: right;">311990</td>
 <td style="text-align: right;">64.53968</td>
-<td style="text-align: right;">-2.8781643</td>
+<td style="text-align: right;">-2.878164</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="odd">
@@ -1143,7 +1114,7 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">71.80</td>
 <td style="text-align: right;">692375</td>
 <td style="text-align: right;">63.87249</td>
-<td style="text-align: right;">-1.0337733</td>
+<td style="text-align: right;">-1.033767</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 <tr class="even">
@@ -1154,8 +1125,8 @@ $ country       &lt;chr&gt; …</code></pre>
 <td style="text-align: right;">74.55</td>
 <td style="text-align: right;">75.05</td>
 <td style="text-align: right;">395475</td>
-<td style="text-align: right;">66.76366</td>
-<td style="text-align: right;">4.5264733</td>
+<td style="text-align: right;">66.76364</td>
+<td style="text-align: right;">4.526442</td>
 <td style="text-align: left;">BOC Aviation</td>
 </tr>
 </tbody>
@@ -1176,12 +1147,9 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>stock_week <span class="ot">&lt;-</span> stock_week <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">factor</span>(name,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> vector_name.list))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 </div>
@@ -1214,8 +1182,6 @@ $ country       &lt;chr&gt; …</code></pre>
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(date, roc),</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> stock_week,</span>
@@ -1252,7 +1218,6 @@ $ country       &lt;chr&gt; …</code></pre>
 <span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-08"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-10-09"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-11-26"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>
