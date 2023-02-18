@@ -1,0 +1,232 @@
+---
+title: "Visualise the Impact of Covid-19 on Import and Export "
+subtitle: " ..."
+editor: visual
+date:  18 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+The main focus of this visual analytics assignment is to ...
+
+uncover the impact of COVID-19 as well as the global economic and political dynamic in 2022 on Singapore bi-lateral trade (i.e. Import, Export and Trade Balance) by using appropriate analytical visualisation techniques learned in **Lesson 6: It's About Time**. Students are encouraged to apply appropriate interactive techniques to enhance user and data discovery experiences.
+
+## **1.1 Target Area**
+
+...
+
+# **2. R PACKAGE REQUIRED**
+
+The following are the packages required for this exercise :
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(readxl, ggstatsplot, tidyverse, gganimate, gifski, ggiraph, performance, lmtest, car, FunnelPlotR, plotly)
+```
+
+# **3. DATA**
+
+## **3.1 Acquire Data Source**
+
+This study will be based on the statistical time series of a merchandise trade data set that compiled by Enterprise Singapore. The data set is available from the [singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data).
+
+-   Download the Excel data set from the link titled "Download all in Excel".
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Highlights of the data set**]{style="color:#3a9c88"}
+
+1.  ...
+:::
+
+## **3.2 Import Data**
+
+### **3.2.1 Import attributes data**
+
+There are two (2) steps involve, which are import and inspect imported data set.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***read_xlsx( )*** - readxl -]{style="color:#d46e15"} to read Excel file into a tibble.
+
+[***select( )*** - dplyr -]{style="color:#d46e15"} to retain columns specifically, "Data Series" and column names that contain "2019", "2020", "2021", and "2022". Include "2019" as "2019 Dec" is needed in order to include "2020 Jan" in the rate calculation.
+
+[***slice( )*** - dplyr -]{style="color:#d46e15"} to remove the first row with "Total Merchandise Imports" for *trade_import* or "Total Merchandise Exports" for *trade_export*.
+
+[***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the Excel file.
+:::
+
+```{r}
+#| code-fold: false
+trade_import <- read_excel("data/merchandiseTrade_region.xlsx",
+                           sheet = "T1",
+                           range = cell_rows(10:129)) %>%
+  select(`Data Series`, contains(c("2019","2020", "2021", "2022"))) %>%
+  slice(-1) %>%
+  select(-(3:13))
+  
+problems(trade_import)
+```
+
+```{r}
+#| code-fold: false
+trade_export <-  read_xlsx("data/merchandiseTrade_region.xlsx",
+                           sheet = "T2",
+                           range = cell_rows(10:101)) %>% 
+  select(`Data Series`, contains(c("2019", "2020", "2021", "2022"))) %>%
+  slice(-1) %>%
+  select(-(3:13))
+
+problems(trade_export)
+```
+
+### **3.2.2 Inspect missing values**
+
+```{r}
+skimr::skim(trade_import)
+```
+
+```{r}
+skimr::skim(trade_export)
+```
+
+### 3.2.3 Explore variable types
+
+```{r}
+glimpse(trade_import, 70)
+```
+
+```{r}
+glimpse(trade_export, 70)
+```
+
+## 3.3 Wrangle Data
+
+### 3.3.1 Split variable
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***separate( )*** - tidyr -]{style="color:#d46e15"} to split "Data Series" into 2 new fields "country" and "unit"
+
+[***str_remove( )*** - stringr -]{style="color:#d46e15"} to remove parenthesis " ( ) " from the "unit" column.
+:::
+
+#### 3.3.1.1 Import data
+
+```{r}
+#| code-fold: false
+trade_imports <- trade_import %>%
+  separate(`Data Series`, c("country", "unit"),
+           sep = ' \\(') %>%
+  mutate(unit = str_remove(unit, '\\)'))
+```
+
+#### 3.3.1.2 Export data
+
+```{r}
+#| code-fold: false
+trade_exports <- trade_export %>%
+  separate(`Data Series`, c("country", "unit"),
+           sep = ' \\(') %>%
+  mutate(unit = str_remove(unit, '\\)'))
+```
+
+### 3.3.2 Split tables
+
+The data consists of regional (unit consists of "Million Dollars") and country (unit consists of "Thousand Dollars") . Hence, two different objects will be created for different content by filter them accordingly.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***str_detect( )*** - stringr -]{style="color:#d46e15"} to separate data table at countries level and regions level.
+
+[***slice( )*** - dplyr -]{style="color:#d46e15"} to remove "Germany, Democratic Republic Of" and "Yemen Democratic" that have 0 value for the entire 2 years.
+:::
+
+#### 3.3.2.1 Import data by "Thousand"
+
+```{r}
+#| code-fold: false
+trade_importsK <- trade_imports %>%
+  filter(str_detect(unit, "Thousand")) 
+```
+
+#### 3.3.2.2 Import data by "Million"
+
+```{r}
+#| code-fold: false
+trade_importsM <- trade_imports %>%
+  filter(str_detect(unit, "Million"))
+```
+
+#### 3.3.2.3 Export data by "Thousand"
+
+```{r}
+#| code-fold: false
+trade_exportsK <- trade_exports %>%
+  filter(str_detect(unit, "Thousand"))
+```
+
+#### 3.3.2.4 Export data by "Million"
+
+```{r}
+#| code-fold: false
+trade_exportsM <- trade_exports %>%
+  filter(str_detect(unit, "Million"))
+```
+
+### 3.3.3 Remove "country" with 0 values
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***slice( )*** - dplyr -]{style="color:#d46e15"} to remove "Germany, Democratic Republic Of" and "Yemen Democratic" that have 0 value for the entire 2 years.
+:::
+
+```{r}
+#| code-fold: false
+trade_importsK <- trade_importsK %>%
+  slice(-20, -64)
+```
+
+```{r}
+#| code-fold: false
+trade_exportsK <- trade_exportsK %>%
+  slice(-18, -62)
+```
+
+### 3.3.4 Derive trade balance variable
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***read_xlsx( )*** - readxl -]{style="color:#d46e15"} to read Excel file into a tibble.
+:::
+
+```{r}
+#| code-fold: false
+match(trade_importsK$country, trade_exportsK$country)
+```
+
+```{r}
+#| code-fold: false
+trades <- anti_join(trade_exportsK, trade_importsM, by = "country")
+```

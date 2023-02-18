@@ -45,6 +45,7 @@ The following are the packages required for this exercise :
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or the pacman repository list if it is not installed.
 
 ```{r}
+#| code-fold: false
 pacman::p_load(tidyverse, knitr, tidyquant, lubridate, ggthemes, data.table, ggHoriPlot)
 ```
 
@@ -133,10 +134,12 @@ problems(sgp_marketCap)
 
 ::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
+#| code-fold: false
 glimpse(sgp_marketCap,0)
 ```
 
 ```{r}
+#| code-fold: false
 kable(head(sgp_marketCap,5))
 ```
 :::
@@ -151,6 +154,7 @@ kable(head(sgp_marketCap,5))
 :::
 
 ```{r}
+#| code-fold: false
 top40 <- head(sgp_marketCap, 40) %>%
   select(-c(1, 4:6)) %>%
   rename(symbol = Symbol) %>%
@@ -170,6 +174,7 @@ top40 <- head(sgp_marketCap, 40) %>%
 :::
 
 ```{r}
+#| code-fold: false
 vector_name.list <- as.vector(top40$name)
 vector_symbol.list <- as.vector(top40$symbol)
 ```
@@ -191,6 +196,7 @@ The prices that retrieved with tq_get() is different from the prices displayed o
 :::
 
 ```{r}
+#| code-fold: false
 test0 = tq_get(vector_symbol.list,
                       get = "stock.prices",
                       from = "2022-12-01",
@@ -218,6 +224,7 @@ The "from" date will need to be set before December 27, 2019, if January 3, 2020
 :::
 
 ```{r}
+#| code-fold: false
 stock_week = tq_get(vector_symbol.list,
                       get = "stock.prices",
                       from = "2020-01-01",
@@ -247,12 +254,14 @@ The data is based on every week Sunday. However, the trading hours for Singapore
 #### 3.3.2.3 save RDS file
 
 ```{r}
+#| code-fold: false
 write_rds(stock_week, "data/stock_week.rds")
 ```
 
 #### 3.3.2.4 read RDS file
 
 ```{r}
+#| code-fold: false
 stock_week <- read_rds("data/stock_week.rds")
 ```
 :::
@@ -267,6 +276,7 @@ The [Rate of Change (ROC)](https://www.investopedia.com/terms/r/rateofchange.asp
 "roc" will be derived by dividing the current "adjusted" price by the previous "adjusted price". Next, deduct 1 before multiplying the final value by 100.
 
 ```{r}
+#| code-fold: false
 stock_week$roc <- ((stock_week$adjusted/shift(stock_week$adjusted))-1)*100
 ```
 :::
@@ -283,6 +293,7 @@ Users unfamiliar with the Singapore stock market may not be able to identify com
 :::
 
 ```{r}
+#| code-fold: false
 stock_week <- merge(stock_week,
                     top40,
                     by = 'symbol')
@@ -299,6 +310,7 @@ kable(head(stock_week))
 :::
 
 ```{r}
+#| code-fold: false
 stock_week <- stock_week %>%
   mutate(name = factor(name,
                        levels = vector_name.list))
@@ -321,6 +333,7 @@ stock_week <- stock_week %>%
 :::
 
 ```{r}
+#| code-fold: false
 ggplot() +
   geom_horizon(aes(date, roc),
                data = stock_week,

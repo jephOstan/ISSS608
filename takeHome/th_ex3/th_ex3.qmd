@@ -745,3 +745,5 @@ bptest(model1)
 Remarks :
 
 The p-value is smaller than 0.05. Hence, the null hypothesis is rejected, meaning there is heteroscedasticity present in this model1. The output for this model will need to further verify for its validity.
+
+!!!!! This output may suggest there is a submarket or more presence.

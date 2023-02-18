@@ -1936,18 +1936,12 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>trade_importsK <span class="ot">&lt;-</span> trade_importsK <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="sc">-</span><span class="dv">64</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>trade_exportsK <span class="ot">&lt;-</span> trade_exportsK <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span><span class="dv">18</span>, <span class="sc">-</span><span class="dv">62</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="derive-trade-balance-variable" class="level3">
@@ -1969,10 +1963,7 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">match</span>(trade_importsK<span class="sc">$</span>country, trade_exportsK<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 NA 15 16 NA 17 18 19 20 21 22 23
  [26] 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48
@@ -1982,13 +1973,7 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 </div>
 </div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>trades <span class="ot">&lt;-</span> <span class="fu">anti_join</span>(trade_exportsK, trade_importsM, <span class="at">by =</span> <span class="st">"country"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-
 </div>
 
 
