@@ -311,7 +311,7 @@ trades <- trades %>%
 
 ### 3.3.5 Extract countries
 
-#### 3.3.5.1 Countries with trade balance 
+#### 3.3.5.1 Countries with trade balance
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -338,7 +338,7 @@ unique(export_xCountries$country)
 
 ```{r}
 #| code-fold: false
-#| fig-height: 16
+#| fig-height: 18
 #| fig-width: 12
 ggplot() + 
   geom_horizon(aes(period, rate),
@@ -347,14 +347,33 @@ ggplot() +
                horizonscale = c(-15, -5, -1, 0, 1, 5)) +
   scale_fill_hcl(palette = "RdBu") +
   facet_grid(country~.) +
+  labs (x = "Period",
+        title = "Overview of Singapore Trade Balance with N Countries",
+        subtitle = "from year January 2020 to December 2022",
+        caption = "Data Source : Singstat.gov.sg, 2023") +
   theme_few() +
-  theme(
+  theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
+        plot.title = element_text (size = 24, 
+                                   colour = "#302f2f",
+                                   face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     margin = margin(0,0,10,0)),
+        plot.caption = element_text(size = 10,
+                                    colour = "#424242",
+                                    hjust = 0,
+                                    vjust = -1.5),
     panel.spacing.y = unit(0, "lines"),
-    strip.text.y = element_text(size = 5, angle = 0, hjust = 0),
+    strip.text.y = element_text(size = 8, 
+                                angle = 0, 
+                                hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     axis.ticks.y = element_blank(),
-    axis.text.x = element_text(size = 7, angle = 90, hjust = 0, vjust = 0.5),
+    axis.ticks.x = element_line(colour = "#969595",
+                                linewidth = 0.5),
+    axis.text.x = element_text(size = 10, angle = 75, hjust = 0, vjust = -0.2),
     axis.title.x = element_blank(),
     panel.border = element_blank(),
     legend.position = "none"
@@ -364,260 +383,251 @@ ggplot() +
                date_labels = "%b '%y",
                limit = c(as.Date("2020-01-01"),
                          as.Date("2022-12-31"))) +
-  labs (x = "Period") +
-  ggtitle("Singapore Trade Balance with N Countries from year 2020 to 2022") +
   geom_vline(xintercept = as.Date("2022-11-16"), color = "limegreen", size = 1) + 
   geom_vline(xintercept = as.Date("2022-09-05"), color = "limegreen", size = 1) +
   geom_vline(xintercept = as.Date("2022-03-16"), color = "limegreen", size = 1) +
   geom_vline(xintercept = as.Date("2021-08-23"), color = "limegreen", size = 1) +
-  geom_vline(xintercept = as.Date("2022-06-22"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-06-14"), color = "orange", size = 1) +
   geom_vline(xintercept = as.Date("2022-09-19"), color = "orange", size = 1) + 
   geom_vline(xintercept = as.Date("2022-09-11"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-08-01"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-06-22"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-06-14"), color = "orange", size = 1) +
   geom_vline(xintercept = as.Date("2022-05-26"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-03-01"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2022-03-24"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2022-02-24"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2021-02-24"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2021-01-07"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2020-12-01"), color = "purple", size = 1) +
   geom_vline(xintercept = as.Date("2022-04-26"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-11-09"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2021-05-08"), color = "red", size = 1) + 
+  geom_vline(xintercept = as.Date("2022-03-24"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-11-26"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2021-10-09"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2021-11-26"), color = "red", size = 1) 
+  geom_vline(xintercept = as.Date("2021-05-08"), color = "red", size = 1) + 
+  geom_vline(xintercept = as.Date("2020-11-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
 ```
 
 Remarks :
 
-**DATES:**  16-18/11/2022
-
-**INDUSTRY:**  Construction and architecture
-
-Singapore's largest construction fair. The most modern solutions in the field of building materials, construction technology as well as interior finishings and interior design are presented here.
-
-16 NOV 2022
-
-18 NOV 2022
-
-### [Architecture & Building Services 2022](https://web.micepad.co/architecture--building-services-2022)
-
-Enterprise Singapore
-
-Singapore
-
-Architecture & Building Services (ABS) encompasses seven physical exhibitions will take place at the Marina Bay Sands Singapore Expo from 16 - 18 November, together with all 10 major conferences over the three days. Exhibitors are able to discover the procurement needs of more than 10,000 trade visitors and professionals from 7 synergistic trade shows all under one roof on the same dates. Archit\...
-
-<br>
-
-26 OCT 2022
-
-28 OCT 2022
-
-### [Glasstech Asia 2022](https://web.micepad.co/glasstech-asia-2022)
-
-Enterprise Singapore
-
-Singapore
-
-Being reputed as the 'Glass Hub of Southeast Asia', this unparalleled glass exhibition provides regional industry players a deeper insight to the glass manufacturing, processing, products and materials sectors. It is therefore an excellent platform for industry players across the globe to step foot and tap into the growing market of Southeast Asia. This event is supported under International Mark\...
-
-+------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [**\                                                                         | [7.6 quake 78 km northwest of Lae, Morobe Province, Papua New Guinea, Sep 11, 2022 9:46 am (GMT +10)](https://www.volcanodiscovery.com/earthquakes/7019421/2022-09-10/23h46/magnitude7-Papua-New-Guinea.html) |
-| Papua New Guinea**](https://www.volcanodiscovery.com/earthquakes/papua.html) |                                                                                                                                                                                                               |
-+==============================================================================+===============================================================================================================================================================================================================+
-+------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-+---------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [**\                                                                | [7.7 quake North Pacific Ocean, 99 km southeast of Tecoman, Colima, Mexico, Sep 19, 2022 1:05 pm (GMT -5)](https://www.volcanodiscovery.com/earthquakes/7040170/2022-09-19/18h05/magnitude7-Mexico.html) |
-| Mexico**](https://www.volcanodiscovery.com/earthquakes/mexico.html) |                                                                                                                                                                                                          |
-+=====================================================================+==========================================================================================================================================================================================================+
-+---------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-https://www.volcanodiscovery.com/largest-recent-by-country/earthquakes/archive/2022.html
-
-|  5  | [**Peru**](https://www.volcanodiscovery.com/earthquakes/peru.html) | [7.2 quake 30 km east of Ayaviri, Puno, Peru, May 26, 2022 7:02 am (GMT -5)](https://www.volcanodiscovery.com/earthquakes/6821838/2022-05-26/12h02/magnitude7-Ecuador.html) |
-|:---:|--------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-
-<br>
-
-**2022-09-05 to 08 :** Food and Beverage, HORECA Fairs[^3]
-
-[^3]: MakeYourAsia. 2022. Trade Fairs in Singapore. https://makeyourasia.com/trade-fairs/trade-fairs-singapore.html
-
-The largest food industry and HORECA fairs in Singapore. Due to the great interest from both exhibitors and visitors, since 2021, it is organized at two exhibition centers: Singapore Expo and Suntec City.
-
-**DATES:** 05-08/09/2022
-
-**INDUSTRY:** Energy, gas
-
-The fair, coorganized with a series of gas industry conferences, focusing in particular on production and transmission technologies, as well as the application of natural gas, LNG and alternative energy sources. One of the most important world events in the gas industry.
-
-### [**COMEX SHOW**](https://www.comexitshow.com.sg/)
-
-**CITY:** Singapore
-
-**DATES:** 01-04/09/2022
-
-**INDUSTRY:**  IT, electronics
-
-The fair is organized offline and online. The latest electronic devices are presented there: Laptops, telephones, accessories, etc. The presentations are combined with promotions. A great opportunity to reach out to potential retail customers.
-
-### [June 2022 Afghanistan earthquake](https://en.wikipedia.org/wiki/June_2022_Afghanistan_earthquake)
-
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEUAAAD+/v41NTUBAQEAAABZWVknJycWFhaZmZmIiIjp6ellZWXMzMzX19eurq54eHhHR0dExXFyAAAAAXRSTlMAQObYZgAAAPtJREFUeAG8kAWOBDAMA9d1Sin+/7XXbpZZdBaURlMrhx28ycGCD/n0bvkBwJf8C+AoIvRAWGtMyHGtCWkfxW+DRopuuIjUtTQJDStevNoXWaRjRSllLd1O8FFhgEZx2BmkAmHC8HwpOUyxSA50VqOjXgAl50URvNWPBRcAnmwnhbcduthqQCO9KYTFBG7eDWoK1T47AZX9DuiUYT/TuhX3MGpnD51kPprSA9Dl+BCKl7jWHHEHmHsLWhNZZMxPQCLTEuy+cYF6D9i8Q5e2Lcyz4AGwKdJbX0p7AegC2qnvxAsAxQRAYH8J6Dg1a/lvpKRJinMW4cxLMPsDAJjSCaG8cPmnAAAAAElFTkSuQmCC){alt=""}](https://en.wikipedia.org/wiki/June_2022_Afghanistan_earthquake)
-
-[Wikipediahttps://en.wikipedia.org › wiki › June_2022_Afghanis\...](https://en.wikipedia.org/wiki/June_2022_Afghanistan_earthquake)
-
-A 4.0-kilometre (2.5 mi) deep ***earthquake*** measuring magnitude (Mw ) 6.2 struck southeastern ***Afghanistan*** on 22 June ***2022*** at 01:24:36 AFT (on 21 June ***2022*** at \...
-
-### [2022 Pakistan floods](https://en.wikipedia.org/wiki/2022_Pakistan_floods)
-
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEUAAAD+/v41NTUBAQEAAABZWVknJycWFhaZmZmIiIjp6ellZWXMzMzX19eurq54eHhHR0dExXFyAAAAAXRSTlMAQObYZgAAAPtJREFUeAG8kAWOBDAMA9d1Sin+/7XXbpZZdBaURlMrhx28ycGCD/n0bvkBwJf8C+AoIvRAWGtMyHGtCWkfxW+DRopuuIjUtTQJDStevNoXWaRjRSllLd1O8FFhgEZx2BmkAmHC8HwpOUyxSA50VqOjXgAl50URvNWPBRcAnmwnhbcduthqQCO9KYTFBG7eDWoK1T47AZX9DuiUYT/TuhX3MGpnD51kPprSA9Dl+BCKl7jWHHEHmHsLWhNZZMxPQCLTEuy+cYF6D9i8Q5e2Lcyz4AGwKdJbX0p7AegC2qnvxAsAxQRAYH8J6Dg1a/lvpKRJinMW4cxLMPsDAJjSCaG8cPmnAAAAAElFTkSuQmCC){alt=""}](https://en.wikipedia.org/wiki/2022_Pakistan_floods)
-
-[Wikipediahttps://en.wikipedia.org › wiki › 2022_Pakistan_floods](https://en.wikipedia.org/wiki/2022_Pakistan_floods)
-
-From 14 June to October ***2022***, ***floods*** in ***Pakistan*** killed 1,739 people, and caused ₨ 3.2 trillion (\$14.9 billion) of damage and ₨ 3.3 trillion (\$15.2 billion) \...
-
-Date: 14 June 2022 -- October 2022
-
-18 MAY 2022
-
-20 MAY 2022
-
-### [Milipol Asia-Pacific 2022](https://web.micepad.co/milipol-asia-pacific-2022)
-
-Enterprise Singapore (LEAD)
-
-Singapore
-
-MILIPOL Asia-Pacific 2021 Asia Pacific\'s Largest Homeland Security event receives official support from the Ministry of Home Affairs, Singapore and the Ministry of the Interior of France. Milipol Asia-Pacific 2021 continues to serve the ASEAN Region and retain its 3-day format showcasing the latest technology solutions in the Defence and Security environment. The Show will address the fundamenta\...
-
-<br>
-
-**2022-04-26 : Singapore Disease Outbreak Response System Condition (DORSCON) Orange to Yellow**[^4]
-
-[^4]: Ministry of Health. 2022. Further easing of community and border measures. https://www.moh.gov.sg/news-highlights/details/further-easing-of-community-and-border-measures
-
-Further easing community policies (safe distancing, group size limit and events' capacity limit are lifted) and border measures.
-
-<br>
-
-**2022-03-24** **: Singapore Easing Community SMMs and Border Measures**
-
-Singapore Tasks Force eased the community Safe Management Measures (SMM) and border measures.
-
-16 MAR 2022-18 MAR 2022
-
-### [Asia Pacific Maritime 2022](https://web.micepad.co/asia-pacific-maritime-2022)
-
-Enterprise Singapore
-
-https://www.enterprisesg.gov.sg/events/lead-trade-fairs-and-business-missions?year=2022
-
-Singapore
-
-APM is a one-stop market for the region\'s maritime community, showcasing the latest in marine, workboat & offshore engineering and port technology. It offers a holistic business experience by combining exhibition, conferences and seminars. In 2018, some 1,432 exhibiting companies from over 60 countries occupied more than 21,000 sqm of exhibition space. The exhibition was attended by 14,158 visitor\...
-
-<br>
-
-**2022-02-24** **: Russia invade Ukraine**
-
-President Putin announced the begin of Russian invasion through Ukraine's eastern Donbas region.[^5]
-
-[^5]: 2022\. As Security Council meets on Ukraine crisis, Russia announces start of \'special military operation\'. UN News. https://news.un.org/en/story/2022/02/1112592
-
-<br>
-
-**2021-11-26 : OMICRON VARIANT OF COVID-19**
-
-On 26 Nov 2021, the World Health Organisation (WHO) announced the Omicron variant discovery of COVID-19.
-
--   While there was some dip to the stock market prices, due to lack of information on the virus, the impact seems to be lower than the Delta and Alpha variant of the virus for most companies.
-
-<br>
-
-**2021-10-09 : CAUTIOUS RE-OPENING WITH ENDEMIC COVID-19**
-
-Since then, the nation has acknowledged that the Zero-Covid strategy is no longer feasible due to highly infectious variants formed.
-
--   It has engaged a cautions re-opening strategy to enable Singaporeans to resume their lives, participate in social activities, open the borders and revive the economy.
-
--   One such example would be the Vaccinated Travel Lane (VTL) which allowed fully-vaccinated Singaporean citizens and permanent residents to return to Singapore without quarantine.
-
--   On 9 Oct 2021, it was announced that Singapore would open up more VTLs with other countries, including South Korea and the United States.
-
--   This saw some rise in the stock market prices, especially companies who stand to gain most such as Singapore Airlines and SATS.
-
-<br>
-
-23 AUG 2021
-
-27 AUG 2021
-
-### [SEMICON Southeast Asia 2021](https://web.micepad.co/semicon-southeast-asia-2021)
-
-Enterprise Singapore (LEAD)
-
-Singapore
-
-SEMICON Southeast Asia is the region's premier platform for engaging microelectronics manufacturing technology, provides exceptional opportunities to learn and share information about the latest developments in microelectronics, including semiconductors, MEMS, LEDs and more. The SEMICON Southeast Asia will focus on the key trends and solutions in semiconductor design and manufacturing, including e\...
-
-<br>
-
-**2021-05-08 : DELTA WAVE OF COVID-19**
-
-By May 2021, the Delta variant of COVID-19 had widely spread, causing several clusters across the nation.
-
--   The re-opening efforts put forth by the Government were heldback, Singapore reverted back to Phase 2 from 8 May, which was subsequently tightened to Phase 2 Heightened Alert from 16 May.
-
--   This tightening of measures caused the stock market prices to dip.
-
-<br>
-
-**2020-11-09 : National Vaccination Campaign**
-
-Pfizer and BioNTech SE announced a vaccine candidate that has demonstrated evidence of efficacy against COVID-19.
-
--   As the news brought about positivity of a potential return of normal activity, many shares of companies soared.
-
--   Since Dec 2020, the National Vaccination Campaign commenced and in late 2021, Singapore became the world\'s most-vaccinated country, with more than 85% of its total population fully-vaccinated.
-
-<br>
-
-**2020-06-02**
-
-Eased of circuit breaker. Enters its first phase of reopening, where businesses and activities are progressively allowed to resume, giving rise to some semblance of normalcy.
-
--   Hence, causing the stock price in the market to rise.
-
-<br>
-
-**2020-04-07 : circuit breaker**
-
-Introduced the Circuit Breaker period, where citizens practised enhanced social distancing and isolation.
-
--   Workplaces and schools closed and most shops shuttered.
-
--   Businesses were badly impacted by the drop in footfall and consumption.
-
--   However, the stock market seem to be recovering from the crash in March.
-
--   One reason could be the implementation of the Budgets the Government has dedicated to support Singaporeans and businesses in the battle against COVID-19, which amounted close to \$100 billion.
-
--   Secondly, businesses were also adapting to the change in consumer patterns through contactless digital systems, which were well-received.
-
-<br>
-
-**2020-02-07** **: initial wave of Covid-19**
-
-Disease Outbreak Response System Condition (DORSCON) to orange, signalling that the disease is severe and there is widespread transmission from unknown sources.
-
--   This is highest level ever reached since the SARS outbreak in 2003.
-
--   The severity of the pandemic caused panic and uncertainty amongst business and citizens.
-
--   More countries were also entering a lockdown state to contain the spread, disrupting global trade flows which exacerbated the market.
-
--   Hence, spurring on the COVID-19 financial crash in March 2020, which not only impacted Singapore but all major stock markets as well.
-
--   The March 2020 COVID-19 crash was a short-lived bear market, and in April 2020 stock markets re-entered a bull market.
+Click on the accordion to view the incidents that may explain the rate of trade balance fluctuation.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Date of Homeland Incidents**]{style="color:#3a9c88"}
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 Apr 26**                                                                                                                                                                                      |
++======================================================================================================================================================================================================+
+| **Singapore Disease Outbreak Response System Condition (DORSCON) Orange to Yellow**[^3]                                                                                                              |
+|                                                                                                                                                                                                      |
+| Further easing community policies (safe distancing, group size limit and events' capacity limit are lifted) and border measures.                                                                     |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 Mar 24**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Singapore Easing Community SMMs and Border Measures**                                                                                                                                              |
+|                                                                                                                                                                                                      |
+| Singapore Tasks Force eased the community Safe Management Measures (SMM) and border measures.                                                                                                        |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2021 Nov 26**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **OMICRON VARIANT OF COVID-19**                                                                                                                                                                      |
+|                                                                                                                                                                                                      |
+| On 26 Nov 2021, the World Health Organisation (WHO) announced the Omicron variant discovery of COVID-19.                                                                                             |
+|                                                                                                                                                                                                      |
+| -   While there was some dip to the stock market prices, due to lack of information on the virus, the impact seems to be lower than the Delta and Alpha variant of the virus for most companies.     |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2021 Oct 09**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **CAUTIOUS RE-OPENING WITH ENDEMIC COVID-19**                                                                                                                                                        |
+|                                                                                                                                                                                                      |
+| Since then, the nation has acknowledged that the Zero-Covid strategy is no longer feasible due to highly infectious variants formed.                                                                 |
+|                                                                                                                                                                                                      |
+| -   It has engaged a cautions re-opening strategy to enable Singaporeans to resume their lives, participate in social activities, open the borders and revive the economy.                           |
+|                                                                                                                                                                                                      |
+| -   One such example would be the Vaccinated Travel Lane (VTL) which allowed fully-vaccinated Singaporean citizens and permanent residents to return to Singapore without quarantine.                |
+|                                                                                                                                                                                                      |
+| -   On 9 Oct 2021, it was announced that Singapore would open up more VTLs with other countries, including South Korea and the United States.                                                        |
+|                                                                                                                                                                                                      |
+| -   This saw some rise in the stock market prices, especially companies who stand to gain most such as Singapore Airlines and SATS.                                                                  |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2021 May 08**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **DELTA WAVE OF COVID-19**                                                                                                                                                                           |
+|                                                                                                                                                                                                      |
+| By May 2021, the Delta variant of COVID-19 had widely spread, causing several clusters across the nation.                                                                                            |
+|                                                                                                                                                                                                      |
+| -   The re-opening efforts put forth by the Government were heldback, Singapore reverted back to Phase 2 from 8 May, which was subsequently tightened to Phase 2 Heightened Alert from 16 May.       |
+|                                                                                                                                                                                                      |
+| -   This tightening of measures caused the stock market prices to dip.                                                                                                                               |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2020 Nov 09**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **National Vaccination Campaign**                                                                                                                                                                    |
+|                                                                                                                                                                                                      |
+| Pfizer and BioNTech SE announced a vaccine candidate that has demonstrated evidence of efficacy against COVID-19.                                                                                    |
+|                                                                                                                                                                                                      |
+| -   Since Dec 2020, the National Vaccination Campaign commenced and in late 2021, Singapore became the world's most-vaccinated country, with more than 85% of its total population fully-vaccinated. |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2020 Jun 02**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Eased of circuit breaker**                                                                                                                                                                         |
+|                                                                                                                                                                                                      |
+| Enters its first phase of reopening, where businesses and activities are progressively allowed to resume, giving rise to some semblance of normalcy.                                                 |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2020 Apr 07**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Circuit breaker**                                                                                                                                                                                  |
+|                                                                                                                                                                                                      |
+| Introduced the Circuit Breaker period, where citizens practised enhanced social distancing and isolation.                                                                                            |
+|                                                                                                                                                                                                      |
+| -   Workplaces and schools closed and most shops shuttered.                                                                                                                                          |
+|                                                                                                                                                                                                      |
+| -   Businesses were badly impacted by the drop in footfall and consumption.                                                                                                                          |
+|                                                                                                                                                                                                      |
+| -   However, the stock market seem to be recovering from the crash in March.                                                                                                                         |
+|                                                                                                                                                                                                      |
+| -   One reason could be the implementation of the Budgets the Government has dedicated to support Singaporeans and businesses in the battle against COVID-19, which amounted close to \$100 billion. |
+|                                                                                                                                                                                                      |
+| -   Secondly, businesses were also adapting to the change in consumer patterns through contactless digital systems, which were well-received.                                                        |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2020 Feb 07**                                                                                                                                                                                      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Initial wave of Covid-19**                                                                                                                                                                         |
+|                                                                                                                                                                                                      |
+| Disease Outbreak Response System Condition (DORSCON) to orange, signalling that the disease is severe and there is widespread transmission from unknown sources.                                     |
+|                                                                                                                                                                                                      |
+| -   This is highest level ever reached since the SARS outbreak in 2003.                                                                                                                              |
+|                                                                                                                                                                                                      |
+| -   The severity of the pandemic caused panic and uncertainty amongst business and citizens.                                                                                                         |
+|                                                                                                                                                                                                      |
+| -   More countries were also entering a lockdown state to contain the spread, disrupting global trade flows which exacerbated the market.                                                            |
+|                                                                                                                                                                                                      |
+| -   Hence, spurring on the COVID-19 financial crash in March 2020, which not only impacted Singapore but all major stock markets as well.                                                            |
+|                                                                                                                                                                                                      |
+| -   The March 2020 COVID-19 crash was a short-lived bear market, and in April 2020 stock markets re-entered a bull market.                                                                           |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+:::
+
+[^3]: Ministry of Health. 2022. Further easing of community and border measures. https://www.moh.gov.sg/news-highlights/details/further-easing-of-community-and-border-measures
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Date of global affairs and high economic damages disasters**]{style="color:#3a9c88"}
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 Sep**                                                                                                                                                                                                               |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [**Magnitude 7.6 earthquake in Papua New Guinea**](https://en.wikipedia.org/wiki/2022_Papua_New_Guinea_earthquake)                                                                                                         |
+|                                                                                                                                                                                                                            |
+| Power supply facilities across the region were damaged.                                                                                                                                                                    |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                            |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 Aug**                                                                                                                                                                                                               |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [**Severe drought in China**](https://www.washingtonpost.com/world/2022/08/16/china-heat-wave-climate-change-electricity/)                                                                                                 |
+|                                                                                                                                                                                                                            |
+| China authorities ordered factories in several major manufacturing regions to suspend production to conserve electricity.                                                                                                  |
+|                                                                                                                                                                                                                            |
+| [**Conflict and election-related violence in Papua New Guinea**](https://news.un.org/en/story/2022/09/1126051)                                                                                                             |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                            |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 June**                                                                                                                                                                                                              |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [**Deadliest earthquake in Afghanistan since 2002**](https://en.wikipedia.org/wiki/June_2022_Afghanistan_earthquake)                                                                                                       |
+|                                                                                                                                                                                                                            |
+| More than 25 villages were nearly decimated with a total of 10,000 homes were partially or totally destroyed.\                                                                                                             |
+| \                                                                                                                                                                                                                          |
+| [**Pakistan flood**](https://en.wikipedia.org/wiki/2022_Pakistan_floods) 10 to 12% of Pakistan was flooded. Damage cost up to ₨ 3.2 trillion (\$14.9 billion) while economic losses up to ₨ 3.3 trillion (\$15.2 billion). |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                            |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 2022 May 29                                                                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Colombian Presidential election**                                                                                                                                                                                        |
+|                                                                                                                                                                                                                            |
+| ![](images/image-1543944568.png){width="400"}                                                                                                                                                                              |
+|                                                                                                                                                                                                                            |
+| The Colombian Peso to SGD been ????                                                                                                                                                                                        |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                            |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 Feb 24**                                                                                                                                                                                                            |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [**Russia invade Ukraine**](https://news.un.org/en/story/2022/02/1112592)                                                                                                                                                  |
+|                                                                                                                                                                                                                            |
+| President Putin announced the begin of Russian invasion through Ukraine's eastern Donbas region.[^4]                                                                                                                       |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+:::
+
+[^4]: 2022\. As Security Council meets on Ukraine crisis, Russia announces start of 'special military operation'. UN News. https://news.un.org/en/story/2022/02/1112592
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Date of Currency Significant Changes**]{style="color:#3a9c88"}
+
++----------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------+
+| **2021 Feb 24**                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------+
+| Australia, AUDSGD \~ \$1.05                                                                                          |
++----------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------+
+| **2021 Jan 7**                                                                                                       |
++----------------------------------------------------------------------------------------------------------------------+
+| **Bahrain, BHDSGD \~3.497**                                                                                          |
+|                                                                                                                      |
+| The lowest within study period. Noticed a dropped of rate up to 18% in the trade balance.                            |
++----------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------+
+| **2020 Dec**                                                                                                         |
++----------------------------------------------------------------------------------------------------------------------+
+| [**Yemeni currency, Rial,**](https://tradingeconomics.com/yemen/currency) hit lowest within 5 years as of year 2023. |
++----------------------------------------------------------------------------------------------------------------------+
+:::
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**Date of Singapore international various industries trade shows**]{style="color:#3a9c88"}
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 2022 Nov 16 to 18                                                                                                                                                                                                                                                                                                                                                                                                    |
++======================================================================================================================================================================================================================================================================================================================================================================================================================+
+| [**Architecture & Building Services 2022**](https://web.micepad.co/architecture--building-services-2022)                                                                                                                                                                                                                                                                                                             |
+|                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Singapore's largest construction fair. Exhibitors are able to discover the procurement needs of more than 10,000 trade visitors and professionals                                                                                                                                                                                                                                                                    |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                                                                                                                                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2022 Oct 26 to 28**                                                                                                                                                                                                                                                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [**Glasstech Asia 2022**](https://web.micepad.co/glasstech-asia-2022)                                                                                                                                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| This glass exhibition provides a platform to connect various regional glass manufacturing, processing, products and materials sectors.                                                                                                                                                                                                                                                                               |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                                                                                                                                                                                                                                                      |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **2021 Aug 23 to 27**                                                                                                                                                                                                                                                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [**SEMICON Southeast Asia 2021**](https://web.micepad.co/semicon-southeast-asia-2021) **Singapore**                                                                                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| SEMICON Southeast Asia is the region's premier platform for engaging microelectronics manufacturing technology, provides exceptional opportunities to learn and share information about the latest developments in microelectronics, including semiconductors, MEMS, LEDs and more. The SEMICON Southeast Asia will focus on the key trends and solutions in semiconductor design and manufacturing, including e\... |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+:::
