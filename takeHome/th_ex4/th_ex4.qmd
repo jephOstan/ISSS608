@@ -424,7 +424,7 @@ europe <- trades_region %>%
 #### 3.3.6.5 European Union region
 
 ```{r}
-eu <- trades_region %>%
+eUnion <- trades_region %>%
   filter(country == "European Union")
 ```
 
@@ -448,6 +448,12 @@ hl_africa <- africa %>%
 hl_america <- america %>%
   group_by(month) %>%
   summarise(avg = mean(balance)) 
+```
+
+```{r}
+hl_eUnion <- eUnion %>%
+  group_by(month) %>%
+  summarise(avg = mean(balance))
 ```
 
 ### 3.3.8 Extract countries
@@ -474,6 +480,40 @@ export_xCountries <- trades %>%
 unique(export_xCountries$country)
 ```
 
+#### 3.3.8.3 Countries listed in European Union
+
+```{r}
+eu <- trades_trim %>%
+  filter(grepl("Austria|Belgium|Bulgaria|Croatia|Cyprus|Czech Rep|Denmark|Estonia|Finland|France|Germany|Greece|Hungary|Ireland|Italy|Latvia|Lithuania|Luxembourg|Malta|Netherlands|Poland|Portugal|Romania|Slovak Rep|Slovenia|Spain|Sweden", country))
+```
+
+```{r}
+unique(eu$country)
+```
+
+Remarks :
+
+Among the EU countries that listed in the metadata, only Bulgaria and Croatia don't have data.
+
+```{r}
+eu$month <- factor(month(eu$`period`),
+                              levels = 1:12, 
+                              labels = month.abb, 
+                              ordered = TRUE) 
+eu$year <- year(ymd(eu$`period`))
+```
+
+```{r}
+eu_test <- eu %>%
+  select(1:7) %>%
+  gather(key = "variable", value = "value", -country, -period, -rate, -diff_balance, -balance)
+```
+
+```{r}
+germany <- eu_test %>%
+  filter(country == "Germany, Federal Republic Of")
+```
+
 # 4. VISUAL ANALYSIS
 
 ## 4.1 EDA
@@ -492,7 +532,7 @@ ggplot(trades_region,
 
 ```{r}
 #| code-fold: false
-#| fig-height: 10
+#| fig-height: 8
 #| fig-width: 12
 africa_plot <- ggplot()  +
   geom_line(data = africa,
@@ -519,7 +559,7 @@ africa_plot
 
 ```{r}
 #| code-fold: false
-#| fig-height: 10
+#| fig-height: 8
 #| fig-width: 12
 america_plot <- ggplot()  +
   geom_line(data = america,
@@ -546,7 +586,7 @@ america_plot
 
 ```{r}
 #| code-fold: false
-#| fig-height: 30
+#| fig-height: 18
 #| fig-width: 12
 ggpubr::ggarrange(africa_plot, 
           america_plot,
@@ -555,9 +595,29 @@ ggpubr::ggarrange(africa_plot,
           align = "v")
 ```
 
-## 4.3 Horizontal Chart
+## 4.3 Visualise Import and Export by Country
 
-### 4.3.1 Trade balance at regional's level
+```{r}
+#| code-fold: false
+#| fig-height: 8
+#| fig-width: 12
+germany_cp <- ggplot(data = germany,
+                   aes (x = period,
+                        y = value)) +
+  geom_line(aes
+            (color = variable, linetype = variable)) + 
+  scale_color_manual(values = c("darkred", "steelblue"))
+
+germany_cp
+```
+
+Remarks :
+
+!!!!! How to visualise the EU countries in one view?
+
+## 4.4 Horizontal Chart
+
+### 4.4.1 Trade balance at regional's level
 
 ```{r}
 #| code-fold: false
@@ -631,7 +691,7 @@ ggplot() +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
 ```
 
-### 4.3.2 Trade balance at countries' level
+### 4.4.2 Trade balance at countries' level
 
 ```{r}
 #| code-fold: false
