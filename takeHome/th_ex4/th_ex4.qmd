@@ -1,6 +1,6 @@
 ---
-title: "Visualise the Impact of Covid-19 on Import and Export "
-subtitle: " ..."
+title: "Visualise Singapore trade balance of import and export regionally and at countries level"
+subtitle: "from year 2020 January to 2022 December"
 editor: visual
 date:  18 Feb 2023
 date-modified: "`r Sys.Date()`"
@@ -94,7 +94,7 @@ There are two (2) steps involve, which are import and inspect imported data set.
 
 [***read_xlsx( )*** - readxl -]{style="color:#d46e15"} to read Excel file into a tibble.
 
-[***select( )*** - dplyr -]{style="color:#d46e15"} to retain columns specifically, "Data Series" and column names that contain "2019", "2020", "2021", and "2022". Include "2019" as "2019 Dec" is needed in order to include "2020 Jan" in the rate calculation.
+[***select( )*** - dplyr -]{style="color:#d46e15"} to retain columns specifically, "Data Series" and column names that contain "2019", "2020", "2021", and "2022". Include "2019" as both Dec and Nov in 2019 are needed to compute the rate for "2020 Jan".
 
 [***slice( )*** - dplyr -]{style="color:#d46e15"} to remove the first row with "Total Merchandise Imports" for *trade_import* or "Total Merchandise Exports" for *trade_export*.
 

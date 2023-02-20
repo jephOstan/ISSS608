@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-02-18">
 
-<title>ISSS608 - Visualise the Impact of Covid-19 on Import and Export</title>
+<title>ISSS608 - Visualise Singapore trade balance of import and export regionally and at countries level</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -425,8 +425,8 @@ cookieconsent.run({
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Visualise the Impact of Covid-19 on Import and Export</h1>
-<p class="subtitle lead">…</p>
+<h1 class="title">Visualise Singapore trade balance of import and export regionally and at countries level</h1>
+<p class="subtitle lead">from year 2020 January to 2022 December</p>
 </div>
 
 
@@ -530,7 +530,7 @@ cookieconsent.run({
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:#d46e15"><strong><em>read_xlsx( )</em></strong> - readxl -</span> to read Excel file into a tibble.</p>
-<p><span style="color:#d46e15"><strong><em>select( )</em></strong> - dplyr -</span> to retain columns specifically, “Data Series” and column names that contain “2019”, “2020”, “2021”, and “2022”. Include “2019” as “2019 Dec” is needed in order to include “2020 Jan” in the rate calculation.</p>
+<p><span style="color:#d46e15"><strong><em>select( )</em></strong> - dplyr -</span> to retain columns specifically, “Data Series” and column names that contain “2019”, “2020”, “2021”, and “2022”. Include “2019” as both Dec and Nov in 2019 are needed to compute the rate for “2020 Jan”.</p>
 <p><span style="color:#d46e15"><strong><em>slice( )</em></strong> - dplyr -</span> to remove the first row with “Total&nbsp;Merchandise&nbsp;Imports” for <em>trade_import</em> or “Total&nbsp;Merchandise&nbsp;Exports” for <em>trade_export</em>.</p>
 <p><span style="color:#d46e15"><strong><em>problems( )</em></strong> - readr -</span> to reveal any parsing errors when importing the Excel file.</p>
 </div>
