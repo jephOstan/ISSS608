@@ -66,7 +66,7 @@ The following are the packages required for this exercise :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(readxl, ggHoriPlot, ggthemes, tidyverse, data.table)
+pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, lubridate, tidyverse, data.table)
 ```
 
 # **3. DATA**
@@ -108,7 +108,7 @@ trade_import <- read_excel("data/merchandiseTrade_region.xlsx",
                            range = cell_rows(10:129)) %>%
   select(`Data Series`, contains(c("2019","2020", "2021", "2022"))) %>%
   slice(-1) %>%
-  select(-(3:13))
+  select(-(4:13))
   
 problems(trade_import)
 ```
@@ -120,7 +120,7 @@ trade_export <-  read_xlsx("data/merchandiseTrade_region.xlsx",
                            range = cell_rows(10:101)) %>% 
   select(`Data Series`, contains(c("2019", "2020", "2021", "2022"))) %>%
   slice(-1) %>%
-  select(-(3:13))
+  select(-(4:13))
 
 problems(trade_export)
 ```
@@ -203,7 +203,8 @@ trade_importsK <- trade_imports %>%
 ```{r}
 #| code-fold: false
 trade_importsM <- trade_imports %>%
-  filter(str_detect(unit, "Million"))
+  filter(str_detect(unit, "Million")) %>%
+  select(-(unit))
 ```
 
 #### 3.3.2.3 Export data by "Thousand"
@@ -220,7 +221,8 @@ trade_exportsK <- trade_exports %>%
 ```{r}
 #| code-fold: false
 trade_exportsM <- trade_exports %>%
-  filter(str_detect(unit, "Million"))
+  filter(str_detect(unit, "Million")) %>%
+  select(-(unit))
 ```
 
 ### 3.3.3 Remove "country" with 0 values
@@ -243,9 +245,9 @@ trade_exportsK <- trade_exportsK %>%
   slice(-18, -62)
 ```
 
-### 3.3.4 Derive trade balance variable
+### 3.3.4 Pivot Tables
 
-#### 3.3.4.1 Pivot data
+#### 3.3.4.1 Pivot imports table
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -277,9 +279,22 @@ import_pl <- trade_importsK %>%
   relocate(period)
 ```
 
+```{r}
+importM_pl <- trade_importsM %>%
+  pivot_longer(cols = !country,
+               names_to = "temporary",
+               values_to = "import") %>%
+  mutate(period = (lubridate::ym(temporary))) %>%
+  arrange(country, period) %>%
+  select(-temporary) %>%
+  relocate(period)
+```
+
 Remarks :
 
 When using arrange function without first mutate the value with ym function from lubridate package, the period will be sorted by the alphabetical order of the months' initial character. For example, 2020 Apr be displayed first, follow by 2020 Aug, 2020 Dec, 2020 Feb...
+
+#### 3.3.4.2 Pivot exports table
 
 ```{r}
 #| code-fold: false
@@ -293,25 +308,151 @@ export_pl <- trade_exportsK %>%
   relocate(period)
 ```
 
-#### 3.3.4.2 Join tables
+```{r}
+exportM_pl <- trade_exportsM %>%
+  pivot_longer(cols = !country,
+               names_to = "temporary",
+               values_to = "export") %>%
+  mutate(period = (lubridate::ym(temporary))) %>%
+  arrange(country, period) %>%
+  select(-temporary) %>%
+  relocate(period)
+```
+
+### 3.3.5 Derive New Variables
+
+#### 3.3.5.1 Derive regionals' trade balance between exports and imports
+
+#### Step 1 - Join regionals level dataframes
+
+```{r}
+tradesM<- importM_pl %>% full_join(exportM_pl)
+```
+
+#### Step 2 - Derive variable
+
+```{r}
+trades_region <- tradesM %>%
+  mutate(balance = export-import) %>%
+  mutate(diff_balance = balance - shift(balance)) %>%
+  mutate(rate = round(
+    (diff_balance/shift(balance)),
+    digits = 2))
+```
+
+#### 3.3.5.2 Derive countries' trade balance between exports and imports
+
+#### Step 1 - Join countries level dataframes
 
 ```{r}
 trades <- import_pl %>% full_join(export_pl)
 ```
 
-#### 3.3.4.3 Derive variables
+#### Step 2 - Derive variable
 
 ```{r}
 trades <- trades %>%
   mutate(balance = export-import) %>%
+  mutate(diff_balance = balance - shift(balance)) %>%
   mutate(rate = round(
-    (balance/shift(balance))-1,
+    (diff_balance/shift(balance)),
     digits = 2))
 ```
 
-### 3.3.5 Extract countries
+#### 3.3.5.3 Derive monthly imports differences 
 
-#### 3.3.5.1 Countries with trade balance
+```{r}
+import_trim <- import_pl %>%
+  mutate(diff_imp = import - shift(import)) %>%
+  mutate(rate_imp = round(
+    (diff_imp/shift(import)),
+    digits = 2)) %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
+```
+
+#### 3.3.5.4 Derive monthly exports differences 
+
+```{r}
+export_trim <- export_pl %>%
+  mutate(diff_imp = export - shift(export)) %>%
+  mutate(rate_imp = round(
+    (diff_imp/shift(export)),
+    digits = 2)) %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
+```
+
+#### 3.3.5.5 Derive "year" and "month" variables
+
+```{r}
+trades_region$month <- factor(month(trades_region$`period`),
+                              levels = 1:12, 
+                              labels = month.abb, 
+                              ordered = TRUE) 
+trades_region$year <- year(ymd(trades_region$`period`))
+```
+
+### 3.3.6 Extract data by Region
+
+#### 3.3.6.1 Africa region
+
+```{r}
+africa <- trades_region %>%
+  filter(country == "Africa")
+```
+
+#### 3.3.6.2 America region
+
+```{r}
+america <- trades_region %>%
+  filter(country == "America")
+```
+
+#### 3.3.6.3 Asia region
+
+```{r}
+asia <- trades_region %>%
+  filter(country == "Asia")
+```
+
+#### 3.3.6.4 Europe region
+
+```{r}
+europe <- trades_region %>%
+  filter(country == "Europe")
+```
+
+#### 3.3.6.5 European Union region
+
+```{r}
+eu <- trades_region %>%
+  filter(country == "European Union")
+```
+
+#### 3.3.6.6 Oceania region
+
+```{r}
+Oceania <- trades_region %>%
+  filter(country == "Oceania")
+```
+
+### 3.3.7 Compute average by month
+
+!!!!! need this? too high level, meaningless to view at region level. Alternative?
+
+```{r}
+hl_africa <- africa %>% 
+  group_by(month) %>%
+  summarise(avg = mean(balance))
+
+
+hl_america <- america %>%
+  group_by(month) %>%
+  summarise(avg = mean(balance)) 
+```
+
+### 3.3.8 Extract countries
+
+#### 3.3.8.1 Countries with trade balance
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -320,21 +461,177 @@ trades <- trades %>%
 :::
 
 ```{r}
-trades_trim <- trades %>% drop_na(rate)
+trades_trim <- trades %>% drop_na(rate) %>%
+  filter(!period == "2019-12-01")
 ```
 
-#### 3.3.5.2 Countries with zero-export by Singapore
+#### 3.3.8.2 Countries with zero-export by Singapore
 
 ```{r}
 export_xCountries <- trades %>% 
-  filter(is.na(balance))
+  filter(is.na(balance)) 
 
 unique(export_xCountries$country)
 ```
 
 # 4. VISUAL ANALYSIS
 
-## 4.1 Horizontal Chart
+## 4.1 EDA
+
+```{r}
+ggplot(trades_region,
+       aes(x = period,
+           y = balance)) +
+  geom_col(aes(fill = country)) +
+  theme(legend.position = "top")
+```
+
+## 4.2 Cycle Plot
+
+### 4.2.1 Africa region
+
+```{r}
+#| code-fold: false
+#| fig-height: 10
+#| fig-width: 12
+africa_plot <- ggplot()  +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = balance, 
+                group = month), 
+            colour = "black") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_africa, 
+             linetype = 6, 
+             colour = "red", 
+             size = 0.5) + 
+  facet_grid(~month) +
+  labs(axis.text.x = element_blank(),
+       title = "Trade balance with Africa region, Jan 2020-Dec 2022") +
+  xlab("") +
+  ylab("Trade Balance")
+
+africa_plot
+```
+
+### 4.2.2 America region
+
+```{r}
+#| code-fold: false
+#| fig-height: 10
+#| fig-width: 12
+america_plot <- ggplot()  +
+  geom_line(data = america,
+            aes(x = year, 
+                y = balance, 
+                group = month), 
+            colour = "black") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_america, 
+             linetype = 6, 
+             colour = "red", 
+             size = 0.5) + 
+  facet_grid(~month) +
+  labs(axis.text.x = element_blank(),
+       title = "Trade balance with America region, Jan 2020-Dec 2022") +
+  xlab("") +
+  ylab("Trade Balance")
+
+america_plot
+```
+
+### 4.2.x Overview Cycle Plots
+
+```{r}
+#| code-fold: false
+#| fig-height: 30
+#| fig-width: 12
+ggpubr::ggarrange(africa_plot, 
+          america_plot,
+          ncol = 1,
+          nrow = 2,
+          align = "v")
+```
+
+## 4.3 Horizontal Chart
+
+### 4.3.1 Trade balance at regional's level
+
+```{r}
+#| code-fold: false
+#| fig-height: 10
+#| fig-width: 12
+ggplot() + 
+  geom_horizon(aes(period, rate),
+               data = trades_region,
+               origin = 0,
+               horizonscale = c(-15, -5, -1, 0, 1, 5)) +
+  scale_fill_hcl(palette = "RdBu") +
+  facet_grid(country~.) +
+  labs (x = "Period",
+        title = "Overview of Singapore Trade Balance with 6 Regions",
+        subtitle = "from year January 2020 to December 2022",
+        caption = "Data Source : Singstat.gov.sg, 2023") +
+  theme_few() +
+  theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
+        plot.title = element_text (size = 24, 
+                                   colour = "#302f2f",
+                                   face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     margin = margin(0,0,10,0)),
+        plot.caption = element_text(size = 10,
+                                    colour = "#424242",
+                                    hjust = 0,
+                                    vjust = -2),
+    panel.spacing.y = unit(0, "lines"),
+    strip.text.y = element_text(size = 8, 
+                                angle = 0, 
+                                hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(colour = "#969595",
+                                linewidth = 0.5),
+    axis.text.x = element_text(size = 10, angle = 75, hjust = 0, vjust = -0.2),
+    axis.title.x = element_blank(),
+    panel.border = element_blank(),
+    legend.position = "none"
+    ) +
+  scale_x_date(expand = c(0,0), 
+               date_breaks = "1 month", 
+               date_labels = "%b '%y",
+               limit = c(as.Date("2020-01-01"),
+                         as.Date("2022-12-31"))) +
+  geom_vline(xintercept = as.Date("2022-11-16"), color = "limegreen", size = 1) + 
+  geom_vline(xintercept = as.Date("2022-09-05"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2022-03-16"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2021-08-23"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2022-09-19"), color = "orange", size = 1) + 
+  geom_vline(xintercept = as.Date("2022-09-11"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-08-01"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-06-22"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-06-14"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-05-26"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-02-24"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2021-02-24"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2021-01-07"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2020-12-01"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2022-04-26"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2022-03-24"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-11-26"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-10-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-05-08"), color = "red", size = 1) + 
+  geom_vline(xintercept = as.Date("2020-11-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
+```
+
+### 4.3.2 Trade balance at countries' level
 
 ```{r}
 #| code-fold: false
@@ -363,7 +660,7 @@ ggplot() +
         plot.caption = element_text(size = 10,
                                     colour = "#424242",
                                     hjust = 0,
-                                    vjust = -1.5),
+                                    vjust = -2),
     panel.spacing.y = unit(0, "lines"),
     strip.text.y = element_text(size = 8, 
                                 angle = 0, 

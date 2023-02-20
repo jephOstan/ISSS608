@@ -395,13 +395,27 @@ cookieconsent.run({
   <li><a href="#split-variable" id="toc-split-variable" class="nav-link" data-scroll-target="#split-variable">3.3.1 Split variable</a></li>
   <li><a href="#split-tables" id="toc-split-tables" class="nav-link" data-scroll-target="#split-tables">3.3.2 Split tables</a></li>
   <li><a href="#remove-country-with-0-values" id="toc-remove-country-with-0-values" class="nav-link" data-scroll-target="#remove-country-with-0-values">3.3.3 Remove “country” with 0 values</a></li>
-  <li><a href="#derive-trade-balance-variable" id="toc-derive-trade-balance-variable" class="nav-link" data-scroll-target="#derive-trade-balance-variable">3.3.4 Derive trade balance variable</a></li>
-  <li><a href="#extract-countries" id="toc-extract-countries" class="nav-link" data-scroll-target="#extract-countries">3.3.5 Extract countries</a></li>
+  <li><a href="#pivot-tables" id="toc-pivot-tables" class="nav-link" data-scroll-target="#pivot-tables">3.3.4 Pivot Tables</a></li>
+  <li><a href="#derive-new-variables" id="toc-derive-new-variables" class="nav-link" data-scroll-target="#derive-new-variables">3.3.5 Derive New Variables</a></li>
+  <li><a href="#extract-data-by-region" id="toc-extract-data-by-region" class="nav-link" data-scroll-target="#extract-data-by-region">3.3.6 Extract data by Region</a></li>
+  <li><a href="#compute-average-by-month" id="toc-compute-average-by-month" class="nav-link" data-scroll-target="#compute-average-by-month">3.3.7 Compute average by month</a></li>
+  <li><a href="#extract-countries" id="toc-extract-countries" class="nav-link" data-scroll-target="#extract-countries">3.3.8 Extract countries</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#visual-analysis" id="toc-visual-analysis" class="nav-link" data-scroll-target="#visual-analysis">4. VISUAL ANALYSIS</a>
   <ul class="collapse">
-  <li><a href="#horizontal-chart" id="toc-horizontal-chart" class="nav-link" data-scroll-target="#horizontal-chart">4.1 Horizontal Chart</a></li>
+  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda">4.1 EDA</a></li>
+  <li><a href="#cycle-plot" id="toc-cycle-plot" class="nav-link" data-scroll-target="#cycle-plot">4.2 Cycle Plot</a>
+  <ul class="collapse">
+  <li><a href="#africa-region-1" id="toc-africa-region-1" class="nav-link" data-scroll-target="#africa-region-1">4.2.1 Africa region</a></li>
+  <li><a href="#america-region-1" id="toc-america-region-1" class="nav-link" data-scroll-target="#america-region-1">4.2.2 America region</a></li>
+  <li><a href="#x-overview-cycle-plots" id="toc-x-overview-cycle-plots" class="nav-link" data-scroll-target="#x-overview-cycle-plots">4.2.x Overview Cycle Plots</a></li>
+  </ul></li>
+  <li><a href="#horizontal-chart" id="toc-horizontal-chart" class="nav-link" data-scroll-target="#horizontal-chart">4.3 Horizontal Chart</a>
+  <ul class="collapse">
+  <li><a href="#trade-balance-at-regionals-level" id="toc-trade-balance-at-regionals-level" class="nav-link" data-scroll-target="#trade-balance-at-regionals-level">4.3.1 Trade balance at regional’s level</a></li>
+  <li><a href="#trade-balance-at-countries-level" id="toc-trade-balance-at-countries-level" class="nav-link" data-scroll-target="#trade-balance-at-countries-level">4.3.2 Trade balance at countries’ level</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -467,7 +481,7 @@ cookieconsent.run({
 <section id="load-r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="load-r-packages"><strong>2.1 Load R Packages</strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, ggHoriPlot, ggthemes, tidyverse, data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, ggHoriPlot, ggthemes, ggpubr, lubridate, tidyverse, data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -528,7 +542,7 @@ cookieconsent.run({
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">range =</span> <span class="fu">cell_rows</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">129</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"2019"</span>,<span class="st">"2020"</span>, <span class="st">"2021"</span>, <span class="st">"2022"</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">13</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">13</span>))</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(trade_import)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -538,7 +552,7 @@ cookieconsent.run({
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">range =</span> <span class="fu">cell_rows</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">101</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"2019"</span>, <span class="st">"2020"</span>, <span class="st">"2021"</span>, <span class="st">"2022"</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">13</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">13</span>))</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(trade_export)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -564,7 +578,7 @@ cookieconsent.run({
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">38</td>
+<td style="text-align: left;">39</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">_______________________</td>
@@ -580,7 +594,7 @@ cookieconsent.run({
 </tr>
 <tr class="odd">
 <td style="text-align: left;">numeric</td>
-<td style="text-align: left;">37</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">________________________</td>
@@ -674,6 +688,19 @@ cookieconsent.run({
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">2019 Nov</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">351419.1</td>
+<td style="text-align: right;">993525.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">149.75</td>
+<td style="text-align: right;">5888.85</td>
+<td style="text-align: right;">110877.25</td>
+<td style="text-align: right;">6389373</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">2020 Dec</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -686,7 +713,7 @@ cookieconsent.run({
 <td style="text-align: right;">6202327</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Nov</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -699,7 +726,7 @@ cookieconsent.run({
 <td style="text-align: right;">6280686</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Oct</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -712,7 +739,7 @@ cookieconsent.run({
 <td style="text-align: right;">5249328</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Sep</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -725,7 +752,7 @@ cookieconsent.run({
 <td style="text-align: right;">5479579</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Aug</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -738,7 +765,7 @@ cookieconsent.run({
 <td style="text-align: right;">5574117</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Jul</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -751,7 +778,7 @@ cookieconsent.run({
 <td style="text-align: right;">5539168</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Jun</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -764,7 +791,7 @@ cookieconsent.run({
 <td style="text-align: right;">5288235</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 May</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -777,7 +804,7 @@ cookieconsent.run({
 <td style="text-align: right;">4843684</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Apr</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -790,7 +817,7 @@ cookieconsent.run({
 <td style="text-align: right;">5583246</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Mar</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -803,7 +830,7 @@ cookieconsent.run({
 <td style="text-align: right;">5979894</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Feb</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -816,7 +843,7 @@ cookieconsent.run({
 <td style="text-align: right;">4985932</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Jan</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -829,7 +856,7 @@ cookieconsent.run({
 <td style="text-align: right;">5469816</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Dec</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -842,7 +869,7 @@ cookieconsent.run({
 <td style="text-align: right;">7876015</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Nov</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -855,7 +882,7 @@ cookieconsent.run({
 <td style="text-align: right;">6670871</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Oct</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -868,7 +895,7 @@ cookieconsent.run({
 <td style="text-align: right;">6447589</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Sep</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -881,7 +908,7 @@ cookieconsent.run({
 <td style="text-align: right;">6184737</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Aug</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -894,7 +921,7 @@ cookieconsent.run({
 <td style="text-align: right;">6519894</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Jul</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -907,7 +934,7 @@ cookieconsent.run({
 <td style="text-align: right;">6094544</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Jun</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -920,7 +947,7 @@ cookieconsent.run({
 <td style="text-align: right;">6198485</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 May</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -933,7 +960,7 @@ cookieconsent.run({
 <td style="text-align: right;">5932710</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Apr</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -946,7 +973,7 @@ cookieconsent.run({
 <td style="text-align: right;">6329544</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Mar</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -959,7 +986,7 @@ cookieconsent.run({
 <td style="text-align: right;">6291717</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Feb</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -972,7 +999,7 @@ cookieconsent.run({
 <td style="text-align: right;">5402465</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Jan</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -985,7 +1012,7 @@ cookieconsent.run({
 <td style="text-align: right;">6121009</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Dec</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -998,7 +1025,7 @@ cookieconsent.run({
 <td style="text-align: right;">7642587</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Nov</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1011,7 +1038,7 @@ cookieconsent.run({
 <td style="text-align: right;">8285837</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Oct</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1024,7 +1051,7 @@ cookieconsent.run({
 <td style="text-align: right;">7377473</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Sep</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1037,7 +1064,7 @@ cookieconsent.run({
 <td style="text-align: right;">7672003</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Aug</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1050,7 +1077,7 @@ cookieconsent.run({
 <td style="text-align: right;">8196629</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Jul</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1063,7 +1090,7 @@ cookieconsent.run({
 <td style="text-align: right;">8510236</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Jun</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1076,7 +1103,7 @@ cookieconsent.run({
 <td style="text-align: right;">7976196</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 May</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1089,7 +1116,7 @@ cookieconsent.run({
 <td style="text-align: right;">7478079</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Apr</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1102,7 +1129,7 @@ cookieconsent.run({
 <td style="text-align: right;">6958619</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Mar</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1115,7 +1142,7 @@ cookieconsent.run({
 <td style="text-align: right;">7882249</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Feb</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1128,7 +1155,7 @@ cookieconsent.run({
 <td style="text-align: right;">6469836</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Jan</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1164,7 +1191,7 @@ cookieconsent.run({
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">38</td>
+<td style="text-align: left;">39</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">_______________________</td>
@@ -1180,7 +1207,7 @@ cookieconsent.run({
 </tr>
 <tr class="odd">
 <td style="text-align: left;">numeric</td>
-<td style="text-align: left;">37</td>
+<td style="text-align: left;">38</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">________________________</td>
@@ -1274,6 +1301,19 @@ cookieconsent.run({
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">2019 Nov</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">497005.4</td>
+<td style="text-align: right;">1182360.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6579.00</td>
+<td style="text-align: right;">37895.50</td>
+<td style="text-align: right;">294744.2</td>
+<td style="text-align: right;">6333733</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">2020 Dec</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1286,7 +1326,7 @@ cookieconsent.run({
 <td style="text-align: right;">7090834</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Nov</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1299,7 +1339,7 @@ cookieconsent.run({
 <td style="text-align: right;">6852887</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Oct</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1312,7 +1352,7 @@ cookieconsent.run({
 <td style="text-align: right;">6992713</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Sep</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1325,7 +1365,7 @@ cookieconsent.run({
 <td style="text-align: right;">6561515</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Aug</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1338,7 +1378,7 @@ cookieconsent.run({
 <td style="text-align: right;">7970167</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Jul</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1351,7 +1391,7 @@ cookieconsent.run({
 <td style="text-align: right;">5935191</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Jun</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1364,7 +1404,7 @@ cookieconsent.run({
 <td style="text-align: right;">5603145</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 May</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1377,7 +1417,7 @@ cookieconsent.run({
 <td style="text-align: right;">5080433</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Apr</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1390,7 +1430,7 @@ cookieconsent.run({
 <td style="text-align: right;">5439082</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Mar</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1403,7 +1443,7 @@ cookieconsent.run({
 <td style="text-align: right;">5823657</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2020 Feb</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1416,7 +1456,7 @@ cookieconsent.run({
 <td style="text-align: right;">5116584</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2020 Jan</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1429,7 +1469,7 @@ cookieconsent.run({
 <td style="text-align: right;">5091217</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Dec</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1442,7 +1482,7 @@ cookieconsent.run({
 <td style="text-align: right;">9215862</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Nov</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1455,7 +1495,7 @@ cookieconsent.run({
 <td style="text-align: right;">8281345</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Oct</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1468,7 +1508,7 @@ cookieconsent.run({
 <td style="text-align: right;">8461516</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Sep</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1481,7 +1521,7 @@ cookieconsent.run({
 <td style="text-align: right;">8785105</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Aug</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1494,7 +1534,7 @@ cookieconsent.run({
 <td style="text-align: right;">8134968</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Jul</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1507,7 +1547,7 @@ cookieconsent.run({
 <td style="text-align: right;">7991895</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Jun</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1520,7 +1560,7 @@ cookieconsent.run({
 <td style="text-align: right;">7300460</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 May</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1533,7 +1573,7 @@ cookieconsent.run({
 <td style="text-align: right;">7161940</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Apr</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1546,7 +1586,7 @@ cookieconsent.run({
 <td style="text-align: right;">7838848</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Mar</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1559,7 +1599,7 @@ cookieconsent.run({
 <td style="text-align: right;">7470910</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2021 Feb</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1572,7 +1612,7 @@ cookieconsent.run({
 <td style="text-align: right;">5518278</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2021 Jan</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1585,7 +1625,7 @@ cookieconsent.run({
 <td style="text-align: right;">5693673</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Dec</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1598,7 +1638,7 @@ cookieconsent.run({
 <td style="text-align: right;">7403998</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Nov</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1611,7 +1651,7 @@ cookieconsent.run({
 <td style="text-align: right;">6773005</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Oct</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1624,7 +1664,7 @@ cookieconsent.run({
 <td style="text-align: right;">7810503</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Sep</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1637,7 +1677,7 @@ cookieconsent.run({
 <td style="text-align: right;">7405741</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Aug</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1650,7 +1690,7 @@ cookieconsent.run({
 <td style="text-align: right;">7548001</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Jul</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1663,7 +1703,7 @@ cookieconsent.run({
 <td style="text-align: right;">7792074</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Jun</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1676,7 +1716,7 @@ cookieconsent.run({
 <td style="text-align: right;">7717915</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 May</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1689,7 +1729,7 @@ cookieconsent.run({
 <td style="text-align: right;">7486002</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Apr</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1702,7 +1742,7 @@ cookieconsent.run({
 <td style="text-align: right;">7481265</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Mar</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1715,7 +1755,7 @@ cookieconsent.run({
 <td style="text-align: right;">8912350</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">2022 Feb</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1728,7 +1768,7 @@ cookieconsent.run({
 <td style="text-align: right;">6929035</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">2022 Jan</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
@@ -1755,9 +1795,10 @@ cookieconsent.run({
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 118
-Columns: 38
+Columns: 39
 $ `Data Series` &lt;chr&gt; "America (Million Dollars)", "Asia (Million Do…
 $ `2019 Dec`    &lt;dbl&gt; 5686.4, 27688.7, 6314.8, 1369.3, 521.4, 4237.7…
+$ `2019 Nov`    &lt;dbl&gt; 6274.7, 27905.0, 6827.1, 841.1, 642.0, 4618.5,…
 $ `2020 Dec`    &lt;dbl&gt; 4676.4, 28200.4, 6087.4, 540.9, 649.4, 4251.3,…
 $ `2020 Nov`    &lt;dbl&gt; 4588.2, 25844.9, 6133.5, 1412.8, 498.6, 4373.3…
 $ `2020 Oct`    &lt;dbl&gt; 4869.7, 26127.9, 6285.4, 577.3, 313.5, 4632.5,…
@@ -1803,9 +1844,10 @@ $ `2022 Jan`    &lt;dbl&gt; 5850.9, 35014.0, 7821.6, 810.4, 529.9, 4561.2,…</c
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 90
-Columns: 38
+Columns: 39
 $ `Data Series` &lt;chr&gt; "America (Million Dollars)", "Asia (Million Do…
 $ `2019 Dec`    &lt;dbl&gt; 4613.7, 34177.0, 3851.0, 1918.4, 503.6, 3152.4…
+$ `2019 Nov`    &lt;dbl&gt; 4822.3, 34252.7, 4173.3, 2078.1, 432.3, 3288.8…
 $ `2020 Dec`    &lt;dbl&gt; 5654.2, 34687.8, 3785.5, 1655.8, 463.5, 3190.3…
 $ `2020 Nov`    &lt;dbl&gt; 5401.9, 32142.6, 3594.1, 1648.8, 504.5, 2990.7…
 $ `2020 Oct`    &lt;dbl&gt; 5098.7, 32140.9, 4757.3, 1581.0, 510.4, 3789.1…
@@ -1918,7 +1960,8 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 <h4 class="anchored" data-anchor-id="import-data-by-million">3.3.2.2 Import data by “Million”</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>trade_importsM <span class="ot">&lt;-</span> trade_imports <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(unit, <span class="st">"Million"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(unit, <span class="st">"Million"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(unit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="export-data-by-thousand" class="level4">
@@ -1933,7 +1976,8 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 <h4 class="anchored" data-anchor-id="export-data-by-million">3.3.2.4 Export data by “Million”</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>trade_exportsM <span class="ot">&lt;-</span> trade_exports <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(unit, <span class="st">"Million"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(unit, <span class="st">"Million"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>(unit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1964,10 +2008,10 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="sc">-</span><span class="dv">18</span>, <span class="sc">-</span><span class="dv">62</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="derive-trade-balance-variable" class="level3">
-<h3 class="anchored" data-anchor-id="derive-trade-balance-variable">3.3.4 Derive trade balance variable</h3>
-<section id="pivot-data" class="level4">
-<h4 class="anchored" data-anchor-id="pivot-data">3.3.4.1 Pivot data</h4>
+<section id="pivot-tables" class="level3">
+<h3 class="anchored" data-anchor-id="pivot-tables">3.3.4 Pivot Tables</h3>
+<section id="pivot-imports-table" class="level4">
+<h4 class="anchored" data-anchor-id="pivot-imports-table">3.3.4.1 Pivot imports table</h4>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2001,46 +2045,229 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>temporary) <span class="sc">%&gt;%</span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(period)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Remarks :</p>
-<p>When using arrange function without first mutate the value with ym function from lubridate package, the period will be sorted by the alphabetical order of the months’ initial character. For example, 2020 Apr be displayed first, follow by 2020 Aug, 2020 Dec, 2020 Feb…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>export_pl <span class="ot">&lt;-</span> trade_exportsK <span class="sc">%&gt;%</span></span>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>importM_pl <span class="ot">&lt;-</span> trade_importsM <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>country,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">'temporary'</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"export"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"temporary"</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"import"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">period =</span> (lubridate<span class="sc">::</span><span class="fu">ym</span>(temporary))) <span class="sc">%&gt;%</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country, period) <span class="sc">%&gt;%</span></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>temporary) <span class="sc">%&gt;%</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(period)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<p>Remarks :</p>
+<p>When using arrange function without first mutate the value with ym function from lubridate package, the period will be sorted by the alphabetical order of the months’ initial character. For example, 2020 Apr be displayed first, follow by 2020 Aug, 2020 Dec, 2020 Feb…</p>
 </section>
-<section id="join-tables" class="level4">
-<h4 class="anchored" data-anchor-id="join-tables">3.3.4.2 Join tables</h4>
+<section id="pivot-exports-table" class="level4">
+<h4 class="anchored" data-anchor-id="pivot-exports-table">3.3.4.2 Pivot exports table</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>export_pl <span class="ot">&lt;-</span> trade_exportsK <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>country,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">'temporary'</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"export"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">period =</span> (lubridate<span class="sc">::</span><span class="fu">ym</span>(temporary))) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country, period) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>temporary) <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(period)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>trades <span class="ot">&lt;-</span> import_pl <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(export_pl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>exportM_pl <span class="ot">&lt;-</span> trade_exportsM <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>country,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"temporary"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"export"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">period =</span> (lubridate<span class="sc">::</span><span class="fu">ym</span>(temporary))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country, period) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>temporary) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(period)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="derive-variables" class="level4">
-<h4 class="anchored" data-anchor-id="derive-variables">3.3.4.3 Derive variables</h4>
+</section>
+<section id="derive-new-variables" class="level3">
+<h3 class="anchored" data-anchor-id="derive-new-variables">3.3.5 Derive New Variables</h3>
+<section id="derive-regionals-trade-balance-between-exports-and-imports" class="level4">
+<h4 class="anchored" data-anchor-id="derive-regionals-trade-balance-between-exports-and-imports">3.3.5.1 Derive regionals’ trade balance between exports and imports</h4>
+</section>
+<section id="step-1---join-regionals-level-dataframes" class="level4">
+<h4 class="anchored" data-anchor-id="step-1---join-regionals-level-dataframes">Step 1 - Join regionals level dataframes</h4>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>trades <span class="ot">&lt;-</span> trades <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">balance =</span> export<span class="sc">-</span>import) <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> <span class="fu">round</span>(</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    (balance<span class="sc">/</span><span class="fu">shift</span>(balance))<span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tradesM<span class="ot">&lt;-</span> importM_pl <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(exportM_pl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
+<section id="step-2---derive-variable" class="level4">
+<h4 class="anchored" data-anchor-id="step-2---derive-variable">Step 2 - Derive variable</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>trades_region <span class="ot">&lt;-</span> tradesM <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">balance =</span> export<span class="sc">-</span>import) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_balance =</span> balance <span class="sc">-</span> <span class="fu">shift</span>(balance)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> <span class="fu">round</span>(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    (diff_balance<span class="sc">/</span><span class="fu">shift</span>(balance)),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="derive-countries-trade-balance-between-exports-and-imports" class="level4">
+<h4 class="anchored" data-anchor-id="derive-countries-trade-balance-between-exports-and-imports">3.3.5.2 Derive countries’ trade balance between exports and imports</h4>
+</section>
+<section id="step-1---join-countries-level-dataframes" class="level4">
+<h4 class="anchored" data-anchor-id="step-1---join-countries-level-dataframes">Step 1 - Join countries level dataframes</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>trades <span class="ot">&lt;-</span> import_pl <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(export_pl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-2---derive-variable-1" class="level4">
+<h4 class="anchored" data-anchor-id="step-2---derive-variable-1">Step 2 - Derive variable</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>trades <span class="ot">&lt;-</span> trades <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">balance =</span> export<span class="sc">-</span>import) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_balance =</span> balance <span class="sc">-</span> <span class="fu">shift</span>(balance)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> <span class="fu">round</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    (diff_balance<span class="sc">/</span><span class="fu">shift</span>(balance)),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="derive-monthly-imports-differences" class="level4">
+<h4 class="anchored" data-anchor-id="derive-monthly-imports-differences">3.3.5.3 Derive monthly imports differences</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>import_trim <span class="ot">&lt;-</span> import_pl <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_imp =</span> import <span class="sc">-</span> <span class="fu">shift</span>(import)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate_imp =</span> <span class="fu">round</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    (diff_imp<span class="sc">/</span><span class="fu">shift</span>(import)),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>period <span class="sc">==</span> <span class="st">"2019-12-01"</span> <span class="sc">&amp;</span> <span class="sc">!</span>period <span class="sc">==</span> <span class="st">"2019-11-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="derive-monthly-exports-differences" class="level4">
+<h4 class="anchored" data-anchor-id="derive-monthly-exports-differences">3.3.5.4 Derive monthly exports differences</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>export_trim <span class="ot">&lt;-</span> export_pl <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_imp =</span> export <span class="sc">-</span> <span class="fu">shift</span>(export)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate_imp =</span> <span class="fu">round</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    (diff_imp<span class="sc">/</span><span class="fu">shift</span>(export)),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>period <span class="sc">==</span> <span class="st">"2019-12-01"</span> <span class="sc">&amp;</span> <span class="sc">!</span>period <span class="sc">==</span> <span class="st">"2019-11-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="derive-year-and-month-variables" class="level4">
+<h4 class="anchored" data-anchor-id="derive-year-and-month-variables">3.3.5.5 Derive “year” and “month” variables</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>trades_region<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">month</span>(trades_region<span class="sc">$</span><span class="st">`</span><span class="at">period</span><span class="st">`</span>),</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> month.abb, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">ordered =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>trades_region<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">ymd</span>(trades_region<span class="sc">$</span><span class="st">`</span><span class="at">period</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="extract-data-by-region" class="level3">
+<h3 class="anchored" data-anchor-id="extract-data-by-region">3.3.6 Extract data by Region</h3>
+<section id="africa-region" class="level4">
+<h4 class="anchored" data-anchor-id="africa-region">3.3.6.1 Africa region</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>africa <span class="ot">&lt;-</span> trades_region <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Africa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="america-region" class="level4">
+<h4 class="anchored" data-anchor-id="america-region">3.3.6.2 America region</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>america <span class="ot">&lt;-</span> trades_region <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"America"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="asia-region" class="level4">
+<h4 class="anchored" data-anchor-id="asia-region">3.3.6.3 Asia region</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>asia <span class="ot">&lt;-</span> trades_region <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Asia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="europe-region" class="level4">
+<h4 class="anchored" data-anchor-id="europe-region">3.3.6.4 Europe region</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>europe <span class="ot">&lt;-</span> trades_region <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Europe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="european-union-region" class="level4">
+<h4 class="anchored" data-anchor-id="european-union-region">3.3.6.5 European Union region</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>eu <span class="ot">&lt;-</span> trades_region <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"European Union"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="oceania-region" class="level4">
+<h4 class="anchored" data-anchor-id="oceania-region">3.3.6.6 Oceania region</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Oceania <span class="ot">&lt;-</span> trades_region <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Oceania"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="compute-average-by-month" class="level3">
+<h3 class="anchored" data-anchor-id="compute-average-by-month">3.3.7 Compute average by month</h3>
+<p>!!!!! need this? too high level, meaningless to view at region level. Alternative?</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>hl_africa <span class="ot">&lt;-</span> africa <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(balance))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>hl_america <span class="ot">&lt;-</span> america <span class="sc">%&gt;%</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg =</span> <span class="fu">mean</span>(balance)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="extract-countries" class="level3">
-<h3 class="anchored" data-anchor-id="extract-countries">3.3.5 Extract countries</h3>
+<h3 class="anchored" data-anchor-id="extract-countries">3.3.8 Extract countries</h3>
 <section id="countries-with-trade-balance" class="level4">
-<h4 class="anchored" data-anchor-id="countries-with-trade-balance">3.3.5.1 Countries with trade balance</h4>
+<h4 class="anchored" data-anchor-id="countries-with-trade-balance">3.3.8.1 Countries with trade balance</h4>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2060,19 +2287,20 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>trades_trim <span class="ot">&lt;-</span> trades <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>trades_trim <span class="ot">&lt;-</span> trades <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(rate) <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>period <span class="sc">==</span> <span class="st">"2019-12-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="countries-with-zero-export-by-singapore" class="level4">
-<h4 class="anchored" data-anchor-id="countries-with-zero-export-by-singapore">3.3.5.2 Countries with zero-export by Singapore</h4>
+<h4 class="anchored" data-anchor-id="countries-with-zero-export-by-singapore">3.3.8.2 Countries with zero-export by Singapore</h4>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>export_xCountries <span class="ot">&lt;-</span> trades <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(balance))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(export_xCountries<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>export_xCountries <span class="ot">&lt;-</span> trades <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(balance)) </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(export_xCountries<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Anguilla"                           "Bahamas"                           
@@ -2097,77 +2325,239 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 </section>
 <section id="visual-analysis" class="level1">
 <h1>4. VISUAL ANALYSIS</h1>
-<section id="horizontal-chart" class="level2">
-<h2 class="anchored" data-anchor-id="horizontal-chart">4.1 Horizontal Chart</h2>
+<section id="eda" class="level2">
+<h2 class="anchored" data-anchor-id="eda">4.1 EDA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(period, rate),</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> trades_trim,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="dv">0</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">horizonscale =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">15</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">"RdBu"</span>) <span class="sc">+</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(country<span class="sc">~</span>.) <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Period"</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Overview of Singapore Trade Balance with N Countries"</span>,</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"from year January 2020 to December 2022"</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Data Source : Singstat.gov.sg, 2023"</span>) <span class="sc">+</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_few</span>() <span class="sc">+</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="st">"cm"</span>),</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span> (<span class="at">size =</span> <span class="dv">24</span>, </span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">colour =</span> <span class="st">"#302f2f"</span>,</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>,</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">colour =</span> <span class="st">"#424242"</span>,</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">face =</span> <span class="st">"italic"</span>,</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">0</span>)),</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>,</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">colour =</span> <span class="st">"#424242"</span>,</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">0</span>,</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">1.5</span>),</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, </span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>                                <span class="at">angle =</span> <span class="dv">0</span>, </span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>                                <span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"#969595"</span>,</span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>                                <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">angle =</span> <span class="dv">75</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.2</span>),</span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 month"</span>, </span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b '%y"</span>,</span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">limit =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),</span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">as.Date</span>(<span class="st">"2022-12-31"</span>))) <span class="sc">+</span></span>
-<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-11-16"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-05"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-03-16"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-08-23"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-19"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-11"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-22"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-14"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-05-26"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-02-24"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-02-24"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-07"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-04-26"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-03-24"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-11-26"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-10-09"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-08"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-11-09"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-06-02"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-04-07"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-02-07"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trades_region,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> period,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> balance)) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<p><img src="th_ex4_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="1152"></p>
+<p><img src="th_ex4_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="cycle-plot" class="level2">
+<h2 class="anchored" data-anchor-id="cycle-plot">4.2 Cycle Plot</h2>
+<section id="africa-region-1" class="level3">
+<h3 class="anchored" data-anchor-id="africa-region-1">4.2.1 Africa region</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>africa_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>()  <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> africa,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> year, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> balance, </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">group =</span> month), </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(aes</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>             (<span class="at">yintercept =</span> avg), </span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> hl_africa, </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">6</span>, </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"red"</span>, </span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>month) <span class="sc">+</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trade balance with Africa region, Jan 2020-Dec 2022"</span>) <span class="sc">+</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Trade Balance"</span>)</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>africa_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="th_ex4_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+<section id="america-region-1" class="level3">
+<h3 class="anchored" data-anchor-id="america-region-1">4.2.2 America region</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>america_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>()  <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> america,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> year, </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> balance, </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">group =</span> month), </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(aes</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>             (<span class="at">yintercept =</span> avg), </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> hl_america, </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">6</span>, </span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"red"</span>, </span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>month) <span class="sc">+</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trade balance with America region, Jan 2020-Dec 2022"</span>) <span class="sc">+</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Trade Balance"</span>)</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>america_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="th_ex4_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+<section id="x-overview-cycle-plots" class="level3">
+<h3 class="anchored" data-anchor-id="x-overview-cycle-plots">4.2.x Overview Cycle Plots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(africa_plot, </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>          america_plot,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">ncol =</span> <span class="dv">1</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">align =</span> <span class="st">"v"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="th_ex4_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="horizontal-chart" class="level2">
+<h2 class="anchored" data-anchor-id="horizontal-chart">4.3 Horizontal Chart</h2>
+<section id="trade-balance-at-regionals-level" class="level3">
+<h3 class="anchored" data-anchor-id="trade-balance-at-regionals-level">4.3.1 Trade balance at regional’s level</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(period, rate),</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> trades_region,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="dv">0</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">horizonscale =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">15</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">"RdBu"</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(country<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Period"</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Overview of Singapore Trade Balance with 6 Regions"</span>,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"from year January 2020 to December 2022"</span>,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Data Source : Singstat.gov.sg, 2023"</span>) <span class="sc">+</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_few</span>() <span class="sc">+</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="st">"cm"</span>),</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span> (<span class="at">size =</span> <span class="dv">24</span>, </span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">colour =</span> <span class="st">"#302f2f"</span>,</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>,</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">colour =</span> <span class="st">"#424242"</span>,</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">0</span>)),</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>,</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">colour =</span> <span class="st">"#424242"</span>,</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">2</span>),</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, </span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>                                <span class="at">angle =</span> <span class="dv">0</span>, </span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>                                <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"#969595"</span>,</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>                                <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">angle =</span> <span class="dv">75</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.2</span>),</span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 month"</span>, </span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b '%y"</span>,</span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">limit =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),</span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">as.Date</span>(<span class="st">"2022-12-31"</span>))) <span class="sc">+</span></span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-11-16"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-05"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-03-16"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-08-23"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-19"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-11"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-22"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-14"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-05-26"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-02-24"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-02-24"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-07"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-04-26"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-03-24"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-11-26"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-10-09"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-08"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-11-09"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-06-02"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-04-07"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-02-07"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="th_ex4_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+<section id="trade-balance-at-countries-level" class="level3">
+<h3 class="anchored" data-anchor-id="trade-balance-at-countries-level">4.3.2 Trade balance at countries’ level</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(period, rate),</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> trades_trim,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="dv">0</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">horizonscale =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">15</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">"RdBu"</span>) <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(country<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span> (<span class="at">x =</span> <span class="st">"Period"</span>,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Overview of Singapore Trade Balance with N Countries"</span>,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"from year January 2020 to December 2022"</span>,</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Data Source : Singstat.gov.sg, 2023"</span>) <span class="sc">+</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_few</span>() <span class="sc">+</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="st">"cm"</span>),</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span> (<span class="at">size =</span> <span class="dv">24</span>, </span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">colour =</span> <span class="st">"#302f2f"</span>,</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>,</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">colour =</span> <span class="st">"#424242"</span>,</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">0</span>)),</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>,</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">colour =</span> <span class="st">"#424242"</span>,</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">2</span>),</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, </span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>                                <span class="at">angle =</span> <span class="dv">0</span>, </span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>                                <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"#969595"</span>,</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>                                <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">angle =</span> <span class="dv">75</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.2</span>),</span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
+<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
+<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 month"</span>, </span>
+<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b '%y"</span>,</span>
+<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">limit =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),</span>
+<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">as.Date</span>(<span class="st">"2022-12-31"</span>))) <span class="sc">+</span></span>
+<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-11-16"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-05"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-03-16"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-47"><a href="#cb44-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-08-23"</span>), <span class="at">color =</span> <span class="st">"limegreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-48"><a href="#cb44-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-19"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb44-49"><a href="#cb44-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-11"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-50"><a href="#cb44-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-51"><a href="#cb44-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-22"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-52"><a href="#cb44-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-14"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-53"><a href="#cb44-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-05-26"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-54"><a href="#cb44-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-02-24"</span>), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-55"><a href="#cb44-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-02-24"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-56"><a href="#cb44-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-07"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-57"><a href="#cb44-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-58"><a href="#cb44-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-04-26"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-59"><a href="#cb44-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-03-24"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-60"><a href="#cb44-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-11-26"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-61"><a href="#cb44-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-10-09"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-62"><a href="#cb44-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2021-05-08"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb44-63"><a href="#cb44-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-11-09"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-64"><a href="#cb44-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-06-02"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-65"><a href="#cb44-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-04-07"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb44-66"><a href="#cb44-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2020-02-07"</span>), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="th_ex4_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="1152"></p>
 </div>
 </div>
 <p>Remarks :</p>
@@ -2480,6 +2870,7 @@ $ `2022 Jan`    &lt;dbl&gt; 6576.2, 40021.0, 4878.2, 2681.5, 688.8, 4101.8…</c
 </div>
 
 
+</section>
 </section>
 </section>
 
