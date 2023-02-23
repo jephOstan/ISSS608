@@ -359,7 +359,7 @@ trades <- trades %>%
     digits = 2))
 ```
 
-#### 3.3.5.3 Derive monthly imports differences 
+#### 3.3.5.3 Derive monthly imports differences
 
 ```{r}
 import_trim <- import_pl %>%
@@ -370,7 +370,7 @@ import_trim <- import_pl %>%
   filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
-#### 3.3.5.4 Derive monthly exports differences 
+#### 3.3.5.4 Derive monthly exports differences
 
 ```{r}
 export_trim <- export_pl %>%
@@ -397,42 +397,48 @@ trades_region$year <- year(ymd(trades_region$`period`))
 
 ```{r}
 africa <- trades_region %>%
-  filter(country == "Africa")
+  filter(country == "Africa") %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 #### 3.3.6.2 America region
 
 ```{r}
 america <- trades_region %>%
-  filter(country == "America")
+  filter(country == "America") %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 #### 3.3.6.3 Asia region
 
 ```{r}
 asia <- trades_region %>%
-  filter(country == "Asia")
+  filter(country == "Asia") %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 #### 3.3.6.4 Europe region
 
 ```{r}
 europe <- trades_region %>%
-  filter(country == "Europe")
+  filter(country == "Europe") %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 #### 3.3.6.5 European Union region
 
 ```{r}
 eUnion <- trades_region %>%
-  filter(country == "European Union")
+  filter(country == "European Union") %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 #### 3.3.6.6 Oceania region
 
 ```{r}
 Oceania <- trades_region %>%
-  filter(country == "Oceania")
+  filter(country == "Oceania") %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 ### 3.3.7 Compute average by month
@@ -505,8 +511,9 @@ eu$year <- year(ymd(eu$`period`))
 
 ```{r}
 eu_test <- eu %>%
-  select(1:7) %>%
-  gather(key = "variable", value = "value", -country, -period, -rate, -diff_balance, -balance)
+  select(1:9) %>%
+  gather(key = "variable", value = "value", -country, -period, -rate, -diff_balance, -balance, -month, -year) %>%
+  filter(!period == "2019-12-01" & !period == "2019-11-01")
 ```
 
 ```{r}
@@ -532,9 +539,9 @@ ggplot(trades_region,
 
 ```{r}
 #| code-fold: false
-#| fig-height: 8
+#| fig-height: 6
 #| fig-width: 12
-africa_plot <- ggplot()  +
+africa_plot <- ggplot() +
   geom_line(data = africa,
             aes(x = year, 
                 y = balance, 
@@ -547,10 +554,33 @@ africa_plot <- ggplot()  +
              colour = "red", 
              size = 0.5) + 
   facet_grid(~month) +
-  labs(axis.text.x = element_blank(),
-       title = "Trade balance with Africa region, Jan 2020-Dec 2022") +
-  xlab("") +
-  ylab("Trade Balance")
+  labs(x = "Year-over-year Performance",
+       y = "Trade Balance\n(Million)",
+       title = "YOY Trade Performance between Singapore and Africa region",
+       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
+  theme(plot.title = element_text(size = 20,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 10,
+                                    colour = "#302f2f",
+                                    vjust = 1.05,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(8,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
 
 africa_plot
 ```
@@ -559,7 +589,7 @@ africa_plot
 
 ```{r}
 #| code-fold: false
-#| fig-height: 8
+#| fig-height: 6
 #| fig-width: 12
 america_plot <- ggplot()  +
   geom_line(data = america,
@@ -574,10 +604,33 @@ america_plot <- ggplot()  +
              colour = "red", 
              size = 0.5) + 
   facet_grid(~month) +
-  labs(axis.text.x = element_blank(),
-       title = "Trade balance with America region, Jan 2020-Dec 2022") +
-  xlab("") +
-  ylab("Trade Balance")
+  labs(x = "Year-over-year Performance",
+       y = "Trade Balance (Million)",
+       title = "YOY Trade Performance between Singapore and America region",
+       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
+  theme(plot.title = element_text(size = 20,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 10,
+                                    colour = "#302f2f",
+                                    vjust = 1.05,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(8,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
 
 america_plot
 ```
@@ -586,7 +639,7 @@ america_plot
 
 ```{r}
 #| code-fold: false
-#| fig-height: 18
+#| fig-height: 12
 #| fig-width: 12
 ggpubr::ggarrange(africa_plot, 
           america_plot,
@@ -599,7 +652,7 @@ ggpubr::ggarrange(africa_plot,
 
 ```{r}
 #| code-fold: false
-#| fig-height: 8
+#| fig-height: 6
 #| fig-width: 12
 germany_cp <- ggplot(data = germany,
                    aes (x = period,
@@ -615,13 +668,58 @@ Remarks :
 
 !!!!! How to visualise the EU countries in one view?
 
+```{r}
+#| code-fold: false
+#| fig-height: 8
+#| fig-width: 12
+eUnion_testPlot <- ggplot(eu_test,
+                          aes(x = round(year,0),
+                              y = rate,
+                              colour = country,
+                              group = month)) +
+  geom_line() +
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "Trade Rate",
+       colour = "European Countries",
+       title = "YOY Trade Performance between Singapore and European Countries",
+       subtitle = "study period from January 2020 to December 2022") +
+  theme(plot.title = element_text(size = 20,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 10,
+                                    colour = "#302f2f",
+                                    vjust = 1.05,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(8,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"),
+        legend.position = "bottom",
+        legend.justification = "left")
+
+eUnion_testPlot
+```
+
 ## 4.4 Horizontal Chart
 
 ### 4.4.1 Trade balance at regional's level
 
 ```{r}
 #| code-fold: false
-#| fig-height: 10
+#| fig-height: 6
 #| fig-width: 12
 ggplot() + 
   geom_horizon(aes(period, rate),
