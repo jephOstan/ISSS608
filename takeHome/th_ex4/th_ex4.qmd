@@ -66,7 +66,7 @@ The following are the packages required for this exercise :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, lubridate, tidyverse, data.table)
+pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table)
 ```
 
 # **3. DATA**
@@ -670,8 +670,11 @@ Remarks :
 
 ```{r}
 #| code-fold: false
-#| fig-height: 8
+#| fig-height: 10
 #| fig-width: 12
+eu_test$tooltip <- c(paste0("Country = ", eu_test$country,
+                            "Trading Rate = ", eu_test$rate))
+
 eUnion_testPlot <- ggplot(eu_test,
                           aes(x = round(year,0),
                               y = rate,
@@ -710,7 +713,10 @@ eUnion_testPlot <- ggplot(eu_test,
         legend.position = "bottom",
         legend.justification = "left")
 
-eUnion_testPlot
+
+girafe(ggobj = eUnion_testPlot,
+       width_svg = 12, 
+       height_svg = 10)
 ```
 
 ## 4.4 Horizontal Chart
@@ -789,86 +795,12 @@ ggplot() +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
 ```
 
-### 4.4.2 Trade balance at countries' level
-
-```{r}
-#| code-fold: false
-#| fig-height: 18
-#| fig-width: 12
-ggplot() + 
-  geom_horizon(aes(period, rate),
-               data = trades_trim,
-               origin = 0,
-               horizonscale = c(-15, -5, -1, 0, 1, 5)) +
-  scale_fill_hcl(palette = "RdBu") +
-  facet_grid(country~.) +
-  labs (x = "Period",
-        title = "Overview of Singapore Trade Balance with N Countries",
-        subtitle = "from year January 2020 to December 2022",
-        caption = "Data Source : Singstat.gov.sg, 2023") +
-  theme_few() +
-  theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
-        plot.title = element_text (size = 24, 
-                                   colour = "#302f2f",
-                                   face = "bold"),
-        plot.subtitle = element_text(size = 12,
-                                     colour = "#424242",
-                                     face = "italic",
-                                     margin = margin(0,0,10,0)),
-        plot.caption = element_text(size = 10,
-                                    colour = "#424242",
-                                    hjust = 0,
-                                    vjust = -2),
-    panel.spacing.y = unit(0, "lines"),
-    strip.text.y = element_text(size = 8, 
-                                angle = 0, 
-                                hjust = 0),
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.ticks.x = element_line(colour = "#969595",
-                                linewidth = 0.5),
-    axis.text.x = element_text(size = 10, angle = 75, hjust = 0, vjust = -0.2),
-    axis.title.x = element_blank(),
-    panel.border = element_blank(),
-    legend.position = "none"
-    ) +
-  scale_x_date(expand = c(0,0), 
-               date_breaks = "1 month", 
-               date_labels = "%b '%y",
-               limit = c(as.Date("2020-01-01"),
-                         as.Date("2022-12-31"))) +
-  geom_vline(xintercept = as.Date("2022-11-16"), color = "limegreen", size = 1) + 
-  geom_vline(xintercept = as.Date("2022-09-05"), color = "limegreen", size = 1) +
-  geom_vline(xintercept = as.Date("2022-03-16"), color = "limegreen", size = 1) +
-  geom_vline(xintercept = as.Date("2021-08-23"), color = "limegreen", size = 1) +
-  geom_vline(xintercept = as.Date("2022-09-19"), color = "orange", size = 1) + 
-  geom_vline(xintercept = as.Date("2022-09-11"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-08-01"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-06-22"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-06-14"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-05-26"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2022-02-24"), color = "orange", size = 1) +
-  geom_vline(xintercept = as.Date("2021-02-24"), color = "purple", size = 1) +
-  geom_vline(xintercept = as.Date("2021-01-07"), color = "purple", size = 1) +
-  geom_vline(xintercept = as.Date("2020-12-01"), color = "purple", size = 1) +
-  geom_vline(xintercept = as.Date("2022-04-26"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2022-03-24"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2021-11-26"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2021-10-09"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2021-05-08"), color = "red", size = 1) + 
-  geom_vline(xintercept = as.Date("2020-11-09"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
-  geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
-```
-
 Remarks :
 
 Click on the accordion to view the incidents that may explain the rate of trade balance fluctuation.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Date of Homeland Incidents**]{style="color:#3a9c88"}
+## [**Date of Homeland Events - RED lines**]{style="color:#3a9c88"}
 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **2022 Apr 26**                                                                                                                                                                                      |
@@ -982,7 +914,7 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 [^3]: Ministry of Health. 2022. Further easing of community and border measures. https://www.moh.gov.sg/news-highlights/details/further-easing-of-community-and-border-measures
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Date of global affairs and high economic damages disasters**]{style="color:#3a9c88"}
+## [**Date of Global Affairs & High Economic Damages Catastrophe - ORANGE lines**]{style="color:#3a9c88"}
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **2022 Sep**                                                                                                                                                                                                               |
@@ -1034,7 +966,7 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 [^4]: 2022\. As Security Council meets on Ukraine crisis, Russia announces start of 'special military operation'. UN News. https://news.un.org/en/story/2022/02/1112592
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Date of Currency Significant Changes**]{style="color:#3a9c88"}
+## [**Date of Significant Changes to Some Currency - PURPLE lines**]{style="color:#3a9c88"}
 
 +----------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                      |
@@ -1060,7 +992,7 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 :::
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Date of Singapore international various industries trade shows**]{style="color:#3a9c88"}
+## [**Date of SGP International Expo / Trade Shows Related to Export Industry - GREEN lines**]{style="color:#3a9c88"}
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | 2022 Nov 16 to 18                                                                                                                                                                                                                                                                                                                                                                                                    |
@@ -1086,3 +1018,77 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 | SEMICON Southeast Asia is the region's premier platform for engaging microelectronics manufacturing technology, provides exceptional opportunities to learn and share information about the latest developments in microelectronics, including semiconductors, MEMS, LEDs and more. The SEMICON Southeast Asia will focus on the key trends and solutions in semiconductor design and manufacturing, including e\... |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 :::
+
+### 4.4.2 Trade balance at countries' level
+
+```{r}
+#| code-fold: false
+#| fig-height: 18
+#| fig-width: 12
+ggplot() + 
+  geom_horizon(aes(period, rate),
+               data = trades_trim,
+               origin = 0,
+               horizonscale = c(-15, -5, -1, 0, 1, 5)) +
+  scale_fill_hcl(palette = "RdBu") +
+  facet_grid(country~.) +
+  labs (x = "Period",
+        title = "Overview of Singapore Trade Balance with N Countries",
+        subtitle = "from year January 2020 to December 2022",
+        caption = "Data Source : Singstat.gov.sg, 2023") +
+  theme_few() +
+  theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
+        plot.title = element_text (size = 24, 
+                                   colour = "#302f2f",
+                                   face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     margin = margin(0,0,10,0)),
+        plot.caption = element_text(size = 10,
+                                    colour = "#424242",
+                                    hjust = 0,
+                                    vjust = -2),
+    panel.spacing.y = unit(0, "lines"),
+    strip.text.y = element_text(size = 8, 
+                                angle = 0, 
+                                hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(colour = "#969595",
+                                linewidth = 0.5),
+    axis.text.x = element_text(size = 10, angle = 75, hjust = 0, vjust = -0.2),
+    axis.title.x = element_blank(),
+    panel.border = element_blank(),
+    legend.position = "none"
+    ) +
+  scale_x_date(expand = c(0,0), 
+               date_breaks = "1 month", 
+               date_labels = "%b '%y",
+               limit = c(as.Date("2020-01-01"),
+                         as.Date("2022-12-31"))) +
+  geom_vline(xintercept = as.Date("2022-11-16"), color = "limegreen", size = 1) + 
+  geom_vline(xintercept = as.Date("2022-09-05"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2022-03-16"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2021-08-23"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2022-09-19"), color = "orange", size = 1) + 
+  geom_vline(xintercept = as.Date("2022-09-11"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-08-01"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-06-22"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-06-14"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-05-26"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-02-24"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2021-02-24"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2021-01-07"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2020-12-01"), color = "purple", size = 1) +
+  geom_vline(xintercept = as.Date("2022-04-26"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2022-03-24"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-11-26"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-10-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-05-08"), color = "red", size = 1) + 
+  geom_vline(xintercept = as.Date("2020-11-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
+```
