@@ -1,0 +1,41 @@
+---
+title: "Visualising Geographic Data"
+subtitle: "In-Class Exercise 7"
+editor: visual
+date:  25 Feb 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+year 2000 onward, Singapore is using SVY21 for the projected coordinates system.
+
+Kertau(RSO) for military usage.
+
+# 2. VISUALISATION WITH TABLEAU
+
+## 2.1 Distribution of SingaporePools Betting Centres
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/DistributionofSingaporePoolsBettingCentres/Quantitative?publish=yes
+
+## 2.2 Distribution of Singapore Housing Price per square metre
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/DistributionofSingaporeHousingPricepersquaremetre/Sheet1?publish=yes
+
+## 2.3 Distribution of Singapore Population by Subzones
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/DistributionofSingaporePopulationbySubzones/Sheet1?publish=yes

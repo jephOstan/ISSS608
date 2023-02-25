@@ -59,7 +59,8 @@ website:
             href: inClass/inClass_ex05/inClass_ex5.qmd
           - text: Ex[6] Visualise Time-series Data
             href: inClass/inClass_ex06/inClass_ex6.qmd
-
+          - text: Ex[7] Visualise Geospatial Analysis
+            href: inClass/inClass_ex07/inClass_ex7.qmd
             
       - text: Take-home Exercises
         menu: 
