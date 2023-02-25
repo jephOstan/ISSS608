@@ -523,6 +523,8 @@ germany <- eu_test %>%
 
 # 4. VISUAL ANALYSIS
 
+!!!!! Consider circle plots for countries level?
+
 ## 4.1 EDA
 
 ```{r}
@@ -552,7 +554,7 @@ africa_plot <- ggplot() +
              data = hl_africa, 
              linetype = 6, 
              colour = "red", 
-             size = 0.5) + 
+             linewidth = 0.5) + 
   facet_grid(~month) +
   labs(x = "Year-over-year Performance",
        y = "Trade Balance\n(Million)",
@@ -602,7 +604,7 @@ america_plot <- ggplot()  +
              data = hl_america, 
              linetype = 6, 
              colour = "red", 
-             size = 0.5) + 
+             linewidth = 0.5) + 
   facet_grid(~month) +
   labs(x = "Year-over-year Performance",
        y = "Trade Balance (Million)",
@@ -727,7 +729,7 @@ girafe(ggobj = eUnion_testPlot,
 #| code-fold: false
 #| fig-height: 6
 #| fig-width: 12
-ggplot() + 
+overviewPlot_regions <- ggplot() + 
   geom_horizon(aes(period, rate),
                data = trades_region,
                origin = 0,
@@ -753,7 +755,6 @@ ggplot() +
                                     vjust = -2),
     panel.spacing.y = unit(0, "lines"),
     strip.text.y = element_text(size = 8, 
-                                angle = 0, 
                                 hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
@@ -793,6 +794,8 @@ ggplot() +
   geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
+
+overviewPlot_regions
 ```
 
 Remarks :
@@ -1025,7 +1028,7 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 #| code-fold: false
 #| fig-height: 18
 #| fig-width: 12
-ggplot() + 
+overviewPlot_countries <- ggplot() + 
   geom_horizon(aes(period, rate),
                data = trades_trim,
                origin = 0,
@@ -1091,4 +1094,7 @@ ggplot() +
   geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
+
+
+overviewPlot_countries
 ```
