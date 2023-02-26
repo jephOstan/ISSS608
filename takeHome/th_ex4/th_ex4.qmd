@@ -309,6 +309,70 @@ export_pl <- trade_exportsK %>%
 ```
 
 ```{r}
+topExport <- export_pl %>%
+  mutate(diff_export = export - shift(export)) %>% 
+  mutate(month = factor(month
+                        (export_pl$`period`),
+                        levels = 1:12, 
+                        labels = month.abb, 
+                        ordered = TRUE)) %>%
+  mutate(year = as.character(year(ymd(export_pl$`period`)))) %>%
+  mutate(rate = round(
+    (diff_export/shift(export)),
+    digits = 2)) %>%
+  group_by(country)
+
+glimpse(topExport, 60)
+```
+
+```{r}
+test <- export_pl %>%
+  mutate(diff_export = export - shift(export)) %>% 
+  mutate(month = factor(month
+                        (export_pl$`period`),
+                        levels = 1:12, 
+                        labels = month.abb, 
+                        ordered = TRUE)) %>%
+  mutate(year = as.character(year(ymd(export_pl$`period`)))) %>%
+  mutate(rate = round(
+    (diff_export/shift(export)),
+    digits = 2)) %>%
+  select(-period, -month) %>%
+  group_by(year, country) %>%
+  summarise(volume_export = sum(export)) %>%
+  filter(!year == "2019") %>%
+  pivot_wider(names_from = year, 
+              values_from = volume_export) %>%
+  arrange(desc(`2022`))
+
+glimpse(test, 60)
+```
+
+```{r}
+g16_countries <- filter(test, country == "France" | 
+                          country == "Germany, Federal Republic Of" | 
+                          country == "Italy" | country == "Japan" | 
+                          country == "United Kingdom" | 
+                          country == "United States" | country == "Canada") %>%
+  filter(country == "Argentina" | country == "Australia" | country == "Brazil" | 
+           country == "Mainland China", country == "India" | 
+           country == "Indonesia" | country == "Mexico" | 
+           country == "Republic Of Korea" | country == "Saudi Arabia")
+```
+
+Remarks :
+
+[Singapore Ministry of Foreign Affairs](https://www.mfa.gov.sg/Newsroom/Press-Statements-Transcripts-and-Photos/2022/03/20220305-sanctions) announced on March 5, 2022 to impose appropriate sanctions and restrictions against Russia[^3]. Without data for the rest of year 2022, thus, this study will explore the trading strength with G20, excluding Russia country.
+
+[^3]: Singapore Ministry of Foreign Affairs. 2022. Sanctions and Restrictions Against Russia in Response to its Invasion of Ukraine. https://www.mfa.gov.sg/Newsroom/Press-Statements-Transcripts-and-Photos/2022/03/20220305-sanctions
+
+South Africa, Türkiye don't have data.
+
+European Union as a block of Europe countries, won't be useful to visualise 1-to-1 trading relationship with Singapore.
+
+Having said all that, only 16 countries out of [G20 countries](https://www.g20.org/en/about-g20/) will be used.
+
+```{r}
 exportM_pl <- trade_exportsM %>%
   pivot_longer(cols = !country,
                names_to = "temporary",
@@ -514,11 +578,25 @@ eu_test <- eu %>%
   select(1:9) %>%
   gather(key = "variable", value = "value", -country, -period, -rate, -diff_balance, -balance, -month, -year) %>%
   filter(!period == "2019-12-01" & !period == "2019-11-01")
+
+glimpse(eu_test, 60)
+```
+
+```{r}
+eu_test$year <- as.character(eu_test$year)
+
+glimpse(eu_test, 60)
 ```
 
 ```{r}
 germany <- eu_test %>%
   filter(country == "Germany, Federal Republic Of")
+```
+
+# 
+
+```{r}
+
 ```
 
 # 4. VISUAL ANALYSIS
@@ -678,7 +756,7 @@ eu_test$tooltip <- c(paste0("Country = ", eu_test$country,
                             "Trading Rate = ", eu_test$rate))
 
 eUnion_testPlot <- ggplot(eu_test,
-                          aes(x = round(year,0),
+                          aes(x = year,
                               y = rate,
                               colour = country,
                               group = month)) +
@@ -720,6 +798,12 @@ girafe(ggobj = eUnion_testPlot,
        width_svg = 12, 
        height_svg = 10)
 ```
+
+```{r}
+
+```
+
+<br>
 
 ## 4.4 Horizontal Chart
 
@@ -808,7 +892,7 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **2022 Apr 26**                                                                                                                                                                                      |
 +======================================================================================================================================================================================================+
-| **Singapore Disease Outbreak Response System Condition (DORSCON) Orange to Yellow**[^3]                                                                                                              |
+| **Singapore Disease Outbreak Response System Condition (DORSCON) Orange to Yellow**[^4]                                                                                                              |
 |                                                                                                                                                                                                      |
 | Further easing community policies (safe distancing, group size limit and events' capacity limit are lifted) and border measures.                                                                     |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -914,7 +998,7 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 :::
 
-[^3]: Ministry of Health. 2022. Further easing of community and border measures. https://www.moh.gov.sg/news-highlights/details/further-easing-of-community-and-border-measures
+[^4]: Ministry of Health. 2022. Further easing of community and border measures. https://www.moh.gov.sg/news-highlights/details/further-easing-of-community-and-border-measures
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Date of Global Affairs & High Economic Damages Catastrophe - ORANGE lines**]{style="color:#3a9c88"}
@@ -962,11 +1046,11 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [**Russia invade Ukraine**](https://news.un.org/en/story/2022/02/1112592)                                                                                                                                                  |
 |                                                                                                                                                                                                                            |
-| President Putin announced the begin of Russian invasion through Ukraine's eastern Donbas region.[^4]                                                                                                                       |
+| President Putin announced the begin of Russian invasion through Ukraine's eastern Donbas region.[^5]                                                                                                                       |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 :::
 
-[^4]: 2022\. As Security Council meets on Ukraine crisis, Russia announces start of 'special military operation'. UN News. https://news.un.org/en/story/2022/02/1112592
+[^5]: 2022\. As Security Council meets on Ukraine crisis, Russia announces start of 'special military operation'. UN News. https://news.un.org/en/story/2022/02/1112592
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Date of Significant Changes to Some Currency - PURPLE lines**]{style="color:#3a9c88"}
