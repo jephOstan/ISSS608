@@ -22,41 +22,81 @@ format:
 
 # **1. OVERVIEW**
 
-The main focus of this visual analytics assignment is to ...
+The instruction for this visual analytics individual assignment is to -
 
-uncover the impact of COVID-19 as well as the global economic and political dynamic in 2022 on Singapore bi-lateral trade (i.e. Import, Export and Trade Balance) by using appropriate analytical visualisation techniques learned in **Lesson 6: It's About Time**. Students are encouraged to apply appropriate interactive techniques to enhance user and data discovery experiences.
+" uncover the impact of COVID-19 as well as the global economic and political dynamic in 2022 on Singapore bi-lateral trade (i.e. Import, Export and Trade Balance) by using appropriate analytical visualisation techniques learned in **Lesson 6: It's About Time**.
 
-## **1.1 Singapore Exports**
+Students are encouraged to apply appropriate interactive techniques to enhance user and data discovery experiences. "
 
-Key export products -
+## **1.1 Singapore Trade Performances**
 
-43% machinery and equipment
+Before conceptualising the approach to visualise Singapore trade performances, first needs to establish some basic understanding of the terms' definitions from the data source and the associated contexts thereof. In this assignment, the focus is on merchandise trading.
 
-19% petroleum
+### 1.1.1 Definition of Merchandise Imports
 
-13% chemical products
+Below is the definition of **Merchandise Imports** in the metadata provided by [Singapore Department of Statistics](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data) :
 
-8% misc manufactured goods.
+" Refer to all goods brought into Singapore, except those specified as excluded under the Coverage section, irrespective of whether they are for consumption, for processing, for use in manufacturing, or for subsequent re-shipment to other countries.  
 
-7% oil bunkers
+-   Merchandise imports are valued at **'CIF' (Cost, Insurance and Freight)**, that is, the value of goods at the frontier of the exporting country plus the cost of insurance and freight and any other charges when sold for export to Singapore. "
+
+### 1.1.2 Definition of Merchandise Exports
+
+Separately, **Merchandise Exports** in the metadata is defined as :
+
+" Refer to all goods taken out of Singapore, except those specified as excluded under the Coverage section.
+
+-   It comprises **domestic exports** & **re-exports**.
+
+-   Merchandise exports are **valued at 'FOB' (Free On Board)**, that is, the value of goods when sold abroad up to the point where the goods are deposited on board the outgoing vessel, aircraft or vehicle.
+
+### 1.1.3 Definition of Re-Exports
+
+From the metadata, re-exports refers to all goods exported from Singapore in the same form as they have been imported (including goods that have undergone minor processing, such as re-packing, splitting into lots, sorting or grading, marking and the like).
+
+### 1.1.4 Key Merchandise Trade
+
+Generally, there are two key types of merchandise traded by Singapore, i.e. oil (petroleum and oil bunkers) and non-oil merchandise which consists of the following **top 5 [major commodity sections traded in year 2022](https://www.singstat.gov.sg/modules/infographics/singapore-international-trade)**[^1] :
+
+[^1]: Singapore Department of Statistics. 2023. Singapore's International Trade. https://www.singstat.gov.sg/modules/infographics/singapore-international-trade
+
+| Sections                           | Exports              | Imports              |
+|------------------------------------|----------------------|----------------------|
+| Machinery & Transport Equipment    | S\$363.5 Bil (63.1%) | S\$319.0 Bil (62.6%) |
+| Chemicals & Chemical Products      | S\$83 Bil (14.4%)    | S\$52.3 Bil (10.3%)  |
+| Miscellaneous Manufactured Articls | S\$56.4 Bil (9.8%)   | S\$52.8 Bil (10.4%)  |
+| Manufactured Goods                 | S\$22.6 Bil (3.9%)   | S\$30.9 Bil (6.1%)   |
+| Food & Live Animals                | S\$15.2 Bil (2.6%)   | S\$14.0 Bil (2.7%)   |
+
+There are top 10 major trading partners ??!!
 
 Main export partners -
 
-China, 15%
+China, 15%, China-Hong Kong 12%, Malaysia 11%, Indonesia 8%, United States 6%, Japan 5%
 
-China-Hong Kong 12%
+## 1.2 Scopes of Data Visualisation
 
-Malaysia 11%
+The following are my focuses for this individual assignment, i.e. explore Singapore's trade performances via cycle plots and horizontal plots with various factors :
 
-Indonesia 8%
+-   [**Overview with all countries**]{.underline} in the dataset (this is not the main focus, just to illustrate the difficulty of deriving valuable insights)
 
-United States 6%
+-   By [**6 Regions**]{.underline}.
 
-Japan 5%
+-   By [**16 countries**]{.underline} instead of entire [G20 group members](https://www.g20.org/en/about-g20/).
 
-The top exports of Singapore are [Integrated Circuits](https://oec.world/en/profile/bilateral-product/integrated-circuits/reporter/sgp) (\$62.7B), [Refined Petroleum](https://oec.world/en/profile/bilateral-product/refined-petroleum/reporter/sgp) (\$27B), [Gold](https://oec.world/en/profile/bilateral-product/gold/reporter/sgp) (\$11.4B), [Packaged Medicaments](https://oec.world/en/profile/bilateral-product/packaged-medicaments/reporter/sgp) (\$9.9B), and [Gas Turbines](https://oec.world/en/profile/bilateral-product/gas-turbines/reporter/sgp) (\$9.24B), exporting mostly to [China](https://oec.world/en/profile/bilateral-country/chn/partner/sgp) (\$42.9B), [Hong Kong](https://oec.world/en/profile/bilateral-country/hkg/partner/sgp) (\$41.7B), [United States](https://oec.world/en/profile/bilateral-country/usa/partner/sgp) (\$27.6B), [Malaysia](https://oec.world/en/profile/bilateral-country/mys/partner/sgp) (\$22.9B), and [Indonesia](https://oec.world/en/profile/bilateral-country/idn/partner/sgp) (\$14.8B). [^1]
+    -   Exclude Russia
 
-[^1]: 2022\. OEC World. https://oec.world/en/profile/country/sgp
+        -   [Singapore Ministry of Foreign Affairs](https://www.mfa.gov.sg/Newsroom/Press-Statements-Transcripts-and-Photos/2022/03/20220305-sanctions) announced on March 5, 2022, to impose appropriate sanctions and restrictions against Russia[^2]. Without data for the rest of the year 2022, thus, this study will explore the trading strength with G20, excluding Russia country.
+
+    -   The dataset does not have trade data with South Africa and Türkiye.
+
+    -   European Union consists of a block of European countries, some of which are G20 group members. Due to duplication, the visualisation won't be meaningful to represent the bi-lateral trading relationship thereof with Singapore. Hence, European Union will be excluded from G20 for this particular scope.
+
+-   By [**ASEAN countries**]{.underline}.
+
+-   By [**European Union countries**]{.underline} as indicated in the metadata.
+
+[^2]: Singapore Ministry of Foreign Affairs. 2022. Sanctions and Restrictions Against Russia in Response to its Invasion of Ukraine. https://www.mfa.gov.sg/Newsroom/Press-Statements-Transcripts-and-Photos/2022/03/20220305-sanctions
 
 # **2. R PACKAGE REQUIRED**
 
@@ -66,21 +106,27 @@ The following are the packages required for this exercise :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table)
+pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table, plotly, viridis, hrbrthemes)
 ```
 
-# **3. DATA**
+# **3. DATA PROCESSING & PREPARATION**
 
 ## **3.1 Acquire Data Source**
 
-This study will be based on the statistical time series of a merchandise trade data set that compiled by Enterprise Singapore. The data set is available from the [singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data).
+This study will be based on the statistical time series of a merchandise trade data set compiled by Enterprise Singapore. The data set is available from [singstat.gov.sg](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data).
 
 -   Download the Excel data set from the link titled "Download all in Excel".
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Highlights of the data set**]{style="color:#3a9c88"}
 
-1.  ...
+1.  The "Data Series" for both import and export datasets consist of a mixture of regions (unit in Million Dollars) and countries level (unit in Thousand Dollars) of data.
+2.  Some countries appeared twice with different names. For example, "Germany, Federal Republic Of" and "Germany, Democratic Republic Of", or "Yemen" and "Yemen Democratic".
+3.  The "European Union" consists of Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Rep, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovak Rep, Slovenia, Spain and Sweden.
+    -   This data set does not include Croatia country.
+
+        -   Remarks : Croatia only officially adopted European currency from the year 2023 onward.
+4.  The data generation date is Feb 18, 2023.
 :::
 
 ## **3.2 Import Data**
@@ -94,12 +140,16 @@ There are two (2) steps involve, which are import and inspect imported data set.
 
 [***read_xlsx( )*** - readxl -]{style="color:#d46e15"} to read Excel file into a tibble.
 
-[***select( )*** - dplyr -]{style="color:#d46e15"} to retain columns specifically, "Data Series" and column names that contain "2019", "2020", "2021", and "2022". Include "2019" as both Dec and Nov in 2019 are needed to compute the rate for "2020 Jan".
+[***select( )*** - dplyr -]{style="color:#d46e15"} to retain columns specifically, "Data Series" and "contains" arguments for multiple column names "2019", "2020", "2021", and "2022".
+
+-   Include both Dec and Nov in 2019 to compute the monthly differences for December 2019 before can compute the rate for "2020 Jan". Else, the value for "2020 Jan" will have "Null" value.
 
 [***slice( )*** - dplyr -]{style="color:#d46e15"} to remove the first row with "Total Merchandise Imports" for *trade_import* or "Total Merchandise Exports" for *trade_export*.
 
 [***problems( )*** - readr -]{style="color:#d46e15"} to reveal any parsing errors when importing the Excel file.
 :::
+
+#### 3.2.1.1 Read T1 as import dataset
 
 ```{r}
 #| code-fold: false
@@ -112,6 +162,8 @@ trade_import <- read_excel("data/merchandiseTrade_region.xlsx",
   
 problems(trade_import)
 ```
+
+#### 3.2.1.2 Read T1 as export dataset
 
 ```{r}
 #| code-fold: false
@@ -127,59 +179,75 @@ problems(trade_export)
 
 ### **3.2.2 Inspect missing values**
 
+#### 3.2.2.1 review *import* dataframe
+
 ```{r}
 skimr::skim(trade_import)
 ```
+
+#### 3.2.2.1 review *import* dataframe
 
 ```{r}
 skimr::skim(trade_export)
 ```
 
-### 3.2.3 Explore variable types
-
-```{r}
-glimpse(trade_import, 70)
-```
-
-```{r}
-glimpse(trade_export, 70)
-```
-
 ## 3.3 Wrangle Data
 
-### 3.3.1 Split variable
+### 3.3.1 Trim "Data Series" values
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-[***separate( )*** - tidyr -]{style="color:#d46e15"} to split "Data Series" into 2 new fields "country" and "unit"
+[***separate( )*** - tidyr -]{style="color:#d46e15"} to split "Data Series" into 2 new fields "country" and "unit". This step will help shorten the country name when displayed in the horizontal chart to avoid unnecessary junk space.
 
 [***str_remove( )*** - stringr -]{style="color:#d46e15"} to remove parenthesis " ( ) " from the "unit" column.
 :::
 
-#### 3.3.1.1 Import data
+#### 3.3.1.1 For *trade_import* dataframe
 
 ```{r}
-#| code-fold: false
 trade_imports <- trade_import %>%
   separate(`Data Series`, c("country", "unit"),
            sep = ' \\(') %>%
   mutate(unit = str_remove(unit, '\\)'))
 ```
 
-#### 3.3.1.2 Export data
+#### 3.3.1.2 For *trade_export* dataframe
 
 ```{r}
-#| code-fold: false
 trade_exports <- trade_export %>%
   separate(`Data Series`, c("country", "unit"),
            sep = ' \\(') %>%
   mutate(unit = str_remove(unit, '\\)'))
 ```
 
-### 3.3.2 Split tables
+### 3.3.2 Remove "country" with 0 values
 
-The data consists of regional (unit consists of "Million Dollars") and country (unit consists of "Thousand Dollars") . Hence, two different objects will be created for different content by filter them accordingly.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***slice( )*** - dplyr -]{style="color:#d46e15"} to remove "Germany, Democratic Republic Of" and "Yemen Democratic" that have 0 value for the entire 3 years.
+:::
+
+#### 3.3.2.1 For *trade_imports* dataframe
+
+```{r}
+#| code-fold: false
+trade_imports <- trade_imports %>%
+  slice(-20, -64)
+```
+
+#### 3.3.2.2 For *trade_exports* dataframe
+
+```{r}
+#| code-fold: false
+trade_exports <- trade_exports %>%
+  slice(-18, -62)
+```
+
+### 3.3.3 Derive regions and countries level data frames
+
+Rows with "Million Dollars" as the "unit" value represents data at regions level while "Thousand Dollars" represents countries level.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -189,7 +257,7 @@ The data consists of regional (unit consists of "Million Dollars") and country (
 [***slice( )*** - dplyr -]{style="color:#d46e15"} to remove "Germany, Democratic Republic Of" and "Yemen Democratic" that have 0 value for the entire 2 years.
 :::
 
-#### 3.3.2.1 Import data by "Thousand"
+#### 3.3.3.1 For import data at countries level
 
 ```{r}
 #| code-fold: false
@@ -198,7 +266,7 @@ trade_importsK <- trade_imports %>%
   select(-(unit))
 ```
 
-#### 3.3.2.2 Import data by "Million"
+#### 3.3.3.2 For import data at regions level
 
 ```{r}
 #| code-fold: false
@@ -207,7 +275,7 @@ trade_importsM <- trade_imports %>%
   select(-(unit))
 ```
 
-#### 3.3.2.3 Export data by "Thousand"
+#### 3.3.3.3 For export data at countries level
 
 ```{r}
 #| code-fold: false
@@ -216,7 +284,7 @@ trade_exportsK <- trade_exports %>%
   select(-(unit))
 ```
 
-#### 3.3.2.4 Export data by "Million"
+#### 3.3.3.4 For export data at regions level
 
 ```{r}
 #| code-fold: false
@@ -225,29 +293,7 @@ trade_exportsM <- trade_exports %>%
   select(-(unit))
 ```
 
-### 3.3.3 Remove "country" with 0 values
-
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
-
-[***slice( )*** - dplyr -]{style="color:#d46e15"} to remove "Germany, Democratic Republic Of" and "Yemen Democratic" that have 0 value for the entire 2 years.
-:::
-
-```{r}
-#| code-fold: false
-trade_importsK <- trade_importsK %>%
-  slice(-20, -64)
-```
-
-```{r}
-#| code-fold: false
-trade_exportsK <- trade_exportsK %>%
-  slice(-18, -62)
-```
-
-### 3.3.4 Pivot Tables
-
-#### 3.3.4.1 Pivot imports table
+### 3.3.4 Pivot data frames
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -262,82 +308,326 @@ Arguments :
 
 -   "values_to" is a new variable name, "import" or "export" to store all the traded values.
 
-The code chunk is with reference to [cran.r-project](https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html)[^2].
+The code chunk is with reference to [cran.r-project](https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html)[^3].
+
+[***arrange( )*** - dplyr -]{style="color:#d46e15"} to sort order of the rows by the values of "country" and "period".
+
+[***relocate( )*** - dplyr -]{style="color:#d46e15"} to place "period" as the first column.
 :::
 
-[^2]: Pivoting. cran.r-project.org. https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html
+[^3]: Pivoting. cran.r-project.org. https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html
+
+#### 3.3.4.1 Pivot imports at countries level
 
 ```{r}
-#| code-fold: false
-import_pl <- trade_importsK %>%
+importK_pvL <- trade_importsK %>%
   pivot_longer(cols = !country,
                names_to = "temporary",
                values_to = "import") %>%
   mutate(period = (lubridate::ym(temporary))) %>%
-  arrange(country, period) %>%
-  select(-temporary) %>%
-  relocate(period)
+  arrange(country, period)
+
+importK_pvL <- importK_pvL %>%
+  mutate(month = factor(month
+                        (importK_pvL$`period`),
+                        levels = 1:12, 
+                        labels = month.abb, 
+                        ordered = TRUE)) %>%
+  mutate(year = as.character(year(ymd(importK_pvL$`period`)))) %>%
+  relocate(year, month) %>%
+  select(-temporary)
 ```
 
+#### 3.3.4.2 Pivot imports at countries level
+
 ```{r}
-importM_pl <- trade_importsM %>%
+importM_pvL <- trade_importsM %>%
   pivot_longer(cols = !country,
                names_to = "temporary",
                values_to = "import") %>%
   mutate(period = (lubridate::ym(temporary))) %>%
-  arrange(country, period) %>%
-  select(-temporary) %>%
-  relocate(period)
+  arrange(country, period) 
+
+importM_pvL <- importM_pvL %>%
+  mutate(month = factor(month
+                        (importM_pvL$`period`),
+                        levels = 1:12, 
+                        labels = month.abb, 
+                        ordered = TRUE)) %>%
+  mutate(year = as.character(year(ymd(importM_pvL$`period`)))) %>%
+  relocate(year, month) %>%
+  select(-temporary)
 ```
 
 Remarks :
 
-When using arrange function without first mutate the value with ym function from lubridate package, the period will be sorted by the alphabetical order of the months' initial character. For example, 2020 Apr be displayed first, follow by 2020 Aug, 2020 Dec, 2020 Feb...
+The "period" will be displayed alphabetically based on the months if arranged without first mutating the values with *ym* function from the lubridate package.
 
-#### 3.3.4.2 Pivot exports table
+For example, 2020 Apr be displayed first, followed by 2020 Aug, 2020 Dec, 2020 Feb...
+
+#### 3.3.4.3 Pivot exports at countries level
 
 ```{r}
-#| code-fold: false
-export_pl <- trade_exportsK %>%
+exportK_pvL <- trade_exportsK %>%
   pivot_longer(cols = !country,
                names_to = 'temporary',
                values_to = "export") %>%
   mutate(period = (lubridate::ym(temporary))) %>%
-  arrange(country, period) %>%
-  select(-temporary) %>%
-  relocate(period)
-```
+  arrange(country, period) 
 
-```{r}
-topExport <- export_pl %>%
-  mutate(diff_export = export - shift(export)) %>% 
+exportK_pvL <- exportK_pvL %>%
   mutate(month = factor(month
-                        (export_pl$`period`),
+                        (exportK_pvL$`period`),
                         levels = 1:12, 
                         labels = month.abb, 
                         ordered = TRUE)) %>%
-  mutate(year = as.character(year(ymd(export_pl$`period`)))) %>%
-  mutate(rate = round(
-    (diff_export/shift(export)),
-    digits = 2)) %>%
-  group_by(country)
-
-glimpse(topExport, 60)
+  mutate(year = as.character(year(ymd(exportK_pvL$`period`)))) %>%
+  relocate(year, month) %>%
+  select(-temporary)
 ```
 
+#### 3.3.4.4 Pivot exports at regions level
+
 ```{r}
-test <- export_pl %>%
-  mutate(diff_export = export - shift(export)) %>% 
+#| code-fold: false
+exportM_pvL <- trade_exportsM %>%
+  pivot_longer(cols = !country,
+               names_to = "temporary",
+               values_to = "export") %>%
+  mutate(period = (lubridate::ym(temporary))) %>%
+  arrange(country, period)
+
+exportM_pvL <- exportM_pvL %>%
   mutate(month = factor(month
-                        (export_pl$`period`),
+                        (exportM_pvL$`period`),
                         levels = 1:12, 
                         labels = month.abb, 
                         ordered = TRUE)) %>%
-  mutate(year = as.character(year(ymd(export_pl$`period`)))) %>%
-  mutate(rate = round(
-    (diff_export/shift(export)),
-    digits = 2)) %>%
-  select(-period, -month) %>%
+  mutate(year = as.character(year(ymd(exportM_pvL$`period`)))) %>%
+  relocate(year, month) %>%
+  select(-temporary)
+```
+
+### 3.3.5 Merge data frames
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***full_join( )*** - dplyr -]{style="color:#d46e15"} to keep all observations in both import and export data frames.
+
+[***replace_na( )*** - tidyr -]{style="color:#d46e15"} to replace NAs with 0 value.
+:::
+
+#### 3.3.5.1 Trade data at countries level
+
+```{r}
+tradesK<- importK_pvL %>% 
+  full_join(exportK_pvL)
+```
+
+#### 3.3.5.2 Countries with no export data
+
+```{r}
+noExport <- tradesK %>% 
+  filter(is.na(export)) 
+
+unique(noExport$country)
+```
+
+#### 3.3.5.3 Trade data at regions level
+
+```{r}
+tradesM<- importM_pvL %>% 
+  full_join(exportM_pvL) %>%
+  rename(`region` = 3) %>%
+  filter(!region %in% "European Union")
+```
+
+### 3.3.6 Compute new variables
+
+Derive the following variables :
+
+-   "tradeTotal" for total merchandise traded, each row's value is the sum of "import" and "export".
+
+-   "bot" is the abbreviation of "Balance of Trade", subtract "import" from the value of "export".
+
+    -   "Trade Surplus" is when Singapore's export value higher than its import value, otherwise known as "Trade Deficit".
+
+-   "rate" for monthly trend percentage.
+
+#### 3.3.6.1 for country data frame
+
+```{r}
+#| code-fold: false
+tradesK_bot <- tradesK %>%
+  mutate(export = replace_na(export, 0)) %>%
+  mutate(tradeTotal = export + import) %>%
+  mutate(bot = export - import) %>%
+  mutate(botMoM = bot - shift(bot)) %>%
+  mutate(rateMoM = round(botMoM/shift(bot),
+                         digits = 3)) %>%
+  filter(!year == "2019")
+```
+
+#### 3.3.6.2 Drop countries without export data
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***drop_na( )*** - tidyr -]{style="color:#d46e15"} to drop rows that has 0 value to avoid infinity value for the "rate" column.
+:::
+
+```{r}
+tradesK_trim <- tradesK %>%
+  drop_na(`export`) %>%
+  mutate(tradeTotal = `export` + `import`) %>%
+  mutate(bot = `export` - `import`) %>%
+  mutate(botMoM = `bot` - shift(`bot`)) %>%
+  mutate(rateMoM = round(
+    (`botMoM`/shift(`bot`)),
+    digits = 3)) %>%
+  filter(!year == "2019")
+```
+
+#### 3.3.6.3 for regional data frame
+
+```{r}
+#| code-fold: false
+tradesM_bot <- tradesM %>%
+  mutate(tradeTotal = import + export) %>%
+  mutate(bot = export - import) %>%
+  mutate(botMoM = bot - shift(bot)) %>%
+  mutate(rateMoM = round(
+    (`botMoM`/shift(`bot`)),
+    digits = 3)) %>%
+  filter(!year == "2019")
+```
+
+## 3.4 Derive scoped data frames
+
+The overview with all countries will be based on *tradesK_bot* data frame while the visualisation at regional level will be based on *tradesM_bot* data frame. The rest data frames will be covered in this section.
+
+### 3.4.1 G16 countries
+
+```{r}
+#| code-fold: false
+g16 <- filter(tradesK_bot,
+              country == "France" | country == "Germany, Federal Republic Of" |
+                country == "Italy" | country == "Japan" | 
+                country == "United Kingdom" | country == "United States" | 
+                country == "Canada" | country == "Argentina" | 
+                country == "Australia" | country == "Brazil" | 
+                country == "Mainland China" | country == "India" | 
+                country == "Indonesia" | country == "Mexico" | 
+                country == "Republic Of Korea" | country == "Saudi Arabia")
+```
+
+Remarks :
+
+### 3.4.2 ASEAN countries
+
+Filter 9 ASEAN members with reference to the [list of member-states](https://asean.org/member-states/) from asean.org.
+
+```{r}
+#| code-fold: false
+asean <- filter(tradesK_bot,
+                country == "Brunei Darussalam" | country == "Cambodia" |
+                country == "Indonesia" | 
+                country == "Laos People's Democratic Republic" | 
+                country == "Malaysia" | country == "Myanmar" | 
+                country == "Philippines" |
+                country == "Thailand" | 
+                country == "Vietnam, Socialist Republic Of")
+```
+
+### 3.4.3 European Union countries
+
+Filter for the countries based on the metadata definition with different approaches.
+
+```{r}
+eUnion <- tradesK_bot %>%
+  filter(grepl("Austria|Belgium|Bulgaria|Croatia|Cyprus|Czech Rep|Denmark|Estonia|Finland|France|Germany|Greece|Hungary|Ireland|Italy|Latvia|Lithuania|Luxembourg|Malta|Netherlands|Poland|Portugal|Romania|Slovak Rep|Slovenia|Spain|Sweden", country))
+```
+
+Remarks :
+
+Avoid space between the countries' name and the pip "\|" character. Else, will return with empty data frame.
+
+With references to *noExport* data frame, only Bulgaria and Croatia don't have trade data.
+
+## 3.5 Create data frame for cycles plot
+
+### 3.5.1 Extract data by region
+
+#### 3.5.1.1 Africa region
+
+```{r}
+africa <- tradesM_bot %>%
+  filter(region == "Africa") %>%
+  filter(!year == "2019")
+```
+
+#### 3.5.1.2 America region
+
+```{r}
+america <- tradesM_bot %>%
+  filter(region == "America") %>%
+  filter(!year == "2019")
+```
+
+#### 3.5.1.3 Asia region
+
+```{r}
+asia <- tradesM_bot %>%
+  filter(region == "Asia") %>%
+  filter(!year == "2019")
+```
+
+#### 3.5.1.4 Europe region
+
+```{r}
+europe <- tradesM_bot %>%
+  filter(region == "Europe") %>%
+  filter(!year == "2019")
+```
+
+#### 3.5.1.5 Oceania region
+
+```{r}
+oceania <- tradesM_bot %>%
+  filter(region == "Oceania") %>%
+  filter(!year == "2019")
+```
+
+### 3.5.2 Compute monthly average for each region
+
+```{r}
+hl_africa <- africa %>% 
+  group_by(month) %>%
+  summarise(avg = mean(tradeTotal))
+
+hl_america <- america %>%
+  group_by(month) %>%
+  summarise(avg = mean(tradeTotal))
+
+hl_asia <- asia %>%
+  group_by(month) %>%
+  summarise(avg = mean(tradeTotal))
+
+hl_europe <- europe %>%
+  group_by(month) %>%
+  summarise(avg = mean(tradeTotal))
+
+hl_oceania <- oceania %>%
+  group_by(month) %>%
+  summarise(avg = mean(tradeTotal))
+```
+
+## 3.6 Create Data Frame for Other Visualisation
+
+```{r}
+#| code-fold: false
+test <- exportK_pvL %>%
   group_by(year, country) %>%
   summarise(volume_export = sum(export)) %>%
   filter(!year == "2019") %>%
@@ -349,479 +639,41 @@ glimpse(test, 60)
 ```
 
 ```{r}
-g16_countries <- filter(test, country == "France" | 
-                          country == "Germany, Federal Republic Of" | 
-                          country == "Italy" | country == "Japan" | 
-                          country == "United Kingdom" | 
-                          country == "United States" | country == "Canada") %>%
-  filter(country == "Argentina" | country == "Australia" | country == "Brazil" | 
-           country == "Mainland China", country == "India" | 
-           country == "Indonesia" | country == "Mexico" | 
-           country == "Republic Of Korea" | country == "Saudi Arabia")
-```
-
-Remarks :
-
-[Singapore Ministry of Foreign Affairs](https://www.mfa.gov.sg/Newsroom/Press-Statements-Transcripts-and-Photos/2022/03/20220305-sanctions) announced on March 5, 2022 to impose appropriate sanctions and restrictions against Russia[^3]. Without data for the rest of year 2022, thus, this study will explore the trading strength with G20, excluding Russia country.
-
-[^3]: Singapore Ministry of Foreign Affairs. 2022. Sanctions and Restrictions Against Russia in Response to its Invasion of Ukraine. https://www.mfa.gov.sg/Newsroom/Press-Statements-Transcripts-and-Photos/2022/03/20220305-sanctions
-
-South Africa, Türkiye don't have data.
-
-European Union as a block of Europe countries, won't be useful to visualise 1-to-1 trading relationship with Singapore.
-
-Having said all that, only 16 countries out of [G20 countries](https://www.g20.org/en/about-g20/) will be used.
-
-```{r}
-exportM_pl <- trade_exportsM %>%
-  pivot_longer(cols = !country,
-               names_to = "temporary",
-               values_to = "export") %>%
-  mutate(period = (lubridate::ym(temporary))) %>%
-  arrange(country, period) %>%
-  select(-temporary) %>%
-  relocate(period)
-```
-
-### 3.3.5 Derive New Variables
-
-#### 3.3.5.1 Derive regionals' trade balance between exports and imports
-
-#### Step 1 - Join regionals level dataframes
-
-```{r}
-tradesM<- importM_pl %>% full_join(exportM_pl)
-```
-
-#### Step 2 - Derive variable
-
-```{r}
-trades_region <- tradesM %>%
-  mutate(balance = export-import) %>%
-  mutate(diff_balance = balance - shift(balance)) %>%
-  mutate(rate = round(
-    (diff_balance/shift(balance)),
-    digits = 2))
-```
-
-#### 3.3.5.2 Derive countries' trade balance between exports and imports
-
-#### Step 1 - Join countries level dataframes
-
-```{r}
-trades <- import_pl %>% full_join(export_pl)
-```
-
-#### Step 2 - Derive variable
-
-```{r}
-trades <- trades %>%
-  mutate(balance = export-import) %>%
-  mutate(diff_balance = balance - shift(balance)) %>%
-  mutate(rate = round(
-    (diff_balance/shift(balance)),
-    digits = 2))
-```
-
-#### 3.3.5.3 Derive monthly imports differences
-
-```{r}
-import_trim <- import_pl %>%
-  mutate(diff_imp = import - shift(import)) %>%
-  mutate(rate_imp = round(
-    (diff_imp/shift(import)),
-    digits = 2)) %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.5.4 Derive monthly exports differences
-
-```{r}
-export_trim <- export_pl %>%
-  mutate(diff_imp = export - shift(export)) %>%
-  mutate(rate_imp = round(
-    (diff_imp/shift(export)),
-    digits = 2)) %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.5.5 Derive "year" and "month" variables
-
-```{r}
-trades_region$month <- factor(month(trades_region$`period`),
-                              levels = 1:12, 
-                              labels = month.abb, 
-                              ordered = TRUE) 
-trades_region$year <- year(ymd(trades_region$`period`))
-```
-
-### 3.3.6 Extract data by Region
-
-#### 3.3.6.1 Africa region
-
-```{r}
-africa <- trades_region %>%
-  filter(country == "Africa") %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.6.2 America region
-
-```{r}
-america <- trades_region %>%
-  filter(country == "America") %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.6.3 Asia region
-
-```{r}
-asia <- trades_region %>%
-  filter(country == "Asia") %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.6.4 Europe region
-
-```{r}
-europe <- trades_region %>%
-  filter(country == "Europe") %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.6.5 European Union region
-
-```{r}
-eUnion <- trades_region %>%
-  filter(country == "European Union") %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-#### 3.3.6.6 Oceania region
-
-```{r}
-Oceania <- trades_region %>%
-  filter(country == "Oceania") %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-```
-
-### 3.3.7 Compute average by month
-
-!!!!! need this? too high level, meaningless to view at region level. Alternative?
-
-```{r}
-hl_africa <- africa %>% 
-  group_by(month) %>%
-  summarise(avg = mean(balance))
-
-
-hl_america <- america %>%
-  group_by(month) %>%
-  summarise(avg = mean(balance)) 
+unique(asean$country)
 ```
 
 ```{r}
-hl_eUnion <- eUnion %>%
-  group_by(month) %>%
-  summarise(avg = mean(balance))
+asean_pvW <- asean %>%
+  group_by(year, country) %>%
+  summarise(tradeVolume = sum(tradeTotal)) %>%
+  pivot_wider(names_from = year, 
+              values_from = tradeVolume) %>%
+  arrange(desc(`2022`))
 ```
 
-### 3.3.8 Extract countries
-
-#### 3.3.8.1 Countries with trade balance
-
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
-
-[***drop_na( )*** - tidyr -]{style="color:#d46e15"} to drop rows that has NA as the "rate" column
-:::
-
-```{r}
-trades_trim <- trades %>% drop_na(rate) %>%
-  filter(!period == "2019-12-01")
-```
-
-#### 3.3.8.2 Countries with zero-export by Singapore
-
-```{r}
-export_xCountries <- trades %>% 
-  filter(is.na(balance)) 
-
-unique(export_xCountries$country)
-```
-
-#### 3.3.8.3 Countries listed in European Union
-
-```{r}
-eu <- trades_trim %>%
-  filter(grepl("Austria|Belgium|Bulgaria|Croatia|Cyprus|Czech Rep|Denmark|Estonia|Finland|France|Germany|Greece|Hungary|Ireland|Italy|Latvia|Lithuania|Luxembourg|Malta|Netherlands|Poland|Portugal|Romania|Slovak Rep|Slovenia|Spain|Sweden", country))
-```
-
-```{r}
-unique(eu$country)
-```
-
-Remarks :
-
-Among the EU countries that listed in the metadata, only Bulgaria and Croatia don't have data.
-
-```{r}
-eu$month <- factor(month(eu$`period`),
-                              levels = 1:12, 
-                              labels = month.abb, 
-                              ordered = TRUE) 
-eu$year <- year(ymd(eu$`period`))
-```
-
-```{r}
-eu_test <- eu %>%
-  select(1:9) %>%
-  gather(key = "variable", value = "value", -country, -period, -rate, -diff_balance, -balance, -month, -year) %>%
-  filter(!period == "2019-12-01" & !period == "2019-11-01")
-
-glimpse(eu_test, 60)
-```
-
-```{r}
-eu_test$year <- as.character(eu_test$year)
-
-glimpse(eu_test, 60)
-```
-
-```{r}
-germany <- eu_test %>%
-  filter(country == "Germany, Federal Republic Of")
-```
-
-# 
-
-```{r}
-
-```
+<br>
 
 # 4. VISUAL ANALYSIS
 
 !!!!! Consider circle plots for countries level?
 
-## 4.1 EDA
+## 4.1 Horizontal Chart
 
-```{r}
-ggplot(trades_region,
-       aes(x = period,
-           y = balance)) +
-  geom_col(aes(fill = country)) +
-  theme(legend.position = "top")
-```
-
-## 4.2 Cycle Plot
-
-### 4.2.1 Africa region
+### 4.1.1 Trade balance at countries' level
 
 ```{r}
 #| code-fold: false
-#| fig-height: 6
+#| fig-height: 20
 #| fig-width: 12
-africa_plot <- ggplot() +
-  geom_line(data = africa,
-            aes(x = year, 
-                y = balance, 
-                group = month), 
-            colour = "black") +
-  geom_hline(aes
-             (yintercept = avg), 
-             data = hl_africa, 
-             linetype = 6, 
-             colour = "red", 
-             linewidth = 0.5) + 
-  facet_grid(~month) +
-  labs(x = "Year-over-year Performance",
-       y = "Trade Balance\n(Million)",
-       title = "YOY Trade Performance between Singapore and Africa region",
-       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
-  theme(plot.title = element_text(size = 20,
-                                  colour = "#302f2f",
-                                  face = "bold"),
-        plot.subtitle = element_text(size = 12,
-                                  colour = "#424242",
-                                  face = "italic"),
-        axis.text.x = element_text(size = 7, 
-                                   angle = 60, 
-                                   hjust = 0, 
-                                   vjust = -0.1),
-        axis.title.y = element_text(angle = 0, 
-                                    size = 10,
-                                    colour = "#302f2f",
-                                    vjust = 1.05,
-                                    margin = margin(r = -20)),
-        axis.title.x = element_text(size = 10,
-                                    colour = "#302f2f",
-                                    margin = margin(8,0,0,0)),
-        strip.text = element_text(size = 12,
-                                  face = "bold",
-                                  colour = "#424242"),
-        strip.background = element_blank(),
-        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
-
-africa_plot
-```
-
-### 4.2.2 America region
-
-```{r}
-#| code-fold: false
-#| fig-height: 6
-#| fig-width: 12
-america_plot <- ggplot()  +
-  geom_line(data = america,
-            aes(x = year, 
-                y = balance, 
-                group = month), 
-            colour = "black") +
-  geom_hline(aes
-             (yintercept = avg), 
-             data = hl_america, 
-             linetype = 6, 
-             colour = "red", 
-             linewidth = 0.5) + 
-  facet_grid(~month) +
-  labs(x = "Year-over-year Performance",
-       y = "Trade Balance (Million)",
-       title = "YOY Trade Performance between Singapore and America region",
-       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
-  theme(plot.title = element_text(size = 20,
-                                  colour = "#302f2f",
-                                  face = "bold"),
-        plot.subtitle = element_text(size = 12,
-                                  colour = "#424242",
-                                  face = "italic"),
-        axis.text.x = element_text(size = 7, 
-                                   angle = 60, 
-                                   hjust = 0, 
-                                   vjust = -0.1),
-        axis.title.y = element_text(angle = 0, 
-                                    size = 10,
-                                    colour = "#302f2f",
-                                    vjust = 1.05,
-                                    margin = margin(r = -20)),
-        axis.title.x = element_text(size = 10,
-                                    colour = "#302f2f",
-                                    margin = margin(8,0,0,0)),
-        strip.text = element_text(size = 12,
-                                  face = "bold",
-                                  colour = "#424242"),
-        strip.background = element_blank(),
-        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
-
-america_plot
-```
-
-### 4.2.x Overview Cycle Plots
-
-```{r}
-#| code-fold: false
-#| fig-height: 12
-#| fig-width: 12
-ggpubr::ggarrange(africa_plot, 
-          america_plot,
-          ncol = 1,
-          nrow = 2,
-          align = "v")
-```
-
-## 4.3 Visualise Import and Export by Country
-
-```{r}
-#| code-fold: false
-#| fig-height: 6
-#| fig-width: 12
-germany_cp <- ggplot(data = germany,
-                   aes (x = period,
-                        y = value)) +
-  geom_line(aes
-            (color = variable, linetype = variable)) + 
-  scale_color_manual(values = c("darkred", "steelblue"))
-
-germany_cp
-```
-
-Remarks :
-
-!!!!! How to visualise the EU countries in one view?
-
-```{r}
-#| code-fold: false
-#| fig-height: 10
-#| fig-width: 12
-eu_test$tooltip <- c(paste0("Country = ", eu_test$country,
-                            "Trading Rate = ", eu_test$rate))
-
-eUnion_testPlot <- ggplot(eu_test,
-                          aes(x = year,
-                              y = rate,
-                              colour = country,
-                              group = month)) +
-  geom_line() +
-  facet_grid(~month) +
-  labs(x = "Year-over-year Performance",
-       y = "Trade Rate",
-       colour = "European Countries",
-       title = "YOY Trade Performance between Singapore and European Countries",
-       subtitle = "study period from January 2020 to December 2022") +
-  theme(plot.title = element_text(size = 20,
-                                  colour = "#302f2f",
-                                  face = "bold"),
-        plot.subtitle = element_text(size = 12,
-                                  colour = "#424242",
-                                  face = "italic"),
-        axis.text.x = element_text(size = 7, 
-                                   angle = 60, 
-                                   hjust = 0, 
-                                   vjust = -0.1),
-        axis.title.y = element_text(angle = 0, 
-                                    size = 10,
-                                    colour = "#302f2f",
-                                    vjust = 1.05,
-                                    margin = margin(r = -20)),
-        axis.title.x = element_text(size = 10,
-                                    colour = "#302f2f",
-                                    margin = margin(8,0,0,0)),
-        strip.text = element_text(size = 12,
-                                  face = "bold",
-                                  colour = "#424242"),
-        strip.background = element_blank(),
-        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"),
-        legend.position = "bottom",
-        legend.justification = "left")
-
-
-girafe(ggobj = eUnion_testPlot,
-       width_svg = 12, 
-       height_svg = 10)
-```
-
-```{r}
-
-```
-
-<br>
-
-## 4.4 Horizontal Chart
-
-### 4.4.1 Trade balance at regional's level
-
-```{r}
-#| code-fold: false
-#| fig-height: 6
-#| fig-width: 12
-overviewPlot_regions <- ggplot() + 
-  geom_horizon(aes(period, rate),
-               data = trades_region,
+overviewPlot_countries <- ggplot() + 
+  geom_horizon(aes(period, rateMoM),
+               data = tradesK_bot,
                origin = 0,
                horizonscale = c(-15, -5, -1, 0, 1, 5)) +
   scale_fill_hcl(palette = "RdBu") +
   facet_grid(country~.) +
   labs (x = "Period",
-        title = "Overview of Singapore Trade Balance with 6 Regions",
+        title = "Overview of Singapore Trade Balance with N Countries",
         subtitle = "from year January 2020 to December 2022",
         caption = "Data Source : Singstat.gov.sg, 2023") +
   theme_few() +
@@ -839,6 +691,7 @@ overviewPlot_regions <- ggplot() +
                                     vjust = -2),
     panel.spacing.y = unit(0, "lines"),
     strip.text.y = element_text(size = 8, 
+                                angle = 0, 
                                 hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
@@ -879,7 +732,8 @@ overviewPlot_regions <- ggplot() +
   geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
 
-overviewPlot_regions
+
+overviewPlot_countries
 ```
 
 Remarks :
@@ -1106,21 +960,21 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 :::
 
-### 4.4.2 Trade balance at countries' level
+### 4.4.2 Trade balance at regional's level
 
 ```{r}
 #| code-fold: false
-#| fig-height: 18
+#| fig-height: 6
 #| fig-width: 12
-overviewPlot_countries <- ggplot() + 
-  geom_horizon(aes(period, rate),
-               data = trades_trim,
+overviewPlot_regions <- ggplot() + 
+  geom_horizon(aes(period, rateMoM),
+               data = tradesM_bot,
                origin = 0,
                horizonscale = c(-15, -5, -1, 0, 1, 5)) +
   scale_fill_hcl(palette = "RdBu") +
-  facet_grid(country~.) +
+  facet_grid(region~.) +
   labs (x = "Period",
-        title = "Overview of Singapore Trade Balance with N Countries",
+        title = "Overview of Singapore Trade Balance with 6 Regions",
         subtitle = "from year January 2020 to December 2022",
         caption = "Data Source : Singstat.gov.sg, 2023") +
   theme_few() +
@@ -1138,7 +992,6 @@ overviewPlot_countries <- ggplot() +
                                     vjust = -2),
     panel.spacing.y = unit(0, "lines"),
     strip.text.y = element_text(size = 8, 
-                                angle = 0, 
                                 hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
@@ -1179,6 +1032,269 @@ overviewPlot_countries <- ggplot() +
   geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
 
-
-overviewPlot_countries
+overviewPlot_regions
 ```
+
+4.1
+
+```{r}
+#| code-fold: false
+#| fig-height: 8
+#| fig-width: 12
+ggplot(asean,
+       aes(x = country,
+           color = year)) +
+  geom_point(aes(y = export)) +
+  geom_point(aes(y = import)) +
+  scale_y_continuous(
+    name = "First Axis",
+    sec.axis = sec_axis(~., 
+                        name = "Second Axis"))
+```
+
+```{r}
+asean_lines <- ggplot(asean,
+                      aes(x = export,
+                          y = import,
+                          colour = country)) +
+  geom_line() +
+  geom_point()
+
+fig_aseanLines <- ggplotly(asean_lines)
+
+fig_aseanLines
+```
+
+## 4.1 EDA
+
+```{r}
+#| code-fold: false
+#| fig-height: 8
+#| fig-width: 12
+bot_areaPlot <- ggplot(tradesM_bot,
+                       aes(x = period, 
+                           y = bot,
+                           text = paste("Region : ", region),
+                           fill = fct_reorder(region,
+                                              bot,
+                                              .desc = TRUE)),
+                       position = "identity") +
+  geom_area(alpha = 0.6,
+            linewidth = .2,
+            colour = "white") +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_ipsum() +
+  labs(x = "Period",
+       y = "Balance of Trade\n(Million Dollars)",
+       fill = "Regions") +
+  ggtitle("Singapore Trade Balance by Regions\nfrom Jan 2020 to Dec 2022") +
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        axis.title.x = element_text(size = 8),
+        panel.grid.major = element_line(linewidth = rel(0.1)))
+
+
+bot_areaPlot <- ggplotly(bot_areaPlot,
+                         tooltip = c("text", "bot", "period")) %>%
+  layout(legend = list(y = -0.35,
+                       orientation = "h",
+                       xanchor = "left", 
+                       yanchor = "bottom"))
+
+bot_areaPlot
+```
+
+Remarks :
+
+The trade balance for Africa and Oceania regions show noticeable growth compare to
+
+## 4.2 Cycle Plot
+
+### 4.2.1 Africa region
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 12
+africa_plot <- ggplot() +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_africa, 
+             linetype = 6, 
+             colour = "red", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "Trade Balance\n(Million)",
+       title = "YOY Trade Performance between Singapore and Africa region",
+       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
+  theme(plot.title = element_text(size = 20,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 10,
+                                    colour = "#302f2f",
+                                    vjust = 1.05,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(8,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
+
+africa_plot
+```
+
+### 4.2.2 America region
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 12
+america_plot <- ggplot()  +
+  geom_line(data = america,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_america, 
+             linetype = 6, 
+             colour = "red", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "Trade Balance (Million)",
+       title = "YOY Trade Performance between Singapore and America region",
+       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
+  theme(plot.title = element_text(size = 20,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 10,
+                                    colour = "#302f2f",
+                                    vjust = 1.05,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(8,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
+
+america_plot
+```
+
+### 4.2.x Overview Cycle Plots
+
+```{r}
+#| code-fold: false
+#| fig-height: 12
+#| fig-width: 12
+ggpubr::ggarrange(africa_plot, 
+          america_plot,
+          ncol = 1,
+          nrow = 2,
+          align = "v")
+```
+
+## 4.3 Visualise Import and Export by Country
+
+```{r}
+#| eval: false
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 12
+germany_cp <- ggplot(data = germany,
+                   aes (x = period,
+                        y = value)) +
+  geom_line(aes
+            (color = variable, linetype = variable)) + 
+  scale_color_manual(values = c("darkred", "steelblue"))
+
+germany_cp
+```
+
+Remarks :
+
+!!!!! How to visualise the EU countries in one view?
+
+```{r}
+#| eval: false
+#| code-fold: false
+#| fig-height: 10
+#| fig-width: 12
+eu_test$tooltip <- c(paste0("Country = ", eu_test$country,
+                            "Trading Rate = ", eu_test$rate))
+
+eUnion_testPlot <- ggplot(eu_test,
+                          aes(x = year,
+                              y = rate,
+                              colour = country,
+                              group = month)) +
+  geom_line() +
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "Trade Rate",
+       colour = "European Countries",
+       title = "YOY Trade Performance between Singapore and European Countries",
+       subtitle = "study period from January 2020 to December 2022") +
+  theme(plot.title = element_text(size = 20,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 7, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 10,
+                                    colour = "#302f2f",
+                                    vjust = 1.05,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 10,
+                                    colour = "#302f2f",
+                                    margin = margin(8,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"),
+        legend.position = "bottom",
+        legend.justification = "left")
+
+
+girafe(ggobj = eUnion_testPlot,
+       width_svg = 12, 
+       height_svg = 10)
+```
+
+<br>
