@@ -106,7 +106,7 @@ The following are the packages required for this exercise :
 
 ```{r}
 #| code-fold: false
-pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table, plotly, viridis, hrbrthemes)
+pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table, plotly, viridis, hrbrthemes, CGPfunctions, ggrepel)
 ```
 
 # **3. DATA PROCESSING & PREPARATION**
@@ -234,7 +234,7 @@ trade_exports <- trade_export %>%
 ```{r}
 #| code-fold: false
 trade_imports <- trade_imports %>%
-  slice(-20, -64)
+  slice(-26, -70)
 ```
 
 #### 3.3.2.2 For *trade_exports* dataframe
@@ -242,7 +242,7 @@ trade_imports <- trade_imports %>%
 ```{r}
 #| code-fold: false
 trade_exports <- trade_exports %>%
-  slice(-18, -62)
+  slice(-24, -68)
 ```
 
 ### 3.3.3 Derive regions and countries level data frames
@@ -627,7 +627,7 @@ hl_oceania <- oceania %>%
 
 ```{r}
 #| code-fold: false
-test <- exportK_pvL %>%
+exportTotal <- exportK_pvL %>%
   group_by(year, country) %>%
   summarise(volume_export = sum(export)) %>%
   filter(!year == "2019") %>%
@@ -635,11 +635,7 @@ test <- exportK_pvL %>%
               values_from = volume_export) %>%
   arrange(desc(`2022`))
 
-glimpse(test, 60)
-```
-
-```{r}
-unique(asean$country)
+glimpse(exportTotal, 60)
 ```
 
 ```{r}
@@ -651,20 +647,45 @@ asean_pvW <- asean %>%
   arrange(desc(`2022`))
 ```
 
+```{r}
+eUnion_pvW <- eUnion %>%
+  select(1:10) %>%
+  gather(key = "tradeType", 
+         value = "tradeVolume", -country, -period, -bot, -botMoM, -tradeTotal, -month, -year, -rateMoM)
+
+glimpse(eUnion_pvW, 60)
+```
+
+```{r}
+germany <- eUnion_pvW %>%
+  filter(country == "Germany, Federal Republic Of")
+```
+
+```{r}
+asean_export <- asean %>%
+  group_by(country, year) %>%
+  summarise(volume_export = sum(export))
+```
+
+```{r}
+asean_bot <- asean %>%
+  group_by(country, year) %>%
+  summarise(bot = sum(bot))
+```
+
 <br>
 
 # 4. VISUAL ANALYSIS
 
-!!!!! Consider circle plots for countries level?
+## 4.1 Horizon Chart
 
-## 4.1 Horizontal Chart
+### 4.1.1 Overview of Trade Balance (BOT) Fluctuation at Countries Level
 
-### 4.1.1 Trade balance at countries' level
+This area-time series visualisation technique is used to reveal the trends of trade balance changes for 110 trading partners at the country level month-over-month from the year 2020 to 2022.
 
 ```{r}
-#| code-fold: false
 #| fig-height: 20
-#| fig-width: 12
+#| fig-width: 14
 overviewPlot_countries <- ggplot() + 
   geom_horizon(aes(period, rateMoM),
                data = tradesK_bot,
@@ -673,8 +694,8 @@ overviewPlot_countries <- ggplot() +
   scale_fill_hcl(palette = "RdBu") +
   facet_grid(country~.) +
   labs (x = "Period",
-        title = "Overview of Singapore Trade Balance with N Countries",
-        subtitle = "from year January 2020 to December 2022",
+        title = "Overview of Singapore's Trade Balance Changes Month-over-Month",
+        subtitle = " with 110 Countries from January 2020 to December 2022",
         caption = "Data Source : Singstat.gov.sg, 2023") +
   theme_few() +
   theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
@@ -688,7 +709,7 @@ overviewPlot_countries <- ggplot() +
         plot.caption = element_text(size = 10,
                                     colour = "#424242",
                                     hjust = 0,
-                                    vjust = -2),
+                                    vjust = -3),
     panel.spacing.y = unit(0, "lines"),
     strip.text.y = element_text(size = 8, 
                                 angle = 0, 
@@ -698,11 +719,13 @@ overviewPlot_countries <- ggplot() +
     axis.ticks.y = element_blank(),
     axis.ticks.x = element_line(colour = "#969595",
                                 linewidth = 0.5),
-    axis.text.x = element_text(size = 10, angle = 75, hjust = 0, vjust = -0.2),
+    axis.text.x = element_text(size = 10, 
+                               angle = 75, 
+                               hjust = 0, 
+                               vjust = -0.2),
     axis.title.x = element_blank(),
     panel.border = element_blank(),
-    legend.position = "none"
-    ) +
+    legend.position = "none") +
   scale_x_date(expand = c(0,0), 
                date_breaks = "1 month", 
                date_labels = "%b '%y",
@@ -732,13 +755,12 @@ overviewPlot_countries <- ggplot() +
   geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
   geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
 
-
 overviewPlot_countries
 ```
 
 Remarks :
 
-Click on the accordion to view the incidents that may explain the rate of trade balance fluctuation.
+It is difficult and ineffective to visually identify patterns or insights by looking at the chart. Hence, various significant events and incidents are listed in the accordion below to facilitate the trend study and explain the fluctuation in BOT changes. However, despite these cross-references, the study can be ineffective and lacks credibility to justify the causality of the BOT fluctuation.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**Date of Homeland Events - RED lines**]{style="color:#3a9c88"}
@@ -910,8 +932,6 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 ## [**Date of Significant Changes to Some Currency - PURPLE lines**]{style="color:#3a9c88"}
 
 +----------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                      |
-+----------------------------------------------------------------------------------------------------------------------+
 | **2021 Feb 24**                                                                                                      |
 +----------------------------------------------------------------------------------------------------------------------+
 | Australia, AUDSGD \~ \$1.05                                                                                          |
@@ -960,12 +980,11 @@ Click on the accordion to view the incidents that may explain the rate of trade 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 :::
 
-### 4.4.2 Trade balance at regional's level
+### 4.1.2 Overview of Trade Balance (BOT) Fluctuation at Regions Level
 
 ```{r}
-#| code-fold: false
-#| fig-height: 6
-#| fig-width: 12
+#| fig-height: 5
+#| fig-width: 14
 overviewPlot_regions <- ggplot() + 
   geom_horizon(aes(period, rateMoM),
                data = tradesM_bot,
@@ -974,8 +993,8 @@ overviewPlot_regions <- ggplot() +
   scale_fill_hcl(palette = "RdBu") +
   facet_grid(region~.) +
   labs (x = "Period",
-        title = "Overview of Singapore Trade Balance with 6 Regions",
-        subtitle = "from year January 2020 to December 2022",
+        title = "Overview of Singapore's Trade Balance Changes Month-over-Month",
+        subtitle = "with 5 regions from January 2020 to December 2022",
         caption = "Data Source : Singstat.gov.sg, 2023") +
   theme_few() +
   theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
@@ -989,20 +1008,23 @@ overviewPlot_regions <- ggplot() +
         plot.caption = element_text(size = 10,
                                     colour = "#424242",
                                     hjust = 0,
-                                    vjust = -2),
+                                    vjust = -3),
     panel.spacing.y = unit(0, "lines"),
     strip.text.y = element_text(size = 8, 
+                                angle = 0, 
                                 hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     axis.ticks.y = element_blank(),
     axis.ticks.x = element_line(colour = "#969595",
                                 linewidth = 0.5),
-    axis.text.x = element_text(size = 10, angle = 75, hjust = 0, vjust = -0.2),
+    axis.text.x = element_text(size = 10, 
+                               angle = 75, 
+                               hjust = 0, 
+                               vjust = -0.2),
     axis.title.x = element_blank(),
     panel.border = element_blank(),
-    legend.position = "none"
-    ) +
+    legend.position = "none") +
   scale_x_date(expand = c(0,0), 
                date_breaks = "1 month", 
                date_labels = "%b '%y",
@@ -1035,43 +1057,187 @@ overviewPlot_regions <- ggplot() +
 overviewPlot_regions
 ```
 
-4.1
-
 ```{r}
-#| code-fold: false
-#| fig-height: 8
-#| fig-width: 12
-ggplot(asean,
-       aes(x = country,
-           color = year)) +
-  geom_point(aes(y = export)) +
-  geom_point(aes(y = import)) +
-  scale_y_continuous(
-    name = "First Axis",
-    sec.axis = sec_axis(~., 
-                        name = "Second Axis"))
+#| fig-height: 5
+#| fig-width: 14
+asean_horPlot <- ggplot() + 
+  geom_horizon(aes(period, rateMoM),
+               data = asean,
+               origin = 0,
+               horizonscale = c(-15, -5, -1, 0, 1, 5)) +
+  scale_fill_hcl(palette = "RdBu") +
+  facet_grid(country~.) +
+  labs (x = "Period",
+        title = "Overview of Singapore's Trade Balance Changes Month-over-Month",
+        subtitle = "with ASEAN members from January 2020 to December 2022",
+        caption = "Data Source : Singstat.gov.sg, 2023") +
+  theme_few() +
+  theme(plot.margin = margin(0.8, 0.5, 0.8, 0.5, "cm"),
+        plot.title = element_text (size = 24, 
+                                   colour = "#302f2f",
+                                   face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                     colour = "#424242",
+                                     face = "italic",
+                                     margin = margin(0,0,10,0)),
+        plot.caption = element_text(size = 10,
+                                    colour = "#424242",
+                                    hjust = 0,
+                                    vjust = -3),
+    panel.spacing.y = unit(0, "lines"),
+    strip.text.y = element_text(size = 8, 
+                                angle = 0, 
+                                hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(colour = "#969595",
+                                linewidth = 0.5),
+    axis.text.x = element_text(size = 10, 
+                               angle = 75, 
+                               hjust = 0, 
+                               vjust = -0.2),
+    axis.title.x = element_blank(),
+    panel.border = element_blank(),
+    legend.position = "none") +
+  scale_x_date(expand = c(0,0), 
+               date_breaks = "1 month", 
+               date_labels = "%b '%y",
+               limit = c(as.Date("2020-01-01"),
+                         as.Date("2022-12-31"))) +
+  geom_vline(xintercept = as.Date("2022-11-16"), color = "limegreen", size = 1) + 
+  geom_vline(xintercept = as.Date("2022-09-05"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2022-03-16"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2021-08-23"), color = "limegreen", size = 1) +
+  geom_vline(xintercept = as.Date("2022-02-24"), color = "orange", size = 1) +
+  geom_vline(xintercept = as.Date("2022-04-26"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2022-03-24"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-11-26"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-10-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2021-05-08"), color = "red", size = 1) + 
+  geom_vline(xintercept = as.Date("2020-11-09"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-06-02"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-04-07"), color = "red", size = 1) +
+  geom_vline(xintercept = as.Date("2020-02-07"), color = "red", size = 1)
+
+asean_horPlot
 ```
 
+Remarks :
+
+Noticed after Russia invaded Ukraine, as indicated by the Orange line, both Laos and Thailand are prone to have negative rates month-over-month.
+
+## 4.2 Scatter Plot
+
+Visualise trading performances for import and export with other ASEAN members.
+
 ```{r}
-asean_lines <- ggplot(asean,
-                      aes(x = export,
-                          y = import,
-                          colour = country)) +
-  geom_line() +
-  geom_point()
+#| fig-height: 12
+#| fig-width: 14
+aseanYoY_plot <- ggplot(asean,
+       aes(x = export,
+           y = import,
+           color = country,
+           text = paste("period :", period))) +
+  geom_point() +
+  facet_grid(~year) +
+  labs(x = "Export Volume (Thousands Dollars)",
+       y = "Import Volume\n(Thousands Dollars)") +
+  ggtitle ("Singapore YOY Trade Performance with ASEAN Countries") +
+  theme(axis.text.x = element_text(size = 7, 
+                                   angle = 75),
+        axis.text.y = element_text(size = 7),
+        axis.title.y = element_text( 
+                                    size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f"),
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    vjust = 0),
+        strip.text = element_text(size = 9,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank())
 
-fig_aseanLines <- ggplotly(asean_lines)
-
-fig_aseanLines
+  
+ggplotly(aseanYoY_plot,
+         tooltip = c("color", "text", "y", "x")) %>%
+  layout(legend = list(x = 0,
+                       y = -0.5,
+                       orientation = "h",
+                       xanchor = "left", 
+                       yanchor = "bottom"))
 ```
 
-## 4.1 EDA
+## 4.3 SlopeGraph
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***newggslopegraph( )*** - CGPfunctions -]{style="color:#d46e15"} to plot a slopegraph a lot Tufte using dplyr and ggplot2.
+:::
 
 ```{r}
-#| code-fold: false
-#| fig-height: 8
-#| fig-width: 12
-bot_areaPlot <- ggplot(tradesM_bot,
+#| fig-height: 14
+#| fig-width: 14
+asean_export %>%
+  newggslopegraph(year, volume_export, country,
+                  Title = "Singapore Export Performances with ASEAN Members",
+                  SubTitle = "from January 2020 to December 2022",
+                  XTextSize = 10,
+                  YTextSize = 2.5,
+                  Caption = "Source from : Singstat.gov.sg 2023",
+                  CaptionJustify = "left",
+                  LineThickness = .5,
+                  WiderLabels = TRUE,
+                  DataTextSize = 3,
+                  DataLabelFillColor = "#b3c8fc",
+                  DataLabelPadding = 0.1)
+```
+
+Remarks :
+
+The slopegraph above indicates Malaysia has the highest demand for Singapore merchandise, and the subsequent strongest growth demand is Indonesia, with a noticeable line gradient.
+
+Regarding trade balance, among all ASEAN members, Singapore has a trade surplus with Indonesia, with noticeable line gradient that reflects healthy export growth.
+
+Malaysia, on the contrary, shows the highest trade deficit despite growing demand for Singapore merchandise.
+
+```{r}
+#| fig-height: 14
+#| fig-width: 14
+asean_bot %>%
+  newggslopegraph(year, bot, country,
+                  Title = "Singapore Trade Balance with ASEAN Members",
+                  SubTitle = "from January 2020 to December 2022",
+                  XTextSize = 10,
+                  YTextSize = 2.5,
+                  Caption = "Source from : Singstat.gov.sg 2023",
+                  CaptionJustify = "left",
+                  LineThickness = .5,
+                  WiderLabels = TRUE,
+                  DataTextSize = 3,
+                  DataLabelFillColor = "#b3c8fc",
+                  DataLabelPadding = 0.1)
+```
+
+Remarks :
+
+Due to larger data points for G16 and European Countries, faced heavily overlapping issues when attempt to plot slopegraph for them. Encountered various errors when attempting to combine ggrepel.
+
+Due to the limited of time to explore solutions dealing with overlapping issue, there is no slopegraph for G16 and European Countries.
+
+## 4.4 Stream Graph
+
+Stream graph is used to reveal trends or periodic trading patterns from the beginning of year 2020 to the end of 2022.
+
+### 4.4.1 Year-over-year(YoY) flow of trade balance regionally
+
+```{r}
+#| fig-height: 10
+#| fig-width: 14
+region_areaPlot <- ggplot(tradesM_bot,
                        aes(x = period, 
                            y = bot,
                            text = paste("Region : ", region),
@@ -1087,214 +1253,730 @@ bot_areaPlot <- ggplot(tradesM_bot,
   labs(x = "Period",
        y = "Balance of Trade\n(Million Dollars)",
        fill = "Regions") +
-  ggtitle("Singapore Trade Balance by Regions\nfrom Jan 2020 to Dec 2022") +
+  ggtitle("Singapore Trade Balance (BOT) by Regions from Jan 2020 to Dec 2022") +
   theme(axis.text.x = element_text(size = 8),
         axis.text.y = element_text(size = 8),
         axis.title.y = element_text(size = 8),
-        axis.title.x = element_text(size = 8),
+        axis.title.x = element_text(size = 8,
+                                    margin = margin(t = 2)),
         panel.grid.major = element_line(linewidth = rel(0.1)))
 
 
-bot_areaPlot <- ggplotly(bot_areaPlot,
+region_areaPlot <- ggplotly(region_areaPlot,
                          tooltip = c("text", "bot", "period")) %>%
-  layout(legend = list(y = -0.35,
+  layout(legend = list(y = -0.3,
                        orientation = "h",
                        xanchor = "left", 
                        yanchor = "bottom"))
 
-bot_areaPlot
+region_areaPlot
 ```
 
 Remarks :
 
 The trade balance for Africa and Oceania regions show noticeable growth compare to
 
-## 4.2 Cycle Plot
-
-### 4.2.1 Africa region
+### 4.4.2 Year-over-year(YoY) BOT with ASEAN members
 
 ```{r}
-#| code-fold: false
+#| fig-height: 10
+#| fig-width: 14
+asean_areaPlot <- ggplot(asean,
+                       aes(x = period, 
+                           y = bot,
+                           text = paste("Country :", country),
+                           fill = fct_reorder(country,
+                                              bot,
+                                              .desc = TRUE)),
+                       position = "identity") +
+  geom_area(alpha = 0.6,
+            linewidth = .2,
+            colour = "white") +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_ipsum() +
+  labs(x = "Period",
+       y = "Balance of Trade\n(Thousand Dollars)",
+       fill = "Country") +
+  ggtitle("Singapore Trade Balance (BOT) with ASEAN from Jan 2020 to Dec 2022") +
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        axis.title.x = element_text(size = 8,
+                                    margin = margin(t = 2)),
+        panel.grid.major = element_line(linewidth = rel(0.1)))
+
+
+asean_areaPlot <- ggplotly(asean_areaPlot,
+                         tooltip = c("text", "bot", "period")) %>%
+  layout(legend = list(y = -0.3,
+                       orientation = "h",
+                       xanchor = "left", 
+                       yanchor = "bottom"))
+
+asean_areaPlot
+```
+
+### 4.4.3 Year-over-year(YoY) BOT with G16 members
+
+```{r}
+#| fig-height: 10
+#| fig-width: 14
+g16_areaPlot <- ggplot(g16,
+                       aes(x = period, 
+                           y = bot,
+                           text = paste("Country :", country),
+                           fill = fct_reorder(country,
+                                              bot,
+                                              .desc = TRUE)),
+                       position = "identity") +
+  geom_area(alpha = 0.6,
+            linewidth = .2,
+            colour = "white") +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_ipsum() +
+  labs(x = "Period",
+       y = "Balance of Trade\n(Thousand Dollars)",
+       fill = "Country") +
+  ggtitle("Singapore Trade Balance (BOT) with G16  from Jan 2020 to Dec 2022") +
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        axis.title.x = element_text(size = 8,
+                                    margin = margin(t = 2)),
+        panel.grid.major = element_line(linewidth = rel(0.1)))
+
+
+g16_areaPlot <- ggplotly(g16_areaPlot,
+                         tooltip = c("text", "bot", "period")) %>%
+  layout(legend = list(y = -0.3,
+                       orientation = "h",
+                       xanchor = "left", 
+                       yanchor = "bottom"))
+
+g16_areaPlot
+```
+
+### 4.4.4 Year-over-year(YoY) BOT with European Union members
+
+```{r}
+#| fig-height: 12
+#| fig-width: 14
+eu_areaPlot <- ggplot(eUnion,
+                       aes(x = period, 
+                           y = bot,
+                           text = paste("Country :", country),
+                           fill = fct_reorder(country,
+                                              bot,
+                                              .desc = TRUE)),
+                       position = "identity") +
+  geom_area(alpha = 0.6,
+            linewidth = .2,
+            colour = "white") +
+  scale_fill_viridis(discrete = TRUE) +
+  theme_ipsum() +
+  labs(x = "Period",
+       y = "Balance of Trade\n(Thousand Dollars)",
+       fill = "Country") +
+  ggtitle("Singapore Trade Balance (BOT) with G16  from Jan 2020 to Dec 2022") +
+  theme(axis.text.x = element_text(size = 8),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_text(size = 8),
+        axis.title.x = element_text(size = 8,
+                                    margin = margin(t = 2)),
+        panel.grid.major = element_line(linewidth = rel(0.1)))
+
+
+eu_areaPlot <- ggplotly(eu_areaPlot,
+                         tooltip = c("text", "bot", "period")) %>%
+  layout(legend = list(y = -0.4,
+                       orientation = "h",
+                       xanchor = "left", 
+                       yanchor = "bottom"))
+
+eu_areaPlot
+```
+
+\<br\>
+
+## 4.5 Cycle Plots
+
+Cycle plot allows viewer to compare the changes of lines' trend that reflects Singapore's monthly trading performances over different years.
+
+### 4.5.1 Trading Performances by Regions
+
+#### 4.5.1.1 Africa region
+
+```{r}
 #| fig-height: 6
-#| fig-width: 12
-africa_plot <- ggplot() +
+#| fig-width: 14
+africaRegion_cycPlot <- ggplot() +
   geom_line(data = africa,
             aes(x = year, 
                 y = tradeTotal, 
                 group = month), 
             colour = "black") +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
   geom_hline(aes
              (yintercept = avg), 
              data = hl_africa, 
              linetype = 6, 
-             colour = "red", 
+             colour = "blue", 
              linewidth = 0.5) + 
   facet_grid(~month) +
   labs(x = "Year-over-year Performance",
-       y = "Trade Balance\n(Million)",
-       title = "YOY Trade Performance between Singapore and Africa region",
-       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
-  theme(plot.title = element_text(size = 20,
+       y = "BOT\n(Million\nDollars)",
+       title = "Singapore YOY Trade Performance (BOT) with Africa Region",
+       subtitle = "from January 2020 to December 2022. Blue lines as a reference for the average of total trade volume,\norange lines for export volume & red lines for the BOT.") +
+  theme(plot.title = element_text(size = 24,
                                   colour = "#302f2f",
                                   face = "bold"),
         plot.subtitle = element_text(size = 12,
                                   colour = "#424242",
                                   face = "italic"),
-        axis.text.x = element_text(size = 7, 
+        axis.text.x = element_text(size = 9, 
                                    angle = 60, 
                                    hjust = 0, 
                                    vjust = -0.1),
+        axis.text.y = element_text(size = 9),
         axis.title.y = element_text(angle = 0, 
-                                    size = 10,
+                                    size = 9,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    vjust = 1.05,
+                                    vjust = 1.1,
                                     margin = margin(r = -20)),
-        axis.title.x = element_text(size = 10,
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    margin = margin(8,0,0,0)),
+                                    margin = margin(9,0,0,0)),
         strip.text = element_text(size = 12,
                                   face = "bold",
                                   colour = "#424242"),
         strip.background = element_blank(),
         plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
 
-africa_plot
+africaRegion_cycPlot
 ```
 
-### 4.2.2 America region
+```{r}
+#| output: false
+#| fig-height: 12
+#| fig-width: 14
+africaRegion_cp <- ggplot() +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = africa,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_africa, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       title = "Singapore YOY Trade Performance (BOT) with 5 Regions",
+       subtitle = "from January 2020 to December 2022. Blue lines as a reference for the average of total trade volume,\norange lines for export volume & red lines for the BOT.\n\nAfrica Region") +
+  theme(plot.title = element_text(size = 28,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 14,
+                                  colour = "#424242",
+                                  face = "italic",
+                                  margin = margin(b = 2)),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    vjust = 1.1,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(1,0.5,0.15,0.5,"cm"))
+```
+
+Remarks :
+
+The code chunk above is the simplified version to be used for ggarrange overview plot.
+
+#### 4.5.1.2 America region
 
 ```{r}
-#| code-fold: false
 #| fig-height: 6
-#| fig-width: 12
-america_plot <- ggplot()  +
+#| fig-width: 14
+americaRegion_cycPlot <- ggplot() +
   geom_line(data = america,
             aes(x = year, 
                 y = tradeTotal, 
                 group = month), 
             colour = "black") +
+  geom_line(data = america,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = america,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
   geom_hline(aes
              (yintercept = avg), 
              data = hl_america, 
              linetype = 6, 
-             colour = "red", 
+             colour = "blue", 
              linewidth = 0.5) + 
   facet_grid(~month) +
   labs(x = "Year-over-year Performance",
-       y = "Trade Balance (Million)",
-       title = "YOY Trade Performance between Singapore and America region",
-       subtitle = "study period from January 2020 to December 2022 with red line indicate the average value") +
-  theme(plot.title = element_text(size = 20,
+       y = "BOT\n(Million\nDollars)",
+       title = "Singapore YOY Trade Performance (BOT) with America Region",
+       subtitle = "from January 2020 to December 2022. Blue lines as a reference for the average of total trade volume, orange lines for export volume & red lines for the BOT.") +
+  theme(plot.title = element_text(size = 24,
                                   colour = "#302f2f",
                                   face = "bold"),
         plot.subtitle = element_text(size = 12,
                                   colour = "#424242",
                                   face = "italic"),
-        axis.text.x = element_text(size = 7, 
+        axis.text.x = element_text(size = 9, 
                                    angle = 60, 
                                    hjust = 0, 
                                    vjust = -0.1),
+        axis.text.y = element_text(size = 9),
         axis.title.y = element_text(angle = 0, 
-                                    size = 10,
+                                    size = 9,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    vjust = 1.05,
+                                    vjust = 1.1,
                                     margin = margin(r = -20)),
-        axis.title.x = element_text(size = 10,
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    margin = margin(8,0,0,0)),
+                                    margin = margin(9,0,0,0)),
         strip.text = element_text(size = 12,
                                   face = "bold",
                                   colour = "#424242"),
         strip.background = element_blank(),
         plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
 
-america_plot
+americaRegion_cycPlot
 ```
 
-### 4.2.x Overview Cycle Plots
-
 ```{r}
-#| code-fold: false
-#| fig-height: 12
-#| fig-width: 12
-ggpubr::ggarrange(africa_plot, 
-          america_plot,
-          ncol = 1,
-          nrow = 2,
-          align = "v")
-```
-
-## 4.3 Visualise Import and Export by Country
-
-```{r}
-#| eval: false
-#| code-fold: false
+#| output: false
 #| fig-height: 6
-#| fig-width: 12
-germany_cp <- ggplot(data = germany,
-                   aes (x = period,
-                        y = value)) +
-  geom_line(aes
-            (color = variable, linetype = variable)) + 
-  scale_color_manual(values = c("darkred", "steelblue"))
-
-germany_cp
-```
-
-Remarks :
-
-!!!!! How to visualise the EU countries in one view?
-
-```{r}
-#| eval: false
-#| code-fold: false
-#| fig-height: 10
-#| fig-width: 12
-eu_test$tooltip <- c(paste0("Country = ", eu_test$country,
-                            "Trading Rate = ", eu_test$rate))
-
-eUnion_testPlot <- ggplot(eu_test,
-                          aes(x = year,
-                              y = rate,
-                              colour = country,
-                              group = month)) +
-  geom_line() +
+#| fig-width: 14
+americaRegion_cp <- ggplot() +
+  geom_line(data = america,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = america,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = america,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_america, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
   facet_grid(~month) +
   labs(x = "Year-over-year Performance",
-       y = "Trade Rate",
-       colour = "European Countries",
-       title = "YOY Trade Performance between Singapore and European Countries",
-       subtitle = "study period from January 2020 to December 2022") +
-  theme(plot.title = element_text(size = 20,
+       y = "BOT\n(Million\nDollars)",
+       subtitle = "America Region") +
+  theme(plot.subtitle = element_text(size = 14,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.text = element_blank(),
+        strip.background = element_blank(),        
+        plot.margin = margin(0.2,0.5,0.2,0.5,"cm"))
+```
+
+#### 4.5.1.3 Asia Region
+
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+asiaRegion_cycPlot <- ggplot() +
+  geom_line(data = asia,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = asia,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = asia,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_asia, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       title = "Singapore YOY Trade Performance (BOT) with Asia Region",
+       subtitle = "from January 2020 to December 2022. Blue lines as a reference for the average of total trade volume,\norange lines for export volume & red lines for the BOT.") +
+  theme(plot.title = element_text(size = 24,
                                   colour = "#302f2f",
                                   face = "bold"),
         plot.subtitle = element_text(size = 12,
                                   colour = "#424242",
                                   face = "italic"),
-        axis.text.x = element_text(size = 7, 
+        axis.text.x = element_text(size = 9, 
                                    angle = 60, 
                                    hjust = 0, 
                                    vjust = -0.1),
+        axis.text.y = element_text(size = 9),
         axis.title.y = element_text(angle = 0, 
-                                    size = 10,
+                                    size = 9,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    vjust = 1.05,
+                                    vjust = 1.1,
                                     margin = margin(r = -20)),
-        axis.title.x = element_text(size = 10,
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
                                     colour = "#302f2f",
-                                    margin = margin(8,0,0,0)),
+                                    margin = margin(9,0,0,0)),
         strip.text = element_text(size = 12,
                                   face = "bold",
                                   colour = "#424242"),
         strip.background = element_blank(),
-        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"),
-        legend.position = "bottom",
-        legend.justification = "left")
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
 
-
-girafe(ggobj = eUnion_testPlot,
-       width_svg = 12, 
-       height_svg = 10)
+asiaRegion_cycPlot
 ```
 
-<br>
+```{r}
+#| output: false
+#| fig-height: 6
+#| fig-width: 14
+asiaRegion_cp <- ggplot() +
+  geom_line(data = asia,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = asia,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = asia,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_asia, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       subtitle = "Asia Region") +
+  theme(plot.subtitle = element_text(size = 14,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.text = element_blank(),
+        strip.background = element_blank(),        
+        plot.margin = margin(0.2,0.5,0.2,0.5,"cm"))
+```
+
+#### 4.5.1.4 Europe Region
+
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+europeRegion_cycPlot <- ggplot() +
+  geom_line(data = europe,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = europe,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = europe,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_europe, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       title = "Singapore YOY Trade Performance (BOT) with Europe Region",
+       subtitle = "from January 2020 to December 2022. Blue lines as a reference for the average of total trade volume,\norange lines for export volume & red lines for the BOT.") +
+  theme(plot.title = element_text(size = 24,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 9, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    vjust = 1.1,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    margin = margin(9,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
+
+europeRegion_cycPlot
+```
+
+```{r}
+#| output: false
+#| fig-height: 6
+#| fig-width: 14
+europeRegion_cp <- ggplot() +
+  geom_line(data = europe,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = europe,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = europe,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_europe, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       subtitle = "Europe Region") +
+  theme(plot.subtitle = element_text(size = 14,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        strip.text = element_blank(),
+        strip.background = element_blank(),        
+        plot.margin = margin(0.2,0.5,0.2,0.5,"cm"))
+```
+
+#### 4.5.1.5 Oceania Region
+
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+oceaniaRegion_cycPlot <- ggplot() +
+  geom_line(data = oceania,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = oceania,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = oceania,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_oceania, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       title = "Singapore YOY Trade Performance (BOT) with Oceania Region",
+       subtitle = "from January 2020 to December 2022. Blue lines as a reference for the average of total trade volume,\norange lines for export volume & red lines for the BOT.") +
+  theme(plot.title = element_text(size = 24,
+                                  colour = "#302f2f",
+                                  face = "bold"),
+        plot.subtitle = element_text(size = 12,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 9, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_text(angle = 0, 
+                                    size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    vjust = 1.1,
+                                    margin = margin(r = -20)),
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    margin = margin(9,0,0,0)),
+        strip.text = element_text(size = 12,
+                                  face = "bold",
+                                  colour = "#424242"),
+        strip.background = element_blank(),
+        plot.margin = margin(0.5,0.5,0.5,0.5,"cm"))
+
+oceaniaRegion_cycPlot
+```
+
+```{r}
+#| output: false
+#| fig-height: 8
+#| fig-width: 14
+oceaniaRegion_cp <- ggplot() +
+  geom_line(data = oceania,
+            aes(x = year, 
+                y = tradeTotal, 
+                group = month), 
+            colour = "black") +
+  geom_line(data = oceania,
+            aes(x = year, 
+                y = bot, 
+                group = month), 
+            colour = "red") +
+  geom_line(data = oceania,
+            aes(x = year, 
+                y = export, 
+                group = month), 
+            colour = "orange") +
+  geom_hline(aes
+             (yintercept = avg), 
+             data = hl_oceania, 
+             linetype = 6, 
+             colour = "blue", 
+             linewidth = 0.5) + 
+  facet_grid(~month) +
+  labs(x = "Year-over-year Performance",
+       y = "BOT\n(Million\nDollars)",
+       subtitle = "Oceania Region") +
+  theme(plot.subtitle = element_text(size = 14,
+                                  colour = "#424242",
+                                  face = "italic"),
+        axis.text.x = element_text(size = 9, 
+                                   angle = 60, 
+                                   hjust = 0, 
+                                   vjust = -0.1),
+        axis.text.y = element_text(size = 9),
+        axis.title.y = element_blank(),
+        axis.title.x = element_text(size = 9,
+                                    face = "bold",
+                                    colour = "#302f2f",
+                                    margin = margin(9,0,0,0)),
+        strip.text = element_blank(),
+        strip.background = element_blank(),        
+        plot.margin = margin(0.2,0.5,0.2,0.5,"cm"))
+```
+
+#### 4.5.1.6 Overview for All 5 Regions
+
+```{r}
+#| fig-height: 30
+#| fig-width: 14
+ggpubr::ggarrange(africaRegion_cp,
+                  americaRegion_cp,
+                  asiaRegion_cp,
+                  europeRegion_cp,
+                  oceaniaRegion_cp,
+                  ncol = 1,
+                  nrow = 5,
+                  align = "v")
+```
+
+## 4.6 Visualise Import & Export by Individual Country
+
+### 4.6.1 Germany
+
+```{r}
+#| fig-height: 4
+#| fig-width: 14
+ggplot(data = germany,
+       aes (x = period,
+            y = tradeVolume)) +
+  geom_line(aes
+            (color = tradeType, linetype = tradeType)) +
+  scale_color_manual(values = c("darkred", "steelblue"))
+
+```
