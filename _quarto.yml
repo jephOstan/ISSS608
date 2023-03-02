@@ -99,7 +99,9 @@ website:
           - text: Exploration 4 - Interactive Heatmap Chart
             href: pnote/test4.qmd
           - text: Exploration 5 - Time-Series Visualisation
-            href: pnote/test5.qmd           
+            href: pnote/test5.qmd
+          - text: Exploration 7 - Marketing & Retail Visual Analytics
+            href: pnote/test7.qmd              
           - text: Personal Note
             href: pnote/note1.qmd
           - text: Tableau Note
