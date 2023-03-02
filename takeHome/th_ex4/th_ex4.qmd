@@ -681,6 +681,12 @@ asean_bot <- asean %>%
 
 ## 4.1 Horizon Chart
 
+!!!!! wildfire 2022 June to Aug in many Europe countries.
+
+Severe drought \> not enough water to cool down nuclear power plant in France.
+
+!!!!! (US\$ trillion), double legends
+
 ### 4.1.1 Overview of Trade Balance (BOT) Fluctuation at Countries Level
 
 This area-time series visualisation technique is used to reveal the trends of trade balance changes for 110 trading partners at the country level month-over-month from the year 2020 to 2022.
@@ -2183,3 +2189,11 @@ ggpubr::ggarrange(africaRegion_cp,
                   nrow = 5,
                   align = "v")
 ```
+
+# 5.FURTHER EXPLORATION 
+
+A government spending with budget deficit can reduce the national savings rate and raises the trade deficit, and BOT, theorectically can affect a country's GDP, currency exchange rate, level of inflation as well as interest rates. Hence, I thought it would be sensible not to exclude exploration based on financial year instead of specific period.
+
+Based on Singapore Ministry of Finance, the Singapore Budget is prepared based on the [Singapore financial year](https://www.mof.gov.sg/singaporebudget/about-budget#:~:text=The%20Singapore%20Budget%20is%20prepared,31%20March%20the%20following%20year.) which begins 1 April and ends on 31 March.
+
+Find out more from [**Take-home Exercise 4.2**](https://visual-analytics-jephostan.netlify.app/takehome/th_ex4/th_ex4.2). Please note this 4.2 has yet to complete.
