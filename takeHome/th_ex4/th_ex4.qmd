@@ -60,19 +60,13 @@ Generally, there are two key types of merchandise traded by Singapore, i.e. oil 
 
 [^1]: Singapore Department of Statistics. 2023. Singapore's International Trade. https://www.singstat.gov.sg/modules/infographics/singapore-international-trade
 
-+------------------------------------+----------------------+----------------------+
 | Sections                           | Exports              | Imports              |
-+====================================+======================+======================+
+|------------------------------------|----------------------|----------------------|
 | Machinery & Transport Equipment    | S\$363.5 Bil (63.1%) | S\$319.0 Bil (62.6%) |
-+------------------------------------+----------------------+----------------------+
 | Chemicals & Chemical Products      | S\$83 Bil (14.4%)    | S\$52.3 Bil (10.3%)  |
-+------------------------------------+----------------------+----------------------+
 | Miscellaneous Manufactured Articls | S\$56.4 Bil (9.8%)   | S\$52.8 Bil (10.4%)  |
-+------------------------------------+----------------------+----------------------+
 | Manufactured Goods                 | S\$22.6 Bil (3.9%)   | S\$30.9 Bil (6.1%)   |
-+------------------------------------+----------------------+----------------------+
 | Food & Live Animals                | S\$15.2 Bil (2.6%)   | S\$14.0 Bil (2.7%)   |
-+------------------------------------+----------------------+----------------------+
 
 There are top 10 major trading partners ??!!
 
@@ -2190,7 +2184,7 @@ ggpubr::ggarrange(africaRegion_cp,
                   align = "v")
 ```
 
-# 5.FURTHER EXPLORATION 
+# 5.FURTHER EXPLORATION
 
 A government spending with budget deficit can reduce the national savings rate and raises the trade deficit, and BOT, theorectically can affect a country's GDP, currency exchange rate, level of inflation as well as interest rates. Hence, I thought it would be sensible not to exclude exploration based on financial year instead of specific period.
 

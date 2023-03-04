@@ -27,7 +27,6 @@ The following are the packages required for this exercise :
 ## **1.1 Load R Packages**
 
 ```{r}
-#| code-fold: false
 pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table, plotly, viridis, hrbrthemes, CGPfunctions, ggrepel)
 ```
 
@@ -38,7 +37,6 @@ pacman::p_load(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyver
 ### 2.1.1 campaign_desc
 
 ```{r}
-#| code-fold: false
 campaign_desc <- read_csv("data2/campaign_desc.csv")
 
 glimpse(campaign_desc, 70)
@@ -53,7 +51,6 @@ So, any coupons received as part of a campaign are valid within the dates contai
 ### 2.1.2 campaign_table
 
 ```{r}
-#| code-fold: false
 campaign_table <- read_csv("data2/campaign_table.csv")
 
 glimpse(campaign_table, 70)
@@ -217,7 +214,6 @@ This table signifies whether a given product was featured in the weekly mailer o
 ### 2.1.4 coupon
 
 ```{r}
-#| code-fold: false
 coupon <- read_csv("data2/coupon.csv")
 
 glimpse(coupon, 70)
@@ -313,14 +309,43 @@ transaction_3 <- read_rds("data2/transaction_3.rds")
 
 ```{r}
 length(unique(hh_demographic$household_key))
+ls(hh_demographic)
 ```
 
 ```{r}
-length(unique(transaction_1$household_key))
+sum(length(unique(transaction_1$household_key)) + length(unique(transaction_2$household_key)) + length(unique(transaction_3$household_key)))
+max(transaction_1$DAY)
+max(transaction_2$DAY)
+max(transaction_3$DAY)
+```
+
+Remarks :
+
+Only 801 households demographic data available.
+
+7,347 unique households made transaction throughout 711 business days.
+
+### 2.2.2 Campaign
+
+```{r}
+campaigns <- campaign_table %>%
+  full_join(campaign_desc)
 ```
 
 ```{r}
-questionr::freq(transaction_1$BASKET_ID == 51700010076)
+campaigns_1 <- campaigns %>%
+  left_join(coupon_redempt) %>%
+  drop_na(COUPON_UPC) %>% 
+  mutate(day_response = (DAY - START_DAY)+1) %>%
+  mutate(duration = (END_DAY - START_DAY)+1)
+```
+
+```{r}
+#| eval: false
+campaigns_hh <- campaigns_1 %>%
+  plyr::join_all(list(transaction_1, transaction_2, transaction_3), 
+                 by = c(`DAY`, `household_key`), 
+                 type = "left")
 ```
 
 ```{r}
