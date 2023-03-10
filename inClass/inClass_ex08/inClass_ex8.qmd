@@ -1,0 +1,25 @@
+---
+title: "Network Data Visualisation & Analysis"
+subtitle: "In-Class Exercise 8"
+editor: visual
+date:  11 Mar 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+# 2. VISUALISATION WITH TABLEAU

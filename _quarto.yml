@@ -45,6 +45,8 @@ website:
             href: handsOn_ex7.2.qmd 
           - text: Ex[7.3] Analytical Mapping
             href: handsOn_ex7.3.qmd 
+          - text: Ex[8] Modelling, Visualising & Analysing Network Data
+            href: handsOn_ex8.qmd 
             
             
       - text: In-class Exercises
@@ -61,6 +63,8 @@ website:
             href: inClass/inClass_ex06/inClass_ex6.qmd
           - text: Ex[7] Visualise Geospatial Analysis
             href: inClass/inClass_ex07/inClass_ex7.qmd
+          - text: Ex[8] Network Data Visualisation & Analysis
+            href: inClass/inClass_ex08/inClass_ex8.qmd            
             
       - text: Take-home Exercises
         menu: 
