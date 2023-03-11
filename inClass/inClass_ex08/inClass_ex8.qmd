@@ -22,4 +22,162 @@ format:
 
 # **1. OVERVIEW**
 
-# 2. VISUALISATION WITH TABLEAU
+In-class notes
+
+![Bipartite Graph](images/image-276964478.png){alt="Bipartite Graph" width="100"}
+
+E.g. U can represent students, V represents school / departments
+
+Multimodel graph - apart from social media, also commonly use in logistic supply chain.
+
+![](images/image-469722110.png)
+
+-   Combine ggtreemap and network package to plot above. if one package, consider nodexl paid version.
+
+-   Aggregate data first if volume too big to use multiple tidygraph plots.
+
+-   For large volumes, look for package that support push force or force directed functions or algorithms.
+
+-   Gephi open source network graph.
+
+-   trade performances for Singapore - trade data for the edges (need to include Singapore name or cant identify from where), countries list only as the nodes.
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load('igraph', 'tidygraph', 'ggraph', 'visNetwork', 'lubridate', 'clock', 'tidyverse', 'graphlayouts')
+```
+
+# **3. DATA**
+
+## 3.1 Import Data
+
+Involved two (2) steps : import and inspect imported data set.
+
+### **3.1.1 Import nodes data**
+
+```{r}
+GAStech_nodes <- read_csv("data/GAStech_email_node.csv")
+
+problems(GAStech_nodes)
+```
+
+### **3.1.2 Import edges data**
+
+```{r}
+GAStech_edges <- read_csv("data/GAStech_email_edge-v2.csv")
+
+problems(GAStech_edges)
+```
+
+### 3.1.3 Inspect imported data
+
+```{r}
+glimpse(GAStech_nodes, 60)
+```
+
+```{r}
+glimpse(GAStech_edges, 60)
+```
+
+## 3.2 Data Wrangling
+
+### 3.2.1 Update data type
+
+#### 3.2.1.1 Update "year", "month", "day"
+
+```{r}
+#| code-fold: false
+GAStech_edges <- GAStech_edges %>%
+  mutate(SendDate = dmy(SentDate)) %>%
+  mutate(Weekday = wday(SentDate,
+                        label = TRUE,
+                        abbr = FALSE))
+```
+
+#### 3.2.1.2 **Review output**
+
+```{r}
+glimpse(GAStech_edges, 60)
+```
+
+### **3.2.2 Aggregate attributes**
+
+```{r}
+#| code-fold: false
+GAStech_edges_aggregated <- GAStech_edges %>%
+  filter(MainSubject == "Work related") %>%
+  group_by(source, 
+           target, 
+           Weekday) %>%
+  summarise(Weight = n()) %>%
+  filter(source != target) %>%
+  filter(Weight > 1) %>%
+  ungroup()
+```
+
+## **3.3.3 Create network objects with tidygraph**
+
+#### **3.3.3.1 Create tidygraph data model**
+
+```{r}
+#| code-fold: false
+GAStech_graph <- tbl_graph(nodes = GAStech_nodes,
+                           edges = GAStech_edges_aggregated, 
+                           directed = TRUE)
+```
+
+#### **3.3.3.2 Review output**
+
+```{r}
+GAStech_graph
+```
+
+### **3.3.4 Activate & update non-active object** 
+
+```{r}
+GAStech_graph %>%
+  activate(edges) %>%
+  arrange(desc
+          (Weight))
+```
+
+# 4. visNetwork package
+
+## 4.1 Visualise Network graphy with visNetwork
+
+```{r}
+GAStech_edges_aggregatedVIS <- GAStech_edges %>%
+  left_join(GAStech_nodes, 
+            by = c("sourceLabel" = "label")) %>%
+  rename(from = id) %>%
+  left_join(GAStech_nodes, 
+            by = c("targetLabel" = "label")) %>%
+  rename(to = id) %>%
+  filter(MainSubject == "Work related") %>%
+  group_by(from, to) %>%
+    summarise(weight = n()) %>%
+  filter(from != to) %>%
+  filter(weight > 1) %>%
+  ungroup()
+```
+
+```{r}
+#| fig-height: 10
+#| fig-width: 14
+visNetwork(GAStech_nodes,
+           GAStech_edges_aggregatedVIS) %>%
+  visIgraphLayout(layout = "layout_with_fr",
+                  smooth = TRUE) %>%
+  visOptions(highlightNearest = TRUE,
+             nodesIdSelection = TRUE) %>%
+  visLegend() %>%
+  visLayout(randomSeed = 123)
+```
+
+Remarks :
+
+For interactive selection, to change to other variable, just rename that intended.variable as "from".

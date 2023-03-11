@@ -7,7 +7,7 @@ website:
   title: "ISSS608"
   navbar:
     left: 
-      - text: Hands-on Exercises
+      - text: Hands-on Exercises[1-6]
         menu: 
           - text: Ex[1] DataVis with ggplot2
             href: handsOn_ex1.qmd
@@ -39,6 +39,9 @@ website:
             href: handsOn_ex6.1.qmd
           - text: Ex[6.2] Create Cycle Plot
             href: handsOn_ex6.2.qmd
+
+      - text: Hands-on Exercises[7-10]
+        menu: 
           - text: Ex[7.1] Choropleth Mapping
             href: handsOn_ex7.1.qmd
           - text: Ex[7.2] Visualise Geospatial Points
@@ -46,8 +49,7 @@ website:
           - text: Ex[7.3] Analytical Mapping
             href: handsOn_ex7.3.qmd 
           - text: Ex[8] Modelling, Visualising & Analysing Network Data
-            href: handsOn_ex8.qmd 
-            
+            href: handsOn_ex8.qmd            
             
       - text: In-class Exercises
         menu: 

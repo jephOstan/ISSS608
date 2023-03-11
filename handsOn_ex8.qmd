@@ -60,7 +60,7 @@ for(p in packages){
 ## 2.2 R Packages Highlights
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Highlights of the R Packages needed for this study** ]{style="color:#3a9c88"}
+## [**⇳ Highlights of the R Packages needed for this study**]{style="color:#3a9c88"}
 
 1.  **tidygraph package**
 
@@ -73,15 +73,9 @@ for(p in packages){
     Additional reading materials recommended by lecturer :
 
     -   [Introducing tidygraph](https://www.data-imaginist.com/2017/introducing-tidygraph/)
-
-    ```{=html}
-    <!-- -->
-    ```
     -   [tidygraph 1.1 -- A tidy hope](https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/)
 
-2.  
-
-    ### **The tbl_graph object**
+    **The tbl_graph object**
 
     Two functions of **tidygraph** package can be used to create network objects, they are:
 
@@ -109,9 +103,35 @@ for(p in packages){
 
     -   *activate()* verb from **tidygraph** serves as a switch between tibbles for nodes and edges. All dplyr verbs applied to **tbl_graph** object are applied to the active tibble.
 
-    ![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex08/img/image9-3.jpg)
+    ![](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex08/img/image9-3.jpg){width="400"}
 
     -   In the above the *.N()* function is used to gain access to the node data while manipulating the edge data. Similarly *.E()* will give you the edge data and *.G()* will give you the **tbl_graph** object itself.
+
+2.  [**ggraph**](https://ggraph.data-imaginist.com/) is an [**extension of ggplot2**]{.underline}, making it easier to carry over basic ggplot skills to the design of network graphs.
+
+    As in all network graph, there are three main aspects to a **ggraph**'s network graph, they are:
+
+    -   [nodes](https://cran.r-project.org/web/packages/ggraph/vignettes/Nodes.html),
+
+    -   \[edges\]((https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html) and
+
+    -   [layouts](https://cran.r-project.org/web/packages/ggraph/vignettes/Layouts.html).
+
+    For a comprehensive discussion of each of this aspect of graph, please refer to their respective vignettes provided.
+
+3.  [**visNetwork()**](http://datastorm-open.github.io/visNetwork/) is a R package for network visualization, using [vis.js](http://visjs.org/) javascript library.
+
+    -   *visNetwork()* function uses a nodes list and edges list to create an interactive graph.
+
+        -   The nodes list must include an "id" column, and the edge list must have "from" and "to" columns.
+
+        -   The function also plots the labels for the nodes, using the names of the actors from the "label" column in the node list.
+
+    -   The resulting graph is fun to play around with.
+
+        -   You can move the nodes and the graph will use an algorithm to keep the nodes properly spaced.
+
+        -   You can also zoom in and out on the plot and move it around to re-center it.
 :::
 
 <br>
@@ -247,7 +267,7 @@ glimpse(GAStech_edges_aggregated, 60)
 
 -   **edges**
 
-    The terminal nodes of each edge must either be encoded in a `to` and `from` column, or in the two first columns, as integers.
+    The terminal nodes of each edge must either be encoded in a **`to`** and **`from`** column, or in the two first columns, as integers.
 
 -   **directed** to set the constructed graph to be directed when set to "TRUE".
 
@@ -271,15 +291,21 @@ GAStech_graph
 
 Remarks :
 
--   The tbl_graph object has 54 nodes and 4541 edges.
+-   The tbl_graph object has 54 nodes and 1,372 edges.
 
 -   Illustrates the first six rows of "Node Data" and the first three rows of "Edge Data".
 
 -   The Node Data is an **active** **tibble** within a tbl_graph object. This means, at this point, only node tibble can be manipulated.
 
-### **3.3.4 Activate & update non-active object**
+### **3.3.4 Activate & update non-active object** 
 
-The nodes tibble data frame is activated by default, but you can change which tibble data frame is active with the *activate()* function. Thus, if we wanted to rearrange the rows in the edges tibble to list those with the highest "weight" first, we could use *activate()* and then *arrange()*.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***activate( )*** - tidygraph -]{style="color:#d46e15"} to set *edges* as the context of subsequent manipulation.
+
+-   note : nodes are activated [by default](https://tidygraph.data-imaginist.com/reference/activate.html).
+:::
 
 ```{r}
 GAStech_graph %>%
@@ -288,23 +314,11 @@ GAStech_graph %>%
           (Weight))
 ```
 
-Visit the reference guide of [*activate()*](https://tidygraph.data-imaginist.com/reference/activate.html) to find out more about the function.
+# **4. VISUALISE NETWORK DATA**
 
-## **Plotting Network Data with ggraph package**
+## **4.1 Plot with ggraph package** 
 
-[**ggraph**](https://ggraph.data-imaginist.com/) is an extension of **ggplot2**, making it easier to carry over basic ggplot skills to the design of network graphs.
-
-As in all network graph, there are three main aspects to a **ggraph**'s network graph, they are:
-
--   [nodes](https://cran.r-project.org/web/packages/ggraph/vignettes/Nodes.html),
-
--   \[edges\]((https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html) and
-
--   [layouts](https://cran.r-project.org/web/packages/ggraph/vignettes/Layouts.html).
-
-For a comprehensive discussion of each of this aspect of graph, please refer to their respective vignettes provided.
-
-### **Plotting a basic network graph**
+### **4.1.1 Plot basic network graph**
 
 The code chunk below uses [*ggraph()*](https://ggraph.data-imaginist.com/reference/ggraph.html), [*geom-edge_link()*](https://ggraph.data-imaginist.com/reference/geom_edge_link.html) and [*geom_node_point()*](https://ggraph.data-imaginist.com/reference/geom_node_point.html) to plot a network graph by using *GAStech_graph*. Before your get started, it is advisable to read their respective reference guide at least once.
 
@@ -399,8 +413,9 @@ In the code chunk below, the thickness of the edges will be mapped with the *Wei
 ```{r}
 g <- ggraph(GAStech_graph, 
             layout = "nicely") +
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight),
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = Department), 
                   size = 3)
@@ -433,10 +448,12 @@ set_graph_style()
 
 g <- ggraph(GAStech_graph, 
             layout = "nicely") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight), 
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = Department), 
+  geom_node_point(aes
+                  (colour = Department), 
                   size = 2)
 
 g + facet_edges(~Weekday)
@@ -451,8 +468,9 @@ set_graph_style()
 
 g <- ggraph(GAStech_graph, 
             layout = "nicely") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight), 
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = Department), 
                   size = 2) +
@@ -470,10 +488,12 @@ set_graph_style()
 
 g <- ggraph(GAStech_graph, 
             layout = "nicely") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight), 
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = Department), 
+  geom_node_point(aes
+                  (colour = Department), 
                   size = 2)
   
 g + facet_edges(~Weekday) +
@@ -491,10 +511,12 @@ set_graph_style()
 
 g <- ggraph(GAStech_graph, 
             layout = "nicely") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight), 
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = Department), 
+  geom_node_point(aes
+                  (colour = Department), 
                   size = 2)
   
 g + facet_nodes(~Department)+
@@ -513,11 +535,13 @@ Centrality measures are a collection of statistical indices use to describe the 
 g <- GAStech_graph %>%
   mutate(betweenness_centrality = centrality_betweenness()) %>%
   ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight), 
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = Department,
-            size=betweenness_centrality))
+  geom_node_point(aes
+                  (colour = Department,
+                    size = betweenness_centrality))
 g + theme_graph()
 ```
 
@@ -550,51 +574,44 @@ In the code chunk below *group_edge_betweenness()* is used.
 
 ```{r}
 g <- GAStech_graph %>%
-  mutate(community = as.factor(group_edge_betweenness(weights = Weight, directed = TRUE))) %>%
+  mutate(community = as.factor
+         (group_edge_betweenness
+           (weights = Weight, 
+             directed = TRUE))) %>%
   ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
+  geom_edge_link(aes
+                 (width = Weight), 
+                 alpha = 0.2) +
   scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = community))  
+  geom_node_point(aes
+                  (colour = community))  
 
 g + theme_graph()
 ```
 
-## **Building Interactive Network Graph with visNetwork**
+## **6. INTERACTIVE NETWORK GRAPH with visNetwork**
 
--   [visNetwork()](http://datastorm-open.github.io/visNetwork/) is a R package for network visualization, using [vis.js](http://visjs.org/) javascript library.
-
--   *visNetwork()* function uses a nodes list and edges list to create an interactive graph.
-
-    -   The nodes list must include an "id" column, and the edge list must have "from" and "to" columns.
-
-    -   The function also plots the labels for the nodes, using the names of the actors from the "label" column in the node list.
-
--   The resulting graph is fun to play around with.
-
-    -   You can move the nodes and the graph will use an algorithm to keep the nodes properly spaced.
-
-    -   You can also zoom in and out on the plot and move it around to re-center it.
-
-### **Data preparation**
-
-Before we can plot the interactive network graph, we need to prepare the data model by using the code chunk below.
+### **6.1 Data preparation**
 
 ```{r}
-GAStech_edges_aggregated <- GAStech_edges %>%
-  left_join(GAStech_nodes, by = c("sourceLabel" = "label")) %>%
+GAStech_edges_aggregatedVIS <- GAStech_edges %>%
+  left_join(GAStech_nodes, 
+            by = c("sourceLabel" = "label")) %>%
   rename(from = id) %>%
-  left_join(GAStech_nodes, by = c("targetLabel" = "label")) %>%
+  left_join(GAStech_nodes, 
+            by = c("targetLabel" = "label")) %>%
   rename(to = id) %>%
   filter(MainSubject == "Work related") %>%
   group_by(from, to) %>%
     summarise(weight = n()) %>%
-  filter(from!=to) %>%
+  filter(from != to) %>%
   filter(weight > 1) %>%
   ungroup()
 ```
 
-### **Plotting the first interactive network graph**
+### **6.2 Plot interactive network graph**
+
+### 6.2.1 Plot nodes
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -604,10 +621,10 @@ GAStech_edges_aggregated <- GAStech_edges %>%
 
 ```{r}
 visNetwork(GAStech_nodes, 
-           GAStech_edges_aggregated)
+           GAStech_edges_aggregatedVIS)
 ```
 
-### **Working with layout**
+### **6.2.2 Adjust with layout** 
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -629,9 +646,11 @@ Arguments :
 -   note : edge directions are ignored. More about [igraph](http://datastorm-open.github.io/visNetwork/igraph.html).
 :::
 
+#### 6.2.2.1 Compare code chunk structure differences
+
 ```{r}
 visNetwork(GAStech_nodes,
-           GAStech_edges_aggregated) %>%
+           GAStech_edges_aggregatedVIS) %>%
   visIgraphLayout(layout = "layout_with_fr")
 ```
 
@@ -641,11 +660,11 @@ The arguements are \>\> visIgraphLayout(graph, layout, smooth\... )
 
 With the graph argument in mind, explore further with code chunk below, different from the code chunk above provided for this lesson.
 
-Conclusion : Both code chunk above and below produced the same output.
+Conclusion : Both code chunk structures shown above and below produced the same output.
 
 ```{r}
 visIgraphLayout((visNetwork(GAStech_nodes,
-                            GAStech_edges_aggregated)),
+                            GAStech_edges_aggregatedVIS)),
                 layout = "layout_with_fr")
 ```
 
@@ -653,25 +672,21 @@ Remarks :
 
 The produced layout value "layout_nicely" and "layout_with_fr" looks similar.
 
-```{r}
-visIgraphLayout(visNetwork(GAStech_nodes,
-                            GAStech_edges_aggregated))
-```
-
-### smooth nodes
+#### 6.2.2.2 Explore with smooth nodes
 
 ```{r}
-visIgraphLayout((visNetwork(GAStech_nodes,
-                            GAStech_edges_aggregated)),
+visIgraphLayout((visNetwork
+                 (GAStech_nodes,
+                  GAStech_edges_aggregatedVIS)),
                 layout = "layout_with_fr",
                 smooth = TRUE)
 ```
 
-### FUNKY NODES!
+#### 6.2.2.3 FUNKY NODES!
 
 ```{r}
 visIgraphLayout((visNetwork(GAStech_nodes,
-                            GAStech_edges_aggregated)),
+                            GAStech_edges_aggregatedVIS)),
                 layout = "layout_with_fr",
                 physics = TRUE,
                 smooth = TRUE,
@@ -682,7 +697,7 @@ visIgraphLayout((visNetwork(GAStech_nodes,
 
 ```{r}
 visIgraphLayout((visNetwork(GAStech_nodes,
-                            GAStech_edges_aggregated)),
+                            GAStech_edges_aggregatedVIS)),
                 layout = "layout_in_circle",
                 physics = TRUE,
                 smooth = TRUE)
@@ -705,7 +720,7 @@ When we rerun the code chunk below, visNetwork shades the nodes by assigning uni
 
 ```{r}
 visNetwork(GAStech_nodes,
-           GAStech_edges_aggregated) %>%
+           GAStech_edges_aggregatedVIS) %>%
   visIgraphLayout(layout = "layout_with_fr") %>%
   visLegend() %>%
   visLayout(randomSeed = 123)
@@ -719,7 +734,7 @@ In the code run below *visEdges()* is used to symbolise the edges.\
 
 ```{r}
 visNetwork(GAStech_nodes,
-           GAStech_edges_aggregated) %>%
+           GAStech_edges_aggregatedVIS) %>%
   visIgraphLayout(layout = "layout_with_fr") %>%
   visEdges(arrows = "to", 
            smooth = list(enabled = TRUE, 
@@ -737,9 +752,12 @@ In the code chunk below, *visOptions()* is used to incorporate interactivity fea
 - The argument *nodesIdSelection* adds an id node selection creating an HTML select element.
 
 ```{r}
+#| fig-height: 10
+#| fig-width: 14
 visNetwork(GAStech_nodes,
-           GAStech_edges_aggregated) %>%
-  visIgraphLayout(layout = "layout_with_fr") %>%
+           GAStech_edges_aggregatedVIS) %>%
+  visIgraphLayout(layout = "layout_with_fr",
+                  smooth = TRUE) %>%
   visOptions(highlightNearest = TRUE,
              nodesIdSelection = TRUE) %>%
   visLegend() %>%

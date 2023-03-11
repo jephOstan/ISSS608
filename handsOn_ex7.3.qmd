@@ -40,6 +40,12 @@ By the end of this in-class exercise, you will be able to use appropriate functi
 
 -   Creating boxmap
 
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**NOTE**]{style="color:#3a9c88"}
+
+The majority of content for this page is with references to [lecture notes](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex08/hands-on_ex08-networkvis#overview) from Dr. Kam Tin Seong.
+:::
+
 # **2. R PACKAGE REQUIRED**
 
 ## **2.1 Load R Packages**

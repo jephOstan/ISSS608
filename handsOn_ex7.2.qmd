@@ -26,6 +26,12 @@ This study explore approaches to plot proportional symbol map (also known as gra
 
 Like choropleth maps, you can create classed or unclassed versions of these maps. The classed ones are known as range-graded or graduated symbols, and the unclassed are called proportional symbols, where the area of the symbols are proportional to the values of the attribute being mapped. In this hands-on exercise, you will learn how to create a proportional symbol map showing the number of wins by Singapore Pools' outlets using an R package called **tmap**.
 
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**NOTE**]{style="color:#3a9c88"}
+
+The majority of content for this page is with references to [lecture notes](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex08/hands-on_ex08-networkvis#overview) from Dr. Kam Tin Seong.
+:::
+
 # **2. R PACKAGE REQUIRED**
 
 ## **2.1 Load R Packages**
