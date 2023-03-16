@@ -429,11 +429,19 @@ cookieconsent.run({
   <li><a href="#product" id="toc-product" class="nav-link" data-scroll-target="#product">2.1.7 product</a></li>
   <li><a href="#transaction_data" id="toc-transaction_data" class="nav-link" data-scroll-target="#transaction_data">2.1.8 transaction_data</a></li>
   </ul></li>
-  <li><a href="#explore-data" id="toc-explore-data" class="nav-link" data-scroll-target="#explore-data">2.2 Explore Data</a>
-  <ul class="collapse">
-  <li><a href="#identify-households" id="toc-identify-households" class="nav-link" data-scroll-target="#identify-households">2.2.1 Identify households</a></li>
-  <li><a href="#campaign" id="toc-campaign" class="nav-link" data-scroll-target="#campaign">2.2.2 Campaign</a></li>
   </ul></li>
+  <li><a href="#data-prep" id="toc-data-prep" class="nav-link" data-scroll-target="#data-prep">3. DATA PREP</a>
+  <ul class="collapse">
+  <li><a href="#group-transaction-data-by-household_key" id="toc-group-transaction-data-by-household_key" class="nav-link" data-scroll-target="#group-transaction-data-by-household_key">3.1 Group transaction data by household_key</a></li>
+  <li><a href="#merge-tables" id="toc-merge-tables" class="nav-link" data-scroll-target="#merge-tables">3.2 Merge Tables</a>
+  <ul class="collapse">
+  <li><a href="#demographic-trans1.1" id="toc-demographic-trans1.1" class="nav-link" data-scroll-target="#demographic-trans1.1">3.2.1 demographic &amp; trans1.1</a></li>
+  <li><a href="#campaign_table-campaign_desc" id="toc-campaign_table-campaign_desc" class="nav-link" data-scroll-target="#campaign_table-campaign_desc">3.2.2 campaign_table &amp; campaign_desc</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#correlation-analysis" id="toc-correlation-analysis" class="nav-link" data-scroll-target="#correlation-analysis">4. CORRELATION ANALYSIS</a>
+  <ul class="collapse">
+  <li><a href="#set-household_key-as-the-row-id" id="toc-set-household_key-as-the-row-id" class="nav-link" data-scroll-target="#set-household_key-as-the-row-id">4.1 Set household_key as the row id</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -462,7 +470,7 @@ cookieconsent.run({
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 11, 2023</p>
+      <p class="date-modified">March 17, 2023</p>
     </div>
   </div>
     
@@ -479,7 +487,7 @@ cookieconsent.run({
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table, plotly, viridis, hrbrthemes, CGPfunctions, ggrepel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, ggHoriPlot, ggthemes, ggpubr, ggiraph, lubridate, tidyverse, data.table, plotly, viridis, hrbrthemes, CGPfunctions, ggrepel, corrplot, corrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -533,6 +541,7 @@ $ CAMPAIGN      &lt;dbl&gt; 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26…</c
 </section>
 <section id="causal_data" class="level3">
 <h3 class="anchored" data-anchor-id="causal_data">2.1.3 causal_data</h3>
+<p>The file is too large to push over to Github. So, I have to split the datasets to keep each dataset less than 100 MB.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -747,9 +756,9 @@ $ CAMPAIGN      &lt;dbl&gt; 8, 8, 8, 18, 18, 8, 5, 8, 8, 8, 11, 10, 13, 11…</c
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>hh_demographic <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/hh_demographic.csv"</span>)</span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>demographic <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/hh_demographic.csv"</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hh_demographic, <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(demographic, <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 801
@@ -764,15 +773,48 @@ $ KID_CATEGORY_DESC   &lt;chr&gt; "None/Unknown", "None/Unknown", "1", "2"…
 $ household_key       &lt;dbl&gt; 1, 7, 8, 13, 16, 17, 18, 19, 20, 22, 25,…</code></pre>
 </div>
 </div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>questionr<span class="sc">::</span><span class="fu">freq</span>(<span class="fu">duplicated</span>(demographic<span class="sc">$</span>household_key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        n   % val%
+FALSE 801 100  100</code></pre>
+</div>
+</div>
+<p>Remarks :</p>
+<ul>
+<li><p>No duplication in household_key.</p></li>
+<li><p>Only 801 households demographic data available.</p></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(demographic<span class="sc">$</span>AGE_DESC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "65+"   "45-54" "25-34" "35-44" "19-24" "55-64"</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(demographic<span class="sc">$</span>MARITAL_STATUS_CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "U" "B"</code></pre>
+</div>
+</div>
 </section>
 <section id="product" class="level3">
 <h3 class="anchored" data-anchor-id="product">2.1.7 product</h3>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>product <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/product.csv"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(product, <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>product <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/product.csv"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(product, <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 92,353
@@ -795,178 +837,204 @@ $ CURR_SIZE_OF_PRODUCT &lt;chr&gt; "22 LB", NA, NA, "50 OZ", "14 OZ", "2.5…</c
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>transaction_1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/transaction_data.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>STORE_ID) <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000000</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(transaction_1,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data2/transaction_1.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>transaction_1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/transaction_data.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>STORE_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000000</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(transaction_1,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data2/transaction_1.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>transaction_2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/transaction_data.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>STORE_ID) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1000001</span><span class="sc">:</span><span class="dv">2000000</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(transaction_2,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data2/transaction_2.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>transaction_2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/transaction_data.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>STORE_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1000001</span><span class="sc">:</span><span class="dv">2000000</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(transaction_2,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data2/transaction_2.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>transaction_3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/transaction_data.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>STORE_ID) <span class="sc">%&gt;%</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">2000001</span><span class="sc">:</span><span class="dv">2595732</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(transaction_3,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data2/transaction_3.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>transaction_3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data2/transaction_data.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>STORE_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">2000001</span><span class="sc">:</span><span class="dv">2595732</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(transaction_3,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"data2/transaction_3.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>transaction_1 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data2/transaction_1.rds"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>transaction_2 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data2/transaction_2.rds"</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>transaction_3 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data2/transaction_3.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>transaction_1 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data2/transaction_1.rds"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>transaction_2 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data2/transaction_2.rds"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>transaction_3 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data2/transaction_3.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 </section>
-<section id="explore-data" class="level2">
-<h2 class="anchored" data-anchor-id="explore-data">2.2 Explore Data</h2>
-<section id="identify-households" class="level3">
-<h3 class="anchored" data-anchor-id="identify-households">2.2.1 Identify households</h3>
+</section>
+<section id="data-prep" class="level1">
+<h1>3. DATA PREP</h1>
+<section id="group-transaction-data-by-household_key" class="level2">
+<h2 class="anchored" data-anchor-id="group-transaction-data-by-household_key">3.1 Group transaction data by household_key</h2>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(hh_demographic<span class="sc">$</span>household_key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>trans_1 <span class="ot">&lt;-</span> transaction_1 <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(household_key) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalSales =</span> <span class="fu">sum</span>(SALES_VALUE), </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalDisc =</span> <span class="fu">sum</span>(RETAIL_DISC)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sales =</span> totalSales <span class="sc">+</span> totalDisc)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>trans_2 <span class="ot">&lt;-</span> transaction_2 <span class="sc">%&gt;%</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(household_key) <span class="sc">%&gt;%</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalSales =</span> <span class="fu">sum</span>(SALES_VALUE), </span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalDisc =</span> <span class="fu">sum</span>(RETAIL_DISC)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sales =</span> totalSales <span class="sc">+</span> totalDisc)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>trans_3 <span class="ot">&lt;-</span> transaction_3 <span class="sc">%&gt;%</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(household_key) <span class="sc">%&gt;%</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalSales =</span> <span class="fu">sum</span>(SALES_VALUE), </span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalDisc =</span> <span class="fu">sum</span>(RETAIL_DISC)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sales =</span> totalSales <span class="sc">+</span> totalDisc)</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>trans <span class="ot">&lt;-</span> <span class="fu">merge</span>(trans_1, trans_2, <span class="at">all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>trans1 <span class="ot">&lt;-</span> <span class="fu">merge</span>(trans, trans_3, <span class="at">all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 801</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>(hh_demographic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "AGE_DESC"            "HH_COMP_DESC"        "HOMEOWNER_DESC"     
-[4] "household_key"       "HOUSEHOLD_SIZE_DESC" "INCOME_DESC"        
-[7] "KID_CATEGORY_DESC"   "MARITAL_STATUS_CODE"</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">length</span>(<span class="fu">unique</span>(transaction_1<span class="sc">$</span>household_key)) <span class="sc">+</span> <span class="fu">length</span>(<span class="fu">unique</span>(transaction_2<span class="sc">$</span>household_key)) <span class="sc">+</span> <span class="fu">length</span>(<span class="fu">unique</span>(transaction_3<span class="sc">$</span>household_key)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 7347</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(transaction_1<span class="sc">$</span>DAY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 318</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(transaction_2<span class="sc">$</span>DAY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 566</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(transaction_3<span class="sc">$</span>DAY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 711</code></pre>
-</div>
 </div>
 <p>Remarks :</p>
 <p>Only 801 households demographic data available.</p>
-<p>7,347 unique households made transaction throughout 711 business days.</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>trans1<span class="fl">.1</span> <span class="ot">&lt;-</span> trans1 <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(household_key) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totalSales1 =</span> <span class="fu">sum</span>(totalSales), </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalDisc1 =</span> <span class="fu">sum</span>(totalDisc)) <span class="sc">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sales1 =</span> totalSales1 <span class="sc">+</span> totalDisc1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
-<section id="campaign" class="level3">
-<h3 class="anchored" data-anchor-id="campaign">2.2.2 Campaign</h3>
+<section id="merge-tables" class="level2">
+<h2 class="anchored" data-anchor-id="merge-tables">3.2 Merge Tables</h2>
+<section id="demographic-trans1.1" class="level3">
+<h3 class="anchored" data-anchor-id="demographic-trans1.1">3.2.1 demographic &amp; trans1.1</h3>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>campaigns <span class="ot">&lt;-</span> campaign_table <span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(campaign_desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>demogTrans <span class="ot">&lt;-</span> demographic <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(trans1<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="campaign_table-campaign_desc" class="level3">
+<h3 class="anchored" data-anchor-id="campaign_table-campaign_desc">3.2.2 campaign_table &amp; campaign_desc</h3>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>campaigns <span class="ot">&lt;-</span> campaign_table <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(campaign_desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>campaigns_1 <span class="ot">&lt;-</span> campaigns <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(coupon_redempt) <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(COUPON_UPC) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day_response =</span> (DAY <span class="sc">-</span> START_DAY)<span class="sc">+</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration =</span> (END_DAY <span class="sc">-</span> START_DAY)<span class="sc">+</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>campaigns_1 <span class="ot">&lt;-</span> campaigns <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(coupon_redempt) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(COUPON_UPC) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day_response =</span> (DAY <span class="sc">-</span> START_DAY)<span class="sc">+</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration =</span> (END_DAY <span class="sc">-</span> START_DAY)<span class="sc">+</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>campaigns_hh <span class="ot">&lt;-</span> campaigns_1 <span class="sc">%&gt;%</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  plyr<span class="sc">::</span><span class="fu">join_all</span>(<span class="fu">list</span>(transaction_1, transaction_2, transaction_3), </span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">DAY</span><span class="st">`</span>, <span class="st">`</span><span class="at">household_key</span><span class="st">`</span>), </span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>campaigns_hh <span class="ot">&lt;-</span> campaigns_1 <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  plyr<span class="sc">::</span><span class="fu">join_all</span>(<span class="fu">list</span>(transaction_1, transaction_2, transaction_3), </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">DAY</span><span class="st">`</span>, <span class="st">`</span><span class="at">household_key</span><span class="st">`</span>), </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+</section>
+<section id="correlation-analysis" class="level1">
+<h1>4. CORRELATION ANALYSIS</h1>
+<section id="set-household_key-as-the-row-id" class="level2">
+<h2 class="anchored" data-anchor-id="set-household_key-as-the-row-id">4.1 Set household_key as the row id</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>cluster_vars <span class="ot">&lt;-</span> <span class="fu">column_to_rownames</span>(demogTrans,</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">var =</span> <span class="st">'household_key'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(product<span class="sc">$</span>PRODUCT_ID))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>cluster_vars <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sales, AGE_DESC, MARITAL_STATUS_CODE, HOUSEHOLD_SIZE_DESC) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlate</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Build Regression Model</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>model_test <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales1 <span class="sc">~</span> AGE_DESC <span class="sc">+</span> HOMEOWNER_DESC <span class="sc">+</span> HOUSEHOLD_SIZE_DESC,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> cluster_vars)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 92353</code></pre>
+<pre><code>
+Call:
+lm(formula = sales1 ~ AGE_DESC + HOMEOWNER_DESC + HOUSEHOLD_SIZE_DESC, 
+    data = cluster_vars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5245.5 -2204.9  -650.8  1391.4 19885.0 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                     4342.5      552.1   7.866 1.21e-14 ***
+AGE_DESC25-34                    414.3      549.8   0.754 0.451340    
+AGE_DESC35-44                   1000.7      535.5   1.869 0.062030 .  
+AGE_DESC45-54                    502.3      519.4   0.967 0.333863    
+AGE_DESC55-64                   -163.6      643.4  -0.254 0.799378    
+AGE_DESC65+                     -774.9      622.9  -1.244 0.213901    
+HOMEOWNER_DESCProbable Owner   -1230.8      982.4  -1.253 0.210645    
+HOMEOWNER_DESCProbable Renter  -1083.4      995.8  -1.088 0.276939    
+HOMEOWNER_DESCRenter            -508.5      524.8  -0.969 0.332838    
+HOMEOWNER_DESCUnknown           -938.0      282.6  -3.319 0.000943 ***
+HOUSEHOLD_SIZE_DESC2             192.4      289.4   0.665 0.506349    
+HOUSEHOLD_SIZE_DESC3             422.0      382.1   1.104 0.269746    
+HOUSEHOLD_SIZE_DESC4             678.7      506.6   1.340 0.180780    
+HOUSEHOLD_SIZE_DESC5+            698.7      469.1   1.489 0.136792    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3203 on 787 degrees of freedom
+  (1699 observations deleted due to missingness)
+Multiple R-squared:  0.05401,   Adjusted R-squared:  0.03839 
+F-statistic: 3.456 on 13 and 787 DF,  p-value: 3.067e-05</code></pre>
 </div>
 </div>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(campaign_table<span class="sc">$</span>DESCRIPTION)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>cluster_vars <span class="ot">&lt;-</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>wp_stdMM <span class="ot">&lt;-</span> <span class="fu">normalize</span>(cluster_varsNF1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "TypeA" "TypeB" "TypeC"</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(transaction_1<span class="sc">$</span>BASKET_ID))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 108962</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(coupon_redempt<span class="sc">$</span>household_key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 434</code></pre>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(campaign_table<span class="sc">$</span>household_key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1584</code></pre>
-</div>
 </div>
 
 
-</section>
 </section>
 </section>
 
