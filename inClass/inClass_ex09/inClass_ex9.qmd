@@ -1,0 +1,33 @@
+---
+title: "Information Dashboard Design"
+subtitle: "In-Class Exercise 9"
+editor: visual
+date:  18 Mar 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+year 2000 onward, Singapore is using SVY21 for the projected coordinates system.
+
+Kertau(RSO) for military usage.
+
+# 2. VISUALISATION WITH TABLEAU
+
+## 2.1 Distribution of SingaporePools Betting Centres
+
+https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/DistributionofSingaporePoolsBettingCentres/Quantitative?publish=yes

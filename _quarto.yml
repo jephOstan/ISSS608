@@ -69,6 +69,8 @@ website:
             href: inClass/inClass_ex07/inClass_ex7.qmd
           - text: Ex[8] Network Data Visualisation & Analysis
             href: inClass/inClass_ex08/inClass_ex8.qmd            
+          - text: Ex[9] Information Dashboard Design
+            href: inClass/inClass_ex09/inClass_ex9.qmd    
             
       - text: Take-home Exercises
         menu: 

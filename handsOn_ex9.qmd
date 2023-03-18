@@ -169,7 +169,7 @@ quarts <- sales_report %>%
   right_join(sales_report)
 ```
 
-## **3.5 Data Preparation for Sparklines** 
+## **3.5 Data Preparation for Sparklines**
 
 ### 3.5.1 Aggregate Data
 
@@ -421,7 +421,7 @@ report <- report %>%
 #### 4.3.2.3 Plot interactive dashboard
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"} 
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***reactable( )*** - [reactable](https://glin.github.io/reactable/)-]{style="color:#d46e15"} to create an interactive data table.
 
