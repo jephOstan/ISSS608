@@ -351,7 +351,8 @@ report %>%
   summarize('Monthly Sales' = list(Sales), 
             .groups = "drop") %>%
   gt() %>%
-  gt_plt_sparkline('Monthly Sales')
+  gt_plt_sparkline('Monthly Sales', 
+                   same_limit = FALSE)
 ```
 
 #### **4.2.2.2 Plot the updated data.table**
@@ -362,7 +363,8 @@ report %>%
 #| fig-width: 14
 sales_data %>%
   gt() %>%
-  gt_plt_sparkline('Monthly Sales')
+  gt_plt_sparkline('Monthly Sales', 
+                   same_limit = FALSE)
 ```
 
 ## **4.3 Combine Bullet Chart & Sparklines**
@@ -389,7 +391,8 @@ sales_data = sales_data %>%
 #| code-fold: false
 sales_data %>%
   gt() %>%
-  gt_plt_sparkline('Monthly Sales') %>%
+  gt_plt_sparkline('Monthly Sales', 
+                   same_limit = FALSE) %>%
   gt_plt_bullet(column = Actual, 
                 target = Target, 
                 width = 28,
