@@ -51,7 +51,9 @@ website:
           - text: Ex[8] Modelling, Visualising & Analysing Network Data
             href: handsOn_ex8.qmd
           - text: Ex[9] Information Dashboard Design
-            href: handsOn_ex9.qmd  
+            href: handsOn_ex9.qmd 
+          - text: Ex[10] Visual Analysis for Financial Data
+            href: handsOn_ex10.qmd 
             
       - text: In-class Exercises
         menu: 
@@ -70,7 +72,9 @@ website:
           - text: Ex[8] Network Data Visualisation & Analysis
             href: inClass/inClass_ex08/inClass_ex8.qmd            
           - text: Ex[9] Information Dashboard Design
-            href: inClass/inClass_ex09/inClass_ex9.qmd    
+            href: inClass/inClass_ex09/inClass_ex9.qmd
+          - text: Ex[10] Visual Analysis for Financial Data
+            href: inClass/inClass_ex010/inClass_ex10.qmd  
             
       - text: Take-home Exercises
         menu: 

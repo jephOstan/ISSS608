@@ -1,0 +1,87 @@
+---
+title: "Create Horizon Graph, Candlestick Chart & Bollinger Bands"
+subtitle: "Hands-on Exercise 10 - Financial Data Visualisation & Analysis"
+editor: visual
+date: 24 Mar 2023
+date-modified: "`r Sys.Date()`"
+code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
+website: 
+    google-analytics: "G-PKMQ2W4ZRC"
+format:
+  html:
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+---
+
+# **1. OVERVIEW**
+
+This study explores the steps to create bullet chart and sparklines to form dashboard.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**NOTE**]{style="color:#3a9c88"}
+
+The majority of content for this page is with references to [lecture notes](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex08/hands-on_ex08-networkvis#overview) from Dr. Kam Tin Seong.
+:::
+
+# **2. R PACKAGE REQUIRED**
+
+## **2.1 Load R Packages**
+
+```{r}
+#| code-fold: false
+pacman::p_load(lubridate, ggthemes, reactable, reactablefmtr, gt, gtExtras, tidyverse)
+```
+
+## 2.2 R Packages Highlights
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## **⇳ Highlights of the R Packages needed for this study**
+
+-   [tidyverse](https://www.tidyverse.org/) provides a collection of functions for performing data science task such as importing, tidying, wrangling data and visualising data. It is not a single package but a collection of modern R packages including but not limited to [readr](https://readr.tidyverse.org/), [tidyr](https://tidyr.tidyverse.org/), [dplyr](https://dplyr.tidyverse.org/), [ggplot](https://ggplot2.tidyverse.org/), [tibble](https://tibble.tidyverse.org/), [stringr](https://stringr.tidyverse.org/), [forcats](https://forcats.tidyverse.org/) and [purrr](https://purrr.tidyverse.org/).
+
+-   [lubridate](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex09/hands-on_ex09-information_dashboard_design) provides functions to work with dates and times more efficiently.
+
+-   [ggthemes](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex09/hands-on_ex09-information_dashboard_design) is an extension of ggplot2. It provides additional [themes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/) beyond the basic themes of ggplot2.
+
+-   [gtExtras](https://jthomasmock.github.io/gtExtras/) provides some additional helper functions to assist in creating beautiful tables with [gt](https://gt.rstudio.com/), an R package specially designed for anyone to make wonderful-looking tables using the R programming language.
+
+-   [reactablefmtr](https://kcuilla.github.io/reactablefmtr/) provides various features to streamline and enhance the styling of interactive reactable tables with easy-to-use and highly-customizable functions and themes.
+
+In this section, you will learn how to create static information dashboard by using [gt](https://gt.rstudio.com/) and [gtExtras](https://jthomasmock.github.io/gtExtras/) packages. Before getting started, it is highly recommended for you to visit the webpage of these two packages and review all the materials provided on the webpages at least once. You done not have to understand and remember everything provided but at least have an overview of the purposes and functions provided by them.
+
+In this section, you will learn how to create interactive information dashboard by using [reactable](https://glin.github.io/reactable/) and [reactablefmtr](https://kcuilla.github.io/reactablefmtr/) packages. Before getting started, it is highly recommended for you to visit the webpage of these two packages and review all the materials provided on the webpages at least once. You done not have to understand and remember everything provided but at least have an overview of the purposes and functions provided by them.
+
+In order to build an interactive sparklines, we need to install dataui R package by using the code chunk below.
+:::
+
+<br>
+
+# **3. DATA PREPARATION**
+
+## **3.1 Acquire Data Source**
+
+The data set for this hands-on exercise, a personal database in Microsoft Access mdb format called *Coffee Chain* is used.
+
+## **3.2 Import Data**
+
+### **3.2.1 Import database**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***odbcConnectAccess( )*** - [RODBC](https://cran.r-project.org/web/packages/RODBC/)-]{style="color:#d46e15"} to import a database query table into R.
+:::
+
+```{r}
+#| code-fold: false
+
+```
+
+### 3.2.2 Write dataframe into RDS format

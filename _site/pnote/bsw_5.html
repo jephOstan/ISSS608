@@ -264,6 +264,10 @@ cookieconsent.run({
     <a class="dropdown-item" href="../handsOn_ex9.html">
  <span class="dropdown-text">Ex[9] Information Dashboard Design</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../handsOn_ex10.html">
+ <span class="dropdown-text">Ex[10] Visual Analysis for Financial Data</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -302,6 +306,10 @@ cookieconsent.run({
         <li>
     <a class="dropdown-item" href="../inClass/inClass_ex09/inClass_ex9.html">
  <span class="dropdown-text">Ex[9] Information Dashboard Design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../inClass/inClass_ex010/inClass_ex10.qmd">
+ <span class="dropdown-text">Ex[10] Visual Analysis for Financial Data</span></a>
   </li>  
     </ul>
   </li>
@@ -460,7 +468,7 @@ cookieconsent.run({
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 18, 2023</p>
+      <p class="date-modified">March 24, 2023</p>
     </div>
   </div>
     
@@ -833,11 +841,10 @@ No. of variables tried at each split: 21
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 12
-  r.squared adj.r.s…¹ sigma stati…² p.value    df logLik     AIC     BIC devia…³
-      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1     0.973     0.973 0.165  56472.       0    21 12307. -24567. -24375.    886.
-# … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;, and abbreviated
-#   variable names ¹​adj.r.squared, ²​statistic, ³​deviance</code></pre>
+  r.squared adj.r.squared sigma statistic p.value    df logLik     AIC     BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1     0.973         0.973 0.165    56472.       0    21 12307. -24567. -24375.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
 </div>
 <p>glance(rf_fit$fit)</p>
@@ -861,7 +868,7 @@ No. of variables tried at each split: 21
  8 clarity_3      0.118    0.00460      25.7 3.59e-144
  9 cut_1          0.0874   0.00419      20.8 6.89e- 96
 10 clarity_4     -0.0466   0.00367     -12.7 7.16e- 37
-# … with 12 more rows</code></pre>
+# ℹ 12 more rows</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -889,7 +896,7 @@ No. of variables tried at each split: 21
  8     8  5.82    6.14 -0.315 0.000761  0.165 0.000125      -1.90 
  9     9  5.83    5.94 -0.113 0.000972  0.165 0.0000208     -0.686
 10    10  5.83    6.09 -0.260 0.000579  0.165 0.0000651     -1.57 
-# … with 32,354 more rows</code></pre>
+# ℹ 32,354 more rows</code></pre>
 </div>
 </div>
 <div class="cell">

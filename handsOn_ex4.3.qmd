@@ -38,7 +38,7 @@ pacman::p_load(tidyverse, plotly, crosstalk, DT, ggdist, gganimate, knitr, kable
 ```
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Highlights of the R Packages :**]{style="color:#3a9c88"} 
+## [**⇳ Highlights of the R Packages :**]{style="color:#3a9c88"}
 
 -   crosstalk
 
@@ -48,7 +48,7 @@ pacman::p_load(tidyverse, plotly, crosstalk, DT, ggdist, gganimate, knitr, kable
 
     -   It is designed for both frequentist and Bayesian uncertainty visualization, taking the view that uncertainty visualization can be unified through the perspective of distribution visualization:
 
-        -   for frequentist models, one visualises confidence distributions or bootstrap distributions (see vignette(\"freq-uncertainty-vis\"));
+        -   for frequentist models, one visualises confidence distributions or bootstrap distributions (see vignette("freq-uncertainty-vis"));
 
         -   for Bayesian models, one visualises probability distributions (see the tidybayes package, which builds on top of ggdist).
 

@@ -297,7 +297,7 @@ Remarks :
 
 -   The Node Data is an **active** **tibble** within a tbl_graph object. This means, at this point, only node tibble can be manipulated.
 
-### **3.3.4 Activate & update non-active object** 
+### **3.3.4 Activate & update non-active object**
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -316,7 +316,7 @@ GAStech_graph %>%
 
 # **4. VISUALISE NETWORK DATA**
 
-## **4.1 Plot with ggraph package** 
+## **4.1 Plot with ggraph package**
 
 ### **4.1.1 Plot basic network graph**
 
@@ -624,7 +624,7 @@ visNetwork(GAStech_nodes,
            GAStech_edges_aggregatedVIS)
 ```
 
-### **6.2.2 Adjust with layout** 
+### **6.2.2 Adjust with layout**
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
