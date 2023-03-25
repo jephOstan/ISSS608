@@ -28,7 +28,7 @@ This study explores the steps to
 
 -   plot horizon graph by using ggHoriPlot package,
 
--   plot static and interactive stock prices line graph(s) by ggplot2 and plotly R packages,\
+-   plot static and interactive stock prices line graph(s) by ggplot2 and plotly R packages,
 
 -   plot static candlestick chart by using tidyquant package,
 
@@ -48,23 +48,24 @@ The majority of content for this page is with references to [lecture notes](http
 
 ```{r}
 #| code-fold: false
-pacman::p_load(lubridate, tidyquant, ggHoriPlot, timetk, ggthemes, plotly, tidyverse)
+pacman::p_load(lubridate, tidyquant, ggHoriPlot, timetk, ggthemes, plotly,
+               tidyverse)
 ```
 
 ## 2.2 R Packages Highlights
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## **⇳ Highlights of the R Packages needed for this study** 
+## **⇳ Highlights of the R Packages needed for this study**
 
--   [tidyverse](https://www.tidyverse.org/) provides a collection of functions for performing data science task such as importing, tidying, wrangling data and visualising data. It is not a single package but a collection of modern R packages including but not limited to [readr](https://readr.tidyverse.org/), [tidyr](https://tidyr.tidyverse.org/), [dplyr](https://dplyr.tidyverse.org/), [ggplot](https://ggplot2.tidyverse.org/), [tibble](https://tibble.tidyverse.org/), [stringr](https://stringr.tidyverse.org/), [forcats](https://forcats.tidyverse.org/) and [purrr](https://purrr.tidyverse.org/).
+-   [tidyverse](https://www.tidyverse.org/) to tidy and wrangle data, and to visualise data.
 
-    -   [lubridate](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex10/hands-on_ex10-finvis) provides functions to work with dates and times more efficiently.
+-   [lubridate](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex10/hands-on_ex10-finvis) to work with dates and times.
 
-    -   [tidyquant](https://business-science.github.io/tidyquant/) bringing business and financial analysis to the \'tidyverse\'. It provides a convenient wrapper to various \'xts\', \'zoo\', \'quantmod\', \'TTR\' and \'PerformanceAnalytics\' package functions and returns the objects in the tidy \'tibble\' format.
+-   [tidyquant](https://business-science.github.io/tidyquant/) to pull various data sources such as ***Yahoo***! ***Finance***, Morning Star, Bloomberg market data, etc. to the 'tidyverse'.
 
-    -   [ggHoriPlot](https://rivasiker.github.io/ggHoriPlot/): A user-friendly, highly customisable R package for building horizon plots in the \'ggplot2\' environment
+    -   It provides a convenient wrapper to various 'xts', 'zoo', 'quantmod', 'TTR' and 'PerformanceAnalytics' package functions and returns the objects in the tidy 'tibble' format.
 
-    -   
+-   [ggHoriPlot](https://rivasiker.github.io/ggHoriPlot/) to build horizon plots in the 'ggplot2' environment.
 :::
 
 <br>
@@ -73,33 +74,42 @@ pacman::p_load(lubridate, tidyquant, ggHoriPlot, timetk, ggthemes, plotly, tidyv
 
 ## **3.1 Acquire Data Source**
 
-*tidyquant* integrates resources for collecting and analysing financial data with the tidy data infrastructure of the tidyverse, allowing for seamless interaction between each.
-
-In this section, you will learn how to extract the daily stock values of a selected stocks from [Yahoo Finance](https://sg.finance.yahoo.com/?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAHa98gxRGd7UR5U5CBJQrzOlGe7GebuoJHwAnhfZteZFhvBCGYuLXElRR4e1jYMKNVAfoTkxZywJqXNn70g1lsXCL4GV5S1iHwV4MK3pKg8H33FHqCteh3jXuTKvpx1sZCOe_tlooJkLH9Odhgj1OV72vk3eRsCgzUeGb6zDxqOe) by using tidyquant.
+The shares data will be sourced from Yahoo Finance with function from *tidyquant.*
 
 ## **3.2 Import Data**
 
-### **3.2.1 Import database**
+### **3.2.1 Import Data into R E**
 
-**Step 1:** We will import a pre-prepared company list called **companySG.csv** onto R. The list consists of top 45 companies by market capitalisation in Singapore. However, we just want the top 40.
+```{r}
+company <- read_csv("data/companySG.csv")
+glimpse(company, 50)
+```
+
+### **3.2.2 Filter for Top 40 'Symbol'**
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-[***odbcConnectAccess( )*** - [RODBC](https://cran.r-project.org/web/packages/RODBC/)-]{style="color:#d46e15"} to import a database query table into R.
+[***slice_max( )*** - ?-]{style="color:#d46e15"} to filter top 40 rows of data.
 :::
 
 ```{r}
-company <- read_csv("data/companySG.csv")
-Top40 <- company %>% 
-  slice_max(`marketcap`, n=40) %>% 
+top40 <- company %>% 
+  slice_max(`marketcap`, 
+            n = 40) %>% 
   select(symbol)
 ```
 
-**Step 2:** [`tq_get()`](https://business-science.github.io/tidyquant/reference/tq_get.html) method will be used to extract daily values of these stocks from Yahoo Finance via APIs. The time period for the data was set from **1st January 2020** to **31st March 2021**. The data are specified to be returned in **daily** intervals.
+### **3.2.3 Import Data from Yahoo! Finance** 
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[[***tq_get( )***](https://business-science.github.io/tidyquant/reference/tq_get.html) - tidyquant -]{style="color:#d46e15"} to extract **daily** stock values from *Yahoo!* Finance via APIs from 1st January 2020 to 31st March 2022.
+:::
 
 ```{r}
-Stock40_daily <- Top40 %>%
+stock40Daily <- top40 %>%
   tq_get(get = "stock.prices", 
          from = "2020-01-01", 
          to = "2022-03-31") %>%
@@ -109,32 +119,46 @@ Stock40_daily <- Top40 %>%
                period  = "days")
 ```
 
-## **Plotting a horizon graph**
+# 4. DATA VISUALISATION
 
-In this section, you will learn how to plot a [horizon graph](http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf) by using [`geom_horizon()`](https://rivasiker.github.io/ggHoriPlot/reference/geom_horizon.html) of [*ggHoriPlot*](https://rivasiker.github.io/ggHoriPlot/) package.
+## **4.1 Basic Horizon Graph**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***geom_horizon( )*** - [ggHoriPlot](https://rivasiker.github.io/ggHoriPlot/)-]{style="color:#d46e15"} to plot horizon graph.
+:::
 
 ```{r}
-Stock40_daily %>% 
+stock40Daily %>% 
   ggplot() +
-  geom_horizon(aes(x = date, y=adjusted), origin = "midpoint", horizonscale = 6)+
-  facet_grid(symbol~.)+
+  geom_horizon(aes(x = date, 
+                   y = adjusted), 
+               origin = "midpoint", 
+               horizonscale = 6) +
+  facet_grid(symbol~.) +
   theme_few() +
   scale_fill_hcl(palette = 'RdBu') +
-  theme(panel.spacing.y=unit(0, "lines"), strip.text.y = element_text(
-    size = 5, angle = 0, hjust = 0),
-    legend.position = 'none',
-    axis.text.y = element_blank(),
-    axis.text.x = element_text(size=7),
-    axis.title.y = element_blank(),
-    axis.title.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    panel.border = element_blank()
-    ) +
-  scale_x_date(expand=c(0,0), date_breaks = "1 month", date_labels = "%b%y") +
+  theme(panel.spacing.y = unit
+        (0, "lines"), 
+        strip.text.y = element_text
+        (size = 5, 
+          angle = 0, 
+          hjust = 0),
+        legend.position = 'none',
+        axis.text.y = element_blank(),
+        axis.text.x = element_text(size = 7),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.border = element_blank()) +
+  scale_x_date(expand = c(0, 0), 
+               date_breaks = "1 month", 
+               date_labels = "%b%y") +
   ggtitle('Daily Adjusted Prices (Jan 2020 to Mar 2022)') 
 ```
 
-### **Horizon graph makeover**
+## **4.2 Horizon Graph Makeover**
 
 -   Instead of showing stock code, the stock name will be displayed.
 
@@ -143,16 +167,14 @@ Stock40_daily %>%
 Step 1: `left_join()` of *dplyr* package is used to append fields from **company** data.frame onto **Stock_daily** data.frame. Next `select()` is used to select columns 1 to 8 and 11 to 12.
 
 ```{r}
-Stock40_daily <- Stock40_daily %>%
-  left_join(company) %>%
+stock40Daily <- stock40Daily %>% left_join(company) %>%
   select(1:8, 11:12)
 ```
 
 Step 2: `geom_vline()` is used to add the vertical reference lines.
 
 ```{r}
-Stock40_daily %>% 
-  ggplot() +
+stock40Daily %>% ggplot() +
   geom_horizon(aes(x = date, y=adjusted), origin = "midpoint", horizonscale = 6)+
   facet_grid(Name~.)+ #<<
   geom_vline(xintercept = as.Date("2020-03-11"), colour = "grey15", linetype = "dashed", size = 0.5)+ #<<
@@ -173,12 +195,14 @@ Stock40_daily %>%
   ggtitle('Daily Adjusted Prices (Jan 2020 to Mar 2022)') 
 ```
 
-## **Plotting Stock Price Line Graph: ggplot methods**
+## **4.3 Stock Price Line Graph**
+
+### **4.3.1 with ggplot method**
 
 In the code chunk below, `geom_line()` of ggplot2 is used to plot the stock prices.
 
 ```{r}
-Stock40_daily %>%
+stock40Daily %>%
   filter(symbol == "DBSDF") %>%
   ggplot(aes(x = date, y = close)) +
     geom_line() +
@@ -187,21 +211,21 @@ Stock40_daily %>%
     theme_tq()
 ```
 
-## **Plotting interactive stock price line graphs**
+### **4.3.2 Interactive with ggplotly**
 
 In this section, we will create interactive line graphs for four selected stocks.
 
 *Step 1:* Selecting the four stocks of interest.
 
 ```{r}
-selected_stocks <-  Stock40_daily %>%
+selectedStocks <-  stock40Daily %>%
   filter (`symbol` == c("C09.SI", "SINGF", "SNGNF", "C52.SI"))
 ```
 
 Step 2: Plotting the line graphs by using *ggplot2* functions and `ggplotly()` of *plotly R* package
 
 ```{r}
-p <- ggplot(selected_stocks, 
+p <- ggplot(selectedStocks, 
             aes(x = date, y = adjusted)) + 
   scale_y_continuous() +
   geom_line() +
@@ -215,30 +239,35 @@ p <- ggplot(selected_stocks,
 ggplotly(p)
 ```
 
-## **Plotting Candlestick Chart: tidyquant method**
+## **4.4 Plot Candlestick Chart** 
+
+### **4.4.1 With tidyquant method**
 
 In this section, you will learn how to plot [candlestick chart](https://en.wikipedia.org/wiki/Candlestick_chart) by using [`geom_candlestick()`](https://business-science.github.io/tidyquant/reference/geom_chart.html) of *tidyquant* package.
 
 Before plotting the candlesticks, the code chunk below will be used to define the end data parameter. It will be used when setting date limits throughout the examples.
 
 ```{r}
-# end <- as_date("2022-03-31")
+end <- as_date("2022-03-31")
 ```
 
 ```{r}
-end <- strptime("31-Mar-2022", format = "%d-%b-%Y")
-end <- as.Date(end)
+#end <- strptime("31-Mar-2022", format = "%d-%b-%Y")
+#end <- as.Date(end)
 ```
 
 Now we are ready to plot the candlesticks by using the code chunk below.
 
 ```{r}
-Stock40_daily %>%
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+stock40Daily %>% 
   filter(symbol == "DBSDF") %>%
-  ggplot(aes(
-    x = date, y = close)) +
-  geom_candlestick(aes(
-    open = open, high = high, 
+  ggplot(aes(x = date, 
+             y = close)) +
+  geom_candlestick(aes(open = open, 
+                       high = high, 
     low = low, close = close)) +
   geom_line(size = 0.5)+
     coord_x_date(xlim = c(end - weeks(12), 
@@ -250,10 +279,10 @@ Stock40_daily %>%
   theme_tq()
 ```
 
-### **Plotting candlestick chart and MA lines: tidyquant method**
+### **4.4.2 Plotting candlestick chart and MA lines: tidyquant method**
 
 ```{r}
-Stock40_daily %>%
+stock40Daily %>%
   filter(symbol == "DBSDF") %>%
   ggplot(aes(
     x = date, y = close)) +
@@ -277,12 +306,14 @@ Things to learn from the code chunk:
 
 -   [`geom_MA`](https://business-science.github.io/tidyquant/reference/geom_ma.html) is used to add the moving average line. It is a wrapper function of [`SMA()`](https://www.rdocumentation.org/packages/TTR/versions/0.24.3/topics/SMA) from the *TTR* package.
 
-## **Plotting Bollinger Bands: tidyquant method**
+## **4.5 Plot Bollinger Bands**
+
+### **4.5.1 wiht tidyquant method**
 
 In this section, you will learn how to plot [bollinger bands](https://en.wikipedia.org/wiki/Bollinger_Bands) by using [`geom_bbands()`](https://business-science.github.io/tidyquant/reference/geom_bbands.html) of tidyquant package.
 
 ```{r}
-Stock40_daily %>%
+stock40Daily %>%
   filter(symbol == "DBSDF") %>% 
   ggplot(aes(x=date, y=close))+
   geom_line(size=0.5)+
@@ -304,11 +335,14 @@ Things you can learn from the code chunk:
 
 -   `geom_bbands()` plots a range around a moving average typically two standard deviations up and down. The moving average functions used are specified in [`SMA()`](https://www.rdocumentation.org/packages/TTR/versions/0.24.3/topics/SMA) from the [*TTR*](https://cran.r-project.org/web/packages/TTR/) package.
 
-## **Plotting Interactive Candlesticks Chart: ggplot2 and plotly R method**
+### **4.5.2 Interactive Candlesticks Chart:** 
+
+#### **4.5.2.1 Step 1 with ggplot2 and plotly R method**
 
 First, a `candleStick_plot` function is written as follows:
 
 ```{r}
+#| code-fold: false
 candleStick_plot<-function(symbol, from, to){
   tq_get(symbol, from = from, to = to, warnings = FALSE) %>% 
     mutate(greenRed=ifelse(open-close>0, "Red", "Green")) %>% 
@@ -331,15 +365,16 @@ candleStick_plot<-function(symbol, from, to){
 
 Credit: I learned this trick from [RObservations #12: Making a Candlestick plot with the ggplot2 and tidyquant packages](https://www.r-bloggers.com/2021/09/robservations-12-making-a-candlestick-plot-with-the-ggplot2-and-tidyquant-packages/)
 
+#### **4.5.2.2 Step 2 with plotly R method**
+
 ```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 p <- candleStick_plot("DBSDF",
                       from = '2022-01-01',
                       to = today())
 ggplotly(p)
 ```
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
-
-[***odbcConnectAccess( )*** - [RODBC](https://cran.r-project.org/web/packages/RODBC/)-]{style="color:#d46e15"} to import a database query table into R.
-:::
+!!!!! Homework - write a function with lubridate to get quarterly for 1 year to visualise the 1 year data with facet of 4 quarter plots to minimise the overlapping.
