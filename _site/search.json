@@ -1579,7 +1579,7 @@
     "href": "inClass/inClass_ex10/inClass_ex10.html",
     "title": "Create Horizon Graph, Candlestick Chart & Bollinger Bands",
     "section": "",
-    "text": "This study explores the steps to create bullet chart and sparklines to form dashboard."
+    "text": "Candlesticks - solid filled when open is higher than the closing price. Empty filled is when the closing price is higher than the open price."
   },
   {
     "objectID": "inClass/inClass_ex10/inClass_ex10.html#load-r-packages",
@@ -2686,5 +2686,33 @@
     "title": "Create Horizon Graph, Candlestick Chart & Bollinger Bands",
     "section": "Plotting Interactive Candlesticks Chart: ggplot2 and plotly R method",
     "text": "Plotting Interactive Candlesticks Chart: ggplot2 and plotly R method\nFirst, a candleStick_plot function is written as follows:\n\n\nShow the code\ncandleStick_plot<-function(symbol, from, to){\n  tq_get(symbol, from = from, to = to, warnings = FALSE) %>% \n    mutate(greenRed=ifelse(open-close>0, \"Red\", \"Green\")) %>% \n    ggplot()+\n    geom_segment(\n      aes(x = date, xend=date, y =open, yend =close, colour=greenRed), \n      size=3)+\n    theme_tq()+\n    geom_segment(\n      aes(x = date, xend=date, y =high, yend =low, colour=greenRed))+\n    scale_color_manual(values=c(\"ForestGreen\",\"Red\"))+\n    ggtitle(paste0(symbol,\" (\",from,\" - \",to,\")\"))+\n    theme(legend.position =\"none\",\n          axis.title.y = element_blank(),\n          axis.title.x=element_blank(),\n          axis.text.x = element_text(angle = 0, vjust = 0.5, hjust=1),\n          plot.title= element_text(hjust=0.5))\n}\n\n\nCredit: I learned this trick from RObservations #12: Making a Candlestick plot with the ggplot2 and tidyquant packages\n\n\nShow the code\np <- candleStick_plot(\"DBSDF\",\n                      from = '2022-01-01',\n                      to = today())\nggplotly(p)\n\n\n\n\n\n\n\n\n\n\n\n\n⇳ Usage of the code chunk below :\n\n\n\n\n\nodbcConnectAccess( ) - RODBC- to import a database query table into R."
+  },
+  {
+    "objectID": "inClass/inClass_ex10/inClass_ex10.html#candlestick-chart",
+    "href": "inClass/inClass_ex10/inClass_ex10.html#candlestick-chart",
+    "title": "Create Horizon Graph, Candlestick Chart & Bollinger Bands",
+    "section": "2.1 Candlestick Chart",
+    "text": "2.1 Candlestick Chart\nstep 1- Create 3 calculated fields\nClose-Open Diff <- SUM([Close])-SUM([Open])\nstep 2 - Put Date (Day) into Columns shelf, Low & Open into Rows shelf. Shows Symbol filter.\nStep 3 - Dual axis - sync - gantt bar changed\nStep 4 - Set\n“High-Low Diff” field into “Size” under the “SUM(Low)” card.\n“Low-High Diff” field into “Size” under the “SUM(High)” card.\nEdit axis to uncheck “Include zero” checkbox. Bullish or Bearish to Color."
+  },
+  {
+    "objectID": "inClass/inClass_ex10/inClass_ex10.html#bollinger-band",
+    "href": "inClass/inClass_ex10/inClass_ex10.html#bollinger-band",
+    "title": "Create Horizon Graph, Candlestick Chart & Bollinger Bands",
+    "section": "2.2 Bollinger Band",
+    "text": "2.2 Bollinger Band\nStep 1 : Create 2 parameters, namely “Lookback Period” and “No. Standard Deviation”."
+  },
+  {
+    "objectID": "inClass/inClass_ex10/inClass_ex10.html#section",
+    "href": "inClass/inClass_ex10/inClass_ex10.html#section",
+    "title": "Create Horizon Graph, Candlestick Chart & Bollinger Bands",
+    "section": "",
+    "text": "Step 2 : Create 5 Calculated Fields.\nnote : compute with average approach whenever there is a need to view at fixed range of period. Don’t need to average if can view data at daily.\n\nMoving Average\nSD\nUpper Bound\nLower Bound\nOutside the Band?\n\nStep 3 : Measure Values into Rows shelf. Select dual-axis. Synchronise the axis so that all lines are sync between 2 axis.\nStep 4 : Drag Lower Bound and Upper Bound to the 2nd axis.\nStep 5 : Show both Parameters."
+  },
+  {
+    "objectID": "inClass/inClass_ex10/inClass_ex10.html#published-dashboard",
+    "href": "inClass/inClass_ex10/inClass_ex10.html#published-dashboard",
+    "title": "Create Horizon Graph, Candlestick Chart & Bollinger Bands",
+    "section": "2.3 Published Dashboard",
+    "text": "2.3 Published Dashboard"
   }
 ]

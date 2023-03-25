@@ -21,69 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -429,19 +366,12 @@ cookieconsent.run({
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. OVERVIEW</strong></a></li>
-  <li><a href="#r-package-required" id="toc-r-package-required" class="nav-link" data-scroll-target="#r-package-required"><strong>2. R PACKAGE REQUIRED</strong></a>
+  <li><a href="#visualisation-with-tableau" id="toc-visualisation-with-tableau" class="nav-link" data-scroll-target="#visualisation-with-tableau">2. VISUALISATION WITH TABLEAU</a>
   <ul class="collapse">
-  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages"><strong>2.1 Load R Packages</strong></a></li>
-  <li><a href="#r-packages-highlights" id="toc-r-packages-highlights" class="nav-link" data-scroll-target="#r-packages-highlights">2.2 R Packages Highlights</a></li>
-  </ul></li>
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><strong>3. DATA PREPARATION</strong></a>
-  <ul class="collapse">
-  <li><a href="#acquire-data-source" id="toc-acquire-data-source" class="nav-link" data-scroll-target="#acquire-data-source"><strong>3.1 Acquire Data Source</strong></a></li>
-  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><strong>3.2 Import Data</strong></a>
-  <ul class="collapse">
-  <li><a href="#import-database" id="toc-import-database" class="nav-link" data-scroll-target="#import-database"><strong>3.2.1 Import database</strong></a></li>
-  <li><a href="#write-dataframe-into-rds-format" id="toc-write-dataframe-into-rds-format" class="nav-link" data-scroll-target="#write-dataframe-into-rds-format">3.2.2 Write dataframe into RDS format</a></li>
-  </ul></li>
+  <li><a href="#candlestick-chart" id="toc-candlestick-chart" class="nav-link" data-scroll-target="#candlestick-chart">2.1 Candlestick Chart</a></li>
+  <li><a href="#bollinger-band" id="toc-bollinger-band" class="nav-link" data-scroll-target="#bollinger-band">2.2 Bollinger Band</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><img src="images/image-632446636.png" class="img-fluid"></a></li>
+  <li><a href="#published-dashboard" id="toc-published-dashboard" class="nav-link" data-scroll-target="#published-dashboard">2.3 Published Dashboard</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -470,7 +400,7 @@ cookieconsent.run({
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 24, 2023</p>
+      <p class="date-modified">March 25, 2023</p>
     </div>
   </div>
     
@@ -481,71 +411,52 @@ cookieconsent.run({
 
 <section id="overview" class="level1">
 <h1><strong>1. OVERVIEW</strong></h1>
-<p>This study explores the steps to create bullet chart and sparklines to form dashboard.</p>
+<p>Candlesticks - solid filled when open is higher than the closing price. Empty filled is when the closing price is higher than the open price.</p>
 </section>
-<section id="r-package-required" class="level1">
-<h1><strong>2. R PACKAGE REQUIRED</strong></h1>
-<section id="load-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="load-r-packages"><strong>2.1 Load R Packages</strong></h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(lubridate, ggthemes, reactable, reactablefmtr, gt, gtExtras, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="visualisation-with-tableau" class="level1">
+<h1>2. VISUALISATION WITH TABLEAU</h1>
+<section id="candlestick-chart" class="level2">
+<h2 class="anchored" data-anchor-id="candlestick-chart">2.1 Candlestick Chart</h2>
+<p>step 1- Create 3 calculated fields</p>
+<p>Close-Open Diff &lt;- SUM([Close])-SUM([Open])</p>
+<p>step 2 - Put Date (Day) into Columns shelf, Low &amp; Open into Rows shelf. Shows Symbol filter.</p>
+<p>Step 3 - Dual axis - sync - gantt bar changed</p>
+<p>Step 4 - Set</p>
+<p>“High-Low Diff” field into “Size” under the “SUM(Low)” card.</p>
+<p>“Low-High Diff” field into “Size” under the “SUM(High)” card.</p>
+<p>Edit axis to uncheck “Include zero” checkbox. Bullish or Bearish to Color.</p>
+<p><img src="images/image-736370308.png" class="img-fluid"></p>
 </section>
-<section id="r-packages-highlights" class="level2">
-<h2 class="anchored" data-anchor-id="r-packages-highlights">2.2 R Packages Highlights</h2>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<strong>⇳ Highlights of the R Packages needed for this study</strong>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<section id="bollinger-band" class="level2">
+<h2 class="anchored" data-anchor-id="bollinger-band">2.2 Bollinger Band</h2>
+<p>Step 1 : Create 2 parameters, namely “Lookback Period” and “No.&nbsp;Standard Deviation”.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"><img src="images/image-632446636.png" class="img-fluid"></h2>
+<p><img src="images/image-1282038136.png" class="img-fluid"></p>
+<p>Step 2 : Create 5 Calculated Fields.</p>
+<p>note : compute with average approach whenever there is a need to view at fixed range of period. Don’t need to average if can view data at daily.</p>
 <ul>
-<li><a href="https://www.tidyverse.org/">tidyverse</a> provides a collection of functions for performing data science task such as importing, tidying, wrangling data and visualising data. It is not a</li>
+<li><p>Moving Average</p></li>
+<li><p>SD</p></li>
+<li><p>Upper Bound</p></li>
+<li><p>Lower Bound</p></li>
+<li><p>Outside the Band?</p></li>
 </ul>
-</div>
-</div>
-</div>
-<p><br></p>
+<p>Step 3 : Measure Values into Rows shelf. Select dual-axis. Synchronise the axis so that all lines are sync between 2 axis.</p>
+<p>Step 4 : Drag Lower Bound and Upper Bound to the 2nd axis.</p>
+<p>Step 5 : Show both Parameters.</p>
+<p><img src="images/image-1214033355.png" class="img-fluid"></p>
 </section>
-</section>
-<section id="data-preparation" class="level1">
-<h1><strong>3. DATA PREPARATION</strong></h1>
-<section id="acquire-data-source" class="level2">
-<h2 class="anchored" data-anchor-id="acquire-data-source"><strong>3.1 Acquire Data Source</strong></h2>
-<p>The data set for this hands-on exercise, a personal database in Microsoft Access mdb format called <em>Coffee Chain</em> is used.</p>
-</section>
-<section id="import-data" class="level2">
-<h2 class="anchored" data-anchor-id="import-data"><strong>3.2 Import Data</strong></h2>
-<section id="import-database" class="level3">
-<h3 class="anchored" data-anchor-id="import-database"><strong>3.2.1 Import database</strong></h3>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<section id="published-dashboard" class="level2">
+<h2 class="anchored" data-anchor-id="published-dashboard">2.3 Published Dashboard</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/CandlestickBollingerforSingaporeTop3Banks/Dashboard1?publish=yes"><img src="images/image-193640459.png" class="img-fluid figure-img"></a></p>
+</figure>
 </div>
-<div class="callout-caption-container flex-fill">
-<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><span style="color:#d46e15"><strong><em>odbcConnectAccess( )</em></strong> - <a href="https://cran.r-project.org/web/packages/RODBC/">RODBC</a>-</span> to import a database query table into R.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="write-dataframe-into-rds-format" class="level3">
-<h3 class="anchored" data-anchor-id="write-dataframe-into-rds-format">3.2.2 Write dataframe into RDS format</h3>
 
 
-</section>
 </section>
 </section>
 

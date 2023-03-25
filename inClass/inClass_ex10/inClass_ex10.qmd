@@ -22,41 +22,60 @@ format:
 
 # **1. OVERVIEW**
 
-This study explores the steps to create bullet chart and sparklines to form dashboard.
+Candlesticks - solid filled when open is higher than the closing price. Empty filled is when the closing price is higher than the open price.
 
-# **2. R PACKAGE REQUIRED**
+# 2. VISUALISATION WITH TABLEAU
 
-## **2.1 Load R Packages**
+## 2.1 Candlestick Chart
 
-```{r}
-#| code-fold: false
-pacman::p_load(lubridate, ggthemes, reactable, reactablefmtr, gt, gtExtras, tidyverse)
-```
+step 1- Create 3 calculated fields
 
-## 2.2 R Packages Highlights
+Close-Open Diff \<- SUM(\[Close\])-SUM(\[Open\])
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## **⇳ Highlights of the R Packages needed for this study**
+step 2 - Put Date (Day) into Columns shelf, Low & Open into Rows shelf. Shows Symbol filter.
 
--   [tidyverse](https://www.tidyverse.org/) provides a collection of functions for performing data science task such as importing, tidying, wrangling data and visualising data. It is not a
-:::
+Step 3 - Dual axis - sync - gantt bar changed
 
-<br>
+Step 4 - Set
 
-# **3. DATA PREPARATION**
+"High-Low Diff" field into "Size" under the "SUM(Low)" card.
 
-## **3.1 Acquire Data Source**
+"Low-High Diff" field into "Size" under the "SUM(High)" card.
 
-The data set for this hands-on exercise, a personal database in Microsoft Access mdb format called *Coffee Chain* is used.
+Edit axis to uncheck "Include zero" checkbox. Bullish or Bearish to Color.
 
-## **3.2 Import Data**
+![](images/image-736370308.png)
 
-### **3.2.1 Import database**
+## 2.2 Bollinger Band
 
-::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+Step 1 : Create 2 parameters, namely "Lookback Period" and "No. Standard Deviation".
 
-[***odbcConnectAccess( )*** - [RODBC](https://cran.r-project.org/web/packages/RODBC/)-]{style="color:#d46e15"} to import a database query table into R.
-:::
+## ![](images/image-632446636.png)
 
-### 3.2.2 Write dataframe into RDS format
+![](images/image-1282038136.png)
+
+Step 2 : Create 5 Calculated Fields.
+
+note : compute with average approach whenever there is a need to view at fixed range of period. Don't need to average if can view data at daily.
+
+-   Moving Average
+
+-   SD
+
+-   Upper Bound
+
+-   Lower Bound
+
+-   Outside the Band?
+
+Step 3 : Measure Values into Rows shelf. Select dual-axis. Synchronise the axis so that all lines are sync between 2 axis.
+
+Step 4 : Drag Lower Bound and Upper Bound to the 2nd axis.
+
+Step 5 : Show both Parameters.
+
+![](images/image-1214033355.png)
+
+## 2.3 Published Dashboard
+
+[![](images/image-193640459.png)](https://public.tableau.com/app/profile/joseph.zexeong.tan/viz/CandlestickBollingerforSingaporeTop3Banks/Dashboard1?publish=yes)
