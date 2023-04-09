@@ -1,9 +1,15 @@
 ---
-title: "Hands-on 1 - DataVis with ggplot2"
+title: "Hands-On Exercise 1 - Data Visualisation with ggplot2"
+subtitle: "Lesson 1 - Introduction to Visual Analytics"
 editor: visual
-date:  13 Jan 2023
+date: 13 Jan 2023
 date-modified: "`r Sys.Date()`"
 code-copy: true
+execute: 
+  echo: true
+  eval: true
+  warning: false
+  error: false
 website: 
     google-analytics: "G-PKMQ2W4ZRC"
 format:
@@ -16,15 +22,22 @@ format:
 
 # **1. OVERVIEW**
 
-This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
+This study explores approaches for data visualisation with [tidyverse](https://www.tidyverse.org/) package functions.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**CREDIT**]{style="color:#3a9c88"}
+
+Most content and code chunks within this post are referred from Visual Analytics & Applications lecture notes by Dr Kam Tin Seong, a lecturer who has helped me build confidence in using R / Posit for visual analytics and various applications.
+:::
+
+<br>
 
 # **2. R PACKAGE REQUIRED**
 
 ## **2.1 Load R Packages**
 
-::: {.callout-warning appearance="simple" icon="false"}
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 :::
@@ -33,7 +46,8 @@ This study explores data visualisation using [***Tidyverse***](https://www.tidyv
 #| code-fold: false
 pacman::p_load(tidyverse)
 ```
-:::
+
+<br>
 
 # **3. DATA PREPARATION**
 
@@ -56,11 +70,12 @@ This study will be based on fictitious data set provided with this lesson.
 
 ### **3.2.1 Import Data**
 
-::: {.callout-warning appearance="simple" icon="false"}
-Involved two (2) steps : import and inspect imported data set.
+Involved two (2) steps : import & inspect imported data set.
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+The import step also includes the problems( ) function to flag any parsing error.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
 
@@ -73,43 +88,31 @@ exam_data <- read_csv("data/Exam_data.csv")
 
 problems(exam_data)
 ```
-:::
 
 ### **3.2.2 Inspect Missing Value**
 
-::: {.callout-warning appearance="simple" icon="false"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***skim( )*** - skimr -]{style="color:#d46e15"} to get an overview of a data frame with summarised statistics. For this usage, this function is used to identify missing values.
+:::
+
 ```{r}
 skimr::skim(exam_data)
 ```
 
-[Remarks :]{style="color:#d69c3c"}
-
-[No missing data.]{style="color:#d69c3c"}
-:::
+<br>
 
 # **4. DATA VISUALISATION**
 
-## **4.1 Compare Charts between R Graphics and ggplot2**
+## **4.1 Compare Charts by Different R Packages**
 
-::: {.callout-warning appearance="simple" icon="false"}
-Compare histogram by R Graphics and ggplot2 -
+Below sections compare histogram plot with R ***graphics*** and ***ggplot2*** packages.
 
-### **4.1.1 Plot with R Graphics**
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***hist( )*** - graphics -]{style="color:#d46e15"} to compute a histogram.
-:::
-
-```{r}
-hist(exam_data$MATHS)
-```
-
-### **4.1.2 Plot with ggplot2**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+[***hist( )*** - graphics -]{style="color:#d46e15"} to create a histogram.
 
 [***ggplot( )*** - ggplot2 -]{style="color:#d46e15"} to initialise a ggplot object.
 
@@ -118,7 +121,22 @@ hist(exam_data$MATHS)
 -   ggtitle( )
 :::
 
+::: panel-tabset
+## **with *graphics* function**
+
 ```{r}
+#| code-fold: false
+#| fig-height: 4
+#| fig-width: 14
+hist(exam_data$MATHS)
+```
+
+## **with *ggplot2* function**
+
+```{r}
+#| code-fold: false
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_histogram(bins = 10, 
@@ -127,66 +145,65 @@ ggplot(data = exam_data,
                  fill = "grey") +
   ggtitle("Distribution of Maths scores")
 ```
-
-[Remarks :]{style="color:#d69c3c"}
-
-[ggplot2 allows to customise axis labels, title, grid lines.]{style="color:#d69c3c"}
 :::
 
-## **4.2 Explore Functions in ggplot2**
+<br>
 
-### **4.2.1 Create Base for a ggplot Object**
+## **4.2 Explore *ggplot2* Code Structures**
 
-::: {.callout-warning appearance="simple" icon="false"}
-text
+Below are the 3 steps to plot with ggplot2 functions :
 
-#### **\-- initialise a ggplot Object**
+-   Step 1 to create a base for ggplot Object initialisation.
 
-```{r}
-#| code-fold: false
-ggplot(data = exam_data)
-```
+-   Step 2 to introduce aesthetic mappings.
 
-#### **\-- introduce aesthetic mappings**
+-   Step 3 to add geometric objects.
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***aes( )*** - ggplot2 -]{style="color:#d46e15"} to visualise the attributes of the data.
+
+[***geom_bar( )*** - ggplot2 -]{style="color:#d46e15"} to makes the height of the bar proportional to the number of "MATHS".
+
+note : use **geom_col( )** if the bars needs to represent values in the data.
 :::
+
+::: panel-tabset
+## **Add geometric object**
 
 ```{r}
 #| code-fold: false
-ggplot(data = exam_data,
-       aes(x = MATHS))
-```
-:::
-
-### **4.2.2 Add Geometric Objects**
-
-::: {.callout-warning appearance="simple" icon="false"}
-text
-
-#### **4.2.2.1 plot bar chart**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***geom_bar( )*** - ggplot2 -]{style="color:#d46e15"} to makes the height of the bar proportional to the number of "MaTHS".
-
-::: callout-note
-## [**use geom_col( ) if the bars need to represent values in the data.**]{style="color:#3a9c88"}
-:::
-:::
-
-```{r}
-#| code-fold: false
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar()
 ```
 
-#### **4.2.2.2 plot dot chart**
+## **Introduce aesthetic mappings**
+
+```{r}
+#| code-fold: false
+#| #| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = RACE))
+```
+
+## **Create base**
+
+```{r}
+#| code-fold: false
+#| #| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data)
+```
+:::
+
+## **4.3 Explore Other Chart Types**
+
+### **4.3.1 Dot Chart**
 
 The width of a dot corresponds to the bin width (or maximum width, depending on the binning algorithm).
 
@@ -194,47 +211,74 @@ The width of a dot corresponds to the bin width (or maximum width, depending on 
 
 -   each dot representing one observation.
 
-```{r}
-#| code-fold: false
-ggplot(data = exam_data, 
-       aes(x = MATHS)) +
-  geom_dotplot(dotsize = 0.5)
-```
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-[Remarks :]{style="color:#d69c3c"}
-
-[The y-scale can be misleading. Hence, below dot chart, the y-axis will be turned off with scale-y-continuous( ) function.]{style="color:#d69c3c"}
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***bindwidth( )*** - ggplot2 -]{style="color:#d46e15"} to change the bin width to 2.5.
+[***bindwidth( )*** - ggplot2 -]{style="color:#d46e15"} to change the bin width to 3, meaning each dot represents 3 units of data.
 
 [***scale_y\_continuous( )*** - ggplot2 -]{style="color:#d46e15"} to turn off the y-axis.
 :::
 
+::: panel-tabset
+## **with R *graphics* function**
+
 ```{r}
+#| code-fold: false
+#| #| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
-  geom_dotplot(binwidth = 2.5,         
+  geom_dotplot(binwidth = 1,
+               dotsize = 0.5)
+```
+
+Remarks :
+
+The scale for y-axis is misleading.
+
+## **Adjust bin width**
+
+Y-axis is hidden by setting it to "NULL".
+
+```{r}
+#| code-fold: false
+#| #| fig-height: 8
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_dotplot(binwidth = 3,         
                dotsize = 0.5) +      
   scale_y_continuous(NULL,           
                      breaks = NULL)  
 ```
+:::
 
-#### **4.2.2.3 plot histogram**
+### **4.3.2 Histogram**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***fill( )*** - ggplot2 -]{style="color:#d46e15"} to change colour to reflect the sub-group.
+:::
+
+::: panel-tabset
+## **Basic**
 
 Note that the default bin is 30.
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_histogram()       
 ```
 
-#### **\-- modify colour and bin**
+## **Modify colour & bin**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_histogram(bins = 20,            
@@ -242,89 +286,101 @@ ggplot(data = exam_data,
                  fill = "light blue")  
 ```
 
-#### **\-- add subgroup to each bar**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***fill( )*** - ggplot2 -]{style="color:#d46e15"} to change colour to reflect the sub-group.
-:::
+## **Add subgroup**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            fill = GENDER)) +
   geom_histogram(bins = 20, 
                  color = "grey30")
 ```
+:::
 
-#### **4.2.2.4 plot density chart**
+### **4.3.3 Density Chart**
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***geom_density( )*** - ggplot2 -]{style="color:#d46e15"} to computes and plots kernel density estimate, which is a smoothed version of the histogram.
 
 -   It is useful for continuous data that comes from an underlying smooth distribution.
 :::
 
+::: panel-tabset
+## **Basic**
+
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_density()           
 ```
 
-#### **\-- plot two (2) kernel density lines with colour arguments under aes( )**
+## **2 kernel density lines**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            colour = GENDER)) +
   geom_density()
 ```
 
-#### **\-- plot two (2) kernel density with fill arguments under aes( )**
+## **with fill arguments**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            fill = GENDER)) +
   geom_density()
 ```
-
-#### **4.2.2.5 plot box plot**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***geom_boxplot( )*** - ggplot2 -]{style="color:#d46e15"} to display summary statistics (median, two hinges and two whiskers) and outliers.
 :::
 
+### **4.3.4 Box Plot**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***geom_boxplot( )*** - ggplot2 -]{style="color:#d46e15"} to display summary statistics (median, two hinges and two whiskers) and outliers.
+
+[***notch( )*** - ggplot2 -]{style="color:#d46e15"} to make it easier to visually notice the distribution of median.
+:::
+
+::: panel-tabset
+## **Basic**
+
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS,       
            x = GENDER)) +    
   geom_boxplot()            
 ```
 
-#### **\-- add notches to box plot**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***notch( )*** - ggplot2 -]{style="color:#d46e15"} to make it easier to visually notice the distribution of median.
-:::
+## **Add notches**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS, 
            x = GENDER)) +
   geom_boxplot(notch = TRUE)
 ```
 
-#### **4.2.2.6 mix plot**
+## **Mix plot**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS, 
            x = GENDER)) +
@@ -332,11 +388,12 @@ ggplot(data = exam_data,
   geom_point(position = "jitter",
              size = 0.5)
 ```
+:::
 
-#### **4.2.2.7 plot violin chart**
+### **4.3.5 Violin Chart**
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***geom_violin( )*** - ggplot2 -]{style="color:#d46e15"} to plot violins that allow to compare multiple data distributions.
 
@@ -345,50 +402,65 @@ ggplot(data = exam_data,
 -   With a violin plot, it's easier to compare several distributions since they're placed side by side.
 :::
 
+::: panel-tabset
+## **Basic**
+
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS, 
            x = GENDER)) +
   geom_violin()
 ```
 
-#### **-**- combine violin chart with box plot
+## **Combine violin chart with box plot**
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS, 
            x = GENDER)) +
   geom_violin(fill = "light blue") +
   geom_boxplot(alpha = 0.5)           
 ```
+:::
 
-#### **4.2.2.8 plot point / scatterplot chart**
+### **4.3.6 Point / Scatterplot Chart**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            y = ENGLISH)) +
   geom_point()            
 ```
-:::
 
-### **4.2.3 Add Statistical Functions**
+## **4.4 Add Statistical Functions**
 
-::: {.callout-warning appearance="simple" icon="false"}
 There are two ways to use these functions :
 
 1.  add a stat\_() function and override the default geom
 2.  add a geom\_() function and override the default stat.
 
-#### **4.2.3.1 add mean values on the boxplot**
+#### **4.4.1 Add mean values on the Boxplot**
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-[***stat_summary( )*** - ? -]{style="color:#d46e15"} to override the default geom.
+[***stat_summary( )*** - ggplot2 -]{style="color:#d46e15"} to override the default geom.
+
+[***stat( )*** - stats -]{style="color:#d46e15"} to override the default stat.
 :::
 
+::: panel-tabset
+## **stat_summary**
+
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS, 
            x = GENDER)) +
@@ -399,15 +471,14 @@ ggplot(data = exam_data,
                size = 4)  
 ```
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***stat( )*** - ? -]{style="color:#d46e15"} to override the default stat.
-:::
+## **geom_point**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
-       aes(y = MATHS, x = GENDER)) +
+       aes(y = MATHS, 
+           x = GENDER)) +
   geom_boxplot() +
   geom_point(stat = "summary",        
              fun.y = "mean",           
@@ -416,16 +487,20 @@ ggplot(data = exam_data,
 ```
 :::
 
-### **4.2.4 Add Best Fit Curve on Scatterplot**
+### **4.4.2 Add best fit curve on Scatterplot**
 
-::: {.callout-warning appearance="simple" icon="false"}
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***geom_smooth( )*** - ggplot2 -]{style="color:#d46e15"} to make it easier to interpret the scatterplot by adding fit curve.
 :::
 
+::: panel-tabset
+## **Basic**
+
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            y = ENGLISH)) +
@@ -433,9 +508,11 @@ ggplot(data = exam_data,
   geom_smooth(size = 0.5)
 ```
 
-#### **\-- override default smoothing method**
+## **Override default smoothing method**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            y = ENGLISH)) +
@@ -445,43 +522,37 @@ ggplot(data = exam_data,
 ```
 :::
 
-### **4.2.5 Plot Trellis Plot**
+## **4.5 Trellis Plot**
 
-::: {.callout-warning appearance="simple" icon="false"}
-Facets Facetting generates small multiples (sometimes also called trellis plot), each displaying a different subset of the data.
+A facets plot, also known as a trellis plot, displays a different subset of the data. There are 2 types of facets, namely facet wrap and facet grid.
 
-Facets are an alternative to aesthetics for displaying additional discrete variables.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-ggplot2 supports two (2) types of factes : facet_wrap( ) facet_grid( )
+[***facet_wrap( )*** - ggplot2 -]{style="color:#d46e15"} to plot all classes separately in
 
-#### **4.2.5.1 plot with face_wrap( ) function**
+-   Use facet wrap if the range of y-axis values is not huge for space efficiency.
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***facet_wrap( )*** - ggplot2 -]{style="color:#d46e15"} to wraps a 1d sequence of panels into 2d.
-
-This is generally a better use of screen space than facet_grid because most displays are roughly rectangular.
+[***facet_grid( )*** - ggplot2 -]{style="color:#d46e15"} to plot all 9 classes separately in 1 row.
 :::
 
+::: panel-tabset
+## **Facet Wrap**
+
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_histogram(bins = 20) +
     facet_wrap(~ CLASS)
 ```
 
-#### 4.2.5.2 plot with face_grid( ) function
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***facet_wrap( )*** - ggplot2 -]{style="color:#d46e15"} to forms a matrix of panels defined by row and column faceting variables.
-
-It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.
-:::
+## **Facet Grid**
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_histogram(bins = 20) +
@@ -489,89 +560,82 @@ ggplot(data = exam_data,
 ```
 :::
 
-## **4.3 Coordinates**
+## **4.6 Coordinates**
 
--   The *Coordinates* functions map the position of objects onto the plane of the plot.
+The coordinates functions map the objects' position onto the plot's plane. Below are some common coordinate systems :
 
-<!-- -->
+-   [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html): the default Cartesian coordinate systems. Setting limits thereof will zoom the plot but will not change the underlying data.
 
--   There are a number of different possible coordinate systems to use, they are:
+-   [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html): a Cartesian system with the x and y flipped.
 
-    -   [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html): the default cartesian coordinate systems, where you specify x and y values (e.g. allows you to zoom in or out).
+-   [`coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html): a Cartesian system with a "fixed" aspect ratio expressed as y / x (e.g. 1.78 for a "widescreen" plot).
 
-    -   [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html): a cartesian system with the x and y flipped.
+-   [`coord_quickmap()`](https://ggplot2.tidyverse.org/reference/coord_map.html): a coordinate system that approximates a good aspect ratio for maps.
 
-    -   [`coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html): a cartesian system with a "fixed" aspect ratio (e.g. 1.78 for a "widescreen" plot).
+    -   note : this is suitable when the plot involve smaller areas closer to the equator.
 
-    -   [`coord_quickmap()`](https://ggplot2.tidyverse.org/reference/coord_map.html): a coordinate system that approximates a good aspect ratio for maps.
+### **4.6.1. Flip the Chart**
 
-### **4.3.1. Working with Coordinate**
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-::: {.callout-warning appearance="simple" icon="false"}
-By the default, the bar chart of ggplot2 is in vertical form.
+[***coord_flip( )*** - ggplot2 -]{style="color:#d46e15"} to flip the Cartesian coordinates for x & y. In this example, flip it so that horizontal bar chart is better visualised when the x-axis is conditional on the y-axis.
 
-The code chunk below flips the horizontal bar chart into vertical bar chart by using `coord_flip()`.
+note : By default, a *ggplot2* bar chart is plot vertically.
+:::
 
 ```{r}
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar() +
   coord_flip()
 ```
+
+### **4.6.2 Change range for y- & x-axis**
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***coord_cartesian( )*** - ggplot2 -]{style="color:#d46e15"} to set limits for the scatterplot from 0 to 100 so that both x-axis and y-axis are scaled at the same set of limits.
 :::
 
-### **4.3.2 Change range for y- and x-axis**
-
-::: {.callout-warning appearance="simple" icon="false"}
-The scatterplot on the right is slightly misleading because the y-aixs and x-axis range are not equal.
-
-The code chunk below fixed both the y-axis and x-axis range from 0-100.
-
 ```{r}
+#| fig-height: 8
+#| fig-width: 8
 ggplot(data = exam_data, 
-       aes(x = MATHS, y = ENGLISH)) +
+       aes(x = MATHS, 
+           y = ENGLISH)) +
   geom_point() +
   geom_smooth(method = lm, 
               size = 0.5) +  
-  coord_cartesian(xlim = c(0,100),
-                  ylim = c(0,100))
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100))
 ```
-:::
 
-# **5. NON-DATA CONTROL ELEMENT**
+<br>
 
--   background colour
+# **5. CONTROLS OF NON-DATA PLOT ELEMENTS**
 
--   size of fonts
+Following are some of the elements :
 
--   grid lines
-
--   colour of labels
+-   Background colour, size of fonts, grid lines, colour of labels
 
 -   Built-in themes include :
 
     -   `theme_gray()` (default)
 
-    -   `theme_bw()`
+    -   [Other themes](https://ggplot2.tidyverse.org/reference/ggtheme.html)
 
-    -   `theme_classic()`
+## **5.1 Explore Themes**
 
--   [Other themes](https://ggplot2.tidyverse.org/reference/ggtheme.html)
-
-## **5.1 Set Theme**
-
-::: {.callout-warning appearance="simple" icon="false"}
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***facet_wrap( )*** - ggplot2 -]{style="color:#d46e15"} to forms a matrix of panels defined by row and column faceting variables.
-
-It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.
-:::
-
-### **5.1.1 Plot Horizontal Bar Chart with `theme_gray( )`**
+::: panel-tabset
+## **default theme**
 
 ```{r}
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar() +
@@ -579,9 +643,35 @@ ggplot(data = exam_data,
   theme_gray()
 ```
 
-### **5.1.2 Plot Horizontal Bar Chart with `theme_classic( )`**
+## **theme_dark( )**
 
 ```{r}
+#| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme_dark()
+```
+
+## **theme_light( )**
+
+```{r}
+#| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme_light()
+```
+
+## **theme_classic( )**
+
+```{r}
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar() +
@@ -589,27 +679,70 @@ ggplot(data = exam_data,
   theme_classic()
 ```
 
-### **5.1.3 Plot Horizontal Bar Chart with `theme_minimal( )`**
+## **theme_minimal( )**
 
 ```{r}
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar() +
   coord_flip() +
   theme_minimal()
 ```
+
+## **theme_bw( )**
+
+```{r}
+#| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme_bw()
+```
+
+## **theme_void( )**
+
+```{r}
+#| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme_void()
+```
+
+## **theme_test( )**
+
+```{r}
+#| fig-height: 4
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme_test()
+```
 :::
+
+<br>
 
 # **6. DATAVIZ ENHANCEMENT**
 
-## **6.1 Chart for Frequency Analysis**
+This section explores various enhancements to communicate data visually effectively.
 
-::: {.callout-warning appearance="simple" icon="false"}
+## **6.1 Bar Chart**
+
 A simple vertical bar chart for frequency analysis.
 
-### **6.1.1 Evaluate Original Bar Chart**
+### **6.1.1 Evaluate original bar chart**
 
 ```{r}
+#| fig-height: 4
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar()
@@ -623,11 +756,9 @@ ggplot(data = exam_data,
 
 -   [This is a static graph. So, the frequency value is needed to provide more context.]{style="color:#d69c3c"}
 
-<br>
+### **6.1.2 Enhance bar chart**
 
-### **6.1.2 Enhance Bar Chart**
-
-#### **6.1.2.1 derive descriptive statistic**
+#### **6.1.2.1 Derive descriptive statistic**
 
 First understand the variable.
 
@@ -635,19 +766,35 @@ First understand the variable.
 questionr::freq(exam_data$RACE)
 ```
 
-#### **6.1.2.2 plot bar chart**
+#### **6.1.2.2 Revise bar chart**
 
-#### **\-- attempt 1**
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***fct_infreq( )*** - forcats -]{style="color:#d46e15"} to arrange factors according to count data.
+
+[***fct_reorder( )*** - forcats -]{style="color:#d46e15"} to reorder data.
+:::
+
+::: panel-tabset
+## **Attempt 2**
+
+Revised with *fct_reorder( )* function.
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 exam_data %>%
   group_by(RACE) %>%
   summarise(count = n()) %>%
   rename(race = RACE) %>%
   mutate(pct = scales::percent(count/sum(count)),
-         res = str_c(count, ", ", pct)) %>%
-  ggplot(aes(x = reorder(race, -count),
+         res = str_c(count, 
+                     ", ", 
+                     pct)) %>%
+  ggplot(aes(fct_reorder(race, 
+                         -count),
              y = count)) +
   geom_bar(stat = "identity") +
   labs(x = "Race",
@@ -664,22 +811,22 @@ exam_data %>%
   scale_y_continuous(limits = c(0,210))
 ```
 
-#### **\-- attempt 2 with recommended function - fct_infreq( )**
+## **Attempt 1**
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***fct_infreq( )*** - forcats -]{style="color:#d46e15"} to arrange factors according to count data.
-:::
+Revise with recommended function : *fct_infreq( )* function.
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 exam_data %>%
   group_by(RACE) %>%
   summarise(count = n()) %>%
   rename(race = RACE) %>%
   mutate(pct = scales::percent(count/sum(count)),
-         res = str_c(count, ", ", pct)) %>%
+         res = str_c(count, 
+                     ", ", 
+                     pct)) %>%
   ggplot(aes(fct_infreq(race),
              y = count)) +
   geom_bar(stat = "identity") +
@@ -697,40 +844,10 @@ exam_data %>%
   scale_y_continuous(limits = c(0,210))
 ```
 
-Credit: Iearned this lesson which sourced from [*Getting things into the right order*](https://wilkelab.org/SDS375/slides/getting-things-in-order.html#1) of Prof. Claus O. Wilke, the author of [**Fundamentals of Data Visualization**](https://clauswilke.com/dataviz/)
+Credit : Learned from [*Getting things into the right order*](https://wilkelab.org/SDS375/slides/getting-things-in-order.html#1) of Prof. Claus O. Wilke, the author of [**Fundamentals of Data Visualization**](https://clauswilke.com/dataviz/)
 
-#### **\-- attempt 3 with fct_reorder( )**
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***fct_reorder( )*** - forcats -]{style="color:#d46e15"} to reorder data.
+## **attempt 1**
 :::
-
-```{r}
-#| code-fold: false
-exam_data %>%
-  group_by(RACE) %>%
-  summarise(count = n()) %>%
-  rename(race = RACE) %>%
-  mutate(pct = scales::percent(count/sum(count)),
-         res = str_c(count, ", ", pct)) %>%
-  ggplot(aes(fct_reorder(race, -count),
-             y = count)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Race",
-       y = "No. of\nPupils",
-       title = "Primary 3 Students By Race",
-       subtitle = "Students from a local school") +
-  theme(axis.title.y = element_text(angle = 0, 
-                                    size = 10),
-        axis.title.x = element_text(size = 10),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10)) +
-  geom_text(aes(label = res),
-            vjust = -0.9) + 
-  scale_y_continuous(limits = c(0,210))
-```
 
 [Remarks :]{style="color:#d69c3c"}
 
@@ -738,26 +855,25 @@ exam_data %>%
 
 -   [Plot above added title and subtitle to set the main context for this plot]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
 
-![](images/image-1254806109.png)
+![](images/image-1254806109.png){fig-alt="This image illustrates a basic bar chart labelled with percentage and count values." fig-align="left" width="400"}
 
-Below are two (2) code chunk with different approach provided by the lesson :
+Below are two (2) different sample code chunks provided by this lesson :
 
 ```{r}
 #| code-fold: false
 #| eval: false
-ggplot(data=exam_data,
-       aes(x=reorder(RACE,RACE,
-                function(x)-length(x))))+
+ggplot(data = exam_data,
+       aes(x = reorder(RACE, RACE,
+                       function(x) - length(x)))) +
   geom_bar() +
-  ylim(0,220) +
-  geom_text(stat="count", 
-      aes(label=paste0(..count.., ", ", 
-      round(..count../sum(..count..)*100,
-            1), "%")),
-      vjust=-1) +
+  ylim(0, 220) +
+  geom_text(stat = "count", 
+      aes(label = paste0(..count.., ", ", 
+      round(..count../sum(..count..)*100, 1), "%")),
+      vjust = -1) +
   xlab("Race") +
   ylab("No. of\nPupils") +
-  theme(axis.title.y=element_text(angle = 0))
+  theme(axis.title.y = element_text(angle = 0))
 ```
 
 ```{r}
@@ -766,27 +882,22 @@ ggplot(data=exam_data,
 exam_data %>%
   mutate(RACE = fct_infreq(RACE)) %>%
   ggplot(aes(x = RACE)) + 
-  geom_bar()+
+  geom_bar() +
   ylim(0,220) +
   geom_text(stat="count", 
       aes(label=paste0(..count.., ", ", 
-      round(..count../sum(..count..)*100,
-            1), "%")),
-      vjust=-1) +
+      round(..count../sum(..count..)*100, 1), "%")),
+      vjust = -1) +
   xlab("Race") +
   ylab("No. of\nPupils") +
-  theme(axis.title.y=element_text(angle = 0))
+  theme(axis.title.y = element_text(angle = 0))
 ```
-:::
 
 ## **6.2 Histogram**
 
-::: {.callout-warning appearance="simple" icon="false"}
-text
+### **6.2.1 Evaluate original histogram**
 
-### **6.2.1 Evaluate Original Histogram**
-
-![](images/image-1349634026.png)
+![](images/image-1349634026.png){fig-alt="This image illustrates a histogram." fig-align="left" width="400"}
 
 Lecturer's input :
 
@@ -794,12 +905,13 @@ Lecturer's input :
 
 -   Change fill color and line color
 
-<br>
-
-### **6.2.2 Enhance Histogram**
+::: panel-tabset
+## **Revise Histogram**
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
   geom_histogram(bins = 20,            
@@ -816,54 +928,50 @@ ggplot(data = exam_data,
   annotate("text",
            x = mean(exam_data$MATHS)*0.84,
            y = mean(exam_data$MATHS)*0.78,
-           label = paste("Mean =", round(mean(exam_data$MATHS),2)),
+           label = paste("Mean =", 
+                         round(mean(exam_data$MATHS),2)),
            col = "red",
            size = 5) +
   annotate("text",
            x = median(exam_data$MATHS)*0.8,
            y = median(exam_data$MATHS)*0.8,
-           label = paste("Median =", round(median(exam_data$MATHS),2)),
+           label = paste("Median =", 
+                         round(median(exam_data$MATHS),2)),
            col = "black",
            size = 5)
 ```
 
-[Remarks :]{style="color:#d69c3c"}
-
-[Below is the sample answer provided for this lesson]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
-
-[![](images/image-92343967.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/designing-data-drive-graphics-for-analysis-ii-1)
-
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
-ggplot(data=exam_data, 
-       aes(x= MATHS)) +
-  geom_histogram(bins=20, 
-                 color="black", 
-                 fill="light blue") +
-  geom_vline(aes(xintercept=mean(MATHS,
-                                 na.rm=T)),
-             color="red", 
-             linetype="dashed", 
-             size=1) +
-  geom_vline(aes(xintercept=median(MATHS,
-                                  na.rm=T)),
-             color="grey30",
-             linetype="dashed", 
-             size=1)
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 color = "black", 
+                 fill = "light blue") +
+  geom_vline(aes
+             (xintercept = mean(MATHS,
+                                na.rm = T)),
+             color = "red", 
+             linetype = "dashed", 
+             size = 1) +
+  geom_vline(aes
+             (xintercept = median(MATHS,
+                                  na.rm = T)),
+             color = "grey30",
+             linetype = "dashed", 
+             size = 1)
 ```
 :::
 
 ## **6.3 Trellis Plot for Histogram**
 
-::: {.callout-warning appearance="simple" icon="false"}
-text
+### **6.3.1 Evaluate original trellis plot for histogram**
 
-### **6.3.1 Evaluate Original Trellis Plot for Histogram**
-
-![](images/image-347055578.png)
+![](images/image-347055578.png){fig-alt="This image shows a basic trellis plot for histogram." fig-align="left" width="400"}
 
 Lecturer's input :
 
@@ -871,15 +979,21 @@ The histograms above are elegantly designed but not informative. This is because
 
 Create a makeover looks similar to the figure below. The background histograms show the distribution of English scores for all pupils.
 
-### **6.3.2 Enhance Trellis Plot for Histogram**
+::: panel-tabset
+## **Revise trellis plot for histogram**
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 gendEngl <- exam_data[,-3]
 
 ggplot(exam_data,
-       aes(x = ENGLISH, fill = GENDER)) +
-  geom_histogram(data = gendEngl, fill = "grey", alpha = .5) +
+       aes(x = ENGLISH,
+           fill = GENDER)) +
+  geom_histogram(data = gendEngl, 
+                 fill = "grey", 
+                 alpha = .5) +
   geom_histogram(color = "black") +
   facet_wrap(~ GENDER) +
   theme(axis.title.y = element_text(size = 5),
@@ -894,17 +1008,12 @@ ggplot(exam_data,
   theme_bw()
 ```
 
-[Remarks :]{style="color:#d69c3c"}
-
--   [Below is the sample answer provided for this lesson]{style="font-size: 11pt; color: rgb(214, 156, 60);"}.
-
-[![](images/image-468107029.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/designing-data-drive-graphics-for-analysis-iii)
-
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
+#| fig-height: 6
+#| fig-width: 14
 d <- exam_data   
 d_bg <- d[, -3]  
 
@@ -919,17 +1028,19 @@ ggplot(d, aes(x = ENGLISH, fill = GENDER)) +
 
 ## **6.4 Scatterplot**
 
-::: {.callout-warning appearance="simple" icon="false"}
-text
+### **6.4.1 Evaluate original scatterplot**
 
-### **6.4.1 Evaluate Original Scatterplot**
+![](images/image-1638389725.png){fig-alt="The image illustrates the scatterplot for English and Maths." fig-align="left" width="400"}
 
-![](images/image-1638389725.png)
+Challenge requirement : Add reference lines to make this scatterplot meaningful.
 
-A within group scatterplot with reference lines.
+::: panel-tabset
+## **Revise scatterplot**
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            y = ENGLISH)) +
@@ -950,36 +1061,46 @@ ggplot(data = exam_data,
              size = 1)
 ```
 
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
-ggplot(data=exam_data, 
-       aes(x=MATHS, y=ENGLISH)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = MATHS, 
+           y = ENGLISH)) +
   geom_point() +
-  coord_cartesian(xlim=c(0,100),
-                  ylim=c(0,100)) +
-  geom_hline(yintercept=50,
-             linetype="dashed",
-             color="grey60",
-             size=1) + 
-  geom_vline(xintercept=50, 
-             linetype="dashed",
-             color="grey60",
-             size=1)
+  coord_cartesian(xlim = c(0,100),
+                  ylim = c(0,100)) +
+  geom_hline(yintercept = 50,
+             linetype = "dashed",
+             color = "grey60",
+             size = 1) + 
+  geom_vline(xintercept = 50, 
+             linetype = "dashed",
+             color = "grey60",
+             size = 1)
 ```
 :::
 
 ## **6.5 Trellis Boxplot**
 
-::: {.callout-warning appearance="simple" icon="false"}
-This section consits of three different trellis plots. \### 6.5.1 Plot 2 Columns - 2 Characters and 1 Continuous Variable
+This section consists of three different trellis plots.
 
-[![](images/image-339727884.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/42)
+### **6.5.1 Facet with 1 row & 2 columns**
+
+[![](images/image-339727884.png){fig-alt="This image shows a trellis plot of boxplots for each classes' students' Maths performances by gender." fig-align="left" width="400"}](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/42)
+
+Challenge requirement : Reproduce similar trellis plot.
+
+::: panel-tabset
+## **Attempt**
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS,       
            x = CLASS)) +    
@@ -991,28 +1112,39 @@ ggplot(data = exam_data,
         axis.text.y = element_text(size = 7))
 ```
 
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
-ggplot(data=exam_data, 
-       aes(y = MATHS, x= CLASS)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(y = MATHS, 
+           x = CLASS)) +
   geom_boxplot() +
   facet_grid(~ GENDER)
 ```
+:::
 
-### **6.5.2 Plot 1 Column, 2 Rows - 2 Characters and 1 Continuous Variables**
+### **6.5.2 Facet with 2 rows & 1 column**
 
-[![](images/image-811211769.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/43)
+[![](images/image-811211769.png){fig-alt="This image shows a trellis plot of boxplots for each classes' students' Maths performances by gender." fig-align="left" width="400"}](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/43)
+
+Challenge requirement : Reproduce similar trellis plot.
+
+::: panel-tabset
+## **Attempt**
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS,       
            x = CLASS)) +    
   geom_boxplot() +
-  facet_grid(GENDER ~ CLASS, scales = "free") +
+  facet_grid(GENDER ~ CLASS, 
+             scales = "free") +
   theme(axis.title.y = element_text(size = 7.5),
         axis.title.x = element_text(size = 7.5),
         axis.text.x = element_text(size = 7),
@@ -1020,27 +1152,36 @@ ggplot(data = exam_data,
         strip.text.x = element_blank(),
         strip.text.y = element_text(size = 7),
         panel.spacing.y = unit(1, "mm"),
-        panel.spacing.x = unit(0, "mm")
-        )
+        panel.spacing.x = unit(0, "mm"))
 ```
 
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
-ggplot(data=exam_data, 
-       aes(y = MATHS, x= CLASS)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(y = MATHS, 
+           x = CLASS)) +
   geom_boxplot() +
   facet_grid(GENDER ~.)
 ```
+:::
 
-### **6.5.3 Plot 1 Column, 2 Rows - 2 Characters and 1 Continuous Variables**
+### **6.5.3 Facet with 2 rows & 1 column with different X-axis**
 
-[![](images/image-468521342.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/44)
+[![](images/image-468521342.png){fig-alt="This is a trellis plot of boxplots for each classes' students' Maths performances by gender." fig-align="left" width="400"}](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/44)
+
+Challenge requirement : Reproduce similar trellis plot.
+
+::: panel-tabset
+## **Attempt**
 
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(y = MATHS,       
            x = GENDER)) +    
@@ -1057,13 +1198,14 @@ ggplot(data = exam_data,
         )
 ```
 
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
-ggplot(data=exam_data, 
-       aes(y = MATHS, x= GENDER)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(y = MATHS, x = GENDER)) +
   geom_boxplot() +
     facet_grid(GENDER ~ CLASS)
 ```
@@ -1071,15 +1213,19 @@ ggplot(data=exam_data,
 
 ## **6.6 Change Theme**
 
-::: {.callout-warning appearance="simple" icon="false"}
-[![](images/image-78293342.png)](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/52)
+[![](images/image-78293342.png){fig-alt="This image illustrate a bar chart plotted with blue background." fig-align="left" width="400"}](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex01/hands-on_ex01-ggplot2#/52)
 
 Instruction :
 
 Change the colour of plot panel background of `theme_minimal()` to light blue and the colour of grid lines to white.
 
+::: panel-tabset
+## **Attempt**
+
 ```{r}
 #| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = RACE)) +
   geom_bar() +
@@ -1094,33 +1240,31 @@ ggplot(data = exam_data,
     axis.title.y = element_text(size = 7.5),
     axis.title.x = element_text(size = 7.5),
     axis.text.x = element_text(size = 6.5),
-    axis.text.y = element_text(size = 6.5)
-    )
+    axis.text.y = element_text(size = 6.5))
 ```
 
-Below is the code chunk provided by the lesson :
+## **Sample code chunk provided by this lesson**
 
 ```{r}
 #| code-fold: false
-#| eval: false
-ggplot(data=exam_data, 
-       aes(x=RACE)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data, 
+       aes(x = RACE)) +
   geom_bar() +
   coord_flip() +
   theme_minimal() +
-  theme(panel.background = element_rect(
-    fill = "lightblue",
-    colour = "lightblue",
-    size = 0.5,
-    linetype = "solid"),
-    panel.grid.major = element_line(
-      size = 0.5,
-      linetype = 'solid',
-      colour = "white"), 
-    panel.grid.minor = element_line(
-      size = 0.25,
-      linetype = 'solid',
-      colour = "white"))
+  theme(
+    panel.background = element_rect(fill = "lightblue",
+                                    colour = "lightblue",
+                                    size = 0.5,
+                                    linetype = "solid"),
+    panel.grid.major = element_line(size = 0.5,
+                                    linetype = 'solid',
+                                    colour = "white"), 
+    panel.grid.minor = element_line(size = 0.25,
+                                    linetype = 'solid',
+                                    colour = "white"))
 ```
 :::
 

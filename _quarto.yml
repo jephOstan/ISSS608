@@ -74,7 +74,7 @@ website:
           - text: Ex[9] Information Dashboard Design
             href: inClass/inClass_ex09/inClass_ex9.qmd
           - text: Ex[10] Visual Analysis for Financial Data
-            href: inClass/inClass_ex010/inClass_ex10.qmd  
+            href: inClass/inClass_ex10/inClass_ex10.qmd  
             
       - text: Take-home Exercises
         menu: 

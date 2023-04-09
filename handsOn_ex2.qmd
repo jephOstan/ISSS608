@@ -1,13 +1,15 @@
 ---
-title: "Hands-on 2 - DataVis with Advanced ggplot2"
+title: "Hands-on 2 - Beyond ggplot2 Fundamentals"
+subtitle: "Lesson 2 - Designing Graphs to Enlighten"
 editor: visual
-date:  20 Jan 2023
+date: 20 Jan 2023
 date-modified: "`r Sys.Date()`"
 code-copy: true
 execute: 
   echo: true
   eval: true
   warning: false
+  error: false
 website: 
     google-analytics: "G-PKMQ2W4ZRC"
 format:
@@ -20,15 +22,22 @@ format:
 
 # **1. OVERVIEW**
 
-This study explores data visualisation using [***Tidyverse***](https://www.tidyverse.org/) package.
+This study explores the approaches to strengthen data visualisation with [***Tidyverse***](https://www.tidyverse.org/) package.
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**CREDIT**]{style="color:#3a9c88"}
+
+Most content and code chunks within this post are referred from Visual Analytics & Applications lecture notes by Dr Kam Tin Seong, a lecturer who has helped me build confidence in using R / Posit for visual analytics and various applications.
+:::
+
+<br>
 
 # **2. R PACKAGE REQUIRED**
 
 ## **2.1 Load R Packages**
 
-::: {.callout-warning appearance="simple" icon="false"}
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***p_load( )*** - pacman -]{style="color:#d46e15"} to load packages into R environment. This function will attempt to install the package from CRAN or pacman repository list if it is not installed.
 :::
@@ -37,7 +46,10 @@ This study explores data visualisation using [***Tidyverse***](https://www.tidyv
 #| code-fold: false
 pacman::p_load(tidyverse, patchwork, ggthemes, hrbrthemes, ggrepel) 
 ```
-:::
+
+[ggthemes](https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html) provides extension to replicate the look of plots by Edward Tufte, Stephen Few, [Fivethirtyeight](https://fivethirtyeight.com/), [The Economist](https://www.economist.com/graphic-detail), 'Stata', 'Excel', and [The Wall Street Journal](https://www.pinterest.com/wsjgraphics/wsj-graphics/), among others.
+
+<br>
 
 # **3. DATA PREPARATION**
 
@@ -60,11 +72,10 @@ This study will be based on fictitious data set provided with this lesson.
 
 ### **3.2.1 Import Data**
 
-::: {.callout-warning appearance="simple" icon="false"}
 Involved two (2) steps : import and inspect imported data set.
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
 [***read_csv( )*** - readr -]{style="color:#d46e15"} to read CSV file into a tibble.
 
@@ -77,36 +88,34 @@ exam_data <- read_csv("data/Exam_data.csv")
 
 problems(exam_data)
 ```
-:::
 
 ### **3.2.2 Inspect Missing Value**
 
-::: {.callout-warning appearance="simple" icon="false"}
 ```{r}
 skimr::skim(exam_data)
 ```
 
-[Remarks :]{style="color:#d69c3c"}
-
-[No missing data.]{style="color:#d69c3c"}
-:::
+<br>
 
 # **4. DATA VISUALISATION**
 
-## **4.1 Plot with Label & Annotation**
-
-::: {.callout-warning appearance="simple" icon="false"}
-text
+## **4.1 Plot with Labels & Annotation**
 
 ### **4.1.1 Overlapping Issue**
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
-[***xxx( )*** - xxx -]{style="color:#d46e15"} to compute.
+[***geom_label_repel( )*** - ggrepel -]{style="color:#d46e15"} to set the text labels repel away from each other & away from the data points.
 :::
 
+::: panel-tabset
+## **Annotation Overlapping**
+
 ```{r}
+#| code-fold: false
+#| fig-height: 8
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            y = ENGLISH)) +
@@ -121,15 +130,16 @@ ggplot(data = exam_data,
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
 
-### **4.1.2 Solve with ggplot2 :: ggrepel**
+Remarks :
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+There are many data points overlapped.
 
-[***xxx( )*** - xxx -]{style="color:#d46e15"} to compute.
-:::
+## **Fix with *ggrepel***
 
 ```{r}
+#| code-fold: false
+#| fig-height: 8
+#| fig-width: 14
 ggplot(data = exam_data, 
        aes(x = MATHS, 
            y = ENGLISH)) +
@@ -142,47 +152,24 @@ ggplot(data = exam_data,
                   ylim = c(0,100)) +
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
-
-[Remarks :]{style="color:#d69c3c"}
-
-ggrepel: 318 unlabeled data points (too many overlaps). Consider increasing max.overlaps
 :::
 
 ## **4.2 Theme Options**
 
-This exercise explore 3 themes packages, namely :
+This section explores visualisation with 3 themes packages, namely :
 
-1.  ggplot2 package
+1.  ggplot2
 
 2.  ggthemes
 
-3.  patchwork package
+3.  patchwork
 
-### **4.2.1 Themes by ggplot2**
-
-::: {.callout-warning appearance="simple" icon="false"}
-There are [8 built-in themes for ggplot2](https://ggplot2.tidyverse.org/reference/index.html#themes) :
-
--   `theme_gray()`,
-
--   `theme_bw()`,
-
--   `theme_classic()`,
-
--   `theme_dark()`,
-
--   `theme_light()`,
-
--   `theme_linedraw()`,
-
--   `theme_minimal(),`
-
--   `theme_void()`
-
-#### **4.2.1.1 theme_gray( )**
+### **4.2.1 Themes by *ggplot2***
+Some of the ggplot2 themes are explored in the hands-on exercise 1. 
 
 ```{r}
-#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data, 
              aes(x = MATHS)) +
   geom_histogram(bins = 20, 
@@ -193,44 +180,223 @@ ggplot(data = exam_data,
   ggtitle("Distribution of Maths scores") 
 ```
 
-#### **4.2.1.2 theme_bw( )**
+<br>
 
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
+### **4.2.2 Themes by *ggthemes***
 
-[***xxx( )*** - xxx -]{style="color:#d46e15"} to compute.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***theme_xxx( )*** - ggthemes -]{style="color:#d46e15"} to set themes that not available under ggplot2.
+
+Below are the list of \<xxx\> :
+
+-   theme_base, theme_par, theme_calc, theme_economist, theme excel, theme_few, theme_fivethirtyeight, theme_gdocs, theme_hc, theme_pander, theme_solarized, theme_stata, theme_tufte, theme_wsj
+
+    `theme_base`: a theme resembling the default base graphics in R. See also `theme_par`.
+
+    -   `theme_calc`: a theme based on LibreOffice Calc.
+
+    -   `theme_economist`: a theme based on the plots in the [The Economist](http://www.economist.com/) magazine.
+
+    -   `theme_excel`: a theme replicating the classic ugly gray charts in Excel
+
+    -   `theme_few`: theme from Stephen Few\'s [\"Practical Rules for Using Color in Charts\"](http://www.perceptualedge.com/articles/visual_business_intelligence/rules_for_using_color.pdf).
+
+    -   `theme_fivethirtyeight`: a theme based on the plots at [fivethirtyeight.com](http://fivethirtyeight.com/).
+
+    -   `theme_gdocs`: a theme based on Google Docs.
+
+    -   `theme_hc`: a theme based on [Highcharts JS](http://www.highcharts.com/).
+
+    -   `theme_par`: a theme that uses the current values of the base graphics parameters in `par`.
+
+    -   `theme_pander`: a theme to use with the [pander](http://rapporter.github.io/pander/) package.
+
+    -   `theme_solarized`: a theme using the [solarized](http://ethanschoonover.com/solarized) color palette.
+
+    -   `theme_stata`: themes based on [Stata](http://www.stata.com/) graph schemes.
+
+    -   `theme_tufte`: a minimal ink theme based on Tufte\'s *The Visual Display of Quantitative Information*.
+
+    -   `theme_wsj`: a theme based on the plots in the [The Wall Street Journal](http://www.wsj.com/).
 :::
 
+::: panel-tabset
+## **theme_wsj (original)**
+Based on Wall Street Journal theme.
 ```{r}
-#| code-fold: false
-ggplot(data = exam_data, 
-             aes(x = MATHS)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
   geom_histogram(bins = 20, 
                  boundary = 100,
                  color = "grey25", 
                  fill = "grey90") +
-  theme_bw() +  
-  ggtitle("Distribution of Maths scores") 
+  ggtitle("Distribution of Maths scores") +
+  theme_wsj()
 ```
-:::
 
-### **4.2.2 Themes by ggplot2 :: ggthemes**
-
-::: {.callout-warning appearance="simple" icon="false"}
-[ggthemes](https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html) provides extension to replicate the look of plots by Edward Tufte, Stephen Few, [Fivethirtyeight](https://fivethirtyeight.com/), [The Economist](https://www.economist.com/graphic-detail), 'Stata', 'Excel', and [The Wall Street Journal](https://www.pinterest.com/wsjgraphics/wsj-graphics/), among others.
-
-::: {.callout-alert appearance="simple" icon="false"}
-[Usage of the code chunk below :]{style="color:#a39f9d"}
-
-[***xxx( )*** - xxx -]{style="color:#d46e15"} to compute.
-
-::: callout-note
-## [**use geom_col( ) if the bars need to represent values in the data.**]{style="color:#3a9c88"}
-:::
-:::
-
+## **theme_wsj (modify)**
+No changes if the color modified with hashcode '#0a89f7'.
 ```{r}
-#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = 'grey25', 
+                 fill = 'grey90') +
+  ggtitle('Distribution of Maths scores') +
+  theme_wsj(color = 'blue')
+```
+
+## **theme_tufte**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_tufte()
+```
+
+## **theme_stata**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_stata()
+```
+
+## **theme_solarized**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_solarized()
+```
+
+## **theme_pander**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_pander()
+```
+
+## **theme_par**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_par()
+```
+
+## **theme_hc**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_hc()
+```
+
+## **theme_gdocs**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_gdocs()
+```
+
+## **theme_fivethirtyeight**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_fivethirtyeight()
+```
+
+## **theme_few**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_few()
+```
+
+## **theme_excel**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_excel()
+```
+
+## **theme_economist**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data,
        aes(x = MATHS)) +
   geom_histogram(bins = 20, 
@@ -241,8 +407,36 @@ ggplot(data = exam_data,
   theme_economist()
 ```
 
-#### 
+## **theme_calc**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_calc()
+```
+
+## **theme_base**
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_base()
+```
+
 :::
+
 
 ### **4.2.3 Themes by ggplot2 :: hrbrthemes**
 

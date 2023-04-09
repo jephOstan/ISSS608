@@ -37,9 +37,9 @@ This study explores the steps to
 -   plot interactive candlestick chart by using ggplot2 and plotly R.
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**NOTE**]{style="color:#3a9c88"}
+## [**CREDIT**]{style="color:#3a9c88"}
 
-The majority of content for this page is with references to [lecture notes](https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex10/hands-on_ex10-finvis) from Dr. Kam Tin Seong.
+Most content and code chunks within this post are referred from Visual Analytics & Applications lecture notes by Dr Kam Tin Seong, a lecturer who has helped me build confidence in using R / Posit for visual analytics and various applications.
 :::
 
 # **2. R PACKAGE REQUIRED**
@@ -100,7 +100,7 @@ top40 <- company %>%
   select(symbol)
 ```
 
-### **3.2.3 Import Data from Yahoo! Finance** 
+### **3.2.3 Import Data from Yahoo! Finance**
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
 ## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
@@ -239,7 +239,7 @@ p <- ggplot(selectedStocks,
 ggplotly(p)
 ```
 
-## **4.4 Plot Candlestick Chart** 
+## **4.4 Plot Candlestick Chart**
 
 ### **4.4.1 With tidyquant method**
 
@@ -335,7 +335,7 @@ Things you can learn from the code chunk:
 
 -   `geom_bbands()` plots a range around a moving average typically two standard deviations up and down. The moving average functions used are specified in [`SMA()`](https://www.rdocumentation.org/packages/TTR/versions/0.24.3/topics/SMA) from the [*TTR*](https://cran.r-project.org/web/packages/TTR/) package.
 
-### **4.5.2 Interactive Candlesticks Chart:** 
+### **4.5.2 Interactive Candlesticks Chart:**
 
 #### **4.5.2.1 Step 1 with ggplot2 and plotly R method**
 
