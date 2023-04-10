@@ -49,6 +49,10 @@ pacman::p_load(tidyverse, patchwork, ggthemes, hrbrthemes, ggrepel)
 
 [ggthemes](https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html) provides extension to replicate the look of plots by Edward Tufte, Stephen Few, [Fivethirtyeight](https://fivethirtyeight.com/), [The Economist](https://www.economist.com/graphic-detail), 'Stata', 'Excel', and [The Wall Street Journal](https://www.pinterest.com/wsjgraphics/wsj-graphics/), among others.
 
+[hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/) package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.
+
+-   The second goal centers around productivity for a production workflow. In fact, this "production workflow" is the context for where the elements of hrbrthemes should be used. Consult [this vignette](https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html) to learn more.
+
 <br>
 
 # **3. DATA PREPARATION**
@@ -213,9 +217,7 @@ Below are the list of \<xxx\> :
     -   `theme_par`: a theme that uses the current values of the base graphics parameters in `par`.
 
     -   `theme_pander`: a theme to use with the [pander](http://rapporter.github.io/pander/) package.
-:::
 
-::: panel-tabset
 ## **theme_wsj (original)**
 
 ```{r}
@@ -235,7 +237,7 @@ Remarks :
 
 Based on the plots in the [Wall Street Journal](http://www.wsj.com/) theme.
 
-## **theme_wsj (modify)**
+## **theme_wsj (variance)**
 
 ```{r}
 #| fig-height: 6
@@ -275,7 +277,7 @@ The theme design is based on Edward Tufte's plot style whereby his plot has no b
 
 -   Suitable to combine with '***geom_rug***' or '***geom_rangeframe*****'**.
 
-## **theme_tufte (modify)**
+## **theme_tufte (variance)**
 
 ```{r}
 #| fig-height: 6
@@ -347,7 +349,7 @@ ggplot(data = exam_data,
 
 Remarks :
 
-This theme provides more [arguments](https://www.rdocumentation.org/packages/ggthemes/versions/3.5.0/topics/theme_pander) than other themes for users to adjust the plot.
+This theme provides more [arguments](https://www.rdocumentation.org/packages/ggthemes/versions/3.5.0/topics/theme_pander) than most themes do for users to adjust the plot.
 
 ## **theme_par**
 
@@ -364,7 +366,11 @@ ggplot(data = exam_data,
   theme_par()
 ```
 
-## **theme_hc**
+Remarks :
+
+Uses current value of the base graphics parameter.
+
+## **theme_hc (original)**
 
 ```{r}
 #| fig-height: 6
@@ -377,6 +383,25 @@ ggplot(data = exam_data,
                  fill = "grey90") +
   ggtitle("Distribution of Maths scores") +
   theme_hc()
+```
+
+Remarks :
+
+The theme is based on Highcharts JS.
+
+## **theme_hc (variance)**
+
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_hc(bgcolor = 'darkunica')
 ```
 
 ## **theme_gdocs**
@@ -394,6 +419,10 @@ ggplot(data = exam_data,
   theme_gdocs()
 ```
 
+Remarks :
+
+This theme is based on Google Docs default chart style.
+
 ## **theme_fivethirtyeight**
 
 ```{r}
@@ -408,6 +437,10 @@ ggplot(data = exam_data,
   ggtitle("Distribution of Maths scores") +
   theme_fivethirtyeight()
 ```
+
+Remarks :
+
+This theme is with references to this site : https://fivethirtyeight.com/
 
 ## **theme_few**
 
@@ -424,6 +457,14 @@ ggplot(data = exam_data,
   theme_few()
 ```
 
+Remarks :
+
+This theme design is based on Stephen Few's publications :
+
+-   *Show Me the Numbers*
+
+-   *Practical Rules for Using Color in Charts*
+
 ## **theme_excel**
 
 ```{r}
@@ -439,7 +480,11 @@ ggplot(data = exam_data,
   theme_excel()
 ```
 
-## **theme_economist**
+Remarks :
+
+This theme based on the Excel vintage chart style.
+
+## **theme_economist (original)**
 
 ```{r}
 #| fig-height: 6
@@ -452,6 +497,26 @@ ggplot(data = exam_data,
                  fill = "grey90") +
   ggtitle("Distribution of Maths scores") +
   theme_economist()
+```
+
+Remarks :
+
+This theme design is based on the Economist. The variance adjusted with *dkpanel* and *horizontal* arguments.
+
+## **theme_economist (variance)**
+
+```{r}
+#| fig-height: 6
+#| fig-width: 14
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20, 
+                 boundary = 100,
+                 color = "grey25", 
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_economist(dkpanel = TRUE,
+                  horizontal = FALSE)
 ```
 
 ## **theme_calc**
@@ -485,15 +550,28 @@ ggplot(data = exam_data,
 ```
 :::
 
-### **4.2.3 Themes by ggplot2 :: hrbrthemes**
+### **4.2.3 Themes by *hrbrthemes***
 
-[hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/) package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
 
--   The second goal centers around productivity for a production workflow. In fact, this "production workflow" is the context for where the elements of hrbrthemes should be used. Consult [this vignette](https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html) to learn more.
+[***axis_title_size( )*** - hrbrthemes -]{style="color:#d46e15"} to adjust the axis title size.
+
+[***base_size( )*** - hrbrthemes -]{style="color:#d46e15"} to adjust the base font size.
+
+[***grid( )*** - hrbrthemes -]{style="color:#d46e15"} to display specified axis grid lines. Can be binary value 'TRUE' or 'FALSE' or combination of 'x' and 'y'.
+
+note : more arguments [available](https://www.rdocumentation.org/packages/hrbrthemes/versions/0.8.0/topics/theme_ipsum).
+:::
+
+::: panel-tabset
+## **Basic**
 
 ```{r}
-ggplot(data = exam_data, 
-             aes(x = MATHS)) +
+#| fig-height: 6
+#| fig-width: 14
+ggplot(exam_data,
+       aes(x = MATHS)) +
   geom_histogram(bins = 20, 
                  boundary = 100,
                  color = "grey25", 
@@ -502,7 +580,11 @@ ggplot(data = exam_data,
   theme_ipsum()
 ```
 
+## **Variance**
+
 ```{r}
+#| fig-height: 6
+#| fig-width: 14
 ggplot(data = exam_data,
        aes(x = MATHS)) +
   geom_histogram(bins = 20, 
@@ -514,30 +596,27 @@ ggplot(data = exam_data,
               base_size = 15, 
               grid = "Y") 
 ```
+:::
 
-**\
-What can we learn from the code chunk below?**
+## 4.3 Composite Plot with Facet Option
 
--   `axis_title_size` argument is used to increase the font size of the axis title to 18,
+### 4.3.1 Create Composite Graphics with *patchwork* package
 
--   `base_size` argument is used to increase the default axis label to 15, and
+The general syntax that combines :
 
--   `grid` argument is used to remove the x-axis grid lines.
+-   Two-columns layout using the plus character, "+".
 
-## 
+-   Create a subplot group with parenthesis, "( )".
 
-4.3 Composite Plot with Facet Option
+-   Stack 2 rows layout using slash forward character, "/".
 
-Creating Composite Graphics: pathwork methods
+-   Place side by side with pipe character, "\|".
 
-It is not unusual that multiple graphs are required to tell a compelling visual story. There are several ggplot2 extensions provide functions to compose figure with multiple graphs. In this section, I am going to shared with you [**patchwork**](https://patchwork.data-imaginist.com/index.html).
-
-Patchwork package has a very simple syntax where we can create layouts super easily. Here's the general syntax that combines: - Two-Column Layout using the Plus Sign +. - Parenthesis () to create a subplot group. - Two-Row Layout using the Division Sign `\`
-
-create composite plot by combining multiple graphs. First, let us create three statistical graphics.\\
+::: panel-tabset
+## **Create the base plots**
 
 ```{r}
-p1 <- ggplot(data = exam_data, 
+p1 <- ggplot(exam_data, 
              aes(x = MATHS)) +
   geom_histogram(bins = 20, 
                  boundary = 100,
@@ -548,7 +627,7 @@ p1 <- ggplot(data = exam_data,
 ```
 
 ```{r}
-p2 <- ggplot(data = exam_data, 
+p2 <- ggplot(exam_data, 
              aes(x = ENGLISH)) +
   geom_histogram(bins = 20, 
                  boundary = 100,
@@ -559,7 +638,7 @@ p2 <- ggplot(data = exam_data,
 ```
 
 ```{r}
-p3 <- ggplot(data = exam_data, 
+p3 <- ggplot(exam_data, 
              aes(x = MATHS, 
                  y = ENGLISH)) +
   geom_point() +
@@ -570,35 +649,36 @@ p3 <- ggplot(data = exam_data,
   ggtitle("English scores versus Maths scores for Primary 3")
 ```
 
+## **+ & /**
+
 ```{r}
 p1 + p2 / p3
 ```
 
-\| will place the plots beside each other, while / will stack them.
+## **/ & \|**
 
 ```{r}
 (p1 / p2) | p3
 ```
+:::
 
-Plot assembly - https://patchwork.data-imaginist.com/articles/guides/assembly.html
+### 4.3.2 Explore Other patchwork functions
 
-### Working with patchwork
-
-**patchwork** also provides auto-tagging capabilities, in order to identify subplots in text:
+#### 4.3.2.1 Illustrate the sequence of subplots
 
 ```{r}
 ((p1 / p2) | p3) + 
   plot_annotation(tag_levels = 'I')
 ```
 
+#### 4.3.2.2 Combine with other theme
+
 ```{r}
 patchwork <- (p1 / p2) | p3
 patchwork & theme_economist()
 ```
 
-### Working with patchwork
-
-Beside providing functions to place plots next to each other based on the provided layout. With [`inset_element()`](https://patchwork.data-imaginist.com/reference/inset_element.html) of **patchwork**, we can place one or several plots or graphic elements freely on top or below another plot
+#### 4.3.2.3 Adjust inset_element
 
 ```{r}
 p3 + inset_element(p2, 
