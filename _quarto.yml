@@ -76,8 +76,10 @@ website:
           - text: Ex[10] Visual Analysis for Financial Data
             href: inClass/inClass_ex10/inClass_ex10.qmd  
             
-      - text: Take-home Exercises
-        menu: 
+      - text: Assignments & Projects
+        menu:
+          - text: Tableau Explorations
+            href: https://public.tableau.com/app/profile/joseph.zexeong.tan
           - text: Ex[1] Trellis Population Pyramids
             href: takeHome/th_ex1/th_ex1.qmd
           - text: Ex[2] DataViz Makeover for Trellis Population Pyramids
@@ -88,7 +90,10 @@ website:
             href: takeHome/th_ex4/th_ex4.qmd
           - text: Ex[4.2] Singapore Merchandise Trade Financial Year 2019 to 2022
             href: takeHome/th_ex4/th_ex4.2.qmd     
-            
+          - text: Group Project - Geospatial Analytical App for Water Points
+            href: https://waterislife.netlify.app/
+          - text: Water Is Life Shiny App
+            href: https://rkyaw.shinyapps.io/nigeria_waterpoint/
      
       - text: Workshop & Notes
         menu:
