@@ -1,5 +1,5 @@
 ---
-title: "Hands-on 2 - Beyond ggplot2 Fundamentals"
+title: "Beyond ggplot2 Fundamentals"
 subtitle: "Lesson 2 - Designing Graphs to Enlighten"
 editor: visual
 date: 20 Jan 2023

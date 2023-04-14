@@ -1,5 +1,5 @@
 ---
-title: "Hands-On Exercise 1 - Data Visualisation with ggplot2"
+title: "Data Visualisation with ggplot2"
 subtitle: "Lesson 1 - Introduction to Visual Analytics"
 editor: visual
 date: 13 Jan 2023
