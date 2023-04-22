@@ -464,10 +464,10 @@ cookieconsent.run({
   <li><a href="#composite-plot-with-facet-option" id="toc-composite-plot-with-facet-option" class="nav-link" data-scroll-target="#composite-plot-with-facet-option">4.3 Composite Plot with Facet Option</a>
   <ul class="collapse">
   <li><a href="#create-composite-graphics-with-patchwork-package" id="toc-create-composite-graphics-with-patchwork-package" class="nav-link" data-scroll-target="#create-composite-graphics-with-patchwork-package">4.3.1 Create Composite Graphics with <em>patchwork</em> package</a></li>
-  <li><a href="#explore-other-patchwork-functions" id="toc-explore-other-patchwork-functions" class="nav-link" data-scroll-target="#explore-other-patchwork-functions">4.3.2 Explore Other patchwork functions</a></li>
+  <li><a href="#explore-other-patchwork-functions" id="toc-explore-other-patchwork-functions" class="nav-link" data-scroll-target="#explore-other-patchwork-functions">4.3.2 Explore other <em>patchwork</em> functions</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><strong>7. REFERENCES</strong></a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><strong>5. REFERENCES</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -495,7 +495,7 @@ cookieconsent.run({
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 14, 2023</p>
+      <p class="date-modified">April 21, 2023</p>
     </div>
   </div>
     
@@ -548,11 +548,47 @@ cookieconsent.run({
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, patchwork, ggthemes, hrbrthemes, ggrepel) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html">ggthemes</a> provides extension to replicate the look of plots by Edward Tufte, Stephen Few, <a href="https://fivethirtyeight.com/">Fivethirtyeight</a>, <a href="https://www.economist.com/graphic-detail">The Economist</a>, ‘Stata’, ‘Excel’, and <a href="https://www.pinterest.com/wsjgraphics/wsj-graphics/">The Wall Street Journal</a>, among others.</p>
-<p><a href="https://cinc.rud.is/web/packages/hrbrthemes/">hrbrthemes</a> package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.</p>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Highlights of the R Packages needed for this study</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
-<li>The second goal centers around productivity for a production workflow. In fact, this “production workflow” is the context for where the elements of hrbrthemes should be used. Consult <a href="https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html">this vignette</a> to learn more.</li>
+<li><p><a href="https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html"><strong><em>ggthemes</em></strong></a> package</p>
+<p>Provides extension of various replication of few notable plots :</p>
+<ul>
+<li><p>Edward Tufte,</p></li>
+<li><p>Stephen Few,</p></li>
+<li><p><a href="https://fivethirtyeight.com/">Fivethirtyeight</a>,</p></li>
+<li><p><a href="https://www.economist.com/graphic-detail">The Economist</a>,</p></li>
+<li><p>‘Stata’,</p></li>
+<li><p>‘Excel’,</p></li>
+<li><p><a href="https://www.pinterest.com/wsjgraphics/wsj-graphics/">The Wall Street Journal</a>.</p></li>
+</ul></li>
+<li><p><a href="https://cinc.rud.is/web/packages/hrbrthemes/"><strong><em>hrbrthemes</em></strong></a> package</p>
+<p>Provides a base theme that focuses on typographic elements.</p>
+<ul>
+<li><p>For more details about the chart typographic, can refers to this <a href="https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html">read-up</a>. Below are some of the recommendation :</p>
+<ul>
+<li><p>Consider <strong><em>sans-serif</em></strong> typeface as the font family, with <strong>condensed</strong> or <strong>narrow</strong> typeface.</p></li>
+<li><p>Ensure a good <strong>kerning</strong> :</p>
+<p>-- Space between letters.</p>
+<p>-- Built-in tables for various pairs of letters.</p></li>
+<li><p>Set <strong><em>tabular figures</em></strong> (digits) vs <strong><em>proportional ones.</em></strong></p></li>
+<li><p>Because of <code>ggplot2</code>, the font family used should be a <strong>TrueType font (TTF)</strong>.</p></li>
+</ul></li>
+</ul></li>
 </ul>
+</div>
+</div>
+</div>
 <p><br></p>
 </section>
 </section>
@@ -562,7 +598,7 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="acquire-data-source"><strong>3.1 Acquire Data Source</strong></h2>
 <p>This study will be based on fictitious data set provided with this lesson.</p>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -571,7 +607,7 @@ cookieconsent.run({
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>Year end examination grades of a cohort of primary 3 students from a local school.</p></li>
@@ -591,7 +627,7 @@ cookieconsent.run({
 <h3 class="anchored" data-anchor-id="import-data-1"><strong>3.2.1 Import Data</strong></h3>
 <p>Involved two (2) steps : import and inspect imported data set.</p>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -600,7 +636,7 @@ cookieconsent.run({
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:#d46e15"><strong><em>read_csv( )</em></strong> - readr -</span> to read CSV file into a tibble.</p>
 <p><span style="color:#d46e15"><strong><em>problems( )</em></strong> - readr -</span> to reveal any parsing errors when importing the CSV file.</p>
@@ -818,7 +854,7 @@ cookieconsent.run({
 <section id="overlapping-issue" class="level3">
 <h3 class="anchored" data-anchor-id="overlapping-issue"><strong>4.1.1 Overlapping Issue</strong></h3>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -827,7 +863,7 @@ cookieconsent.run({
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:#d46e15"><strong><em>geom_label_repel( )</em></strong> - ggrepel -</span> to set the text labels repel away from each other &amp; away from the data points.</p>
 </div>
@@ -909,9 +945,9 @@ cookieconsent.run({
 <p><br></p>
 </section>
 <section id="themes-by-ggthemes" class="level3">
-<h3 class="anchored"><strong>4.2.2 Themes by <em>ggthemes</em></strong></h3>
+<h3 class="anchored" data-anchor-id="themes-by-ggthemes"><strong>4.2.2 Themes by <em>ggthemes</em></strong></h3>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -920,7 +956,7 @@ cookieconsent.run({
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:#d46e15"><strong><em>theme_xxx( )</em></strong> - ggthemes -</span> to set themes that not available under ggplot2.</p>
 <p>Below are the list of &lt;xxx&gt; :</p>
@@ -939,8 +975,13 @@ cookieconsent.run({
 <li><p><code>theme_pander</code>: a theme to use with the <a href="http://rapporter.github.io/pander/">pander</a> package.</p></li>
 </ul></li>
 </ul>
-<section id="theme_wsj-original" class="level2">
-<h2 class="anchored" data-anchor-id="theme_wsj-original"><strong>theme_wsj (original)</strong></h2>
+</div>
+</div>
+</div>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><strong>theme_wsj (original)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><strong>theme_wsj (variance)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false"><strong>theme_tufte (original)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false"><strong>theme_tufte (variance)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false"><strong>theme_stata</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-6" role="tab" aria-controls="tabset-2-6" aria-selected="false"><strong>theme_solarized</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-7" role="tab" aria-controls="tabset-2-7" aria-selected="false"><strong>theme_pander</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-8" role="tab" aria-controls="tabset-2-8" aria-selected="false"><strong>theme_par</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-9" role="tab" aria-controls="tabset-2-9" aria-selected="false"><strong>theme_hc (original)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-10" role="tab" aria-controls="tabset-2-10" aria-selected="false"><strong>theme_hc (variance)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-11-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-11" role="tab" aria-controls="tabset-2-11" aria-selected="false"><strong>theme_gdocs</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-12-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-12" role="tab" aria-controls="tabset-2-12" aria-selected="false"><strong>theme_fivethirtyeight</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-13-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-13" role="tab" aria-controls="tabset-2-13" aria-selected="false"><strong>theme_few</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-14-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-14" role="tab" aria-controls="tabset-2-14" aria-selected="false"><strong>theme_excel</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-15-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-15" role="tab" aria-controls="tabset-2-15" aria-selected="false"><strong>theme_economist (original)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-16-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-16" role="tab" aria-controls="tabset-2-16" aria-selected="false"><strong>theme_economist (variance)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-17-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-17" role="tab" aria-controls="tabset-2-17" aria-selected="false"><strong>theme_calc</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-18-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-18" role="tab" aria-controls="tabset-2-18" aria-selected="false"><strong>theme_base</strong></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -959,9 +1000,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>Based on the plots in the <a href="http://www.wsj.com/">Wall Street Journal</a> theme.</p>
-</section>
-<section id="theme_wsj-variance" class="level2">
-<h2 class="anchored" data-anchor-id="theme_wsj-variance"><strong>theme_wsj (variance)</strong></h2>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -983,9 +1023,8 @@ cookieconsent.run({
 <li><p><em>‘<strong>color</strong>’</em> options available are ‘brown’, ‘gray’, ‘green’ and ‘blue’.</p></li>
 <li><p>Display white background if colour argument input with other colour name, or input with colour hex, for example ‘#0a89f7’.</p></li>
 </ul>
-</section>
-<section id="theme_tufte-original" class="level2">
-<h2 class="anchored" data-anchor-id="theme_tufte-original"><strong>theme_tufte (original)</strong></h2>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1006,9 +1045,8 @@ cookieconsent.run({
 <ul>
 <li>Suitable to combine with ‘<strong><em>geom_rug</em></strong>’ or ’<strong><em>geom_rangeframe</em>’</strong>.</li>
 </ul>
-</section>
-<section id="theme_tufte-variance" class="level2">
-<h2 class="anchored" data-anchor-id="theme_tufte-variance"><strong>theme_tufte (variance)</strong></h2>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1027,9 +1065,8 @@ cookieconsent.run({
 <p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
-</section>
-<section id="theme_stata" class="level2">
-<h2 class="anchored" data-anchor-id="theme_stata"><strong>theme_stata</strong></h2>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1048,9 +1085,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>There are various options available for ‘<strong><em>scheme</em></strong>’ argument, namely ‘s2color’, ‘s2mono’, ‘s1color’, ‘s1rcolor’, ‘s1mono’, ‘s2manual’, ‘s1manual’, ‘sj’.</p>
-</section>
-<section id="theme_solarized" class="level2">
-<h2 class="anchored" data-anchor-id="theme_solarized"><strong>theme_solarized</strong></h2>
+</div>
+<div id="tabset-2-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-6-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1069,9 +1105,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>Argument ‘<strong><em>light</em></strong>’, default as ‘TRUE’ for light or dark theme.</p>
-</section>
-<section id="theme_pander" class="level2">
-<h2 class="anchored" data-anchor-id="theme_pander"><strong>theme_pander</strong></h2>
+</div>
+<div id="tabset-2-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-7-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1090,9 +1125,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>This theme provides more <a href="https://www.rdocumentation.org/packages/ggthemes/versions/3.5.0/topics/theme_pander">arguments</a> than most themes do for users to adjust the plot.</p>
-</section>
-<section id="theme_par" class="level2">
-<h2 class="anchored" data-anchor-id="theme_par"><strong>theme_par</strong></h2>
+</div>
+<div id="tabset-2-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-8-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1111,9 +1145,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>Uses current value of the base graphics parameter.</p>
-</section>
-<section id="theme_hc-original" class="level2">
-<h2 class="anchored" data-anchor-id="theme_hc-original"><strong>theme_hc (original)</strong></h2>
+</div>
+<div id="tabset-2-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-9-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1132,9 +1165,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>The theme is based on Highcharts JS.</p>
-</section>
-<section id="theme_hc-variance" class="level2">
-<h2 class="anchored" data-anchor-id="theme_hc-variance"><strong>theme_hc (variance)</strong></h2>
+</div>
+<div id="tabset-2-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-10-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1151,9 +1183,8 @@ cookieconsent.run({
 <p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
-</section>
-<section id="theme_gdocs" class="level2">
-<h2 class="anchored" data-anchor-id="theme_gdocs"><strong>theme_gdocs</strong></h2>
+</div>
+<div id="tabset-2-11" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-11-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1172,9 +1203,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>This theme is based on Google Docs default chart style.</p>
-</section>
-<section id="theme_fivethirtyeight" class="level2">
-<h2 class="anchored" data-anchor-id="theme_fivethirtyeight"><strong>theme_fivethirtyeight</strong></h2>
+</div>
+<div id="tabset-2-12" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-12-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1193,9 +1223,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>This theme is with references to this site : https://fivethirtyeight.com/</p>
-</section>
-<section id="theme_few" class="level2">
-<h2 class="anchored" data-anchor-id="theme_few"><strong>theme_few</strong></h2>
+</div>
+<div id="tabset-2-13" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-13-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1218,9 +1247,8 @@ cookieconsent.run({
 <li><p><em>Show Me the Numbers</em></p></li>
 <li><p><em>Practical Rules for Using Color in Charts</em></p></li>
 </ul>
-</section>
-<section id="theme_excel" class="level2">
-<h2 class="anchored" data-anchor-id="theme_excel"><strong>theme_excel</strong></h2>
+</div>
+<div id="tabset-2-14" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-14-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1239,9 +1267,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>This theme based on the Excel vintage chart style.</p>
-</section>
-<section id="theme_economist-original" class="level2">
-<h2 class="anchored" data-anchor-id="theme_economist-original"><strong>theme_economist (original)</strong></h2>
+</div>
+<div id="tabset-2-15" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-15-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1260,9 +1287,8 @@ cookieconsent.run({
 </div>
 <p>Remarks :</p>
 <p>This theme design is based on the Economist. The variance adjusted with <em>dkpanel</em> and <em>horizontal</em> arguments.</p>
-</section>
-<section id="theme_economist-variance" class="level2">
-<h2 class="anchored" data-anchor-id="theme_economist-variance"><strong>theme_economist (variance)</strong></h2>
+</div>
+<div id="tabset-2-16" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-16-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1280,9 +1306,8 @@ cookieconsent.run({
 <p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
-</section>
-<section id="theme_calc" class="level2">
-<h2 class="anchored" data-anchor-id="theme_calc"><strong>theme_calc</strong></h2>
+</div>
+<div id="tabset-2-17" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-17-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1299,9 +1324,8 @@ cookieconsent.run({
 <p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
-</section>
-<section id="theme_base" class="level2">
-<h2 class="anchored" data-anchor-id="theme_base"><strong>theme_base</strong></h2>
+</div>
+<div id="tabset-2-18" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-18-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1318,7 +1342,6 @@ cookieconsent.run({
 <p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
-</section>
 </div>
 </div>
 </div>
@@ -1326,7 +1349,7 @@ cookieconsent.run({
 <section id="themes-by-hrbrthemes" class="level3">
 <h3 class="anchored" data-anchor-id="themes-by-hrbrthemes"><strong>4.2.3 Themes by <em>hrbrthemes</em></strong></h3>
 <div class="callout-tip callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1335,7 +1358,7 @@ cookieconsent.run({
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span style="color:#d46e15"><strong><em>axis_title_size( )</em></strong> - hrbrthemes -</span> to adjust the axis title size.</p>
 <p><span style="color:#d46e15"><strong><em>base_size( )</em></strong> - hrbrthemes -</span> to adjust the base font size.</p>
@@ -1345,9 +1368,9 @@ cookieconsent.run({
 </div>
 </div>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><strong>Basic</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><strong>Variance</strong></a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><strong>Basic</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><strong>Variance</strong></a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1365,7 +1388,7 @@ cookieconsent.run({
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1401,9 +1424,9 @@ cookieconsent.run({
 <li><p>Place side by side with pipe character, “|”.</p></li>
 </ul>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true"><strong>Create the base plots</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false"><strong>+ &amp; /</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false"><strong>/ &amp; |</strong></a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true"><strong>Create the base plots</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false"><strong>+ &amp; /</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false"><strong>/ &amp; |</strong></a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1445,25 +1468,19 @@ cookieconsent.run({
 </details>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">/</span> p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
-<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
 </div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">/</span> p2) <span class="sc">|</span> p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
-<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
 </div>
@@ -1471,46 +1488,226 @@ cookieconsent.run({
 </div>
 </section>
 <section id="explore-other-patchwork-functions" class="level3">
-<h3 class="anchored" data-anchor-id="explore-other-patchwork-functions">4.3.2 Explore Other patchwork functions</h3>
-<section id="illustrate-the-sequence-of-subplots" class="level4">
-<h4 class="anchored" data-anchor-id="illustrate-the-sequence-of-subplots">4.3.2.1 Illustrate the sequence of subplots</h4>
+<h3 class="anchored" data-anchor-id="explore-other-patchwork-functions">4.3.2 Explore other <em>patchwork</em> functions</h3>
+<section id="annotate-subplots-layout" class="level4">
+<h4 class="anchored" data-anchor-id="annotate-subplots-layout">4.3.2.1 Annotate subplots &amp; layout</h4>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>plot_annotation( )</em></strong> - patchwork -</span> to label the subplots for easy reference.</p>
+<p><span style="color:#d46e15"><strong><em>plot_layout( )</em></strong> - patchwork -</span> to assemble subplots by defining the dimension of the grid and how much space allocate for different rows and columns.</p>
+<p><span style="color:#d46e15"><strong><em>plot_spacer( )</em></strong> - patchwork -</span> to fill a cell in the grid with nothing.</p>
+</div>
+</div>
+</div>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>((p1 <span class="sc">/</span> p2) <span class="sc">|</span> p3) <span class="sc">+</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'I'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>((p1 <span class="sc">/</span> p2 </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))) </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">|</span> <span class="fu">plot_spacer</span>() <span class="sc">+</span> p3) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Distribution of Students' English and Mathematics Performances"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tag_levels =</span> <span class="st">'I'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="1344"></p>
 </div>
 </div>
 </section>
 <section id="combine-with-other-theme" class="level4">
 <h4 class="anchored" data-anchor-id="combine-with-other-theme">4.3.2.2 Combine with other theme</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true"><strong>‘&amp;’ Operator</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">**‘*’ Operator**</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<p>&amp; will recurse into the nested level.</p>
 <div class="cell">
-<details>
-<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>patchwork <span class="ot">&lt;-</span> (p1 <span class="sc">/</span> p2) <span class="sc">|</span> p3</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>patchwork <span class="sc">&amp;</span> <span class="fu">theme_economist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
-<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<ul>
+<li>will only apply the theme to the current nesting level.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>patchwork <span class="ot">&lt;-</span> (p1 <span class="sc">/</span> p2) <span class="sc">|</span> p3</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>patchwork <span class="sc">*</span> <span class="fu">theme_economist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
 <section id="adjust-inset_element" class="level4">
 <h4 class="anchored" data-anchor-id="adjust-inset_element">4.3.2.3 Adjust inset_element</h4>
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+<span style="color:#3a9c88"><strong>⇳ Usage of the code chunk below :</strong></span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span style="color:#d46e15"><strong><em>inset_element( )</em></strong> - patchwork -</span> to create an inset on top of a plot.</p>
+<p>Arguments :</p>
+<p><em>align_to</em> specify relative to “panel” or “plot” or “full”.</p>
+<p><em>on_top</em> to specify the position of the inset above or below the plot.</p>
+<p><em>clip</em> to perform clipping on the inset.</p>
+<p><em>ignore_tag</em> to determine whether the auto-tagging to ignore the inset.</p>
+</div>
+</div>
+</div>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true"><strong>Basic Inset</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false"><strong>Align with “full”</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false"><strong>Align with “panel” (default)</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false"><strong>Align with “plot”</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-5" role="tab" aria-controls="tabset-6-5" aria-selected="false"><strong>‘TRUE’ for on_top</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-6" role="tab" aria-controls="tabset-6-6" aria-selected="false"><strong>‘FALSE’ for on_top</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-7" role="tab" aria-controls="tabset-6-7" aria-selected="false"><strong>‘TRUE’ to clip the inset</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-8" role="tab" aria-controls="tabset-6-8" aria-selected="false"><strong>‘FALSE’ to clip the inset</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-9-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-9" role="tab" aria-controls="tabset-6-9" aria-selected="false"><strong>‘TRUE’ for autotagging to ignore the inset</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-10-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-10" role="tab" aria-controls="tabset-6-10" aria-selected="false"><strong>‘FALSE’ for autotagging to ignore the inset</strong></a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">align_to =</span> <span class="st">"full"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">align_to =</span> <span class="st">"panel"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">align_to =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">on_top =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-6-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">on_top =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-7-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">clip =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-8" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-8-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">clip =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-9" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-9-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ignore_tag =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'A'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-10" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-10-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">inset_element</span>(p2, </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">left =</span> <span class="fl">0.02</span>, </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bottom =</span> <span class="fl">0.7</span>, </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">right =</span> <span class="fl">0.5</span>, </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">top =</span> <span class="dv">1</span>,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ignore_tag =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'A'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="handsOn_ex2_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="1344"></p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -1518,17 +1715,18 @@ cookieconsent.run({
 </section>
 </section>
 <section id="references" class="level1">
-<h1><strong>7. REFERENCES</strong></h1>
-<ul>
-<li><p>T.S. Kam. (2023). Handout lesson material for Hands-on Exercise 2. Singapore Management University. https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex02/hands-on_ex02-beyond_ggplot2#/title-slide</p></li>
-<li><p><a href="https://www.littlemissdata.com/blog/patchwork">Patchwork R package goes nerd viral</a></p></li>
-<li><p><a href="https://ggrepel.slowkow.com/index.html">ggrepel</a></p></li>
-<li><p><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">ggthemes</a></p></li>
-<li><p><a href="https://cinc.rud.is/web/packages/hrbrthemes/">hrbrthemes</a></p></li>
-<li><p><a href="https://albert-rapp.de/post/2021-10-28-extend-plot-variety/">ggplot tips: Arranging plots</a></p></li>
-<li><p><a href="https://henrywang.nl/ggplot2-theme-elements-demonstration/">ggplot2 Theme Elements Demonstration</a></p></li>
-<li><p><a href="https://isabella-b.com/blog/ggplot2-theme-elements-reference/">ggplot2 Theme Elements Reference Sheet</a></p></li>
-</ul>
+<h1><strong>5. REFERENCES</strong></h1>
+<ol type="1">
+<li>T.S. Kam. (2023). Handout lesson material for Hands-on Exercise 2. Singapore Management University. https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex02/hands-on_ex02-beyond_ggplot2#/title-slide</li>
+<li>Bob R. (2020). Why hrbrthemes? https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html</li>
+<li><a href="https://www.littlemissdata.com/blog/patchwork">Patchwork R package goes nerd viral</a></li>
+<li><a href="https://ggrepel.slowkow.com/index.html">ggrepel</a></li>
+<li><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">ggthemes</a></li>
+<li><a href="https://cinc.rud.is/web/packages/hrbrthemes/">hrbrthemes</a></li>
+<li><a href="https://albert-rapp.de/post/2021-10-28-extend-plot-variety/">ggplot tips: Arranging plots</a></li>
+<li><a href="https://henrywang.nl/ggplot2-theme-elements-demonstration/">ggplot2 Theme Elements Demonstration</a></li>
+<li><a href="https://isabella-b.com/blog/ggplot2-theme-elements-reference/">ggplot2 Theme Elements Reference Sheet</a></li>
+</ol>
 
 
 </section>

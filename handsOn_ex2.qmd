@@ -47,11 +47,45 @@ Most content and code chunks within this post are referred from Visual Analytics
 pacman::p_load(tidyverse, patchwork, ggthemes, hrbrthemes, ggrepel) 
 ```
 
-[ggthemes](https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html) provides extension to replicate the look of plots by Edward Tufte, Stephen Few, [Fivethirtyeight](https://fivethirtyeight.com/), [The Economist](https://www.economist.com/graphic-detail), 'Stata', 'Excel', and [The Wall Street Journal](https://www.pinterest.com/wsjgraphics/wsj-graphics/), among others.
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Highlights of the R Packages needed for this study**]{style="color:#3a9c88"}
 
-[hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/) package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.
+-   [***ggthemes***](https://mran.microsoft.com/snapshot/2016-12-28/web/packages/ggthemes/vignettes/ggthemes.html) package
 
--   The second goal centers around productivity for a production workflow. In fact, this "production workflow" is the context for where the elements of hrbrthemes should be used. Consult [this vignette](https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html) to learn more.
+    Provides extension of various replication of few notable plots :
+
+    -   Edward Tufte,
+
+    -   Stephen Few,
+
+    -   [Fivethirtyeight](https://fivethirtyeight.com/),
+
+    -   [The Economist](https://www.economist.com/graphic-detail),
+
+    -   'Stata',
+
+    -   'Excel',
+
+    -   [The Wall Street Journal](https://www.pinterest.com/wsjgraphics/wsj-graphics/).
+
+-   [***hrbrthemes***](https://cinc.rud.is/web/packages/hrbrthemes/) package
+
+    Provides a base theme that focuses on typographic elements.
+
+    -   For more details about the chart typographic, can refers to this [read-up](https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html). Below are some of the recommendation :
+
+        -   Consider ***sans-serif*** typeface as the font family, with **condensed** or **narrow** typeface.
+
+        -   Ensure a good **kerning** :
+
+            \-- Space between letters.
+
+            \-- Built-in tables for various pairs of letters.
+
+        -   Set ***tabular figures*** (digits) vs ***proportional ones.***
+
+        -   Because of `ggplot2`, the font family used should be a **TrueType font (TTF)**.
+:::
 
 <br>
 
@@ -217,7 +251,9 @@ Below are the list of \<xxx\> :
     -   `theme_par`: a theme that uses the current values of the base graphics parameters in `par`.
 
     -   `theme_pander`: a theme to use with the [pander](http://rapporter.github.io/pander/) package.
+:::
 
+::: panel-tabset
 ## **theme_wsj (original)**
 
 ```{r}
@@ -616,6 +652,8 @@ The general syntax that combines :
 ## **Create the base plots**
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 5
 p1 <- ggplot(exam_data, 
              aes(x = MATHS)) +
   geom_histogram(bins = 20, 
@@ -627,6 +665,8 @@ p1 <- ggplot(exam_data,
 ```
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 5
 p2 <- ggplot(exam_data, 
              aes(x = ENGLISH)) +
   geom_histogram(bins = 20, 
@@ -638,6 +678,8 @@ p2 <- ggplot(exam_data,
 ```
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 5
 p3 <- ggplot(exam_data, 
              aes(x = MATHS, 
                  y = ENGLISH)) +
@@ -652,35 +694,101 @@ p3 <- ggplot(exam_data,
 ## **+ & /**
 
 ```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 p1 + p2 / p3
 ```
 
 ## **/ & \|**
 
 ```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 (p1 / p2) | p3
 ```
 :::
 
-### 4.3.2 Explore Other patchwork functions
+### 4.3.2 Explore other *patchwork* functions
 
-#### 4.3.2.1 Illustrate the sequence of subplots
+#### 4.3.2.1 Annotate subplots & layout
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***plot_annotation( )*** - patchwork -]{style="color:#d46e15"} to label the subplots for easy reference.
+
+[***plot_layout( )*** - patchwork -]{style="color:#d46e15"} to assemble subplots by defining the dimension of the grid and how much space allocate for different rows and columns.
+
+[***plot_spacer( )*** - patchwork -]{style="color:#d46e15"} to fill a cell in the grid with nothing.
+:::
 
 ```{r}
-((p1 / p2) | p3) + 
-  plot_annotation(tag_levels = 'I')
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+((p1 / p2 
+  + plot_layout(ncol = 1, heights = c(1,1))) 
+  | plot_spacer() + p3) +
+  plot_layout(ncol = 3, heights = c(2,2,2)) + 
+  plot_annotation(title = "Distribution of Students' English and Mathematics Performances",
+                  tag_levels = 'I')
 ```
 
 #### 4.3.2.2 Combine with other theme
 
+::: panel-tabset
+## **'&' Operator**
+
+& will recurse into the nested level.
+
 ```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 patchwork <- (p1 / p2) | p3
 patchwork & theme_economist()
 ```
 
-#### 4.3.2.3 Adjust inset_element
+## \*\*'\*' Operator\*\*
+
+-   will only apply the theme to the current nesting level.
 
 ```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+patchwork <- (p1 / p2) | p3
+patchwork * theme_economist()
+```
+:::
+
+#### 4.3.2.3 Adjust inset_element
+
+::: {.callout-tip collapse="true" appearance="simple" icon="false"}
+## [**⇳ Usage of the code chunk below :**]{style="color:#3a9c88"}
+
+[***inset_element( )*** - patchwork -]{style="color:#d46e15"} to create an inset on top of a plot.
+
+Arguments :
+
+*align_to* specify relative to "panel" or "plot" or "full".
+
+*on_top* to specify the position of the inset above or below the plot.
+
+*clip* to perform clipping on the inset.
+
+*ignore_tag* to determine whether the auto-tagging to ignore the inset.
+:::
+
+::: panel-tabset
+## **Basic Inset**
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
 p3 + inset_element(p2, 
                    left = 0.02, 
                    bottom = 0.7, 
@@ -688,20 +796,143 @@ p3 + inset_element(p2,
                    top = 1)
 ```
 
-# **7. REFERENCES**
+## **Align with "full"**
 
--   T.S. Kam. (2023). Handout lesson material for Hands-on Exercise 2. Singapore Management University. https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex02/hands-on_ex02-beyond_ggplot2#/title-slide
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   align_to = "full")
+```
 
--   [Patchwork R package goes nerd viral](https://www.littlemissdata.com/blog/patchwork)
+## **Align with "panel" (default)**
 
--   [ggrepel](https://ggrepel.slowkow.com/index.html)
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   align_to = "panel")
+```
 
--   [ggthemes](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+## **Align with "plot"**
 
--   [hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/)
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   align_to = "plot")
+```
 
--   [ggplot tips: Arranging plots](https://albert-rapp.de/post/2021-10-28-extend-plot-variety/)
+## **'TRUE' for on_top**
 
--   [ggplot2 Theme Elements Demonstration](https://henrywang.nl/ggplot2-theme-elements-demonstration/)
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   on_top = TRUE)
+```
 
--   [ggplot2 Theme Elements Reference Sheet](https://isabella-b.com/blog/ggplot2-theme-elements-reference/)
+## **'FALSE' for on_top**
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   on_top = FALSE)
+```
+
+## **'TRUE' to clip the inset**
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   clip = TRUE)
+```
+
+## **'FALSE' to clip the inset**
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   clip = FALSE)
+```
+
+## **'TRUE' for autotagging to ignore the inset**
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   ignore_tag = TRUE) + 
+  plot_annotation(tag_levels = 'A')
+```
+
+## **'FALSE' for autotagging to ignore the inset**
+
+```{r}
+#| code-fold: false
+#| fig-height: 6
+#| fig-width: 14
+p3 + inset_element(p2, 
+                   left = 0.02, 
+                   bottom = 0.7, 
+                   right = 0.5, 
+                   top = 1,
+                   ignore_tag = FALSE) + 
+  plot_annotation(tag_levels = 'A')
+```
+:::
+
+# **5. REFERENCES**
+
+1.  T.S. Kam. (2023). Handout lesson material for Hands-on Exercise 2. Singapore Management University. https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex02/hands-on_ex02-beyond_ggplot2#/title-slide
+2.  Bob R. (2020). Why hrbrthemes? https://cran.r-project.org/web/packages/hrbrthemes/vignettes/why_hrbrthemes.html
+3.  [Patchwork R package goes nerd viral](https://www.littlemissdata.com/blog/patchwork)
+4.  [ggrepel](https://ggrepel.slowkow.com/index.html)
+5.  [ggthemes](https://ggplot2.tidyverse.org/reference/ggtheme.html)
+6.  [hrbrthemes](https://cinc.rud.is/web/packages/hrbrthemes/)
+7.  [ggplot tips: Arranging plots](https://albert-rapp.de/post/2021-10-28-extend-plot-variety/)
+8.  [ggplot2 Theme Elements Demonstration](https://henrywang.nl/ggplot2-theme-elements-demonstration/)
+9.  [ggplot2 Theme Elements Reference Sheet](https://isabella-b.com/blog/ggplot2-theme-elements-reference/)

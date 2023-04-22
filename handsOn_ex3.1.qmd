@@ -1,8 +1,8 @@
 ---
 title: "Programming Interactive Visualisation"
-subtitle: "Hands-on Exercise 3.1 : Interactive Data Visualisation"
+subtitle: "Lesson 3.1 : Interactivity in Visual Analytics"
 editor: visual
-date:  28 Jan 2023
+date: 28 Jan 2023
 date-modified: "`r Sys.Date()`"
 code-copy: true
 execute: 
@@ -52,7 +52,7 @@ pacman::p_load(ggiraph, plotly, DT, tidyverse, patchwork, rPackedBar)
 ```
 
 ::: {.callout-tip collapse="true" appearance="simple" icon="false"}
-## [**Usage of R Packages :**]{style="color:#3a9c88"}
+## [**⇳ Highlights of the R Packages needed for this study**]{style="color:#3a9c88"}
 
 -   [**ggiraph**](https://davidgohel.github.io/ggiraph/) for making 'ggplot' graphics interactive.
 
@@ -177,6 +177,8 @@ p <- ggplot(data = exam_data,
 #### step 2 - create interactive SVG Object
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 #| code-fold: false
 girafe(ggobj = p,
        width_svg = 6,
@@ -186,6 +188,8 @@ girafe(ggobj = p,
 ## No Tooltip :: **histodot**
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 #| code-fold: false
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
@@ -201,6 +205,8 @@ ggplot(data = exam_data,
 ## No Tooltip :: **dotdensity**
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 #| code-fold: false
 ggplot(data = exam_data, 
        aes(x = MATHS)) +
@@ -227,6 +233,8 @@ Y-axis is hidden. It became meaningless when binning along X-axis and stacking b
 #### 4.1.2.1 Display additional details
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 14
 #| code-fold: false
 exam_data$tooltip <- c(paste0("Name = ", exam_data$ID,
                               "\n Class = ", exam_data$CLASS)
